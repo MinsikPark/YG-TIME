@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>YG-TIME Calendar</title>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="fullcalendar/fullcalendar.css" />
+	<script src="fullcalendar/lib/jquery.min.js"></script>
+	<script src="fullcalendar/lib/moment.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<!-- (주의)fullcalendar.js import가 가장 마지막 라인에 작성되어야 함 -->
+	<script src="fullcalendar/fullcalendar.js"></script>
+	
+	<!-- script -->
+	<script type="text/javascript">
+	/*TODO
+		1)
+		날짜 클릭
+		보드명
+		기간 설정
+		세부내용 (설명)
+		보드바 색
+	*/
+	
+		$(function() { // $(document).ready.
+			$('#delete').click(function() {
+				$('#calendar').fullCalendar('removeEvents', 'jino');
+			});
+		
+			$('#deleteAll').click(function() {
+				$('#calendar').fullCalendar('removeEvents');
+			});
+			
+			//fullCalendar
+			$('#calendar').fullCalendar({
+				selectable: true, //일자를 클릭, 드래그 가능
+				selectHelper: true, //일자 드래그하면 보드바를 표시
+				select: function(start, end) { //이벤트객체에 입력될 시작일, 종료일 파라미터
+					$('#eventStart').datepicker({dateFormat: "yy-mm-dd"}); //시작일 Datepicker
+		            $('#eventEnd').datepicker({dateFormat: "yy-mm-dd"}); //종료일 Datepicker
+					$('#calEventDialog').dialog('open');
+				},
+				editable: true, // 달력에 일정 수정 여부 (드래그, 크기 조정)
+				eventLimit: true, // 하루에 표시되는 이벤트의 수를 제한. 나머지는 팝 오버에 나타남.
+				displayEventTime: false,
+				events: [
+					{
+						id: 'jino',
+						title: '지너니',
+						start: '2018-04-07',
+						end: '2018-04-10',
+						color: '#000000'
+					},
+					{
+						title: '재우기',
+						//url: 'http://www.daum.com/',
+						start: '2018-04-15',
+						end: '2018-04-17',
+						color: '#336699'
+					},
+					{
+						title: '윤그니',
+						//url: 'http://www.daum.com/',
+						start: '2018-04-20',
+						end: '2018-04-22',
+						color: 'red'
+					}
+				],
+			}); // end - fullCalendar
+			
+			/* var title = $('#eventTitle');
+			var start = $('#eventStart');
+			var end = $('#eventEnd');
+			var eventData; */
+			$('#calEventDialog').dialog({ //dialog 설정
+				resizable: false,
+				autoOpen: false,
+				title: 'Add Board',
+				width: 500,
+				buttons: {
+					Add: function() {
+						var title = $('#eventTitle'); //제목 
+						var start = $('#eventStart'); //시작일
+						var end = $('#eventEnd'); //종료일
+						var color = $('#eventColor');
+						var eventData; //이벤트 객체 변수 선언
+						
+						console.log(color.val());
+						
+						
+						if(title.val() !== '') {
+							eventData = {
+								title: title.val(),
+								start: start.val(),
+								end: end.val() + " 23:59:59", //end.val()로 정확한 일자값을 넣어주면 종료일 전날로 표시 되므로, 종료일의 23시 59분 59초로 설정
+								color: color.val()
+							};
+							$('#calendar').fullCalendar('renderEvent', eventData, true);
+						}
+						$('#calendar').fullCalendar('unselect');
+						$(this).dialog('close');
+					},
+					Cancel: function() {
+						$(this).dialog('close');
+					}
+				},
+			});
+			
+		}); // end - jquery
+	</script>
+	<!-- style -->
+	<style type="text/css">
+		#calendar {
+		    max-width: 900px;
+		    margin: 0 auto;
+		}
+	</style>
+</head>
+<body>
+	<!-- 달력 표시되는 영역 -->
+	<button id="delete">지너니삭제</button><button id="deleteAll">전체삭제</button>
+	<div id="calendar"></div>
+	<div id="testpage"></div>
+	
+	<!-- Dialog 영역 -->
+	<div id="calEventDialog">
+	    <form>
+	        <fieldset>
+		        <label for="eventTitle">Title</label>
+		        <input type="text" name="eventTitle" id="eventTitle" /><br>
+		        <label for="eventStart">Start Date</label>
+		        <input type="text" name="eventStart" id="eventStart" /><br>
+		        <label for="eventEnd">End Date</label>
+		        <input type="text" name="eventEnd" id="eventEnd" /><br>
+		        <label for="eventColor">BoardBar Color</label>
+		        <input type="color" name="eventColor" id="eventColor" /><br>
+	        </fieldset>
+	    </form>
+	</div>
+	
+</body>
+</html>

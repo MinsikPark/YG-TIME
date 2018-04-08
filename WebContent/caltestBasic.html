@@ -10,6 +10,15 @@
 	<script src="fullcalendar/fullcalendar.js"></script>
 	<!-- script -->
 	<script type="text/javascript">
+	/*TODO
+		1)
+		날짜 클릭
+		보드명
+		기간 설정
+		세부내용 (설명)
+		보드바 색
+	*/
+	
 		$(function() { // $(document).ready.
 			$('#delete').click(function() {
 				$('#calendar').fullCalendar('removeEvents', 'jino');
@@ -23,13 +32,15 @@
 			$('#calendar').fullCalendar({
 				selectable: true, //일자를 클릭, 드래그 가능
 				selectHelper: true, //일자 드래그하면 보드바를 표시
-				select: function(start, end) { //이벤트객체에 입력될 시작일, 종료일 파라미터
+				select: function() { //이벤트객체에 입력될 시작일, 종료일 파라미터
 					var title = prompt('지너니 일정: '); //alert기능
+					var start = prompt('시작 일자: ');
+					var end = prompt('완료 일자: ');
+					
 					var eventData; // eventData라는 json type의 이벤트객체 변수 정의
 					if(title) {
 						eventData = { //eventData 이벤트 객체 내용
 							title: title,
-							//url: 'http://www.daum.net',
 							start: start,
 							end: end
 						};

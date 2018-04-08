@@ -7,94 +7,126 @@
 <script src='fullcalendar/lib/moment.min.js'></script>
 <script src='fullcalendar/lib/jquery.min.js'></script>
 <script src='fullcalendar/fullcalendar.min.js'></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script>
-
-  $(function() {
-
-    $('#calendar').fullCalendar({
-      /* defaultDate: '2018-03-12',
-      editable: true,
-      eventLimit: true, // allow "more" link when too many events
-      events: [
-        {
-          title: 'All Day Event',
-          start: '2018-03-01'
+$(document).ready(function() {
+    $myCalendar = $('#myCalendar').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: ''
         },
-        {
-          title: 'Long Event',
-          start: '2018-03-07',
-          end: '2018-03-10'
+        theme: true,
+        selectable: true,
+        selectHelper: true,
+        height: 500,
+        select: function(start, end, allDay) {
+            $('#eventStart').datepicker("setDate", new Date(start));
+            $('#eventEnd').datepicker("setDate", new Date(end));
+            $('#calEventDialog').dialog('open');
         },
-        {
-          id: 999,
-          title: 'Repeating Event',
-          start: '2018-03-09T16:00:00'
+        eventClick: function(calEvent, jsEvent, view) {
+            $('#eventStart').datepicker("setDate", new Date(calEvent.start));
+            $('#eventEnd').datepicker("setDate", new Date(calEvent.end));
+            $('#calEventDialog #eventTitle').val(calEvent.title);
+            //                    alert(calEvent.className);
+            //                alert(calEvent.className=="gbcs-halfday-event"?"1":"2");
+            //                    $('#allday[value="' + calEvent.className=="gbcs-halfday-event"?"1":"2" + '"]').prop('checked', true);
+            $('#calEventDialog #allday').val([calEvent.className == "gbcs-halfday-event" ? "1" : "2"]).prop('checked', true);
+            $("#calEventDialog").dialog("option", "buttons", [
+                {
+                text: "Save",
+                click: function() {
+                    $(this).dialog("close");
+                }},
+            {
+                text: "Delete",
+                click: function() {
+                    $(this).dialog("close");
+                }},
+            {
+                text: "Cancel",
+                click: function() {
+                    $(this).dialog("close");
+                }}
+            ]);
+            $("#calEventDialog").dialog("option", "title", "Edit Event");
+            $('#calEventDialog').dialog('open');
         },
-        {
-          id: 999,
-          title: 'Repeating Event',
-          start: '2018-03-16T16:00:00'
-        },
-        {
-          title: 'Conference',
-          start: '2018-03-11',
-          end: '2018-03-13'
-        },
-        {
-          title: 'Meeting',
-          start: '2018-03-12T10:30:00',
-          end: '2018-03-12T12:30:00'
-        },
-        {
-          title: 'Lunch',
-          start: '2018-03-12T12:00:00'
-        },
-        {
-          title: 'Meeting',
-          start: '2018-03-12T14:30:00'
-        },
-        {
-          title: 'Happy Hour',
-          start: '2018-03-12T17:30:00'
-        },
-        {
-          title: 'Dinner',
-          start: '2018-03-12T20:00:00'
-        },
-        {
-          title: 'Birthday Party',
-          start: '2018-03-13T07:00:00'
-        },
-        {
-          title: 'Click for Google',
-          url: 'http://google.com/',
-          start: '2018-03-28'
-        }
-      ] */
+        editable: true
     });
-
-  });
-
+    
+    var title = $('#eventTitle');
+    var start = $('#eventStart');
+    var end = $('#eventEnd');
+    var eventClass, color;
+    $('#calEventDialog').dialog({
+        resizable: false,
+        autoOpen: false,
+        title: 'Add Event',
+        width: 400,
+        buttons: {
+            Save: function() {
+                if ($('input:radio[name=allday]:checked').val() == "1") {
+                    eventClass = "gbcs-halfday-event";
+                    color = "#9E6320";
+                    end.val(start.val());
+                }
+                else {
+                    eventClass = "gbcs-allday-event";
+                    color = "#875DA8";
+                }
+                if (title.val() !== '') {
+                    $myCalendar.fullCalendar('renderEvent', {
+                        title: title.val(),
+                        start: start.val(),
+                        end: end.val(),
+                        allDay: true,
+                        className: eventClass,
+                        color: color
+                    }, true // make the event "stick"
+                    );
+                }
+                $myCalendar.fullCalendar('unselect');
+                $(this).dialog('close');
+            },
+            Cancel: function() {
+                $(this).dialog('close');
+            }
+        }
+    });
+});
 </script>
 <style>
-/* 
-  body {
-    margin: 40px 10px;
-    padding: 0;
-    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-    font-size: 14px;
-  }
-
   #calendar {
     max-width: 900px;
     margin: 0 auto;
   }
- */
 </style>
 </head>
 <body>
-
-  <div id='calendar'></div>
-
+<div id="calEventDialog">
+    <form>
+        <fieldset>
+        <label for="eventTitle">Title</label>
+        <input type="text" name="eventTitle" id="eventTitle" /><br>
+        <label for="eventStart">Start Date</label>
+        <input type="text" name="eventStart" id="eventStart" /><br>
+        <label for="eventEnd">End Date</label>
+        <input type="text" name="eventEnd" id="eventEnd" /><br>
+        <input type="radio" id="allday" name="allday" value="1">
+        Half Day
+        <input type="radio" id="allday" name="allday" value="2">
+        All Day
+        </fieldset>
+    </form>
+</div>
+<div style="border:solid 2px red;">
+        <div id='myCalendar'></div>
+</div>
 </body>
 </html>
