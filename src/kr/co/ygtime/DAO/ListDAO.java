@@ -17,32 +17,38 @@ public class ListDAO {
 	
 	DataSource ds;
 
+	//리스트DAO생성자
 	public ListDAO() {
 		super();
 	}
 	
+	//리스트삽입 insert
 	public int listInsert(ListDTO list) {
 		
 		return 0;		
 	}
-	public ListDTO listSelect(int boardNum) {
-		return null;
-		
-	}
-	
-	public List<ListDTO> allListSelect(int boardNum){
-		
-		return null;
-	}
-	
+
+	//리스트수정 update
 	public int listUpdate(ListDTO list) {
 		
 		return 0;
 	}
-	
+	//리스트삭제 delete
 	public int listDelete(int listNum) {
 		
 		return 0;
+	}
+	
+	//리스트조회 select
+	public ListDTO listSelect(int boardNum) {
+		return null;
+		
+	}
+		
+	//모든 리스트조회 select
+	public List<ListDTO> allListSelect(int boardNum){
+		
+		return null;
 	}
 	
 }

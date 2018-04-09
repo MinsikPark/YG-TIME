@@ -5,16 +5,26 @@ public class ProjectDTO {
 	private String projectName;
 	private String projectStartDate;
 	private String projectEndDate;
+	private int deleteOk;
 	
 	public ProjectDTO() {}
 	
-	public ProjectDTO(int projectNum, String projectName, String projectStartDate, String projectEndDate) {
+	public ProjectDTO(int projectNum, String projectName, String projectStartDate, String projectEndDate, int deleteOk) {
 		this.projectNum = projectNum;
 		this.projectName = projectName;
 		this.projectStartDate = projectStartDate;
 		this.projectEndDate = projectEndDate;
+		this.deleteOk = deleteOk;
 	}
 	
+	public int getDeleteOk() {
+		return deleteOk;
+	}
+
+	public void setDeleteOk(int deleteOk) {
+		this.deleteOk = deleteOk;
+	}
+
 	public int getProjectNum() {
 		return projectNum;
 	}

@@ -1,13 +1,13 @@
 package kr.co.ygtime.DTO;
 
-public class UploadDTO {
+public class UpLoadDTO {
 	private int fileNum;
 	private int cardNum;
 	private String filePath;
 	
-	public UploadDTO() {}
+	public UpLoadDTO() {}
 	
-	public UploadDTO(int fileNum, int cardNum, String filePath) {
+	public UpLoadDTO(int fileNum, int cardNum, String filePath) {
 		this.fileNum = fileNum;
 		this.cardNum = cardNum;
 		this.filePath = filePath;

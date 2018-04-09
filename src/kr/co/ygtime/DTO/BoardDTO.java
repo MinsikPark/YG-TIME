@@ -8,10 +8,11 @@ public class BoardDTO {
 	private String boardStartDate;
 	private String boardEndDate;
 	private String label;
+	private int deleteOk;
 	
 	public BoardDTO() {}
 	
-	public BoardDTO(int boardNum, int projectNum, String boardTitle, String detail, String boardStartDate, String boardEndDate, String label) {
+	public BoardDTO(int boardNum, int projectNum, String boardTitle, String detail, String boardStartDate, String boardEndDate, String label, int deleteOk) {
 		this.boardNum = boardNum;
 		this.projectNum = projectNum;
 		this.boardTitle = boardTitle;
@@ -19,8 +20,17 @@ public class BoardDTO {
 		this.boardStartDate = boardStartDate;
 		this.boardEndDate = boardEndDate;
 		this.label = label;
+		this.deleteOk = deleteOk;
 	}
 	
+	public int getDeleteOk() {
+		return deleteOk;
+	}
+
+	public void setDeleteOk(int deleteOk) {
+		this.deleteOk = deleteOk;
+	}
+
 	public int getBoardNum() {
 		return boardNum;
 	}
@@ -65,7 +75,5 @@ public class BoardDTO {
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}
-	
-	
-	
 }
+

@@ -5,14 +5,16 @@ public class InviteMsgDTO {
 	private String userId;
 	private int projectNum;
 	private String inviteUserId;
+	private String msgDate;
 		
 	public InviteMsgDTO() {}
 	
-	public InviteMsgDTO(int msgNum, String userId, int projectNum, String inviteUserId) {
+	public InviteMsgDTO(int msgNum, String userId, int projectNum, String inviteUserId, String msgDate) {
 		this.msgNum = msgNum;
 		this.userId = userId;
 		this.projectNum = projectNum;
 		this.inviteUserId = inviteUserId;
+		this.msgDate = msgDate;
 	}
 	
 	public int getMsgNum() {
@@ -39,4 +41,13 @@ public class InviteMsgDTO {
 	public void setInviteUserId(String inviteUserId) {
 		this.inviteUserId = inviteUserId;
 	}
+
+	public String getMsgDate() {
+		return msgDate;
+	}
+
+	public void setMsgDate(String msgDate) {
+		this.msgDate = msgDate;
+	}
+	
 }

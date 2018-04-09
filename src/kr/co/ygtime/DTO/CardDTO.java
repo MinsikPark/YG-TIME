@@ -6,18 +6,18 @@ public class CardDTO {
 	private int cardNum;
 	private String cardName;
 	private String cardContents;
-	private int deleteCheck;
+	private int deleteOk;
 	private int cardSequential;
 	
 	public CardDTO() {}
 	
-	public CardDTO(int listNum, int cardNum, String cardName, String cardContents,int deleteCheck, int cardSequential) {
+	public CardDTO(int listNum, int cardNum, String cardName, String cardContents,int deleteOk, int cardSequential) {
 		
 		this.listNum = listNum;
 		this.cardNum = cardNum;
 		this.cardName = cardName;
 		this.cardContents = cardContents;
-		this.deleteCheck = deleteCheck;
+		this.deleteOk = deleteOk;
 		this.cardSequential = cardSequential;
 	}
 	
@@ -48,11 +48,11 @@ public class CardDTO {
 	}
 
 	public int getDeleteCheck() {
-		return deleteCheck;
+		return deleteOk;
 	}
 
-	public void setDeleteCheck(int deleteCheck) {
-		this.deleteCheck = deleteCheck;
+	public void setDeleteCheck(int deleteOk) {
+		this.deleteOk = deleteOk;
 	}
 
 	public int getCardSequential() {
