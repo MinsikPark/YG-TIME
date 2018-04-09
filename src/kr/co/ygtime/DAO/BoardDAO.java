@@ -26,7 +26,11 @@ public class BoardDAO {
 		ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
 	}
 	
-	//보드 생성
+	/*
+	 날      짜 : 2018. 4. 9.
+	 기      능 : 보드 생성
+	 작성자명 : 박 민 식
+	 */
 	public int boardInsert(int boardNum) {
 		return 0;
 	}
