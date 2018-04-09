@@ -18,7 +18,7 @@ import kr.co.ygtime.DTO.CardDTO;
 import kr.co.ygtime.DTO.CardMemberDTO;
 import kr.co.ygtime.DTO.CheckBoxDTO;
 import kr.co.ygtime.DTO.CommentDTO;
-import kr.co.ygtime.DTO.UploadDTO;
+import kr.co.ygtime.DTO.UpLoadDTO;
 
 public class CardDAO {
 	DataSource ds = null;
@@ -85,18 +85,18 @@ public class CardDAO {
 	//////////////////////////////////
 	
 	//업로드 생성(추가)
-	public int upLoadInsert(UploadDTO upLoad) {
+	public int upLoadInsert(UpLoadDTO upLoad) {
 		return 0;
 	}
 	
 	//업로드 검색(선택)
-	public UploadDTO upLoadSelect(int upLodadNum) {
+	public UpLoadDTO upLoadSelect(int upLodadNum) {
 		
 		return null;
 	}
 	
 	//업로드리스트검색(선택)
-	public List<UploadDTO> allUpLoadSelect(int cardNum){
+	public List<UpLoadDTO> allUpLoadSelect(int cardNum){
 		
 		return null;
 	}
