@@ -33,14 +33,28 @@
 			
 			//fullCalendar
 			$('#calendar').fullCalendar({
+				header: {
+			  		left: 'prev,next today',
+			  		center: 'title',
+			  		right: 'listYear,listMonth'
+				},
+				views: {
+		  			listMonth: {
+		    			buttonText: 'list month'
+			  		},
+			  		listYear: {
+		    			buttonText: 'list year'
+			  		}
+				},
 				selectable: true, //일자를 클릭, 드래그 가능
 				selectHelper: true, //일자 드래그하면 보드바를 표시
 				select: function(start, end) { //이벤트객체에 입력될 시작일, 종료일 파라미터
+					$('#eventStart').val(start.format()); // start.format() : 시작일 값
 					$('#eventStart').datepicker({dateFormat: "yy-mm-dd"}); //시작일 Datepicker
 		            $('#eventEnd').datepicker({dateFormat: "yy-mm-dd"}); //종료일 Datepicker
 					$('#calEventDialog').dialog('open');
 				},
-				editable: true, // 달력에 일정 수정 여부 (드래그, 크기 조정)
+				editable: true, // 달력에 종료일 수정 여부 (드래그, 크기 조정)
 				eventLimit: true, // 하루에 표시되는 이벤트의 수를 제한. 나머지는 팝 오버에 나타남.
 				displayEventTime: false,
 				events: [
@@ -53,14 +67,14 @@
 					},
 					{
 						title: '재우기',
-						//url: 'http://www.daum.com/',
+						url: 'http://www.daum.net/',
 						start: '2018-04-15',
 						end: '2018-04-17',
 						color: '#336699'
 					},
 					{
 						title: '윤그니',
-						//url: 'http://www.daum.com/',
+						url: 'http://www.naver.com/',
 						start: '2018-04-20',
 						end: '2018-04-22',
 						color: 'red'
@@ -68,10 +82,6 @@
 				],
 			}); // end - fullCalendar
 			
-			/* var title = $('#eventTitle');
-			var start = $('#eventStart');
-			var end = $('#eventEnd');
-			var eventData; */
 			$('#calEventDialog').dialog({ //dialog 설정
 				resizable: false,
 				autoOpen: false,
@@ -85,16 +95,16 @@
 						var color = $('#eventColor');
 						var eventData; //이벤트 객체 변수 선언
 						
-						console.log(color.val());
-						
-						
 						if(title.val() !== '') {
 							eventData = {
+								id: 'test',
 								title: title.val(),
 								start: start.val(),
-								end: end.val() + " 23:59:59", //end.val()로 정확한 일자값을 넣어주면 종료일 전날로 표시 되므로, 종료일의 23시 59분 59초로 설정
-								color: color.val()
+								//end: end.val() + " 23:59:59",  //end.val()로 정확한 일자값을 넣어주면 종료일 전날로 표시 되므로, 종료일의 23시 59분 59초로 설정
+								end: end.val(),
+								color: color.val(),
 							};
+							console.log(end);
 							$('#calendar').fullCalendar('renderEvent', eventData, true);
 						}
 						$('#calendar').fullCalendar('unselect');
@@ -104,6 +114,10 @@
 						$(this).dialog('close');
 					}
 				},
+			}); // end - dialog
+			
+			$('#eventDate').click(function() {
+				
 			});
 			
 		}); // end - jquery
@@ -118,12 +132,14 @@
 </head>
 <body>
 	<!-- 달력 표시되는 영역 -->
-	<button id="delete">지너니삭제</button><button id="deleteAll">전체삭제</button>
+	<button id="delete">지너니삭제</button><button id="deleteAll">전체삭제</button><br>
+	<button id="eventDate">이벤트 시작/종료 일자</button>
 	<div id="calendar"></div>
 	<div id="testpage"></div>
 	
 	<!-- Dialog 영역 -->
-	<div id="calEventDialog">
+	<!-- 초기에 깜빡이는 것을 없애기 위해 <div hidden ...> 사용 -->
+	<div hidden id="calEventDialog">
 	    <form>
 	        <fieldset>
 		        <label for="eventTitle">Title</label>
