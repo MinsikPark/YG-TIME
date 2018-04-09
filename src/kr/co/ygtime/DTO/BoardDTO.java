@@ -57,5 +57,15 @@ public class BoardDTO {
 	public void setLabel(String label) {
 		this.label = label;
 	}
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+	
+	
 	
 }

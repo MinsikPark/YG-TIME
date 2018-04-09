@@ -2,7 +2,6 @@ package kr.co.ygtime.DTO;
 
 public class CardDTO {
 	
-	
 	private int listNum;
 	private int cardNum;
 	private String cardName;
