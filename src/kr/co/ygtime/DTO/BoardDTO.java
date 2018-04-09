@@ -75,10 +75,5 @@ public class BoardDTO {
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}
-<<<<<<< HEAD
-=======
-	
-	
->>>>>>> bdcf1e54f4060fea0c4076780bd0250acf6f35f6
-	
 }
+
