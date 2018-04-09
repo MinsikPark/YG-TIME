@@ -7,6 +7,7 @@ public class ProjectDTO {
 	private String projectEndDate;
 	
 	public ProjectDTO() {}
+	
 	public ProjectDTO(int projectNum, String projectName, String projectStartDate, String projectEndDate) {
 		this.projectNum = projectNum;
 		this.projectName = projectName;

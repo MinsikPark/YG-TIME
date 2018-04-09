@@ -1,13 +1,13 @@
 package kr.co.ygtime.DTO;
 
-public class ProjectTeamDTO {
+public class TeamDTO {
 	private int projectNum;
 	private String userId;
 	private int grade;
 	private String projectLastModDate;
 	
-	public ProjectTeamDTO() {}
-	public ProjectTeamDTO(int projectNum, String userId, int grade, String projectLastModDate) {
+	public TeamDTO() {}
+	public TeamDTO(int projectNum, String userId, int grade, String projectLastModDate) {
 		this.projectNum = projectNum;
 		this.userId = userId;
 		this.grade = grade;

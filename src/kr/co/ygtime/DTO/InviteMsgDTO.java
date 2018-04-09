@@ -5,16 +5,14 @@ public class InviteMsgDTO {
 	private String userId;
 	private int projectNum;
 	private String inviteUserId;
-	private String inviteUserNicname;
-	
+		
 	public InviteMsgDTO() {}
 	
-	public InviteMsgDTO(int msgNum, String userId, int projectNum, String inviteUserId, String inviteUserNicname) {
+	public InviteMsgDTO(int msgNum, String userId, int projectNum, String inviteUserId) {
 		this.msgNum = msgNum;
 		this.userId = userId;
 		this.projectNum = projectNum;
 		this.inviteUserId = inviteUserId;
-		this.inviteUserNicname = inviteUserNicname;
 	}
 	
 	public int getMsgNum() {
@@ -41,11 +39,4 @@ public class InviteMsgDTO {
 	public void setInviteUserId(String inviteUserId) {
 		this.inviteUserId = inviteUserId;
 	}
-	public String getInviteUserNicname() {
-		return inviteUserNicname;
-	}
-	public void setInviteUserNicname(String inviteUserNicname) {
-		this.inviteUserNicname = inviteUserNicname;
-	}
-	
 }

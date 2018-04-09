@@ -3,7 +3,9 @@ package kr.co.ygtime.DTO;
 public class GradeDTO {
 	private int grade;
 	private String lank;
+
 	public GradeDTO() {}
+	
 	public GradeDTO(int grade , String lank) {
 		this.grade = grade;
 		this.lank = lank;

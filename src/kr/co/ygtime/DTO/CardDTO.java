@@ -1,40 +1,28 @@
 package kr.co.ygtime.DTO;
 
 public class CardDTO {
-	private int projectNum;
-	private int boardNum;
+	
+	
 	private int listNum;
 	private int cardNum;
 	private String cardName;
 	private String cardContents;
-	private String uploadFileName;
+	private int deleteCheck;
 	private int cardSequential;
 	
 	public CardDTO() {}
 	
-	public CardDTO(int projectNum, int boardNum, int listNum, int cardNum, String cardName, String cardContents, String uploadFileName, int cardSequential) {
-		this.projectNum = projectNum;
-		this.boardNum = boardNum;
+	public CardDTO(int listNum, int cardNum, String cardName, String cardContents,int deleteCheck, int cardSequential) {
+		
 		this.listNum = listNum;
 		this.cardNum = cardNum;
 		this.cardName = cardName;
 		this.cardContents = cardContents;
-		this.uploadFileName = uploadFileName;
+		this.deleteCheck = deleteCheck;
 		this.cardSequential = cardSequential;
 	}
 	
-	public int getProjectNum() {
-		return projectNum;
-	}
-	public void setProjectNum(int projectNum) {
-		this.projectNum = projectNum;
-	}
-	public int getBoardNum() {
-		return boardNum;
-	}
-	public void setBoardNum(int boardNum) {
-		this.boardNum = boardNum;
-	}
+
 	public int getListNum() {
 		return listNum;
 	}
@@ -59,12 +47,15 @@ public class CardDTO {
 	public void setCardContents(String cardContents) {
 		this.cardContents = cardContents;
 	}
-	public String getUploadFileName() {
-		return uploadFileName;
+
+	public int getDeleteCheck() {
+		return deleteCheck;
 	}
-	public void setUploadFileName(String uploadFileName) {
-		this.uploadFileName = uploadFileName;
+
+	public void setDeleteCheck(int deleteCheck) {
+		this.deleteCheck = deleteCheck;
 	}
+
 	public int getCardSequential() {
 		return cardSequential;
 	}

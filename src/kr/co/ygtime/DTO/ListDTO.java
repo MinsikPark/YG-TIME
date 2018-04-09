@@ -1,28 +1,30 @@
 package kr.co.ygtime.DTO;
 
 public class ListDTO {
-	private int projectNum;
 	private int boardNum;
 	private int listNum;
 	private String listName;
 	private int listSequential;
-	
+	private int deleteCheck;
 	public ListDTO() {}
 	
-	public ListDTO(int projectNum, int boardNum, int listNum, String listName, int listSequential) {
-		this.projectNum = projectNum;
+	public ListDTO(int boardNum, int listNum, String listName, int listSequential, int deleteCheck) {
 		this.boardNum = boardNum;
 		this.listNum = listNum;
 		this.listName = listName;
 		this.listSequential = listSequential;
+		this.deleteCheck = deleteCheck;
 	}
 	
-	public int getProjectNum() {
-		return projectNum;
+	
+	public int getDeleteCheck() {
+		return deleteCheck;
 	}
-	public void setProjectNum(int projectNum) {
-		this.projectNum = projectNum;
+
+	public void setDeleteCheck(int deleteCheck) {
+		this.deleteCheck = deleteCheck;
 	}
+
 	public int getBoardNum() {
 		return boardNum;
 	}
