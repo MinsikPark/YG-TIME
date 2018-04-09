@@ -68,14 +68,14 @@ public class ProjectDAO {
 		return 0;
 	}
 	
-	//팀원 삭제 Delete
-	public int teamDelete(int projectNum, String userId, String outUserId) {
+	//팀원 제명 Delete
+	public int teamMemberDelete(int projectNum, String userId, String outUserId) {
 
 		return 0;
 	}
 	
-	//팀원 삭제 Delete
-	public int teamDelete(TeamDTO team) {
+	//팀 탈퇴 Delete
+	public int outFromTeam(TeamDTO team) {
 
 		return 0;
 	}
