@@ -7,6 +7,8 @@
 
 package kr.co.ygtime.DAO;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 import javax.naming.Context;
@@ -30,8 +32,52 @@ public class CardDAO {
 		ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
 	}
 	
-	//카드 생성
+	/**
+	 날      짜 : 2018. 4. 9.
+	 기      능 : 카드 생성
+	 작성자명 : 김 진 원
+	*/
 	public int cardInsert(CardDTO card) {
+		/*Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row = 0;
+		try {
+				conn = ds.getConnection();
+				String sql ="insert into jspboard(idx,writer,pwd,subject,content,email,homepage,writedate,readnum,filename,filesize,refer)" + 
+						    " values(jspboard_idx.nextval,?,?,?,?,?,?,sysdate,0,?,0,?)";
+			
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1,boardata.getWriter());
+				pstmt.setString(2,boardata.getPwd());
+				pstmt.setString(3,boardata.getSubject());
+				pstmt.setString(4,boardata.getContent());
+				pstmt.setString(5,boardata.getEmail());
+				pstmt.setString(6,boardata.getHomepage());
+				pstmt.setString(7,boardata.getFilename());
+				
+				//계층형 게시판
+				//refer , step , depth
+				//1. 원본글 : refer , step(0) default, depth(0) default
+				//2. 답변글 : refer , step(규칙) , depth(규칙)
+				
+				int refermax = getMaxRefer();
+				int refer = refermax + 1;
+				pstmt.setInt(8, refer); 
+				
+				row = pstmt.executeUpdate();
+				
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();//반환
+			}catch (Exception e) {
+				
+			}
+		}
+		*/
 		return 0;
 	}
 	
