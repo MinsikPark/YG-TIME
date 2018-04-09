@@ -5,24 +5,24 @@ public class ListDTO {
 	private int listNum;
 	private String listName;
 	private int listSequential;
-	private int deleteCheck;
+	private int deleteOk;
 	public ListDTO() {}
 	
-	public ListDTO(int boardNum, int listNum, String listName, int listSequential, int deleteCheck) {
+	public ListDTO(int boardNum, int listNum, String listName, int listSequential, int deleteOk) {
 		this.boardNum = boardNum;
 		this.listNum = listNum;
 		this.listName = listName;
 		this.listSequential = listSequential;
-		this.deleteCheck = deleteCheck;
+		this.deleteOk = deleteOk;
 	}
 	
 	
 	public int getDeleteCheck() {
-		return deleteCheck;
+		return deleteOk;
 	}
 
-	public void setDeleteCheck(int deleteCheck) {
-		this.deleteCheck = deleteCheck;
+	public void setDeleteCheck(int deleteOk) {
+		this.deleteOk = deleteOk;
 	}
 
 	public int getBoardNum() {
