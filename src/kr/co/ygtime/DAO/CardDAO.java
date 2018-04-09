@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 import kr.co.ygtime.DTO.CardDTO;
 import kr.co.ygtime.DTO.CardMemberDTO;
 import kr.co.ygtime.DTO.CheckBoxDTO;
-import kr.co.ygtime.DTO.CommentDTO;
+import kr.co.ygtime.DTO.ReplyDTO;
 import kr.co.ygtime.DTO.UpLoadDTO;
 
 public class CardDAO {
@@ -110,22 +110,22 @@ public class CardDAO {
 	//////////////////////////////////////
 	
 	//댓글 생성(추가)
-	public int commentInsert(CommentDTO comment) {
+	public int commentInsert(ReplyDTO comment) {
 		return 0;
 	}
 	
 	//댓글 검색(선택)
-	public CommentDTO upLoadInsert(int commentNum) {
+	public ReplyDTO upLoadInsert(int commentNum) {
 		return null;
 	}
 	
 	//모든 댓글 검색
-	public List<CommentDTO> allCommentSelect(int cardNum) {
+	public List<ReplyDTO> allCommentSelect(int cardNum) {
 		return null;
 	}
 	
 	//댓글 수정
-	public int commentUpdate(CommentDTO comment) {
+	public int commentUpdate(ReplyDTO comment) {
 		return 0;
 	}
 	
