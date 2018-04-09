@@ -1,3 +1,10 @@
+/* 
+    파일명: TeamDTO.java
+    설명: 프로젝트 내용 추가 Service부
+    작성일: 2018. 4. 9.
+    작성자: 최 재 욱 
+*/
+
 package kr.co.ygtime.DTO;
 
 public class TeamDTO {
