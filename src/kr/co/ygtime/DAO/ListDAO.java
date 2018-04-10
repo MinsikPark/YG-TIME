@@ -10,6 +10,7 @@ package kr.co.ygtime.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Context;
@@ -28,8 +29,7 @@ public class ListDAO {
 	//리스트DAO생성자
 	public ListDAO() throws NamingException{
 		Context context = new InitialContext();
-
-		//ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
+		ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
 	}	
 	/**
 	 * 
@@ -38,19 +38,19 @@ public class ListDAO {
 	 작성자명 : 박 민 식
 	 */
 	public int listInsert(ListDTO list) {
+		System.out.println("listInsert 함수");
 		PreparedStatement pstmt =null;
 		Connection conn = null;
 		String sql = "insert into list(boardnum, listnum, listname, deleteok,listsequential )"
-					+ "value (?,list_idx.nextval,?,?,?)";
+					+ "value (?,list_idx.nextval,?,0,?)";
 		int resultRow = 0;
 		
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, list.getBoardNum());
-			pstmt.setInt(2, list.getListNum());
-			pstmt.setString(3, list.getListName());
-			pstmt.setInt(4, list.getDeleteOk());
+			pstmt.setString(2, list.getListName());
+			pstmt.setInt(3, list.getListSequential());
 			
 			resultRow= pstmt.executeUpdate();
 			
@@ -67,7 +67,45 @@ public class ListDAO {
 		return resultRow;		
 	}
 
+	
+/**
+ * 
+ 날      짜 : 2018. 4. 10.
+ 기      능 : 리스트 sequence 최대값 뽑아오기 
+ 작성자명 : 박 민 식
+ */
+	
+	public int maxListSequential(int boardNum) {
+		System.out.println("listInsert 함수");
+		PreparedStatement pstmt =null;
+		Connection conn = null;
+		ResultSet rs = null;
+		String sql = "select max(listsequential) as maxlistsequential from list where boardNum =?";
+		int maxListSequential = 0;
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNum);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				maxListSequential = rs.getInt("maxlistsequential");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();			
+		}finally {
+	
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();//반환
+			}catch (Exception e) {
+			}
+		}
 
+		return maxListSequential;
+	}
 	
 	
 	/**
@@ -77,37 +115,26 @@ public class ListDAO {
 	 작성자명 : 박 민 식
 	 */
 	public int listUpdate(ListDTO list) {
-		
-		int boardNum = list.getBoardNum();
+		System.out.println("listUpdate 함수");
 		int listNum = list.getListNum();
 		String listName = list.getListName();
 		int listSequential = list.getListSequential();
-		int deleteOk = list.getDeleteOk();
 		int resultRow = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String selectSql= "select listnum from list where listnum = ?";
-		String updateSql = "update list set boardNum =? , listNum =?, listName=?,"
-				+ "listSequential = ?, deleteOk=? where listNum =?";
+		String updateSql = "update list set listName=?,"
+				+ "listSequential = ? where listNum =?";
 		
 		try {
 			conn = ds.getConnection();
-			pstmt = conn.prepareStatement(selectSql);
-			pstmt.setInt(1, listNum);
-			rs = pstmt.executeQuery();
+			pstmt = conn.prepareStatement(updateSql);
 			
-			if(rs.next()) {
-				pstmt.close();
-				pstmt = conn.prepareStatement(updateSql);
-				pstmt.setInt(1, boardNum);
-				pstmt.setInt(2, listNum);
-				pstmt.setString(3, listName);
-				pstmt.setInt(4, listSequential);
-				pstmt.setInt(5, deleteOk);
-				pstmt.setInt(6, listNum);
-				resultRow = pstmt.executeUpdate();
-			}
+			pstmt.setString(1, listName);
+			pstmt.setInt(2, listSequential);
+			pstmt.setInt(3, listNum);
+			
+			resultRow = pstmt.executeUpdate();
+			
 					
 			
 		}catch(Exception e) {
@@ -115,7 +142,7 @@ public class ListDAO {
 		}finally {
 			try {
 				pstmt.close();
-				rs.close();
+			
 				conn.close();//반환
 			}catch (Exception e) {
 				
@@ -132,40 +159,24 @@ public class ListDAO {
 	 작성자명 : 박 민 식
 	 */
 	public int listDelete(int listNum) {
-		
+		System.out.println("listDelete 함수");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String selectSql = "select deleteok from list where listnum =?";
-		String updateSql = "update list set deleteok = 1 where listnum =?";
+		
+		String updateSql = "update list set deleteok = 1, listSequential= -1 where listnum =?";
 		
 		int resultRow = 0;
 		
 		try {
-			pstmt = conn.prepareStatement(selectSql);
+		    conn= ds.getConnection();
+			pstmt = conn.prepareStatement(updateSql);
 			pstmt.setInt(1, listNum);
-			rs = pstmt.executeQuery();
 			
-			if(rs.next()) { // 해당 list가 있는지 여부 확인
-				pstmt.close();
-				int deleteok = Integer.parseInt(rs.getString("deleteok"));	
-				if(deleteok==0) { // list가 존재 할 때, 해당 list가 삭제되어 있는 상태인지 아닌지 확인 
-						          // 삭제되어 있지 않다면, update  
-					pstmt = conn.prepareStatement(updateSql);
-					pstmt.setInt(1, listNum);
-					
-					resultRow = pstmt.executeUpdate();
-				}else { // 이미 삭제된 상태라면 한번 console로 확인
-					System.out.println("이미 삭제되어 있음");
-				}
-				
-			}
-			
+			resultRow = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				rs.close();
 				pstmt.close();
 				conn.close();//반환
 			}catch (Exception e) {
@@ -175,8 +186,15 @@ public class ListDAO {
 		return resultRow;
 	}
 	
-	//리스트조회 select
+	
+	/**
+	 * 
+	 날      짜 : 2018. 4. 10.
+	 기      능 : 리스트조회 select
+	 작성자명 : 박 민 식
+	 */
 	public ListDTO listSelect(int listNum) {
+		System.out.println("listSelect 함수");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -196,7 +214,7 @@ public class ListDAO {
 					dto.setListNum(rs.getInt("listnum"));
 					dto.setListSequential(rs.getInt("listSequential"));	
 				}else {
-					System.out.println("삭제된 리스트ㄴ");
+					System.out.println("삭제된 리스트");
 				}
 				
 			}
@@ -213,14 +231,57 @@ public class ListDAO {
 			}
 		}
 		
-		return null;
+		return dto;
 		
 	}
 		
-	//모든 리스트조회 select
+	
+
+	/**
+	 * 
+	 날      짜 : 2018. 4. 10.
+	 기      능 : 모든 리스트조회 select
+	 작성자명 : 박민식
+	 */
 	public List<ListDTO> allListSelect(int boardNum){
+		System.out.println("allListSelect 함수");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String selectListSql = "select * from list where boardNum =? order by listSequential asc";
+		List<ListDTO> dtolist =null;
 		
-		return null;
+		try {
+
+			dtolist =  new ArrayList<>();
+			conn = ds.getConnection();
+			pstmt= conn.prepareStatement(selectListSql);
+			pstmt.setInt(1, boardNum);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				ListDTO dto = new ListDTO();
+				dto.setBoardNum(rs.getInt("boardnum"));
+				dto.setListName(rs.getString("listname"));
+				dto.setListNum(rs.getInt("listnum"));
+				dto.setListSequential(rs.getInt("listSequential"));
+				dto.setDeleteOk(rs.getInt("deleteOk"));
+				dtolist.add(dto);
+			}
+			
+			
+		} catch(Exception e){
+			
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();//반환
+			}catch (Exception e) {
+			}
+		}
+		
+		return dtolist;
 	}
 	
 }
