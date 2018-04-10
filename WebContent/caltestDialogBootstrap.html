@@ -3,14 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<title>YG-TIME Calendar</title>
-	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 	<link rel="stylesheet" href="fullcalendar/fullcalendar.css" />
+	<link rel='stylesheet' href="fullcalendar/fullcalendar.print.min.css" media="print" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css" />
+	
 	<script src="fullcalendar/lib/jquery.min.js"></script>
 	<script src="fullcalendar/lib/moment.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js"></script>
 	<!-- (주의)fullcalendar.js import가 가장 마지막 라인에 작성되어야 함 -->
 	<script src="fullcalendar/fullcalendar.js"></script>
-	
+	<script src="fullcalendar/locale-all.js"></script>
 	<!-- script -->
 	<script type="text/javascript">
 	/*TODO
@@ -33,60 +39,10 @@
 			
 			//fullCalendar
 			$('#calendar').fullCalendar({
-				eventDragStop: function( event, jsEvent, ui, view, removeEvents ) {
-				    // This condition makes it easier to test if the event is over the trash can using Jquery
-				    if($('div#deleteEventsDiv').is(':hover')){
-				        // Confirmation popup
-				        $.SmartMessageBox({
-				            title : "Delete Event?",
-				            content : 'Are you sure you want to remove this event from the calender?',
-				            buttons : '[No][Yes]'
-				        }, function(ButtonPressed) {
-				            if (ButtonPressed === "Yes") {
-
-				                // You can change the URL and other details to your liking.
-				                // On success a small box notification will fire
-				                $.ajax({
-				                    url: '/events/' + event.id,
-				                    type: 'DELETE',
-				                    success: function(request) {
-				                        $.smallBox({
-				                            title : "Deleting Event",
-				                            content : "Event Deleted",
-				                            color : "#659265",
-				                            iconSmall : "fa fa-check fa-2x fadeInRight animated",
-				                            timeout : 4000
-				                        });
-				                        $('#calendar').fullCalendar('removeEvents', event.id);
-				                    }
-				                });
-				            }
-				        });
-				    }
-				},
-				/*
-				eventDragStop: function (event, jsEvent) {
-				    var trashEl = $('#trashCan');
-				    var ofs = trashEl.offset();
-
-				    var x1 = ofs.left;
-				    var x2 = ofs.left + trashEl.outerWidth(true);
-				    var y1 = ofs.top;
-				    var y2 = ofs.top + trashEl.outerHeight(true);
-
-				    if (jsEvent.pageX >= x1 && jsEvent.pageX <= x2 &&
-				        jsEvent.pageY >= y1 && jsEvent.pageY <= y2) {
-				        console.log(event);
-				        dragRevertDuration
-				        $('#calendar').fullCalendar('removeEvents', event._id);
-				    }
-				},
-				*/
-				dragRevertDuration: 10,
 				header: {
-			  		left: 'prev,next today',
+			  		left: 'prev, next today',
 			  		center: 'title',
-			  		right: 'listYear,listMonth'
+			  		right: 'listYear, listMonth'
 				},
 				views: {
 		  			listMonth: {
@@ -96,13 +52,16 @@
 		    			buttonText: 'list year'
 			  		}
 				},
+				defaultDate: moment().format('YYYY-MM-DD'),
+				locale: 'ko',
 				selectable: true, //일자를 클릭, 드래그 가능
 				selectHelper: true, //일자 드래그하면 보드바를 표시
 				select: function(start, end) { //이벤트객체에 입력될 시작일, 종료일 파라미터
-					$('#eventStart').val(start.format()); // start.format() : 시작일 값
-					$('#eventStart').datepicker({dateFormat: "yy-mm-dd"}); //시작일 Datepicker
-		            $('#eventEnd').datepicker({dateFormat: "yy-mm-dd"}); //종료일 Datepicker
-					$('#calEventDialog').dialog('open');
+					//$('#eventStart').val(start.format()); // start.format() : 시작일 값
+					//$('#eventStart').datepicker({dateFormat: 'yy-mm-dd'}); //시작일 Datepicker
+		            //$('#eventEnd').datepicker({dateFormat: 'yy-mm-dd'}); //종료일 Datepicker
+					//$('#calEventDialog').dialog('open');
+					$('.modal').modal('show');
 				},
 				editable: true, // 달력에 종료일 수정 여부 (드래그, 크기 조정)
 				eventLimit: true, // 하루에 표시되는 이벤트의 수를 제한. 나머지는 팝 오버에 나타남.
@@ -131,6 +90,8 @@
 					}
 				],
 			}); // end - fullCalendar
+			
+			$('#eventStart, #eventEnd').datetimepicker();
 			
 			$('#calEventDialog').dialog({ //dialog 설정
 				resizable: false,
@@ -166,9 +127,29 @@
 				},
 			}); // end - dialog
 			
-			$('#eventDate').click(function() {
-				
-			});
+			// Bind the dates to datetimepicker.
+	        // You should pass the options you need
+	        $("#starts-at, #ends-at").datetimepicker();
+
+	        // Whenever the user clicks on the "save" button om the dialog
+	        $('#save-event').on('click', function() {
+	            var title = $('#title').val();
+	            if (title) {
+	                var eventData = {
+	                    title: title,
+	                    start: $('#starts-at').val(),
+	                    end: $('#ends-at').val()
+	                };
+	                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+	            }
+	            $('#calendar').fullCalendar('unselect');
+
+	            // Clear modal inputs
+	            $('.modal').find('input').val('');
+
+	            // hide modal
+	            $('.modal').modal('hide');
+	        });
 			
 		}); // end - jquery
 	</script>
@@ -178,31 +159,15 @@
 		    max-width: 900px;
 		    margin: 0 auto;
 		}
-		.fc-view
-		{
-		    width: 100%;
-		    overflow: visible;
-		}
 	</style>
 </head>
 <body>
-	<div id="trashCan">
-		<h1>쓰레기통</h1>
-	</div>
 	<!-- 달력 표시되는 영역 -->
 	<button id="delete">지너니삭제</button><button id="deleteAll">전체삭제</button><br>
 	<button id="eventDate">이벤트 시작/종료 일자</button>
 	<div id="calendar"></div>
+	<div id="datepicker"></div>
 	<div id="testpage"></div>
-	<div class="well well-sm" id="deleteEventsDiv">
-	    <legend>
-	        Delete Events
-	    </legend>
-	    <img src="images/cal-trash.png">
-	    <div class="note">
-	        <strong>Note:</strong> Drag and drop events here to delete them
-	    </div>
-	</div>
 	
 	<!-- Dialog 영역 -->
 	<!-- 초기에 깜빡이는 것을 없애기 위해 <div hidden ...> 사용 -->
@@ -220,6 +185,43 @@
 	        </fieldset>
 	    </form>
 	</div>
+	
+	
+	<!-- Modal 영역 -->
+	<div class="modal fade" tabindex="-1" role="dialog">
+	    <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                <h4 class="modal-title">Create new event</h4>
+	            </div>
+	            <div class="modal-body">
+	                <div class="row">
+	                    <div class="col-xs-12">
+	                        <label class="col-xs-4" for="title">Event title</label>
+	                        <input type="text" name="title" id="title" />
+	                    </div>
+	                </div>
+	                <div class="row">
+	                    <div class="col-xs-12">
+	                        <label class="col-xs-4" for="starts-at">Starts at</label>
+	                        <input type="text" name="starts_at" id="starts-at" />
+	                    </div>
+	                </div>
+	                <div class="row">
+	                    <div class="col-xs-12">
+	                        <label class="col-xs-4" for="ends-at">Ends at</label>
+	                        <input type="text" name="ends_at" id="ends-at" />
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                <button type="button" class="btn btn-primary" id="save-event">Save changes</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 	
 </body>
 </html>

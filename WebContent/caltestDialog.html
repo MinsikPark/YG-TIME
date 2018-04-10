@@ -3,14 +3,15 @@
 <head>
 	<meta charset="UTF-8">
 	<title>YG-TIME Calendar</title>
-	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 	<link rel="stylesheet" href="fullcalendar/fullcalendar.css" />
+	<link rel='stylesheet' href="fullcalendar/fullcalendar.print.min.css" media="print" />
 	<script src="fullcalendar/lib/jquery.min.js"></script>
 	<script src="fullcalendar/lib/moment.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<!-- (주의)fullcalendar.js import가 가장 마지막 라인에 작성되어야 함 -->
 	<script src="fullcalendar/fullcalendar.js"></script>
-	
+	<script src="fullcalendar/locale-all.js"></script>
 	<!-- script -->
 	<script type="text/javascript">
 	/*TODO
@@ -34,9 +35,9 @@
 			//fullCalendar
 			$('#calendar').fullCalendar({
 				header: {
-			  		left: 'prev,next today',
+			  		left: 'prev, next today',
 			  		center: 'title',
-			  		right: 'listYear,listMonth'
+			  		right: 'listYear, listMonth'
 				},
 				views: {
 		  			listMonth: {
@@ -46,12 +47,14 @@
 		    			buttonText: 'list year'
 			  		}
 				},
+				defaultDate: moment().format('YYYY-MM-DD'),
+				locale: 'ko',
 				selectable: true, //일자를 클릭, 드래그 가능
 				selectHelper: true, //일자 드래그하면 보드바를 표시
 				select: function(start, end) { //이벤트객체에 입력될 시작일, 종료일 파라미터
 					$('#eventStart').val(start.format()); // start.format() : 시작일 값
-					$('#eventStart').datepicker({dateFormat: "yy-mm-dd"}); //시작일 Datepicker
-		            $('#eventEnd').datepicker({dateFormat: "yy-mm-dd"}); //종료일 Datepicker
+					//$('#eventStart').datepicker({dateFormat: 'yy-mm-dd'}); //시작일 Datepicker
+		            //$('#eventEnd').datepicker({dateFormat: 'yy-mm-dd'}); //종료일 Datepicker
 					$('#calEventDialog').dialog('open');
 				},
 				editable: true, // 달력에 종료일 수정 여부 (드래그, 크기 조정)
@@ -82,6 +85,8 @@
 				],
 			}); // end - fullCalendar
 			
+			$('#eventStart, #eventEnd').datepicker({dateFormat: 'yy-mm-dd'});
+			
 			$('#calEventDialog').dialog({ //dialog 설정
 				resizable: false,
 				autoOpen: false,
@@ -89,20 +94,19 @@
 				width: 500,
 				buttons: {
 					Add: function() {
-						var title = $('#eventTitle'); //제목 
-						var start = $('#eventStart'); //시작일
-						var end = $('#eventEnd'); //종료일
-						var color = $('#eventColor');
+						var title = $('#eventTitle').val(); //제목 
+						var start = $('#eventStart').val() + "T00:00:00"; //시작일
+						var end = $('#eventEnd').val() + "T23:59:59"; //종료일
+						var color = $('#eventColor').val();
 						var eventData; //이벤트 객체 변수 선언
 						
-						if(title.val() !== '') {
+						if(title !== '') {
 							eventData = {
-								id: 'test',
-								title: title.val(),
-								start: start.val(),
+								title: title,
+								start: start,
 								//end: end.val() + " 23:59:59",  //end.val()로 정확한 일자값을 넣어주면 종료일 전날로 표시 되므로, 종료일의 23시 59분 59초로 설정
-								end: end.val(),
-								color: color.val(),
+								end: end,
+								color: color,
 							};
 							console.log(end);
 							$('#calendar').fullCalendar('renderEvent', eventData, true);
