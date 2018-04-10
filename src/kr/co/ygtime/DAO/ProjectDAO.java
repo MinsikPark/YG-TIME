@@ -8,6 +8,7 @@
 package kr.co.ygtime.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class ProjectDAO {
 		Connection conn = null;
 		
 		try {
+			conn = ds.getConnection();
 			String sql = "insert into project(projectnum, projectname, projectstartdate, projectenddate,deleteok) values(project_idx.nextval,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			
@@ -74,10 +76,12 @@ public class ProjectDAO {
 		PreparedStatement pstmt = null;
 		Connection conn = null;
 		try {
+			conn = ds.getConnection();
 			String sql="update project set deleteok = 1 where projectnum = ?";
 			
 			
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, projectNum);
 			
 			
 			resultrow = pstmt.executeUpdate();
@@ -109,8 +113,15 @@ public class ProjectDAO {
 		Connection conn = null;
 		
 		try {
+			conn = ds.getConnection();
 			String sql = "update project set projectname=? where projectnum = ?";
-			pstmt.executeQuery(sql);
+			
+			pstmt = conn.prepareStatement(sql);
+			ProjectDTO projectdto = new ProjectDTO();
+			
+			pstmt.setString(1,projectdto.getProjectName());
+			pstmt.setInt(2, projectdto.getProjectNum());
+			
 			resultrow = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("projectUpdate 에러 발생: " + e.getMessage());
@@ -124,17 +135,66 @@ public class ProjectDAO {
 		}
 		return resultrow;
 	}
-
-	
-	
-    //프로젝트 조회 select
+    
+	/**
+	 날      짜 : 2018. 4. 10.
+	 기      능 : 프로젝트 조회 select
+	 작성자명 : 최 재 욱
+	 */
 	public ProjectDTO projectSelect(int projectNum) {
-		return null;
+		ProjectDTO projectdto = null;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			conn = ds.getConnection();
+			String sql = "select projectnum, projectname, projectstartdate, projectenddate,deleteok from project where projectNum = ?";
+			pstmt = conn.prepareStatement(sql);
+			projectdto = new ProjectDTO();
+			pstmt.setInt(1,projectdto.getProjectNum());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				projectdto.setProjectNum(rs.getInt("projectnum"));
+				projectdto.setProjectName(rs.getString("projectname"));
+				projectdto.setProjectStartDate(rs.getString("projectstartdate"));
+				projectdto.setProjectEndDate(rs.getString("projectenddate"));
+				projectdto.setDeleteOk(rs.getInt("deleteok"));
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+		}
+		return projectdto;
 	}
 
 
 	//모든 프로젝트 select
 	public List<ProjectDTO> allProjectSelect(String userId) {
+		ProjectDTO projectdto = null;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		List<ProjectDTO> listprojectdto = null;
+		
+		try {
+			conn = ds.getConnection();
+			String sql = 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 		return null;
 	}
