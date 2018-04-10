@@ -21,31 +21,37 @@ public class ReplyDTO {
 		this.cardNum = cardNum;
 		this.replyContents = replyContents;
 	}
-	
-	public int getCommentNum() {
+
+	public int getReplyNum() {
 		return replyNum;
 	}
-	public void setCommentNum(int replyNum) {
+
+	public void setReplyNum(int replyNum) {
 		this.replyNum = replyNum;
 	}
+
 	public String getUserId() {
 		return userId;
 	}
+
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+
 	public int getCardNum() {
 		return cardNum;
 	}
+
 	public void setCardNum(int cardNum) {
 		this.cardNum = cardNum;
 	}
-	public String getCommentContents() {
+
+	public String getReplyContents() {
 		return replyContents;
 	}
-	public void setCommentContents(String replyContents) {
+
+	public void setReplyContents(String replyContents) {
 		this.replyContents = replyContents;
 	}
-	
 	
 }
