@@ -32,11 +32,10 @@ public class ListDAO {
 		ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
 	}	
 	/**
-	 * 
 	 날      짜 : 2018. 4. 9.
 	 기      능 : 리스트삽입 insert
 	 작성자명 : 박 민 식
-	 */
+	*/
 	public int listInsert(ListDTO list) {
 		System.out.println("listInsert 함수");
 		PreparedStatement pstmt =null;
@@ -67,14 +66,11 @@ public class ListDAO {
 		return resultRow;		
 	}
 
-	
-/**
- * 
- 날      짜 : 2018. 4. 10.
- 기      능 : 리스트 sequence 최대값 뽑아오기 
- 작성자명 : 박 민 식
- */
-	
+	/**
+	 날      짜 : 2018. 4. 10.
+	 기      능 : 리스트 sequence 최대값 뽑아오기 
+	 작성자명 : 박 민 식
+	*/	
 	public int maxListSequential(int boardNum) {
 		System.out.println("listInsert 함수");
 		PreparedStatement pstmt =null;
@@ -107,13 +103,11 @@ public class ListDAO {
 		return maxListSequential;
 	}
 	
-	
 	/**
-	 * 
 	 날      짜 : 2018. 4. 9.
 	 기      능 : 리스트수정 update
 	 작성자명 : 박 민 식
-	 */
+	*/
 	public int listUpdate(ListDTO list) {
 		System.out.println("listUpdate 함수");
 		int listNum = list.getListNum();
@@ -153,11 +147,10 @@ public class ListDAO {
 	}
 	
 	/**
-	 * 
 	 날      짜 : 2018. 4. 9.
 	 기      능 : 리스트삭제 delete
 	 작성자명 : 박 민 식
-	 */
+	*/
 	public int listDelete(int listNum) {
 		System.out.println("listDelete 함수");
 		Connection conn = null;
@@ -186,13 +179,11 @@ public class ListDAO {
 		return resultRow;
 	}
 	
-	
 	/**
-	 * 
 	 날      짜 : 2018. 4. 10.
 	 기      능 : 리스트조회 select
 	 작성자명 : 박 민 식
-	 */
+	*/
 	public ListDTO listSelect(int listNum) {
 		System.out.println("listSelect 함수");
 		Connection conn = null;
@@ -235,14 +226,11 @@ public class ListDAO {
 		
 	}
 		
-	
-
 	/**
-	 * 
 	 날      짜 : 2018. 4. 10.
 	 기      능 : 모든 리스트조회 select
 	 작성자명 : 박민식
-	 */
+	*/
 	public List<ListDTO> allListSelect(int boardNum){
 		System.out.println("allListSelect 함수");
 		Connection conn = null;
