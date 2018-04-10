@@ -179,8 +179,8 @@ public class CardDAO {
 			while(rs.next()) {
 				
 				CardDTO carddto = new CardDTO(); 
-				carddto.setListNum(rs.getInt("cardnum"));
-				carddto.setCardNum(rs.getInt("listnum"));
+				carddto.setCardNum(rs.getInt("cardnum"));
+				carddto.setListNum(rs.getInt("listnum"));
 				carddto.setCardName(rs.getString("cardname"));
 				carddto.setCardContents(rs.getString("cardcontents"));
 				carddto.setCardSequential(rs.getInt("deleteok"));
