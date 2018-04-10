@@ -7,26 +7,26 @@
 
 package kr.co.ygtime.DTO;
 
-public class CommentDTO {
-	private int commentNum;
+public class ReplyDTO {
+	private int replyNum;
 	private String userId;
 	private int cardNum;
-	private String commentContents;
+	private String replyContents;
 	
-	public CommentDTO() {}
+	public ReplyDTO() {}
 	
-	public CommentDTO(int commentNum, String userId, int cardNum, String commentContents) {
-		this.commentNum = commentNum;
+	public ReplyDTO(int replyNum, String userId, int cardNum, String replyContents) {
+		this.replyNum = replyNum;
 		this.userId = userId;
 		this.cardNum = cardNum;
-		this.commentContents = commentContents;
+		this.replyContents = replyContents;
 	}
 	
 	public int getCommentNum() {
-		return commentNum;
+		return replyNum;
 	}
-	public void setCommentNum(int commentNum) {
-		this.commentNum = commentNum;
+	public void setCommentNum(int replyNum) {
+		this.replyNum = replyNum;
 	}
 	public String getUserId() {
 		return userId;
@@ -41,10 +41,10 @@ public class CommentDTO {
 		this.cardNum = cardNum;
 	}
 	public String getCommentContents() {
-		return commentContents;
+		return replyContents;
 	}
-	public void setCommentContents(String commentContents) {
-		this.commentContents = commentContents;
+	public void setCommentContents(String replyContents) {
+		this.replyContents = replyContents;
 	}
 	
 	

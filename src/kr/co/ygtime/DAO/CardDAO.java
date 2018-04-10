@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 import kr.co.ygtime.DTO.CardDTO;
 import kr.co.ygtime.DTO.CardMemberDTO;
 import kr.co.ygtime.DTO.CheckBoxDTO;
-import kr.co.ygtime.DTO.CommentDTO;
+import kr.co.ygtime.DTO.ReplyDTO;
 import kr.co.ygtime.DTO.UpLoadDTO;
 
 public class CardDAO {
@@ -38,33 +38,22 @@ public class CardDAO {
 	 작성자명 : 김 진 원
 	*/
 	public int cardInsert(CardDTO card) {
-		/*Connection conn = null;
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int row = 0;
 		try {
 				conn = ds.getConnection();
-				String sql ="insert into jspboard(idx,writer,pwd,subject,content,email,homepage,writedate,readnum,filename,filesize,refer)" + 
-						    " values(jspboard_idx.nextval,?,?,?,?,?,?,sysdate,0,?,0,?)";
-			
+				String sql ="insert into CARD(cardnum, listnum, cardname, cardcontents, cardsequential, deleteok)" + 
+						    " values(card_idx.nextval,?,?,?,?,0)";
+				// TODO 카드 시퀀스 만들어서 수정하기..
+				
 				pstmt = conn.prepareStatement(sql);
 				
-				pstmt.setString(1,boardata.getWriter());
-				pstmt.setString(2,boardata.getPwd());
-				pstmt.setString(3,boardata.getSubject());
-				pstmt.setString(4,boardata.getContent());
-				pstmt.setString(5,boardata.getEmail());
-				pstmt.setString(6,boardata.getHomepage());
-				pstmt.setString(7,boardata.getFilename());
-				
-				//계층형 게시판
-				//refer , step , depth
-				//1. 원본글 : refer , step(0) default, depth(0) default
-				//2. 답변글 : refer , step(규칙) , depth(규칙)
-				
-				int refermax = getMaxRefer();
-				int refer = refermax + 1;
-				pstmt.setInt(8, refer); 
-				
+				pstmt.setInt(1, card.getListNum());
+				pstmt.setString(2, card.getCardName());
+				pstmt.setString(3, card.getCardContents());
+				pstmt.setInt(4, card.getCardSequential());
+				// pstmt.setInt(4, card.getCardSequential()); <- 순서 리스트 안에 순서 최대값 찾고 최대값 + 1 넣어주기;
 				row = pstmt.executeUpdate();
 				
 		}catch (Exception e) {
@@ -77,8 +66,8 @@ public class CardDAO {
 				
 			}
 		}
-		*/
-		return 0;
+		
+		return row;
 	}
 	
 	//한개카드 검색
@@ -156,22 +145,22 @@ public class CardDAO {
 	//////////////////////////////////////
 	
 	//댓글 생성(추가)
-	public int commentInsert(CommentDTO comment) {
+	public int commentInsert(ReplyDTO comment) {
 		return 0;
 	}
 	
 	//댓글 검색(선택)
-	public CommentDTO upLoadInsert(int commentNum) {
+	public ReplyDTO upLoadInsert(int commentNum) {
 		return null;
 	}
 	
 	//모든 댓글 검색
-	public List<CommentDTO> allCommentSelect(int cardNum) {
+	public List<ReplyDTO> allCommentSelect(int cardNum) {
 		return null;
 	}
 	
 	//댓글 수정
-	public int commentUpdate(CommentDTO comment) {
+	public int commentUpdate(ReplyDTO comment) {
 		return 0;
 	}
 	
