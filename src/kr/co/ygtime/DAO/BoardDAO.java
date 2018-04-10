@@ -41,7 +41,7 @@ public class BoardDAO {
 		Connection conn = null;
 		String sql =  "insert into board(boardnum, projectnum, boardtitle, detail,"
 					+ "boardStartDate, boardEndDate, label, deleteok, completeok)"
-					+ " value(?,?,?,?,?,?,?,0,0)";
+					+ " values(?,?,?,?,?,?,?,0,0)";
 		int resultrow = 0;		
 		try {
 			conn = ds.getConnection();
