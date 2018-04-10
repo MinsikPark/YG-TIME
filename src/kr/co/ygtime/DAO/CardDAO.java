@@ -145,6 +145,7 @@ public class CardDAO {
 		}finally {
 			try {
 				pstmt.close();
+				rs.close();
 				conn.close();
 			}catch (Exception e) {
 				
@@ -386,6 +387,7 @@ public class CardDAO {
 		}finally {
 			try {
 				pstmt.close();
+				rs.close();
 				conn.close();
 			}catch (Exception e) {
 				
@@ -642,6 +644,7 @@ public class CardDAO {
 		}finally {
 			try {
 				pstmt.close();
+				rs.close();
 				conn.close();
 			}catch (Exception e) {
 				
@@ -862,6 +865,7 @@ public class CardDAO {
 		}finally {
 			try {
 				pstmt.close();
+				rs.close();
 				conn.close();
 			}catch (Exception e) {
 				
