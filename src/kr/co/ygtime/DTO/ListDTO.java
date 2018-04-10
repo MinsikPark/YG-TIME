@@ -24,11 +24,11 @@ public class ListDTO {
 	}
 	
 	
-	public int getDeleteCheck() {
+	public int getDeleteOk() {
 		return deleteOk;
 	}
 
-	public void setDeleteCheck(int deleteOk) {
+	public void setDeleteOk(int deleteOk) {
 		this.deleteOk = deleteOk;
 	}
 
