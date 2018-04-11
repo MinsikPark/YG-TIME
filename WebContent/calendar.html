@@ -4,57 +4,56 @@
 	<meta charset="UTF-8">
 	<title>YG-TIME Calendar</title>
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-	<link rel="stylesheet" href="fullcalendar/fullcalendar.css" />
-	<link rel='stylesheet' href="fullcalendar/fullcalendar.print.min.css" media="print" />
-	<script src="fullcalendar/lib/jquery.min.js"></script>
-	<script src="fullcalendar/lib/moment.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/fullcalendar.css" />
+	<link rel='stylesheet' href="css/fullcalendar.print.min.css" media="print" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="js/moment.min.js"></script>
 	<!-- (주의)fullcalendar.js import가 가장 마지막 라인에 작성되어야 함 -->
-	<script src="fullcalendar/fullcalendar.js"></script>
-	<script src="fullcalendar/locale-all.js"></script>
+	<script src="js/fullcalendar.js"></script>
+	<script src="js/locale-all.js"></script>
 	<!-- script -->
 	<script type="text/javascript">
-	/*TODO
-		1)
-		날짜 클릭
-		보드명
-		기간 설정
-		세부내용 (설명)
-		보드바 색
-	*/
 	
 		$(function() { // $(document).ready.
-			$('#delete').click(function() {
-				$('#calendar').fullCalendar('removeEvents', 'jino');
-			});
+			var displayEndDate = null; //달력 출력용 날짜
 		
-			$('#deleteAll').click(function() {
-				$('#calendar').fullCalendar('removeEvents');
-			});
-			
+			function dateProcess(dateStr, days){ //date가공 메서드
+				var date = new Date(dateStr); //Date 객체 생성
+				date.setDate(date.getDate() + days); //Date 가감설정
+				var dateToISO = date.toISOString().substring(0,10); //Date -> String (ISO날짜 타입, 시간제거)
+				return dateToISO;
+			}
+		
 			//fullCalendar
 			$('#calendar').fullCalendar({
-				header: {
-			  		left: 'prev, next today',
-			  		center: 'title',
-			  		right: 'listYear, listMonth'
+				eventDragStop: function (event, jsEvent) {
+				    var trashEl = $('#trashCan');
+				    var ofs = trashEl.offset();
+
+				    var x1 = ofs.left;
+				    var x2 = ofs.left + trashEl.outerWidth(true);
+				    var y1 = ofs.top;
+				    var y2 = ofs.top + trashEl.outerHeight(true);
+
+				    if (jsEvent.pageX >= x1 && jsEvent.pageX <= x2 &&
+				        jsEvent.pageY >= y1 && jsEvent.pageY <= y2) {
+				        event.dragRevertDuration = 10;
+				        $('#calendar').fullCalendar('removeEvents', event._id);
+				    }
 				},
-				views: {
-		  			listMonth: {
-		    			buttonText: 'list month'
-			  		},
-			  		listYear: {
-		    			buttonText: 'list year'
-			  		}
-				},
-				defaultDate: moment().format('YYYY-MM-DD'),
+				dragRevertDuration : 0, //drag 속도
 				locale: 'ko',
 				selectable: true, //일자를 클릭, 드래그 가능
 				selectHelper: true, //일자 드래그하면 보드바를 표시
 				select: function(start, end) { //이벤트객체에 입력될 시작일, 종료일 파라미터
+					var endDate = dateProcess(end.format(), -1);
+					console.log("달력에 표시되는 종료일: " + endDate); //확인용 콘솔 코드
+					
 					$('#eventStart').val(start.format()); // start.format() : 시작일 값
-					//$('#eventStart').datepicker({dateFormat: 'yy-mm-dd'}); //시작일 Datepicker
-		            //$('#eventEnd').datepicker({dateFormat: 'yy-mm-dd'}); //종료일 Datepicker
+					$('#eventEnd').val(endDate); // 종료일 값
+					$('#eventStart, #eventEnd').datepicker({dateFormat: 'yy-mm-dd'}); //시작일, 종료일 Datepicker
 					$('#calEventDialog').dialog('open');
 				},
 				editable: true, // 달력에 종료일 수정 여부 (드래그, 크기 조정)
@@ -85,9 +84,16 @@
 				],
 			}); // end - fullCalendar
 			
-			$('#eventStart, #eventEnd').datepicker({dateFormat: 'yy-mm-dd'});
+			//dialog 초기화
+			function clearDialog() {
+				$("#eventTitle").val("");
+				$("#eventStart").val("");
+				$("#eventEnd").val("");
+				$("#eventColor").val("#000000");
+			}			
 			
-			$('#calEventDialog').dialog({ //dialog 설정
+			//dialog 설정
+			$('#calEventDialog').dialog({
 				resizable: false,
 				autoOpen: false,
 				title: 'Add Board',
@@ -95,36 +101,34 @@
 				buttons: {
 					Add: function() {
 						var title = $('#eventTitle').val(); //제목 
-						var start = $('#eventStart').val() + "T00:00:00"; //시작일
-						var end = $('#eventEnd').val() + "T23:59:59"; //종료일
+						var start = $('#eventStart').val(); //시작일
+						var end = dateProcess($('#eventEnd').val(), 1);
 						var color = $('#eventColor').val();
-						var eventData; //이벤트 객체 변수 선언
+						var eventData = null; //이벤트 객체 변수 선언
+						console.log("datepicker로 받은 endDate: " + $('#eventEnd').val());
+						console.log("실제 endDate: " + end);
 						
 						if(title !== '') {
 							eventData = {
 								title: title,
 								start: start,
-								//end: end.val() + " 23:59:59",  //end.val()로 정확한 일자값을 넣어주면 종료일 전날로 표시 되므로, 종료일의 23시 59분 59초로 설정
 								end: end,
 								color: color,
 							};
-							console.log(end);
 							$('#calendar').fullCalendar('renderEvent', eventData, true);
 						}
 						$('#calendar').fullCalendar('unselect');
 						$(this).dialog('close');
+						clearDialog(); //dialog 초기화
 					},
 					Cancel: function() {
 						$(this).dialog('close');
+						clearDialog(); //dialog 초기화
 					}
 				},
 			}); // end - dialog
 			
-			$('#eventDate').click(function() {
-				
-			});
-			
-		}); // end - jquery
+		}); // end - $(document).ready
 	</script>
 	<!-- style -->
 	<style type="text/css">
@@ -136,10 +140,10 @@
 </head>
 <body>
 	<!-- 달력 표시되는 영역 -->
-	<button id="delete">지너니삭제</button><button id="deleteAll">전체삭제</button><br>
-	<button id="eventDate">이벤트 시작/종료 일자</button>
-	<div id="calendar"></div>
-	<div id="testpage"></div>
+	<div id="calendar">
+		<br>
+		<img id="trashCan" src="images/cal-trash.png"> <!-- 쓰레기통 이미지 -->
+	</div>
 	
 	<!-- Dialog 영역 -->
 	<!-- 초기에 깜빡이는 것을 없애기 위해 <div hidden ...> 사용 -->
