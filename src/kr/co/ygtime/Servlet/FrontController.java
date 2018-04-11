@@ -55,8 +55,17 @@ public class FrontController extends HttpServlet {
         	확인 작업을 시작합니다
         	~~
         	~~~
+<<<<<<< HEAD
         	충돌테스트
         	충돌테슷트
+=======
+        	안녕하세요
+        	박민식이에요
+        	반가워요
+        	진원인 하이하이
+        	방가방가
+        	test4
+>>>>>>> 212a3c7e445a2f65ce480bec67b8041053f7408a
         	~~~~
 >>>>>>> 9e9748cfeb50066dee9e3e88ae3dbf91bf2f3b0f
         	*/
