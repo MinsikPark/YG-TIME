@@ -59,6 +59,7 @@ public class FrontController extends HttpServlet {
 			} 
         	catch (Exception e) {
 				e.printStackTrace();
+				ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎ
 			}
         	*/
         }else if(cmdURI.equals("/방법2.time")) {
