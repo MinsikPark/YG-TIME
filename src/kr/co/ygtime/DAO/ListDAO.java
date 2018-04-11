@@ -41,7 +41,7 @@ public class ListDAO {
 		PreparedStatement pstmt =null;
 		Connection conn = null;
 		String sql = "insert into list(boardnum, listnum, listname, deleteok,listsequential )"
-					+ "value (?,list_idx.nextval,?,0,?)";
+					+ "values (?,list_idx.nextval,?,0,?)";
 		int resultRow = 0;
 		
 		try {
