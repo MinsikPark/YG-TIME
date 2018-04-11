@@ -49,15 +49,7 @@ public class FrontController extends HttpServlet {
         	forward.setPath("/board/board_write.jsp");
         	*/
         }else if(cmdURI.equals("/방법2.time")) {
-        	/* 방법2 : 서비스 만들어서 태우고 오기
-        	action = new 서비스자바파일();
-        	try {
-				forward = action.execute(request, response);
-			} 
-        	catch (Exception e) {
-				e.printStackTrace();
-			}
-        	*/
+        	System.out.println("충돌 테스트 ");
         }
         
         //태우기 마지막
