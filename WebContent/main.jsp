@@ -173,7 +173,7 @@ function addList(e){
 </head>
 <body >
 
-	<jsp:include page="member_test/join_test.jsp"></jsp:include>
+	<jsp:include page="include/header.jsp"></jsp:include>
 	
 	<div id="mainScreen">
 		<h2>Title</h2><p>세부내용 블라블라</p>
