@@ -12,14 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
-import com.sun.javafx.application.PlatformImpl.FinishListener;
-
 import kr.co.ygtime.DTO.ProjectDTO;
 import kr.co.ygtime.DTO.TeamDTO;
 
@@ -30,8 +26,6 @@ public class ProjectDAO {
 	// 프로젝트DAO 생성자
 	public ProjectDAO() throws NamingException{
 		Context context = new InitialContext();
-		//JNDI 
-		//context : container(was) 안에서 이름기반으로 검색 제공
 		ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
 	}
 	/**
@@ -47,13 +41,13 @@ public class ProjectDAO {
 		
 		try {
 			conn = ds.getConnection();
-			String sql = "insert into project(projectnum, projectname, projectstartdate, projectenddate,deleteok) values(project_idx.nextval,?,?,?,?)";
+			String sql = "insert into project(projectnum, projectname, projectstartdate, projectenddate,deleteok) values(project_idx.nextval,?,sysdate,?,0)";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, project.getProjectName());
-			pstmt.setString(2, project.getProjectStartDate());
-			pstmt.setString(3, project.getProjectEndDate());
-			pstmt.setInt(4, project.getDeleteOk());
+			//pstmt.setString(2, project.getProjectStartDate());
+			pstmt.setString(2, project.getProjectEndDate());
+			//pstmt.setInt(3, project.getDeleteOk());
 			
 			resultrow = pstmt.executeUpdate();
 

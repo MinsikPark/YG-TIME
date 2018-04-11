@@ -203,14 +203,14 @@ public class MemberDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = "INSERT INTO INVITEMSG(msgNum,userId,projectNum,inviteUserId,msgDate) VALUES (?,?,?,?,?)";
+			String sql = "INSERT INTO INVITEMSG(msgNum,userId,projectNum,inviteUserId,msgDate) VALUES (?,?,?,?,sysdate)";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1,invitemsg.getMsgNum());
 			pstmt.setString(2,invitemsg.getUserId());
 			pstmt.setInt(3,invitemsg.getProjectNum());
 			pstmt.setString(4,invitemsg.getInviteUserId());
-			pstmt.setString(5,invitemsg.getMsgDate());
+			//pstmt.setString(5,invitemsg.getMsgDate());
 			
 			row = pstmt.executeUpdate();
 			
