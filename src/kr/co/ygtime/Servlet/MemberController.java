@@ -40,10 +40,16 @@ public class MemberController extends HttpServlet {
         
         if(cmdURI.equals("/방법1.time")) {
  
-        }else if(cmdURI.equals("/member_test/login.member")) {
-        	System.out.println("들어옴");
-        	String logincheck = new LoginService().execute(request, response);
-        	response.getWriter().print(logincheck);
+        }else if(cmdURI.equals("/login.member")) {
+        	try {
+				
+        		String logincheck = new LoginService().execute(request, response);
+        		response.getWriter().print(logincheck);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			
+			}
         }else if(cmdURI.equals("/Join.member")) {
      
          	action = new JoinService();

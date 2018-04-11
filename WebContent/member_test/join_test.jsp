@@ -167,6 +167,44 @@ $(function(){
 		sideShow()
 	})
 	//여기까지 사이드 관련
+	
+	//헤더 관련
+	$("#btnLogin").click(function(){
+			console.log("login 클릭");
+	 		if($("#loginEmail").val() =="" || $("#loginPwd").val() ==""){
+				alert("아이디와 비밀번호를 입력해 주세요");
+				return;
+			} 			
+			var data = {
+					loginEmail:$("#loginEmail").val(),
+					loginPwd:$("#loginPwd").val()
+			}
+			console.log("data : " +data);
+			console.log("2");
+			$.ajax({
+				url:"login.member",
+				datatype:"html",
+				data:data,
+				success:function(data){
+					console.log(">"+data.trim()+"<");
+					if(data.trim()=="true"){
+						userId = "<%= session.getAttribute("sessionId")%>";
+				
+						$("#header").append(
+						"<h3>" +userId +"님 로그인 하셨습니다</h3>"	
+						);
+					}else if(data.trim()=="false"){
+						alert("아이디와 비밀번호를 확인하세요");
+						$("#userId").val("");
+						$("#userPwd").val("");
+					}else{
+						alert("요청 실패");
+					}
+					
+				}
+			})
+		}) // 로그인 비동기 처리 함수
+	//여기까지 헤더 관련 
 })
 
 //사이드 숨길때
@@ -229,6 +267,11 @@ $(function() {
 		 	   	}
   }	
  	
+  
+///로그인 비동기 처리 함수 
+
+	
+ 
 });
 
 
@@ -292,9 +335,9 @@ $(function() {
 	                <label for="pwd">Password:</label>
 	                <input type="password" class="form-control" id="loginPwd">
 	              </div>
-	              <button type="button" id="btnLogin" class="btn btn-block">Btn Login</button>
-	              <button type="submit" class="btn btn-block">Submit Login</button>
 	            </form>
+	              <button type="button" id="btnLogin" class="btn btn-block">Btn Login</button>
+	             <!--  <button type="submit" class="btn btn-block">Submit Login</button> -->
 	            <div class="container-fluid">
 	              <br>
 	            </div> 
@@ -376,58 +419,6 @@ $(function() {
 <!-- MODAL END -->  
 
 
-<!--  보경이 상세페이지   -->
-
-<div class="modal fade" id="myModal1">
-			<div class="modal-dialog">
-				<div class="modal-content">
-
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h4 class="modal-title">카드 제목</h4>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-
-					<!-- Modal body -->
-					<div class="modal-body">
-						<div class="container">
-							<form class="form-horizontal">
-								<div class="form-group">
-									<label class="control-label col-sm-4" for="email">상세내용</label>
-									<div class="col-sm-7">
-										<input type="email" class="form-control" id="email"
-											placeholder="상세내용을 입력해주세요." style="height: 100px">
-											 <div class="fileupload">
-           										file1 : <input type="file" name="filename1"><br>
-       										 </div>
-									</div>
-								</div>
-								<div class="form-group">
-									체크리스트:<br> <input type="checkbox" id="myCheck" > <input
-										type="text" class="form-control" id="pwd"
-										placeholder="내용을 입력해주세요">
-										<input type="checkbox" id="myCheck"> <input
-										type="text" class="form-control" id="pwd"
-										placeholder="내용을 입력해주세요">
-										<input type="checkbox" id="myCheck"> <input
-										type="text" class="form-control" id="pwd"
-										placeholder="내용을 입력해주세요">
-								</div>
-
-								<!-- Modal footer -->
-								<div class="modal-footer">
-									<button type="submit" class="btn btn-default">등록</button>
-									<button type="submit" class="btn btn-default">취소</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
-
-<!--  보경이 상세페이지 끝   -->
 
 </div>
 

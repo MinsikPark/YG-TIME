@@ -28,18 +28,21 @@ public class LoginService {
 
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("LoginService 함수 실행");
-		String userId = request.getParameter("userId");
-		String userPwd = request.getParameter("userPwd");
+		String loginEmail = request.getParameter("loginEmail");
+		String loginPwd = request.getParameter("loginPwd");
 		String logincheck = "false";
+		System.out.println("loginEmail : "+loginEmail);
 		try {
 			MemberDAO dao = new MemberDAO();
-			MemberDTO dto = dao.memberSelect(userId);
+			System.out.println("ch-1");
+			MemberDTO dto = dao.memberSelect(loginEmail);
 			System.out.println("ch 1");
+			System.out.println("userid : "+dto.getUserId());
 			if(dto !=null) { // 해당하는 멤버가 있다면
-				if(userPwd.equals(dto.getUserPwd())) { // 입력한 비밀번호가 user의 비밀번호와 같은지 체크
-					System.out.println(userId);
+				if(loginPwd.equals(dto.getUserPwd())) { // 입력한 비밀번호가 user의 비밀번호와 같은지 체크
+					System.out.println(loginEmail);
 					System.out.println(dto.getUserId());
-					request.getSession().setAttribute("sessionId", userId);//비밀번호가 일치 한다면 session에 담아주세요
+					request.getSession().setAttribute("sessionId", loginEmail);//비밀번호가 일치 한다면 session에 담아주세요
 					System.out.println("ch 3");
 					logincheck = "true";
 				}
