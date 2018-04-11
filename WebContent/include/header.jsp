@@ -171,19 +171,48 @@ $(function(){
 	//여기까지 사이드 관련
 	
 	//헤더 관련
-		$("#btnLogin").click(function(){
-			console.log("login 클릭");
-	 		if($("#loginEmail").val() =="" || $("#loginPwd").val() ==""){
-				alert("아이디와 비밀번호를 입력해 주세요");
-				
-			}else{
-				$("#formLogin").submit();
-			}			
-		}) // 로그인 비동기 처리 함수 
+	$("#btnLogin").click(function(){
+		console.log("login 클릭");
+ 		if($("#loginEmail").val() =="" || $("#loginPwd").val() ==""){
+			alert("아이디와 비밀번호를 입력해 주세요");
+			
+		}else{
+			$("#formLogin").submit();
+		}			
+	}) // 로그인 비동기 처리 함수 
 	//여기까지 헤더 관련 
 	
 	//헤더 관련 (profile 이미지 눌렀을 시) 초대메세지 리스트
-	
+	$("#profiledrop").click(function () {
+        var param = ${sessionScope.sessionId};
+        $.ajax({
+            url:"list.member",
+            datatype:"JSON",
+            data:param,
+            success:function(data){
+                console.log(">"+data.trim()+"<");
+                
+                $("#subform").append("<p>"+data+"</p>");
+                
+                $.each(data, function(index, obj) {
+                	String str = '<div class="dropdown-menu">';
+                	str += '<form id="fromUser" class="form container-fluid">';
+                })
+            }
+            
+        })
+        /* 
+        <div class="dropdown-menu">
+          <form id="fromUser" class="form container-fluid">
+            <div class="form-group">
+              <label for="email">프로젝트에 참여 하시겠습니까</label>
+              <input type="button" value="Y">
+              <input type="button" value="N">
+            </div>
+          </form>
+        </div>
+        */
+    })
 	//여기까지 초대메세지 리스트 뽑아오기
 })
 
@@ -246,21 +275,6 @@ $(function() {
 		 	   		alert("불일치2");
 		 	   	}
   }	
- 	
-
-  /* 
-  <div class="dropdown-menu">
-    <form id="fromUser" class="form container-fluid">
-      <div class="form-group">
-        <label for="email">프로젝트에 참여 하시겠습니까</label>
-        <input type="button" value="Y">
-        <input type="button" value="N">
-      </div>
-    </form>
-  </div>
-  */
-
-	
  
 });
 
@@ -340,7 +354,7 @@ $(function() {
 	        	<c:otherwise>
 	        		 <li ><a href = "logout.member">Logout <span class="glyphicon glyphicon-log-out"></span></a></li> 
 			         <li id="profiledrop" class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span></a>
-			          <div class="dropdown-menu">
+			          <div id="profilediv" class="dropdown-menu">
 			            <form id="fromUser" class="form container-fluid">
 			              <div class="form-group">
 			                <label for="email">프로젝트에 참여 하시겠습니까</label>
