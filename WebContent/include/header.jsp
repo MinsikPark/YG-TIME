@@ -181,6 +181,10 @@ $(function(){
 			}			
 		}) // 로그인 비동기 처리 함수 
 	//여기까지 헤더 관련 
+	
+	//헤더 관련 (profile 이미지 눌렀을 시) 초대메세지 리스트
+	
+	//여기까지 초대메세지 리스트 뽑아오기
 })
 
 //사이드 숨길때
@@ -244,6 +248,17 @@ $(function() {
   }	
  	
 
+  /* 
+  <div class="dropdown-menu">
+    <form id="fromUser" class="form container-fluid">
+      <div class="form-group">
+        <label for="email">프로젝트에 참여 하시겠습니까</label>
+        <input type="button" value="Y">
+        <input type="button" value="N">
+      </div>
+    </form>
+  </div>
+  */
 
 	
  
@@ -324,7 +339,7 @@ $(function() {
 	        	</c:when>
 	        	<c:otherwise>
 	        		 <li ><a href = "logout.member">Logout <span class="glyphicon glyphicon-log-out"></span></a></li> 
-			         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span></a>
+			         <li id="profiledrop" class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span></a>
 			          <div class="dropdown-menu">
 			            <form id="fromUser" class="form container-fluid">
 			              <div class="form-group">

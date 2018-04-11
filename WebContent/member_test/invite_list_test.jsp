@@ -1,11 +1,31 @@
-<%@page import="kr.co.ygtime.DTO.InviteMsgDTO"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+ $(function () {
     
-  
-    
+    $("#sub").click(function () {
+        console.log("메롱");
+        var param = $("#subform").serialize();
+        $.ajax({
+            url:"list.member",
+            datatype:"JSON",
+            data:param,
+            success:function(data){
+                console.log(">"+data.trim()+"<");
+                
+                $("#subform").append("<p>"+data+"</p>");
+                
+            }
+            
+        })
+    })
+
+ })
+ 
+</script>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,17 +33,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-  
-
-<form action="<%= request.getContextPath()%>/list.member" method="post">
-	< <input type="text" name="userId" value="메세지번호"> 
-	<!-- <input type="text" name="userId" value="아이디">
-	<input type="text" name="projectNum" value="프로젝트번호">
-	<input type="text" name="inviteUserId" value="초대한사람아이디"> -->
-	<input type="submit" value="보내기">
-	<!-- //<input type="text" name="msgDate" value="고용일"> -->
+	<form id = "subform">
+	   <input type="text" name="userId" value="메세지번호"> 
+	    <input type="button" id = "sub" value="보내기">
+    </form>
 	
-	</form>
-
 </body>
 </html>

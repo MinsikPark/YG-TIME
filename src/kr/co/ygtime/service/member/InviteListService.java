@@ -51,7 +51,6 @@ public class InviteListService implements Action{
 			
 			
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return forward;
