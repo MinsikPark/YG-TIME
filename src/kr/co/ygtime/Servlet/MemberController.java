@@ -1,12 +1,5 @@
 package kr.co.ygtime.Servlet;
 
-/**
-파일명: EncodingFilter.java
-설명: 서블릿 컨트롤러
-작성일: 2018. 4. 10.
-작성자: 김진원
-*/
-
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -19,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 
-@WebServlet("/*.time")
-public class FrontController extends HttpServlet {
+@WebServlet("/*.member")
+public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public FrontController() {
+    public MemberController() {
         super();
     }
 

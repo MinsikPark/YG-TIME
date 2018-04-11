@@ -25,32 +25,14 @@ import kr.co.ygtime.DTO.InviteMsgDTO;
 import kr.co.ygtime.DTO.MemberDTO;
 
 public class MemberDAO {
-
+	DataSource ds = null;
 	
-	
-	
-	public MemberDAO()  {
-		
-		DataSource ds = null;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		Context context;
-		
-		try {
-			context = new InitialContext();//context : container(was) 안에서 이름기반으로 검색 제공
-			ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
-		} catch (NamingException e) {
-			System.out.println("DB 연결 실패 : " + e);
-			e.printStackTrace();
-		}
-
-		
+	public MemberDAO() throws NamingException {
+		Context context = new InitialContext();
+		//JNDI 
+		//context : container(was) 안에서 이름기반으로 검색 제공
+		ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
 	}
-/*	private String userId;
-	private String userPwd;
-	private String userNicname;
-	private String userProfile;*/
 	
 	/**
 	 * 
@@ -60,22 +42,23 @@ public class MemberDAO {
 	 */	
 	public int memberInsert(MemberDTO member) {
 		
-		DataSource ds = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
 
 		String sql = "INSERT INTO MEMBER(userId,userPwd,userNicname,userProfile) VALUES (?,?,?,?)";
 		int row =0;
 
 		try {
 			conn = ds.getConnection();
+			
 			pstmt = conn.prepareStatement(sql);
+			
 			pstmt.setString(1, member.getUserId());
 			pstmt.setString(2, member.getUserPwd());
 			pstmt.setString(3, member.getUserNicname());
 			pstmt.setString(4, member.getUserProfile());
+			
 			row = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -101,14 +84,15 @@ public class MemberDAO {
 		
 		
 		MemberDTO memberDTO = null;
-		DataSource ds = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
 			conn = ds.getConnection();
-			String sql = "SELECT USERID FROM MEMBER WHERE USERID=?";
+			
+			String sql = "SELECT userid, userpwd, usernicname, userprofile FROM MEMBER WHERE USERID=?";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();	
@@ -116,10 +100,10 @@ public class MemberDAO {
 			if(rs.next()) {
 				
 				memberDTO = new MemberDTO();
-				memberDTO.setUserId(rs.getString("userId"));
-				memberDTO.setUserPwd(rs.getString("userPwd"));
-				memberDTO.setUserNicname(rs.getString("userNickname"));
-				memberDTO.setUserProfile(rs.getString("userProfile"));
+				memberDTO.setUserId(rs.getString("userid"));
+				memberDTO.setUserPwd(rs.getString("userpwd"));
+				memberDTO.setUserNicname(rs.getString("usernicname"));
+				memberDTO.setUserProfile(rs.getString("userprofile"));
 							
 			}
 						
@@ -141,31 +125,26 @@ public class MemberDAO {
 	 작성자명 : 전 나 영
 	 */
 	public int memberUpdate(MemberDTO member) {
-		DataSource ds = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "UPDATE MEMBER SET USERPWD = ? , USERNICKNAME = ? , USERPROFILE = ?  WHERE USERID = ?";
 		int row =0;
 		try {
-	
 			conn = ds.getConnection();
+			String sql = "UPDATE MEMBER SET USERPWD = ? , usernicname = ? , USERPROFILE = ?  WHERE USERID = ?";
 			
-			
+			pstmt = conn.prepareStatement(sql);
+
 			pstmt.setString(1, member.getUserPwd());
 			pstmt.setString(2, member.getUserNicname());
 			pstmt.setString(3, member.getUserProfile());
 			pstmt.setString(4, member.getUserId());
 			
-		
-			pstmt = conn.prepareStatement(sql);
 			row =pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}finally{
-			if(rs!=null) try{rs.close();}catch(SQLException ex){}
 			if(pstmt!=null) try{pstmt.close();}catch(SQLException ex){}
 			if(conn!=null) try{conn.close();}catch(SQLException ex){}
 		}
@@ -182,15 +161,15 @@ public class MemberDAO {
 	 */
 	public int memberDelete(String userId) {
 		
-		DataSource ds = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "DELETE FROM MEMBER WHERE USERID=?";
 		int row =0;
 		
 		try {
 			conn = ds.getConnection();
+			
+			String sql = "DELETE FROM MEMBER WHERE USERID=?";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			
@@ -198,10 +177,8 @@ public class MemberDAO {
 			
 			
 		} catch (SQLException e) {
-		
 			e.printStackTrace();
 		}finally{
-			if(rs!=null) try{rs.close();}catch(SQLException ex){}
 			if(pstmt!=null) try{pstmt.close();}catch(SQLException ex){}
 			if(conn!=null) try{conn.close();}catch(SQLException ex){}
 		}
@@ -218,30 +195,29 @@ public class MemberDAO {
 	 */
 	public int inviteMsgInsert(InviteMsgDTO invitemsg) {
 
-		DataSource ds = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		
-
-		String sql = "INSERT INTO MEMBER(msgNum,userId,projectNum,inviteUserId,msgDate) VALUES (?,?,?,?,?)";
 		int row =0;
 
 		try {
 			conn = ds.getConnection();
+			
+			String sql = "INSERT INTO INVITEMSG(msgNum,userId,projectNum,inviteUserId,msgDate) VALUES (?,?,?,?,?)";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1,invitemsg.getMsgNum());
 			pstmt.setString(2,invitemsg.getUserId());
 			pstmt.setInt(3,invitemsg.getProjectNum());
 			pstmt.setString(4,invitemsg.getInviteUserId());
 			pstmt.setString(5,invitemsg.getMsgDate());
+			
 			row = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}finally{
-			if(rs!=null) try{rs.close();}catch(SQLException ex){}
 			if(pstmt!=null) try{pstmt.close();}catch(SQLException ex){}
 			if(conn!=null) try{conn.close();}catch(SQLException ex){}
 		}
@@ -257,13 +233,12 @@ public class MemberDAO {
 	 작성자명 : 전 나 영
 	 */
 	public List<InviteMsgDTO> inviteMsgSelect(String userId) {
-		DataSource ds = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;		
-		List<InviteMsgDTO> list =  new ArrayList();
+		List<InviteMsgDTO> list =  null;
 		
-		String sql ="SELECT * FROM MEMBER WHERE USERID= ?";
+		String sql ="SELECT * FROM INVITEMSG WHERE userid= ?";
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -271,7 +246,8 @@ public class MemberDAO {
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
 
-	
+			list = new ArrayList<>();
+			
 			if(rs.next()) {
 				
 				InviteMsgDTO msgDTO = new InviteMsgDTO();
@@ -307,15 +283,15 @@ public class MemberDAO {
 	 */
 	public int inviteMsgDelete(String userId, int projectNum) {
 		
-		DataSource ds = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "DELETE FROM MEMBER WHERE USERID=? AND PROJECTNUM=?";
 		int row =0;
 		
 		try {
 			conn = ds.getConnection();
+			
+			String sql = "DELETE FROM INVITEMSG WHERE USERID=? AND PROJECTNUM=?";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			pstmt.setInt(2, projectNum);
@@ -323,10 +299,8 @@ public class MemberDAO {
 			
 			
 		} catch (SQLException e) {
-		
 			e.printStackTrace();
 		}finally{
-			if(rs!=null) try{rs.close();}catch(SQLException ex){}
 			if(pstmt!=null) try{pstmt.close();}catch(SQLException ex){}
 			if(conn!=null) try{conn.close();}catch(SQLException ex){}
 		}
