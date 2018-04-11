@@ -1,14 +1,21 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>YG-TIME Calendar</title>
+	<!-- 모바일 반응형을 위한 viewport 설정 -->
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/fullcalendar.css" />
 	<link rel='stylesheet' href="css/fullcalendar.print.min.css" media="print" />
+	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/validate.js/0.12.0/validate.min.js"></script>
 	<script src="js/moment.min.js"></script>
 	<!-- (주의)fullcalendar.js import가 가장 마지막 라인에 작성되어야 함 -->
 	<script src="js/fullcalendar.js"></script>
@@ -98,10 +105,15 @@
 			$('#calEventDialog').dialog({
 				resizable: false,
 				autoOpen: false,
+				width: 'auto',
+				maxWidth: 350,
+				height: 'auto',
+				//responsive: true,
+				modal: true,
+				fluid: true,
 				title: '보드 추가',
-				width: 500,
 				buttons: {
-					Add: function() {
+					추가: function() {
 						var title = $('#eventTitle').val(); //제목 
 						var start = $('#eventStart').val(); //시작일
 						var end = dateProcess($('#eventEnd').val(), 1);
@@ -110,20 +122,23 @@
 						console.log("datepicker로 받은 endDate: " + $('#eventEnd').val());
 						console.log("실제 endDate: " + end);
 						
-						if(title !== '') {
-							eventData = {
-								title: title,
-								start: start,
-								end: end,
-								color: color,
-							};
-							$('#calendar').fullCalendar('renderEvent', eventData, true);
-						}
-						$('#calendar').fullCalendar('unselect');
-						$(this).dialog('close');
-						clearDialog(); //dialog 초기화
-					},
-					Cancel: function() {
+						if(title === "" ){
+							alert("보드명을 입력해주세요.");
+							return;
+						}else {
+								eventData = {
+									title: title,
+									start: start,
+									end: end,
+									color: color,
+								};
+								$('#calendar').fullCalendar('renderEvent', eventData, true);
+							}
+							$('#calendar').fullCalendar('unselect');
+							$(this).dialog('close');
+							clearDialog(); //dialog 초기화
+						},
+					취소: function() {
 						$(this).dialog('close');
 						clearDialog(); //dialog 초기화
 					}
