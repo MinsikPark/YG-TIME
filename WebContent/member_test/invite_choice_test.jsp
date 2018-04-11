@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<a href="<%= request.getContextPath()%>/msgagree.member?userid=jin@naver.com&projectnum=1">수락</a>
+	<a href="<%= request.getContextPath()%>/msgdel.member?userid=jin@naver.com&projectnum=1">삭제</a>
 </body>
 </html>
