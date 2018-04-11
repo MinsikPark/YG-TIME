@@ -52,6 +52,8 @@ public class FrontController extends HttpServlet {
         	확인 작업을 시작합니다
         	~~
         	~~~
+        	
+        	
         	~~~~
         	*/
         }else if(cmdURI.equals("/방법2.time")) {
@@ -63,6 +65,7 @@ public class FrontController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
 				ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎ
+				test3
 			}
         	*/
         }else if(cmdURI.equals("/방법2.time")) {
