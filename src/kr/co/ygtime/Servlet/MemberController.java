@@ -13,6 +13,11 @@ import com.sun.org.apache.xml.internal.security.utils.resolver.implementations.R
 
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
+
+import kr.co.ygtime.service.member.InviteListService;
+import kr.co.ygtime.service.member.InviteMsgService;
+import kr.co.ygtime.service.member.MsgAgreeService;
+import kr.co.ygtime.service.member.MsgDeleteSerivce;
 import kr.co.ygtime.service.member.JoinService;
 import kr.co.ygtime.service.member.LoginService;
 
@@ -38,15 +43,18 @@ public class MemberController extends HttpServlet {
         String cmdURI = requestURI.substring(contextPath.length());
 		System.out.println(cmdURI);
         ActionForward forward =null;
+	
         Action action = null;
         
-        if(cmdURI.equals("/방법1.time")) {
- 
-        }else if(cmdURI.equals("/login.member")) {
-        	try {
+
+        if(cmdURI.equals("/member_test/login.member")) {
+        	try{
 				action = new LoginService();
         		forward= action.execute(request, response);
         		//response.getWriter().print(logincheck);
+
+				forward = action.execute(request, response);
+
 			} 
         	catch (Exception e) {
 				e.printStackTrace();
@@ -66,7 +74,43 @@ public class MemberController extends HttpServlet {
         }else if(cmdURI.equals("/Join.member")) {
      
          	action = new JoinService();
+
+
+        }else if(cmdURI.equals("/msgagree.member")) {
+        	action = new MsgAgreeService();
+
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
+        }else if(cmdURI.equals("/msgdel.member")) {
+        	action = new MsgDeleteSerivce();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
         	
+        }else if(cmdURI.equals("/list.member")) {
+        	action = new InviteListService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
+        	
+        }else if(cmdURI.equals("/invite.member")) {
+        	action = new InviteMsgService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
         }
         
         //태우기 마지막
@@ -80,4 +124,4 @@ public class MemberController extends HttpServlet {
         	}
         }
 	}
-}
+ }
