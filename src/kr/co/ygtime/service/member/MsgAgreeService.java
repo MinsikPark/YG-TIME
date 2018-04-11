@@ -32,28 +32,28 @@ public class MsgAgreeService implements Action{
 			int projectnum = Integer.parseInt(request.getParameter("projectnum"));
 			
 			//TeamDTO 객체에 넣어준다.
+			//2. 팀 insert 팀원으로
 			TeamDTO teamdto = new TeamDTO();
 			teamdto.setUserId(userid);
 			teamdto.setProjectNum(projectnum);
+			teamdto.setGrade(1);
 			
 			ProjectDAO projectdao = new ProjectDAO();
 			
-			//2. 팀 insert
 			int row = projectdao.teamInsert(teamdto); //DB 팀에 넣어준다.
 			
 			forward = new ActionForward();
 			if(row > 0) {
-				
-				System.out.println("드러왔따2");
 				//초대 승인 (팀 insert) 성공
 				//3.메세지 Delete 경로
 				forward.setRedirect(false);
 	       	    forward.setPath("/msgdel.member?userid="+userid+"&projectnum="+projectnum);
+	       	    
 			}else {
 				//실패 (main 화면 가기)
-				System.out.println("드러왔따3");
 				forward.setRedirect(false);
 				forward.setPath("/member_test/invite_choice_test.jsp");
+				
 			}
 			
 		} catch (Exception e) {
