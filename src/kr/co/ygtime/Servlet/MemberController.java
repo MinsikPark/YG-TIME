@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
+import kr.co.ygtime.service.member.JoinService;
 import kr.co.ygtime.service.member.LoginService;
 
 @WebServlet("*.member")
@@ -43,20 +44,18 @@ public class MemberController extends HttpServlet {
         	System.out.println("들어옴");
         	String logincheck = new LoginService().execute(request, response);
         	response.getWriter().print(logincheck);
-        }else if(cmdURI.equals("/방법2.time")) {
-        
-        }else if(cmdURI.equals("/방법2.time")) {
-        
-        }else if(cmdURI.equals("/방법2.time")) {
-        
-        }else if(cmdURI.equals("/방법2.time")) {
-      
-        }else if(cmdURI.equals("/방법2.time")) {
-    
-        }else if(cmdURI.equals("/방법2.time")) {
-        	System.out.println("충돌 테스트 ");
+        }else if(cmdURI.equals("/Join.member")) {
+     
+         	action = new JoinService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			
+			}
+        	
         }
-        
         
         //태우기 마지막
         if(forward != null){
