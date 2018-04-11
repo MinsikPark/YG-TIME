@@ -24,27 +24,30 @@ import kr.co.ygtime.DTO.MemberDTO;
  */
 
 
-public class LoginService {
+public class LoginService implements Action{
 
-	public String execute(HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("LoginService 함수 실행");
 		String loginEmail = request.getParameter("loginEmail");
 		String loginPwd = request.getParameter("loginPwd");
-		String logincheck = "false";
+		String msg = "fail";
+	
 		System.out.println("loginEmail : "+loginEmail);
 		try {
 			MemberDAO dao = new MemberDAO();
 			System.out.println("ch-1");
 			MemberDTO dto = dao.memberSelect(loginEmail);
 			System.out.println("ch 1");
-			System.out.println("userid : "+dto.getUserId());
+			//System.out.println("userid : "+dto.getUserId());
 			if(dto !=null) { // 해당하는 멤버가 있다면
+				System.out.println("ch 2");
 				if(loginPwd.equals(dto.getUserPwd())) { // 입력한 비밀번호가 user의 비밀번호와 같은지 체크
 					System.out.println(loginEmail);
 					System.out.println(dto.getUserId());
+					msg = "success";
 					request.getSession().setAttribute("sessionId", loginEmail);//비밀번호가 일치 한다면 session에 담아주세요
 					System.out.println("ch 3");
-					logincheck = "true";
+					//logincheck = "true";
 				}
 			} 
 			
@@ -52,10 +55,16 @@ public class LoginService {
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			msg = "error";
 			e.printStackTrace();
 		}
+		request.setAttribute("msg", msg);
+		System.out.println("msg : " + msg);
+		request.setAttribute("path", "main.jsp");
+		ActionForward forward = new ActionForward();
+		forward.setPath("/member_test/redirect.jsp");
 		
-		return logincheck;
+		return forward;
 	}
 
 }

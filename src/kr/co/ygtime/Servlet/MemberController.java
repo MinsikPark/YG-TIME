@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.org.apache.xml.internal.security.utils.resolver.implementations.ResolverXPointer;
+
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.service.member.JoinService;
@@ -42,24 +44,28 @@ public class MemberController extends HttpServlet {
  
         }else if(cmdURI.equals("/login.member")) {
         	try {
-				
-        		String logincheck = new LoginService().execute(request, response);
-        		response.getWriter().print(logincheck);
+				action = new LoginService();
+        		forward= action.execute(request, response);
+        		//response.getWriter().print(logincheck);
 			} 
         	catch (Exception e) {
 				e.printStackTrace();
 			
 			}
+        }else if(cmdURI.equals("/logout.member")){
+        	
+        	try {
+        		request.getSession().invalidate();
+            	forward = new ActionForward();
+            	forward.setPath("main.jsp");
+        	} 
+        	catch (Exception e) {
+        		e.printStackTrace();
+        		
+        	}
         }else if(cmdURI.equals("/Join.member")) {
      
          	action = new JoinService();
-        	try {
-				forward = action.execute(request, response);
-			} 
-        	catch (Exception e) {
-				e.printStackTrace();
-			
-			}
         	
         }
         

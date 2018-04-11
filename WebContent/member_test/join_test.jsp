@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -169,41 +171,15 @@ $(function(){
 	//여기까지 사이드 관련
 	
 	//헤더 관련
-	$("#btnLogin").click(function(){
+		$("#btnLogin").click(function(){
 			console.log("login 클릭");
 	 		if($("#loginEmail").val() =="" || $("#loginPwd").val() ==""){
 				alert("아이디와 비밀번호를 입력해 주세요");
-				return;
-			} 			
-			var data = {
-					loginEmail:$("#loginEmail").val(),
-					loginPwd:$("#loginPwd").val()
-			}
-			console.log("data : " +data);
-			console.log("2");
-			$.ajax({
-				url:"login.member",
-				datatype:"html",
-				data:data,
-				success:function(data){
-					console.log(">"+data.trim()+"<");
-					if(data.trim()=="true"){
-						userId = "<%= session.getAttribute("sessionId")%>";
 				
-						$("#header").append(
-						"<h3>" +userId +"님 로그인 하셨습니다</h3>"	
-						);
-					}else if(data.trim()=="false"){
-						alert("아이디와 비밀번호를 확인하세요");
-						$("#userId").val("");
-						$("#userPwd").val("");
-					}else{
-						alert("요청 실패");
-					}
-					
-				}
-			})
-		}) // 로그인 비동기 처리 함수
+			}else{
+				$("#formLogin").submit();
+			}			
+		}) // 로그인 비동기 처리 함수 
 	//여기까지 헤더 관련 
 })
 
@@ -267,8 +243,7 @@ $(function() {
 		 	   	}
   }	
  	
-  
-///로그인 비동기 처리 함수 
+
 
 	
  
@@ -323,37 +298,46 @@ $(function() {
 	    <div> 
 	      <!-- 로그인 창 -->
 	      <ul class="nav navbar-nav navbar-right">
-	        <li data-toggle="modal" data-target="#myModal"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-	        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Login <span class="glyphicon glyphicon-log-in"></span></a>
-	          <div class="dropdown-menu">
-	            <form id="formLogin" class="form container-fluid">
-	              <div class="form-group">
-	                <label for="email">Email:</label>
-	                <input type="email" class="form-control" id="loginEmail">
-	              </div>
-	              <div class="form-group">
-	                <label for="pwd">Password:</label>
-	                <input type="password" class="form-control" id="loginPwd">
-	              </div>
-	            </form>
-	              <button type="button" id="btnLogin" class="btn btn-block">Btn Login</button>
-	             <!--  <button type="submit" class="btn btn-block">Submit Login</button> -->
-	            <div class="container-fluid">
-	              <br>
-	            </div> 
-	          </div>
-	        </li>
-	         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">님 환영합니다 <span class="glyphicon glyphicon-user"></span></a>
-	          <div class="dropdown-menu">
-	            <form id="fromUser" class="form container-fluid">
-	              <div class="form-group">
-	                <label for="email">프로젝트에 참여 하시겠습니까</label>
-	                <input type="button" value="Y">
-	                <input type="button" value="N">
-	              </div>
-	            </form>
-	          </div>
-	        </li>
+	        
+	         <c:choose>
+	        	<c:when test = "${sessionScope.sessionId eq null}"> 
+			        <li data-toggle="modal" data-target="#myModal"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+			        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Login <span class="glyphicon glyphicon-log-in"></span></a>
+			          <div class="dropdown-menu">
+			            <form id="formLogin" class="form container-fluid" action="login.member">
+			              <div class="form-group">
+			                <label for="email">Email:</label>
+			                <input type="email" class="form-control" name="loginEmail" id="loginEmail">
+			              </div>
+			              <div class="form-group">
+			                <label for="pwd">Password:</label>
+			                <input type="password" class="form-control" name="loginPwd" id="loginPwd">
+			              </div>
+			            </form>
+			             <button type="button" id="btnLogin" class="btn btn-block">Btn Login</button>
+			             <button type="submit" class="btn btn-block">Submit Login</button> 
+			            <div class="container-fluid">
+			              <br>
+			            </div> 
+			          </div>
+			        </li>
+	        	</c:when>
+	        	<c:otherwise>
+	        		 <li ><a href = "logout.member">Logout <span class="glyphicon glyphicon-log-out"></span></a></li> 
+			         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span></a>
+			          <div class="dropdown-menu">
+			            <form id="fromUser" class="form container-fluid">
+			              <div class="form-group">
+			                <label for="email">프로젝트에 참여 하시겠습니까</label>
+			                <input type="button" value="Y">
+			                <input type="button" value="N">
+			              </div>
+			            </form>
+			          </div>
+			        </li>
+	        	</c:otherwise>
+	        </c:choose>
+	        
 	      </ul>
 	      <!-- 로그인 창 -->
 	    </div>
