@@ -3,7 +3,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+<<<<<<< HEAD
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+=======
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_161">
+>>>>>>> 77e9874f8539700160794442b00d906e99832848
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>

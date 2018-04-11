@@ -321,7 +321,7 @@ public class ProjectDAO {
 
 	/**
 	 날      짜 : 2018. 4. 10.
-	 기      능 : 팀원 삽입 insert
+	 기      능 : 팀원 삽입 insert(초대 메세지 수락)
 	 작성자명 : 최 재 욱
 	 */
 	public int teamInsert(TeamDTO team) {
@@ -332,12 +332,12 @@ public class ProjectDAO {
 		
 		try {
 			conn = ds.getConnection();
-			String sql = "inset into team(projectnum, userid, grade, projectlastmoddate) values(?,?,?,?)";
+			String sql = "insert into team(projectnum, userid, grade, projectlastmoddate) values(?,?,1,sysdate)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1,team.getProjectNum());
 			pstmt.setString(2,team.getUserId());
-			pstmt.setInt(3, team.getGrade());
-			pstmt.setString(4, team.getProjectLastModDate());
+			//pstmt.setInt(3, team.getGrade());
+			//pstmt.setString(4, team.getProjectLastModDate());
 			
 			resultrow = pstmt.executeUpdate();
 			

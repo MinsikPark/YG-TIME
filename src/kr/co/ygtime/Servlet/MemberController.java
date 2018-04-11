@@ -11,8 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
+
 import kr.co.ygtime.service.project.InviteListService;
 import kr.co.ygtime.service.project.InviteMsgService;
+import kr.co.ygtime.service.member.MsgAgreeService;
+import kr.co.ygtime.service.member.MsgDeleteSerivce;
+import kr.co.ygtime.service.member.JoinService;
+import kr.co.ygtime.service.member.LoginService;
 
 @WebServlet("*.member")
 public class MemberController extends HttpServlet {
@@ -38,69 +43,55 @@ public class MemberController extends HttpServlet {
         ActionForward forward = null;
         Action action = null;
         
-        if(cmdURI.equals("/list.member")) {
-        	action = new InviteListService();
-        	forward = action.execute(request, response);
-        }else if(cmdURI.equals("/방법2.time")) {
-        	/* 방법2 : 서비스 만들어서 태우고 오기
-        	action = new 서비스자바파일();
+        if(cmdURI.equals("/member_test/login.member")) {
+        	String logincheck = new LoginService().execute(request, response);
+        	response.getWriter().print(logincheck);
+        }else if(cmdURI.equals("/Join.member")) {
+        	action = new JoinService();
         	try {
 				forward = action.execute(request, response);
 			} 
         	catch (Exception e) {
 				e.printStackTrace();
-				ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎ
-				test3
 			}
-        	*/
+
+        }else if(cmdURI.equals("/msgagree.member")) {
+        	action = new MsgAgreeService();
+
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
+        }else if(cmdURI.equals("/msgdel.member")) {
+        	action = new MsgDeleteSerivce();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
+        	
+        }else if(cmdURI.equals("/list.member")) {
+        	action = new InviteListService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
+        	
         }else if(cmdURI.equals("/invite.member")) {
         	action = new InviteMsgService();
-        	forward = action.execute(request, response);
-        }else if(cmdURI.equals("/방법2.time")) {
-        	/* 방법2 : 서비스 만들어서 태우고 오기
-        	action = new 서비스자바파일();
         	try {
 				forward = action.execute(request, response);
 			} 
         	catch (Exception e) {
 				e.printStackTrace();
 			}
-        	*/
-        }else if(cmdURI.equals("/방법2.time")) {
-        	/* 방법2 : 서비스 만들어서 태우고 오기
-        	action = new 서비스자바파일();
-        	try {
-				forward = action.execute(request, response);
-			} 
-        	catch (Exception e) {
-				e.printStackTrace();
-			}
-        	*/
-        }else if(cmdURI.equals("/방법2.time")) {
-        	/* 방법2 : 서비스 만들어서 태우고 오기
-        	action = new 서비스자바파일();
-        	try {
-				forward = action.execute(request, response);
-			} 
-        	catch (Exception e) {
-				e.printStackTrace();
-			}
-        	*/
-        }else if(cmdURI.equals("/방법2.time")) {
-        	/* 방법2 : 서비스 만들어서 태우고 오기
-        	action = new 서비스자바파일();
-        	try {
-				forward = action.execute(request, response);
-			} 
-        	catch (Exception e) {
-				e.printStackTrace();
-			}
-        	*/
-        }else if(cmdURI.equals("/방법2.time")) {
-        	System.out.println("충돌 테스트 ");
+        	
         }
-        
-        
         //태우기 마지막
         if(forward != null){
         	if(forward.isRedirect()) {
