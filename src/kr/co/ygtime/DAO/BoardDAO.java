@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 import kr.co.ygtime.DTO.BoardDTO;
 
 public class BoardDAO {
-	DataSource ds;
+	DataSource ds = null;
 	
 	public BoardDAO() throws NamingException {
 		Context context = new InitialContext();
