@@ -19,6 +19,7 @@ import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.DAO.MemberDAO;
 import kr.co.ygtime.DTO.InviteMsgDTO;
 import kr.co.ygtime.DTO.MemberDTO;
+import net.sf.json.JSONArray;
 
 /**
  * 
@@ -40,11 +41,12 @@ public class InviteListService implements Action{
 			list = memberdao.inviteMsgSelect(userId);
 			System.out.println("userid : " + userId);
 			
-			forward = new ActionForward();
-			request.setAttribute("list", list);
 			
+			JSONArray json = JSONArray.fromObject(list);
+			forward = new ActionForward();
+			request.setAttribute("json", json);
 			forward.setRedirect(false);
-			forward.setPath("/member_test/invite_list_test.jsp");
+			forward.setPath("/member_test/ListOk_test.jsp");
 			System.out.println("메롱1");
 			System.out.println("list : "+ list);
 			

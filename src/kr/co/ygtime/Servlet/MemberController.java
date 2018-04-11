@@ -94,7 +94,7 @@ public class MemberController extends HttpServlet {
 				e.printStackTrace();
 			}
         	
-        }else if(cmdURI.equals("/list.member")) {
+        }else if(cmdURI.equals("/member_test/list.member")) {
         	action = new InviteListService();
         	try {
 				forward = action.execute(request, response);
