@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>function myFunction() {
+    	confirm("멤버를 삭제 하시겠습니까?");}</script>
+<style>
+footer {
+	bottom: 0px;
+    background-color: #555;
+    color: white;
+    position: absolute;
+    padding: 15px;
+    width: 100%;
+}
+
+a{
+	float: left;
+    font-size: 30pt;
+    margin : 0px 40px;
+}
+</style>
+</head>
+<body>
+	<footer>
+		<div class="dropup">
+			<a class = "glyphicon glyphicon-user" onclick="myFunction()"></a>
+			<button type="button" class="btn btn-default" data-toggle="dropdown">
+				<span class="glyphicon glyphicon-plus"></span> 멤버 추가
+			</button>
+			<ul class="dropdown-menu" style="width: 300px;">
+				<li><div class="input-group">
+						<input type="text" class="form-control"
+							placeholder="이메일 검색.."> <span
+							class="input-group-btn">
+							<button class="btn btn-default" type="button">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</span>
+					</div></li>
+			</ul>
+		</div>
+		<div class="container">
+</div>
+		
+	</footer>
+</body>
+</html>
