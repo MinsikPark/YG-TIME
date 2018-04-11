@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>YG-TIME Calendar</title>
+	<link rel="stylesheet" href="fullcalendar/fullcalendar.css" />
+	<script src="fullcalendar/lib/jquery.min.js"></script>
+	<script src="fullcalendar/lib/moment.min.js"></script>
+	<!-- (주의)fullcalendar.js import가 가장 마지막 라인에 작성되어야 함 -->
+	<script src="fullcalendar/fullcalendar.js"></script>
+	<!-- script -->
+	<script type="text/javascript">
+	/*TODO
+		1)
+		날짜 클릭
+		보드명
+		기간 설정
+		세부내용 (설명)
+		보드바 색
+	*/
+	
+		$(function() { // $(document).ready.
+			$('#delete').click(function() {
+				$('#calendar').fullCalendar('removeEvents', 'jino');
+			});
+		
+			$('#deleteAll').click(function() {
+				$('#calendar').fullCalendar('removeEvents');
+			});
+			
+			//fullCalendar
+			$('#calendar').fullCalendar({
+				selectable: true, //일자를 클릭, 드래그 가능
+				selectHelper: true, //일자 드래그하면 보드바를 표시
+				select: function() { //이벤트객체에 입력될 시작일, 종료일 파라미터
+					var title = prompt('지너니 일정: '); //alert기능
+					var start = prompt('시작 일자: ');
+					var end = prompt('완료 일자: ');
+					
+					var eventData; // eventData라는 json type의 이벤트객체 변수 정의
+					if(title) {
+						eventData = { //eventData 이벤트 객체 내용
+							title: title,
+							start: start,
+							end: end
+						};
+						// 달력에 새 이벤트를 렌더링
+						// fullCalendar('renderEvent', event(이벤트객체), stick)
+						// stick이 true이면 해당 이벤트가 달력에 영구적으로 고정
+						$('#calendar').fullCalendar('renderEvent', eventData, true);
+					}
+					$('#calendar').fullCalendar('unselect'); //선택 취소
+				},
+				editable: true, // 달력에 일정 수정 여부 (드래그, 크기 조정)
+				eventLimit: true, // 하루에 표시되는 이벤트의 수를 제한. 나머지는 팝 오버에 나타남.
+				events: [
+					{
+						id: 'jino',
+						title: '지너니',
+						start: '2018-04-07',
+						end: '2018-04-10',
+						color: '#000000'
+					},
+					{
+						title: '재우기',
+						url: 'http://www.daum.net/',
+						start: '2018-04-15',
+						end: '2018-04-17',
+						color: '#336699'
+					},
+					{
+						title: '윤그니',
+						url: 'http://www.naver.com/',
+						start: '2018-04-20',
+						end: '2018-04-22',
+						color: 'red'
+					}
+				],
+				eventClick: function(event) {
+					$('#testpage').empty();
+					$('#testpage').append('<object data="testpage.html" width="100%" height="100%"></object>');
+				},
+			}); // end - fullCalendar
+		}); // end - jquery
+	</script>
+	<!-- style -->
+	<style type="text/css">
+		#calendar {
+		    max-width: 700px;
+		    margin: 0 auto;
+		}
+	</style>
+</head>
+<body>
+	<!-- 달력 표시되는 영역 -->
+	<button id="delete">지너니삭제</button><button id="deleteAll">전체삭제</button>
+	<div id="calendar"></div>
+	<div id="testpage"></div>
+</body>
+</html>
