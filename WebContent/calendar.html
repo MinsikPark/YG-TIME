@@ -17,7 +17,6 @@
 	<script type="text/javascript">
 	
 		$(function() { // $(document).ready.
-			var displayEndDate = null; //달력 출력용 날짜
 		
 			function dateProcess(dateStr, days){ //date가공 메서드
 				var date = new Date(dateStr); //Date 객체 생성
@@ -39,8 +38,11 @@
 
 				    if (jsEvent.pageX >= x1 && jsEvent.pageX <= x2 &&
 				        jsEvent.pageY >= y1 && jsEvent.pageY <= y2) {
-				        event.dragRevertDuration = 10;
-				        $('#calendar').fullCalendar('removeEvents', event._id);
+				    	
+				    	var answer = confirm("정말 삭제 하시겠습니까?");
+				    	if (answer) {
+				    		$('#calendar').fullCalendar('removeEvents', event._id);
+				    	}
 				    }
 				},
 				dragRevertDuration : 0, //drag 속도
@@ -96,7 +98,7 @@
 			$('#calEventDialog').dialog({
 				resizable: false,
 				autoOpen: false,
-				title: 'Add Board',
+				title: '보드 추가',
 				width: 500,
 				buttons: {
 					Add: function() {
@@ -126,7 +128,7 @@
 						clearDialog(); //dialog 초기화
 					}
 				},
-			}); // end - dialog
+			}); // end - calEventDialog
 			
 		}); // end - $(document).ready
 	</script>
@@ -150,13 +152,13 @@
 	<div hidden id="calEventDialog">
 	    <form>
 	        <fieldset>
-		        <label for="eventTitle">Title</label>
+		        <label for="eventTitle">보드명</label>
 		        <input type="text" name="eventTitle" id="eventTitle" /><br>
-		        <label for="eventStart">Start Date</label>
+		        <label for="eventStart">시작일</label>
 		        <input type="text" name="eventStart" id="eventStart" /><br>
-		        <label for="eventEnd">End Date</label>
+		        <label for="eventEnd">종료일</label>
 		        <input type="text" name="eventEnd" id="eventEnd" /><br>
-		        <label for="eventColor">BoardBar Color</label>
+		        <label for="eventColor">보드바 색상</label>
 		        <input type="color" name="eventColor" id="eventColor" /><br>
 	        </fieldset>
 	    </form>
