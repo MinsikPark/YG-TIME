@@ -47,27 +47,9 @@ public class FrontController extends HttpServlet {
         	/* 방법1 : 아무것도 안타고 바로 경로 적기
 			forward.setRedirect(false);
         	forward.setPath("/board/board_write.jsp");
-<<<<<<< HEAD
-        	test3
-=======
-        	jinwon
+        	
         	충돌 테스트를 하겠습니다
         	확인 작업을 시작합니다
-        	~~
-        	~~~
-<<<<<<< HEAD
-        	충돌테스트
-        	충돌테슷트
-=======
-        	안녕하세요
-        	박민식이에요
-        	반가워요
-        	진원인 하이하이
-        	방가방가
-        	test4
->>>>>>> 212a3c7e445a2f65ce480bec67b8041053f7408a
-        	~~~~
->>>>>>> 9e9748cfeb50066dee9e3e88ae3dbf91bf2f3b0f
         	*/
         }else if(cmdURI.equals("/방법2.time")) {
         	/* 방법2 : 서비스 만들어서 태우고 오기
@@ -78,7 +60,6 @@ public class FrontController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
 				ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎ
-				test3
 			}
         	*/
         }else if(cmdURI.equals("/방법2.time")) {
