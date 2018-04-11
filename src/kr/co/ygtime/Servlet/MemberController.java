@@ -13,6 +13,8 @@ import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.service.member.MsgAgreeService;
 import kr.co.ygtime.service.member.MsgDeleteSerivce;
+import kr.co.ygtime.service.member.JoinService;
+import kr.co.ygtime.service.member.LoginService;
 
 @WebServlet("*.member")
 public class MemberController extends HttpServlet {
@@ -38,14 +40,18 @@ public class MemberController extends HttpServlet {
         ActionForward forward = null;
         Action action = null;
         
-        if(cmdURI.equals("/msgagree.member")) {
-        	action = new MsgAgreeService();
+        if(cmdURI.equals("/member_test/login.member")) {
+        	String logincheck = new LoginService().execute(request, response);
+        	response.getWriter().print(logincheck);
+        }else if(cmdURI.equals("/Join.member")) {
+        	action = new JoinService();
         	try {
 				forward = action.execute(request, response);
 			} 
         	catch (Exception e) {
 				e.printStackTrace();
 			}
+        	
         }else if(cmdURI.equals("/msgdel.member")) {
         	action = new MsgDeleteSerivce();
         	try {
@@ -54,23 +60,16 @@ public class MemberController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
 			}
-        }else if(cmdURI.equals("/방법2.member")) {
         	
-        }else if(cmdURI.equals("/방법2.time")) {
-
-        }else if(cmdURI.equals("/방법2.time")) {
-        	
-        }else if(cmdURI.equals("/방법2.time")) {
-
-        }else if(cmdURI.equals("/방법2.time")) {
-        	
-        }else if(cmdURI.equals("/방법2.time")) {
-        	/* 
-        	forward.setRedirect(false);
-        	forward.setPath("/board/board_write.jsp");
-        	*/
+        }else if(cmdURI.equals("/msgagree.member")) {
+        	action = new MsgAgreeService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
         }
-        
         
         //태우기 마지막
         if(forward != null){

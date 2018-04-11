@@ -7,6 +7,21 @@
 
 package kr.co.ygtime.service.member;
 
-public class JoinService {
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import kr.co.ygtime.Action.Action;
+import kr.co.ygtime.Action.ActionForward;
+
+public class JoinService implements Action{
+
+	@Override
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		
+		
+		return null;
+	}
 
 }
