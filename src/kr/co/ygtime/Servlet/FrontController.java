@@ -47,9 +47,12 @@ public class FrontController extends HttpServlet {
         	/* 방법1 : 아무것도 안타고 바로 경로 적기
 			forward.setRedirect(false);
         	forward.setPath("/board/board_write.jsp");
-        	
+        	jinwon
         	충돌 테스트를 하겠습니다
         	확인 작업을 시작합니다
+        	~~
+        	~~~
+        	~~~~
         	*/
         }else if(cmdURI.equals("/방법2.time")) {
         	/* 방법2 : 서비스 만들어서 태우고 오기
