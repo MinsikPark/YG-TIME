@@ -68,7 +68,7 @@ public class MemberDAO {
 
 		String sql = "INSERT INTO MEMBER(userId,userPwd,userNicname,userProfile) VALUES (?,?,?,?)";
 		int row =0;
-
+		
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql);
