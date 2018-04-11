@@ -21,8 +21,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
-
 import kr.co.ygtime.DTO.InviteMsgDTO;
 import kr.co.ygtime.DTO.MemberDTO;
 

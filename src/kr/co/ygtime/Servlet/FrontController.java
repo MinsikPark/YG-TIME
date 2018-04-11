@@ -47,6 +47,69 @@ public class FrontController extends HttpServlet {
         	/* 방법1 : 아무것도 안타고 바로 경로 적기
 			forward.setRedirect(false);
         	forward.setPath("/board/board_write.jsp");
+        	
+        	충돌 테스트를 하겠습니다
+        	확인 작업을 시작합니다
+        	*/
+        }else if(cmdURI.equals("/방법2.time")) {
+        	/* 방법2 : 서비스 만들어서 태우고 오기
+        	action = new 서비스자바파일();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
+        	*/
+        }else if(cmdURI.equals("/방법2.time")) {
+        	/* 방법2 : 서비스 만들어서 태우고 오기
+        	action = new 서비스자바파일();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
+        	*/
+        }else if(cmdURI.equals("/방법2.time")) {
+        	/* 방법2 : 서비스 만들어서 태우고 오기
+        	action = new 서비스자바파일();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
+        	*/
+        }else if(cmdURI.equals("/방법2.time")) {
+        	/* 방법2 : 서비스 만들어서 태우고 오기
+        	action = new 서비스자바파일();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
+        	*/
+        }else if(cmdURI.equals("/방법2.time")) {
+        	/* 방법2 : 서비스 만들어서 태우고 오기
+        	action = new 서비스자바파일();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
+        	*/
+        }else if(cmdURI.equals("/방법2.time")) {
+        	/* 방법2 : 서비스 만들어서 태우고 오기
+        	action = new 서비스자바파일();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
         	*/
         }else if(cmdURI.equals("/방법2.time")) {
         	/* 방법2 : 서비스 만들어서 태우고 오기
@@ -59,6 +122,7 @@ public class FrontController extends HttpServlet {
 			}
         	*/
         }
+        
         
         //태우기 마지막
         if(forward != null){
