@@ -25,7 +25,7 @@
 	    z-index: 1;
 	    top: 0;
 	    left: 0;
-	    background-color: #111;
+	    background-color: #fed057;
 	    overflow-x: hidden;
 	    transition: 0.5s;
 	    padding-top: 10px;
@@ -232,7 +232,7 @@ function sideShow(){
 <header>
 	<nav class="navbar">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="#">YG Time</a>
+	      <a class="navbar-brand" href="#"><img src="images/logo.JPG" style="width: 110px; height: 30px;"></a>
 	    </div>
 	    <div> 
 	      <!-- 로그인 창 -->
