@@ -189,7 +189,8 @@ function sideShow(){
 	$('.setting').delay(250).fadeIn()
 	$('.insert').delay(250).fadeIn()
 } 
-</script>  
+        function myFunction() {
+    	confirm("멤버를 삭제 하시겠습니까?");}</script>
 </head>
 <!-- SIDEBAR -->
 <body>
@@ -199,27 +200,43 @@ function sideShow(){
 		<a href="#" class="glyphicon glyphicon-plus insert"></a>
 		<div class="tab-content">
 			<ul class="nav nav-tabs nav-tabs-modify">
-				<li class="active"><a data-toggle="tab" href="#home">진행중인 프로젝트</a></li>
-				<li><a data-toggle="tab" href="#menu1">완료된 &nbsp;   프로젝트</a></li>
+				<li class="active"><a data-toggle="tab" href="#home">진행</a></li>
+				<li><a data-toggle="tab" href="#menu1">완료</a></li>
 			</ul>
 			<div id="home" class="tab-pane fade in active">
 				<div>
 					<button class="button btn-1">Button 1</button>
-					<a class="glyphicon glyphicon-cog setting"></a>
+					<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
+    				<ul class="dropdown-menu" style= "float: right; position: unset;">
+      					<li><a href="#">프로젝트 삭제</a></li>
+      					<li><a href="#">프로젝트 완료</a></li>
+    				</ul>	
 				</div>
 				<div>
 					<button class="button btn-1">Button 2</button>
-					<a class="glyphicon glyphicon-cog setting"></a>
+					<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
+    				<ul class="dropdown-menu" style= "float: right; position: unset;">
+      					<li><a href="#">프로젝트 삭제</a></li>
+      					<li><a href="#">프로젝트 완료</a></li>
+    				</ul>	
 				</div>
 			</div>
 			<div id="menu1" class="tab-pane fade">
 				<div>
 					<button class="button btn-1">Button 3</button>
-					<a class="glyphicon glyphicon-cog setting"></a>
+					<a class="glyphicon glyphicon-cog setting"  data-toggle="dropdown"></a>
+    				<ul class="dropdown-menu" style= "float: right; position: unset;">
+      					<li><a href="#">프로젝트 삭제</a></li>
+      					<li><a href="#">프로젝트 완료</a></li>
+    				</ul>	
 				</div>
-				<div>
+				<div class="dropdown">
 					<button class="button btn-1">Button 4</button>
-					<a class="glyphicon glyphicon-cog setting"></a>
+					<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
+    				<ul class="dropdown-menu" style= "float: right; position: unset;">
+      					<li><a href="#">프로젝트 삭제</a></li>
+      					<li><a href="#">프로젝트 완료</a></li>
+    				</ul>	
 				</div>
 			</div>
 		</div>
@@ -281,11 +298,24 @@ function sideShow(){
     <div class="navbar-header">
       <a class="navbar-brand" href="#">진행중인 MEMBER</a>
     </div>
-    <div> 
-      <ul class="nav navbar-nav">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> 지너니 </a></li> 
-      </ul>
-    </div>
+    <div class="dropup">
+			<a class = "glyphicon glyphicon-user" onclick="myFunction()" style="font-size: 25pt; top: 7px;"></a>
+			<button type="button" class="btn btn-default" data-toggle="dropdown" style="margin: 0px 0px 10px 30px;">
+				<span class="glyphicon glyphicon-plus" ></span> 멤버 추가
+			</button>
+			<ul class="dropdown-menu" style="width: 300px;">
+				<li><div class="input-group">
+						<input type="text" class="form-control"
+							placeholder="이메일 검색..">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</span>
+					</div>
+				</li>
+			</ul>
+		</div>
 </nav>
 <!-- FOOTER END -->
 
