@@ -47,7 +47,7 @@ public class MemberController extends HttpServlet {
         Action action = null;
         
 
-        if(cmdURI.equals("/member_test/login.member")) {
+        if(cmdURI.equals("/login.member")) {
         	try{
 				action = new LoginService();
         		forward= action.execute(request, response);
