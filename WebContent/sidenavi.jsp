@@ -380,13 +380,10 @@ function addProjectForm(obj){
 		<a href="#" class="glyphicon glyphicon-plus insert" onclick="addProjectForm()"></a>
 		<div class="tab-content">
 			<ul class="nav nav-tabs nav-tabs-modify">
-<<<<<<< HEAD
 				<li class="active"><a data-toggle="tab" href="#progress">진행중인 프로젝트</a></li>
 				<li><a data-toggle="tab" href="#complete">완료된 &nbsp;   프로젝트</a></li>
-=======
 				<li class="active"><a data-toggle="tab" href="#home">진행</a></li>
 				<li><a data-toggle="tab" href="#menu1">완료</a></li>
->>>>>>> 93e80b700f4dc09747924f4a2973b2b6a031590c
 			</ul>
 			<div id="progress" class="tab-pane fade in active">
 				<div>
