@@ -366,6 +366,10 @@ function addProjectForm(obj){
 	$('#progress').append(button)
 }
 
+function memberDel() {
+    confirm("멤버를 삭제하시겠습니까?");
+}
+
 </script>
 
 </head>
@@ -476,7 +480,7 @@ function addProjectForm(obj){
       <a class="navbar-brand" href="#">진행중인 MEMBER &nbsp;&nbsp;&nbsp;</a>
     </div>
     <div class="dropup">
-			<a class = "glyphicon glyphicon-user" onclick="myFunction()" style="font-size: 25pt; top: 7px;"></a>
+			<a class = "glyphicon glyphicon-user" onclick="memberDel()" style="font-size: 25pt; top: 7px;"></a>
 			<button type="button" class="btn btn-default" data-toggle="dropdown" style="margin: 0px 0px 10px 30px;">
 				<span class="glyphicon glyphicon-plus" ></span> 멤버 추가
 			</button>
