@@ -315,17 +315,6 @@ $(function() {
   }
     
  });
- 	
-  function mykeychange() {
-		 	if($('#password').val() != "$('#passwordCheck').val()="   ){
-		 		alert("일치");
-		 	   		
-		 	   	}else{
-		 	   		alert("불일치2");
-		 	   	}
-  }	
- 	
-
 	//프로젝트 추가
 	$("#insertproject").on("click",function(){
 		console.log("btnclick");
@@ -377,7 +366,7 @@ $(function() {
 				} 
 			}
 			 if(keycode =='27'){
-				console.log("지운ㅏ");
+				console.log("지운다");
 				$(this).remove();
 			}
 		})
