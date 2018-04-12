@@ -22,9 +22,7 @@ public class ProjectCompleteService implements Action {
 	
 		int projectNum = Integer.parseInt(request.getParameter("projectNum"));
 		String userId = request.getParameter("userId");
-		System.out.println("userid : " + userId);
-		System.out.println("projectnum : " + projectNum);
-		
+
 		ActionForward forward = null;
 		int row = 0;
 		try {

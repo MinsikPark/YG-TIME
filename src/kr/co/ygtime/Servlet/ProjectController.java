@@ -79,6 +79,7 @@ public class ProjectController extends HttpServlet {
 				e.printStackTrace();
 			}
         } else if(cmdURI.equals("/progressproject.project")){
+        	System.out.println("/progressproject.project");
         	action = new ProjectProgressService();
         	try {
 				forward = action.execute(request, response);

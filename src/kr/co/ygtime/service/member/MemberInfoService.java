@@ -25,7 +25,6 @@ public class MemberInfoService implements Action{
 		MemberDAO memberdao = null;
 		String userId = request.getParameter("userId");
 		MemberDTO memberdto = null;
-		System.out.println("test1");
 		try {
 			memberdao = new MemberDAO();
 			//System.out.println(userId + "멤버 액션");

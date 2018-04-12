@@ -29,13 +29,11 @@ public class ProjectAddService implements Action{
 		try {
 			//파라미터로 프로젝트 명을 가져온다
 			String newprojectname = request.getParameter("newprojectname");
-			System.out.println("param : " + newprojectname);
 			//ProjectDTO 객체에 넣어준다.
 			ProjectDTO projectdto = new ProjectDTO();
 			projectdto.setProjectName(newprojectname);
 		
 			ProjectDAO projectdao = new ProjectDAO();
-			System.out.println("");
 			//1. 프로젝트 insert
 			int projectnum = projectdao.projectInsert(projectdto); 
 			
@@ -44,18 +42,16 @@ public class ProjectAddService implements Action{
 				//프로젝트 insert 성공
 				//2. 팀 insert 관리자로
 				String userid = (String) request.getSession().getAttribute("sessionId"); //확실한지 로그인 만들어진 후 테스트
-				System.out.println("userid : " + userid);
+
 				TeamDTO teamdto = new TeamDTO();
-				System.out.println("-1");
 				teamdto.setUserId(userid);
-				System.out.println("0");
+				
 				teamdto.setGrade(0);
 				teamdto.setProjectNum(projectnum);
-				System.out.println("1");
+				
 				
 				int insertrow = projectdao.teamInsert(teamdto); //DB 팀에 넣어준다.
-				System.out.println("insertrow : " + insertrow);
-				System.out.println("2");
+				
 				
 				request.setAttribute("resultrow", insertrow);
 			}

@@ -407,8 +407,8 @@ $(function() {
 			idcheck();
 		    return false;
 		   
-		  } else if($('#result').html() == "중복된 아이디입니다."){
-			alert("중복된 아이디 입니다.");
+		  } else if($('#result').html() != "사용가능한 아이디입니다."){
+			alert("아이디 형식 또는 중복을 확인하세요");
 			return false;
 		  } else if ($('#password').val() == "") { //비밀번호 검사
 		   /* alert('PWD를 입력해 주세요.');
@@ -492,17 +492,13 @@ $(function() {
 						console.log("data1 : " + data);
 					}	
 				})	
-
 		callprojectlist();
 	}
 	
 	
 	//////프로젝트 완료
 	function projectComplete(obj){
-		var ul = $(obj).closest('ul')
-		var li = '<li><a onclick="projectView('+obj+')">프로젝트 보기</a></li><li><a onclick="projectProgress('+obj+')">프로젝트 다시 진행</a></li>'
 		console.log($('#getsession').val()+"/"+obj);
-		console.log(ul);
 		$.ajax({
 			url : "completeproject.project",
 			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
@@ -511,9 +507,7 @@ $(function() {
 				console.log(data);
 			}
 		});
-		
-		ul.empty()
-		ul.append(li)
+
 		callprojectlist();
 	}
 	
@@ -522,9 +516,6 @@ $(function() {
 	
 	///////프로젝트복구
 	function projectProgress(obj){
-		var ul = $(obj).closest('ul')
-		var li = '<li><a onclick="projectDel('+obj+')">프로젝트 삭제</a></li><li><a onclick="projectComplete('+obj+')">프로젝트 완료</a></li>'
-		
 		$.ajax({
 			url : "progressproject.project",
 			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
@@ -533,9 +524,6 @@ $(function() {
 				console.log(data);
 			}
 		});
-		
-		ul.empty()
-		ul.append(li)
 		callprojectlist();
 	}
 	
@@ -805,6 +793,7 @@ function idcheck() {
 <!-- FOOTER END -->
 
 <!-- MODAL-->
+ <!-- 회원가입 -->
  <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
@@ -834,6 +823,48 @@ function idcheck() {
 	        	<div class="form-group">
 				    <label for="passwordCheck">비밀 번호 확인 <span id="pwdcheck" style="color: red;"></span></label>
 				    <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" onchange="passwordfunction()">
+				</div>
+	        	<div class="form-group">
+				    <label for="nickName">닉네임  <span id="nickcheck" style="color: red;"></span></label>
+				    <input type="text" class="form-control" id="nickName" name="nickName">
+				</div>
+				<div class="form-group">
+				    <label for="fileUpLoad">파일 업로드</label>
+				    <input type="file" id="fileUpLoad" name="fileUpLoad">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" onclick="joinsubmit()">Submit</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="joinclear()">Close</button>
+		        </div>
+        	</form>
+        </div>
+      </div>
+    </div>
+  </div> 
+  <!-- 회원수정 -->
+  <div class="modal fade" id="myModa2" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" onclick="joinclear()">&times;</button>
+          <h4 class="modal-title">회원정보 수정</h4>
+        </div>
+        
+        
+        <div class="modal-body">
+        	<form id ="modForm">
+	        	<div class="form-group">
+				    <label for="modemail">이메일 주소</label>
+				    <input type="text" value = "${sessionScope.sessionId}" readonly="readonly" class="form-control">
+				</div>
+	        	<div class="form-group">
+				    <label for="modpassword">비밀 번호</label>
+				    <input type="password" class="form-control" id="modpassword"  name="modpassword" >
+				</div>
+	        	<div class="form-group">
+				    <label for="modpasswordCheck">비밀 번호 확인 <span id="modpwdcheck" style="color: red;"></span></label>
+				    <input type="password" class="form-control" id="modpasswordCheck" name="modpasswordCheck" onchange="modpasswordfunction()">
 				</div>
 	        	<div class="form-group">
 				    <label for="nickName">닉네임  <span id="nickcheck" style="color: red;"></span></label>

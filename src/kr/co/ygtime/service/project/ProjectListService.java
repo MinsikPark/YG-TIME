@@ -23,7 +23,6 @@ public class ProjectListService implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		String userId = request.getParameter("userId");
-		System.out.println("ProjectListService : " + userId);
 		List<ProjectDTO> list = null;
 		
 		try {
@@ -32,7 +31,6 @@ public class ProjectListService implements Action {
 			list = dao.allProjectSelect(userId);
 			
 			JSONArray json = JSONArray.fromObject(list);
-			System.out.println(json);
 			request.setAttribute("json", json);
 		}catch(Exception e) {
 			e.printStackTrace();
