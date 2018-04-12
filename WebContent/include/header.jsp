@@ -193,8 +193,6 @@ $(function(){
             datatype:"JSON",
             data:param,
             success:function(data){
-            	console.log(">"+data.trim()+"<");
-            	
                 var json = JSON.parse(data);
                 
                 $("#dropdownchilddiv").empty();
@@ -227,8 +225,6 @@ function msgaccept(me, projectNum){
           datatype:"JSON",
           data:param,
           success:function(data){
-          	console.log(">"+data.trim()+"<");
-          	
               var json = JSON.parse(data);
               
               $("#dropdownchilddiv").empty();
@@ -257,8 +253,6 @@ function msgreject(me, projectNum){
           datatype:"JSON",
           data:param,
           success:function(data){
-          	console.log(">"+data.trim()+"<");
-          	
               var json = JSON.parse(data);
               
               $("#dropdownchilddiv").empty();
