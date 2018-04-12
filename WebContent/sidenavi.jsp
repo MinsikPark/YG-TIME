@@ -190,7 +190,9 @@ function sideShow(){
 	$('.insert').delay(250).fadeIn()
 } 
         function myFunction() {
-    	confirm("멤버를 삭제 하시겠습니까?");}</script>
+    	confirm("멤버를 삭제 하시겠습니까?");}
+
+</script>
 </head>
 <!-- SIDEBAR -->
 <body>
@@ -279,7 +281,8 @@ function sideShow(){
 	          <div class="dropdown-menu">
 	            <form id="fromUser" class="form container-fluid">
 	              <div class="form-group">
-	                <label for="email">프로젝트에 참여 하시겠습니까</label>
+	              	<li data-toggle="modal" data-target="#myModal2"><a href="#">프로필 수정</a></li>
+					<label for="email">프로젝트에 참여 하시겠습니까</label>
 	                <input type="button" value="Y">
 	                <input type="button" value="N">
 	              </div>
@@ -296,7 +299,7 @@ function sideShow(){
 <!-- FOOTER -->
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">진행중인 MEMBER</a>
+      <a class="navbar-brand" href="#">진행중인 MEMBER &nbsp;&nbsp;&nbsp;</a>
     </div>
     <div class="dropup">
 			<a class = "glyphicon glyphicon-user" onclick="myFunction()" style="font-size: 25pt; top: 7px;"></a>
@@ -305,8 +308,9 @@ function sideShow(){
 			</button>
 			<ul class="dropdown-menu" style="width: 300px;">
 				<li><div class="input-group">
-						<input type="text" class="form-control"
-							placeholder="이메일 검색..">
+						<div class="form-group">
+				   			<input type="email" class="form-control" id="email" placeholder="이메일 입력..">
+						</div>
 						<span class="input-group-btn">
 							<button class="btn btn-default" type="button">
 								<span class="glyphicon glyphicon-search"></span>
@@ -347,7 +351,7 @@ function sideShow(){
 				    <input type="text" class="form-control" id="nickName" placeholder="닉네임을 입력하세요">
 				</div>
 				<div class="form-group">
-				    <label for="fileUpLoad">파일 업로드</label>
+				    <label for="fileUpLoad">프로필 사진 설정</label>
 				    <input type="file" id="fileUpLoad">
 				</div>
 				<div class="modal-footer">
