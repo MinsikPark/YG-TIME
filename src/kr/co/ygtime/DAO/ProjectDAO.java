@@ -151,7 +151,11 @@ public class ProjectDAO {
 	}
 	
 	
-    
+    /**
+	     날      짜 : 2018. 4. 12.
+	     기      능 : 프로젝트 완료  
+	     작성자명 : 최 재 욱
+     */
 	public int projectComplete (int projectNum, String userId) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -174,6 +178,63 @@ public class ProjectDAO {
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) { 
+					pstmt.close();
+					//아이디가 일치하는지 확인
+					if(rs.getInt("grade") == 0) {
+						pstmt = conn.prepareStatement(sql2);
+						pstmt.setInt(1, projectNum);
+						
+						
+						row = pstmt.executeUpdate();
+					}
+				}
+						
+				if(row > 0) {
+					conn.commit();
+				}
+			
+		}catch (Exception e) {
+					try {conn.rollback();} catch (SQLException e1) {e1.printStackTrace();}
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();
+			}catch (Exception e) {
+				
+			}
+		}
+		return row;
+	}
+	
+	/**
+	    날      짜 : 2018. 4. 12.
+	    기      능 : 프로젝트 복구
+	    작성자명 : 전 나 영
+	*/
+	public int projectProgress (int projectNum, String userId) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int row = 0;
+		
+		try {
+				conn = ds.getConnection();
+				
+				//아이디팀장검증
+				String sql1= "select grade from team where projectnum=? and userid=?";
+				
+				//게시글 삭제
+				String sql2 = "UPDATE project set projectenddate = null where projectnum =?";
+				
+				pstmt = conn.prepareStatement(sql1);
+				pstmt.setInt(1, projectNum);
+				pstmt.setString(2, userId);
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) { 
+					pstmt.close();
 					//아이디가 일치하는지 확인
 					if(rs.getInt("grade") == 0) {
 						pstmt = conn.prepareStatement(sql2);

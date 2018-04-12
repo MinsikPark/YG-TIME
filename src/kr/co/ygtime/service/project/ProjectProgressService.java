@@ -1,9 +1,10 @@
 /* 
-    파일명: ProjectpdateService.java
+    파일명: ProjectProgressService.java
     설명: 
     작성일: 2018. 4. 12.
-    작성자: 전나영
+    작성자: 김 진 원
 */
+
 package kr.co.ygtime.service.project;
 
 import javax.naming.NamingException;
@@ -13,23 +14,20 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.DAO.ProjectDAO;
-import kr.co.ygtime.DTO.ProjectDTO;
 
-public class ProjectCompleteService implements Action {
-
+public class ProjectProgressService implements Action{
+	
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 	
 		int projectNum = Integer.parseInt(request.getParameter("projectNum"));
 		String userId = request.getParameter("userId");
-		System.out.println("userid : " + userId);
-		System.out.println("projectnum : " + projectNum);
 		
 		ActionForward forward = null;
 		int row = 0;
 		try {
 			ProjectDAO dao = new ProjectDAO();
-			row = dao.projectComplete(projectNum, userId);
+			row = dao.projectProgress(projectNum, userId);
 			
 			request.setAttribute("resultrow", row);
 			forward = new ActionForward();
@@ -37,11 +35,9 @@ public class ProjectCompleteService implements Action {
 			
 			
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return forward;
 	}
-
 }
