@@ -30,13 +30,9 @@ public class InviteMsgService implements Action{
 		int projectNum = Integer.parseInt(request.getParameter("projectNum"));
 		String inviteUserId = request.getParameter("inviteUserId");
 		
-		//String msgDate = request.getParameter("msgDate");
-		//invitemsgdto.setMsgNum(msgNum);
 		invitemsgdto.setUserId(userId);
 		invitemsgdto.setProjectNum(projectNum);
 		invitemsgdto.setInviteUserId(inviteUserId);
-		//invitemsgdto.setMsgDate(msgDate);
-		//msgNum,userId,projectNum,inviteUserId,msgDate) VALUES (?,?,?,?,?)"
 		
 		try {
 			memberdao =new MemberDAO();

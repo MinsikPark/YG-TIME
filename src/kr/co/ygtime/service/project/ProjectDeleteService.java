@@ -22,15 +22,12 @@ public class ProjectDeleteService implements Action{
 		ProjectDAO dao = null;
 		int resultrow = 0;
 		int projectNum = Integer.parseInt(request.getParameter("projectNum"));
-		System.out.println("메롱");
 		
 		try {
 			dao = new ProjectDAO();
 			resultrow = dao.projectDelete(projectNum);
-			System.out.println("메롱1");
 			request.setAttribute("resultrow", resultrow);
 			forward = new ActionForward();
-			System.out.println("메롱2");
 			forward.setPath("/ajaxpath/result_row.jsp");
 			
 		} catch (NamingException e) {

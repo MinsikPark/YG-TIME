@@ -28,10 +28,6 @@ public class MemberModifyService implements Action{
 		String userPwd = request.getParameter("userPwd");
 		String userNicname = request.getParameter("userNicname");
 		String userProfile = request.getParameter("userProfile");
-		System.out.println("userid123 : " + userId);
-		System.out.println("userPwd123 : " + userPwd);
-		System.out.println("userNicname123 : " + userNicname);
-		System.out.println("userProfile123 : " + userProfile);
 		memberdto = new MemberDTO();
 		memberdto.setUserId(userId);
 		memberdto.setUserPwd(userPwd);
@@ -46,7 +42,6 @@ public class MemberModifyService implements Action{
 			forward = new ActionForward();
 			forward.setPath("/member_test/AjaxData.jsp");
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return forward;
