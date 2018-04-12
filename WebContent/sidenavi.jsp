@@ -307,13 +307,13 @@ function sideShow(){
 function changeValue(obj){
 	if(obj.value != ""){
 		var div = '<div><input type="text" class="form-control inputtextbox" value="첨부 파일  : '+ obj.value.substr(12)+'" readonly>'
-			div += '<button type="button" class="close" onclick="fileInputRemove(this)">&times;</button></div>'
+			div += '<button type="button" class="close" onclick="fileInputDel(this)">&times;</button></div>'
 		$('#fileUploadForm').append(div)
 	}
 	obj.value =""; 
 }
 
-function fileInputRemove(obj){
+function fileInputDel(obj){
 	obj.closest('div').remove()
 }
 
@@ -326,7 +326,7 @@ function addCheckListForm(){
 
 function addCheckList(obj) {
 	var value = $(obj).closest('div')[0].children[0].value
-	if(value != ""){
+	if(value.trim() != ""){
 		var div = '<p><input type="checkbox" id="checkbox'+i+'"><label for="checkbox'+i+'">'+value+'</label><button type="button" class="close" onclick="removeCheckList(this)">&times;</button></p>'
 		i++
 		
@@ -342,8 +342,8 @@ function removeCheckList(obj){
 
 function addComment(obj){
 	var value = $(obj).closest('div')[0].children[1].value
-	if(value != ""){
-		var div = '<div class="commentlist"><img src="img/bg-banner.jpg" class="img-circle person" alt="Random Name" width="30" height="30">'
+	if(value.trim() != ""){
+		var div = '<div class="commentlist"><img src="images/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">'
 			div += '<input type="text" class="form-control commentinputtextbox" value="' + value + '" readonly>'
 			div += '<button type="button" class="close" onclick="removeComment(this)">&times;</button></div>'
 			
@@ -362,12 +362,51 @@ function updateDetail(obj){
 
 //프로젝트 추가부분
 function addProjectForm(obj){
-	var button = '<div><button class="button btn-1"><input type="text" style="margin-left:-50px;"></button><a class="glyphicon glyphicon-cog setting"></a></div>'
-	$('#progress').append(button)
+	if($('#projectName').length == 0){
+		var button = '<div><button class="button btn-1"><input type="text" id="projectName" style="margin-left:-60px; color:black;"></button><a class="glyphicon setting" onclick="addProject(this)">&#xe013;</a></div>'
+			$('#progress').append(button)
+		$('#projectName').focus()
+	}
 }
 
-</script>
+function addProject(obj) {
+	var value = $('#projectName').val() 
+	if(value.trim() != ""){
+		$(obj).closest('div').remove()
+		var div  = '<div><button class="button btn-1">'+value+'</button><a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a><ul class="dropdown-menu" style= "float: right; position: unset;">'
+			div += '<li><a onclick="projectDel(this)">프로젝트 삭제</a></li><li><a onclick="projectComplete(this)">프로젝트 완료</a></li></ul>	</div>'
+		$('#progress').append(div)
+	}else{
+		alert('프로젝트 명을 입력하세요')
+	}
+}
 
+function projectDel(obj){
+	console.log($(obj).closest('div'))
+	$(obj).closest('div').remove()
+}
+
+function projectComplete(obj){
+	var ul = $(obj).closest('ul')
+	var li = '<li><a onclick="projectView(this)">프로젝트 보기</a></li><li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>'
+	$(obj).closest('div').appendTo($('#complete'))
+	ul.empty()
+	ul.append(li)
+}
+
+function projectProgress(obj){
+	console.log($(obj).closest('ul'))
+	var ul = $(obj).closest('ul')
+	var li = '<li><a onclick="projectDel(this)">프로젝트 삭제</a></li><li><a onclick="projectComplete(this)">프로젝트 완료</a></li>'
+	$(obj).closest('div').appendTo($('#progress'))
+	ul.empty()
+	ul.append(li)
+}
+
+function projectView(obj){
+	console.log('프로젝트 아이디를 받아서 다시 뿌려줘요')
+}
+</script>
 </head>
 <!-- SIDEBAR -->
 <body>
@@ -385,16 +424,16 @@ function addProjectForm(obj){
 					<button class="button btn-1">Button 1</button>
 					<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
     				<ul class="dropdown-menu" style= "float: right; position: unset;">
-      					<li><a href="#">프로젝트 삭제</a></li>
-      					<li><a href="#">프로젝트 완료</a></li>
+      					<li><a onclick="projectDel(this)">프로젝트 삭제</a></li>
+      					<li><a onclick="projectComplete(this)">프로젝트 완료</a></li>
     				</ul>	
 				</div>
 				<div>
 					<button class="button btn-1">Button 2</button>
 					<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
     				<ul class="dropdown-menu" style= "float: right; position: unset;">
-      					<li><a href="#">프로젝트 삭제</a></li>
-      					<li><a href="#">프로젝트 완료</a></li>
+      					<li><a onclick="projectDel(this)">프로젝트 삭제</a></li>
+      					<li><a onclick="projectComplete(this)">프로젝트 완료</a></li>
     				</ul>	
 				</div>
 			</div>
@@ -403,16 +442,16 @@ function addProjectForm(obj){
 					<button class="button btn-1">Button 3</button>
 					<a class="glyphicon glyphicon-cog setting"  data-toggle="dropdown"></a>
     				<ul class="dropdown-menu" style= "float: right; position: unset;">
-      					<li><a href="#">프로젝트 삭제</a></li>
-      					<li><a href="#">프로젝트 완료</a></li>
+      					<li><a onclick="projectView(this)">프로젝트 보기</a></li>
+      					<li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>
     				</ul>	
 				</div>
 				<div class="dropdown">
 					<button class="button btn-1">Button 4</button>
 					<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
     				<ul class="dropdown-menu" style= "float: right; position: unset;">
-      					<li><a href="#">프로젝트 삭제</a></li>
-      					<li><a href="#">프로젝트 완료</a></li>
+      					<li><a onclick="projectView(this)">프로젝트 보기</a></li>
+      					<li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>
     				</ul>	
 				</div>
 			</div>
@@ -476,7 +515,7 @@ function addProjectForm(obj){
       <a class="navbar-brand" href="#">진행중인 MEMBER &nbsp;&nbsp;&nbsp;</a>
     </div>
     <div class="dropup">
-			<a class = "glyphicon glyphicon-user" onclick="myFunction()" style="font-size: 25pt; top: 7px;"></a>
+			<a class = "glyphicon glyphicon-user" onclick="memberDel()" style="font-size: 25pt; top: 7px;"></a>
 			<button type="button" class="btn btn-default" data-toggle="dropdown" style="margin: 0px 0px 10px 30px;">
 				<span class="glyphicon glyphicon-plus" ></span> 멤버 추가
 			</button>
