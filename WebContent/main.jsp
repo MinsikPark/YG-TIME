@@ -38,9 +38,9 @@
 	}
 	
 	.listbox {
-	    border:10px solid #e2e4e6;
+	    border:10px solid #fbedc8;
 	    border-radius: 12px;
-	    background-color: #e2e4e6;
+	    background-color: #fbedc8;
 	    margin:10px;
 	    width:300px;
 	    float:left;
@@ -150,9 +150,15 @@ function addCardView(e) {
 function addCard(e){
 	var parent = $(e).closest('div')
 	var value = parent[0].firstChild.value
-	$(parent).empty()
-	parent[0].innerHTML = value
-	sortable()
+	if(value.trim() != ""){
+		$(parent).empty()
+		parent[0].innerHTML = value
+		$(parent).attr({ 
+			'data-toggle':'modal',
+			'data-target':'#myModal1'
+		})
+		sortable()
+	}
 }
 
 function addListView(e){
@@ -163,10 +169,12 @@ function addListView(e){
 function addList(e){
 	var parent = $(e).closest('.listbox')
 	var value = parent[0].firstChild.value
-	parent.empty()
-	var	div = '<div class="listtitle">' + value + '</div>'
-		div += "<a class='cardcreate' onclick='addCardView(this)'>Add a card...</a>"
-	parent.append(div)
+	if(value.trim() != ""){
+		parent.empty()
+		var	div = '<div class="listtitle">' + value + '</div>'
+			div += "<a class='cardcreate' onclick='addCardView(this)'>Add a card...</a>"
+		parent.append(div)
+	}
 }
 </script>
 </head>
@@ -180,13 +188,13 @@ function addList(e){
 		<div id="content-md">
 			<div class="listbox">
 				<div class="listtitle">하고잇는것하고잇는것하고잇는</div>
-				<div class="card" onclick="cardDetail">하하하하1</div>
-			    <div class="card">하하하하2</div>
-			    <div class="card">하하하하3</div>
-			    <div class="card">하하하하4</div>
-			    <div class="card">하하하하5</div>
-			    <div class="card">하하하하6</div>
-			    <div class="card">하하하하7</div>
+				<div class="card" data-toggle="modal" data-target="#myModal1">하하하하1</div>
+			    <div class="card" data-toggle="modal" data-target="#myModal1">하하하하2</div>
+			    <div class="card" data-toggle="modal" data-target="#myModal1">하하하하3</div>
+			    <div class="card" data-toggle="modal" data-target="#myModal1">하하하하4</div>
+			    <div class="card" data-toggle="modal" data-target="#myModal1">하하하하5</div>
+			    <div class="card" data-toggle="modal" data-target="#myModal1">하하하하6</div>
+			    <div class="card" data-toggle="modal" data-target="#myModal1">하하하하7</div>
 			    <a class="cardcreate" onclick="addCardView(this)">Add a card...</a>
 			</div>
 			<a class="listbox" onclick="addListView(this)">Add a list...</a>
