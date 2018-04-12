@@ -40,10 +40,11 @@ public class ProjectDAO {
 	 작성자명 : 최 재 욱
 	 */
 	public int projectInsert(ProjectDTO project) { 
-
 		int resultrow = 0;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		Connection conn = null;
+		int result = 0;
 		
 		try {
 			conn = ds.getConnection();
@@ -54,6 +55,18 @@ public class ProjectDAO {
 			
 			resultrow = pstmt.executeUpdate();
 
+			if(resultrow > 0) {
+				pstmt.close();
+				String sql2 = "select Max(projectnum) as maxpronum from project";
+				
+				pstmt = conn.prepareStatement(sql2);
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					result = rs.getInt("maxpronum");
+				}
+			}
 		} catch (Exception e) {
 			System.out.println("projectInsert 에러발생 :" + e.getMessage());
 		} finally {
@@ -64,7 +77,7 @@ public class ProjectDAO {
 				e.printStackTrace();
 			}
 		}
-		return resultrow;
+		return result;
 	}
 	/**
 	 * 
@@ -335,10 +348,11 @@ public class ProjectDAO {
 		
 		try {
 			conn = ds.getConnection();
-			String sql = "insert into team(projectnum, userid, grade, projectlastmoddate) values(project_idx.val,?,?,sysdate)";
+			String sql = "insert into team(projectnum, userid, grade, projectlastmoddate) values(?,?,?,sysdate)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,team.getUserId());
-			pstmt.setInt(2, team.getGrade());
+			pstmt.setInt(1, team.getProjectNum());
+			pstmt.setString(2,team.getUserId());
+			pstmt.setInt(3, team.getGrade());
 			
 			resultrow = pstmt.executeUpdate();
 			

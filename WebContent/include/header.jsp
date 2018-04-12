@@ -229,7 +229,15 @@ $(function() {
    return false;
   }
     
+	
+	
+	
+	
  });
+ 	
+	
+	
+	
  	
   function mykeychange() {
  
@@ -244,48 +252,106 @@ $(function() {
   }	
  	
 
+	//프로젝트 추가
+	$("#insertproject").on("click",function(){
+		console.log("btnclick");
+		$("#home").find($("#newprojectname").parent()).remove();
+		$("#home").prepend("<div><input style='float:left' type = 'text' id='newprojectname'  name = 'newprojectname' >"
+				          +"<a class='glyphicon glyphicon-remove' onclick='remove()'></a></div>");
+		nameinput();
+		$("#newprojectname").focus();
+	})
+}); // onload 밖
 
+	//프로젝트 생성 취소하기 
+	function remove(){
+		console.log("삭제 클릭");
+		$("#newprojectname").parent().remove();
+	}
 	
- 
-});
+	function nameinput(){ // 프로젝트 이름 입력 관련 함수
+		$("#newprojectname").keypress(function(event){
+			 var keycode = event.keyCode;
+			 console.log(keycode);
+			 if(keycode =='13'){ 
+				console.log("엔터입력");
+				var value = $("#newprojectname").val();
+				//프로젝트 이름이 입력 되었는지 검증한다. 
+				if(value.trim()!=""){ 
+					
+					console.log("insert한다");
+					 var data ={newprojectname:$("#newprojectname").val()};
+					$.ajax({
+						url: "addproject.project",
+						data:data,
+						datatype:"TEXT",
+						success:function(data){
+							console.log(">"+data.trim()+"<");
+							if(data.trim() =="success"){
+								$(this).parent().remove();
+								$("#home").prepend(
+									"<div><button class="+value+">Button 1</button>"
+									+"<a class='glyphicon glyphicon-cog setting'></a></div>"	
+								)
+							}else{
+								alter("프로젝트 생성에 실패하였습니다");
+								$(this).parent().remove();
+							}
+						}
+						
+					}) 
+				} 
+			}
+			 if(keycode =='27'){
+				console.log("지운ㅏ");
+				$(this).remove();
+			}
+		})
+	}
+	
 
 
 </script>  
 </head>
 <!-- SIDEBAR -->
 <body>
-<div id="mySidenav" class="sidenav">
-
-	<div id="sideNav" class="sidenav">
-		<a href="#" class="glyphicon glyphicon-plus insert"></a>
-		<div class="tab-content">
-			<ul class="nav nav-tabs nav-tabs-modify">
-				<li class="active"><a data-toggle="tab" href="#home">진행중인 프로젝트</a></li>
-				<li><a data-toggle="tab" href="#menu1">완료된 &nbsp;   프로젝트</a></li>
-			</ul>
-			<div id="home" class="tab-pane fade in active">
-				<div>
-					<button class="button btn-1">Button 1</button>
-					<a class="glyphicon glyphicon-cog setting"></a>
-				</div>
-				<div>
-					<button class="button btn-1">Button 2</button>
-					<a class="glyphicon glyphicon-cog setting"></a>
-				</div>
-			</div>
-			<div id="menu1" class="tab-pane fade">
-				<div>
-					<button class="button btn-1">Button 3</button>
-					<a class="glyphicon glyphicon-cog setting"></a>
-				</div>
-				<div>
-					<button class="button btn-1">Button 4</button>
-					<a class="glyphicon glyphicon-cog setting"></a>
+	<c:if test="${!empty sessionScope.sessionId}">
+		<div id="mySidenav" class="sidenav">
+		
+			<div id="sideNav" class="sidenav">
+				<button id="insertproject" class="glyphicon glyphicon-plus insert btn btn-sm"></button> 
+				
+				<!-- <a href="#" class="glyphicon glyphicon-plus insert"></a> -->
+				<div class="tab-content">
+					<ul class="nav nav-tabs nav-tabs-modify">
+						<li class="active"><a data-toggle="tab" href="#home">진행중인 프로젝트</a></li>
+						<li><a data-toggle="tab" href="#menu1">완료된 &nbsp;   프로젝트</a></li>
+					</ul>
+					<div id="home" class="tab-pane fade in active">
+					<!-- <div><input style='float:left' type = 'text' id='newprojectname' onfocus="" name = 'newprojectname' ></div> -->
+						<div>
+							<button class="button btn-1">Button 1</button>
+							<a class="glyphicon glyphicon-cog setting"></a>
+						</div>
+						<div>
+							<button class="button btn-1">Button 2</button>
+							<a class="glyphicon glyphicon-cog setting" ></a>
+						</div>
+					</div>
+					<div id="menu1" class="tab-pane fade">
+						<div>
+							<button class="button btn-1">Button 3</button>
+							<a class="glyphicon glyphicon-cog setting"></a>
+						</div>
+						<div>
+							<button class="button btn-1">Button 4</button>
+							<a class="glyphicon glyphicon-cog setting"></a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
+	</c:if>
 
 <div id="navigationBars">
 <!-- SIDEBAR END -->
@@ -328,6 +394,7 @@ $(function() {
 			          <div class="dropdown-menu">
 			            <form id="fromUser" class="form container-fluid">
 			              <div class="form-group">
+			              	
 			                <label for="email">프로젝트에 참여 하시겠습니까</label>
 			                <input type="button" value="Y">
 			                <input type="button" value="N">
