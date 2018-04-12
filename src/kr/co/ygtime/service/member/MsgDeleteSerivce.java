@@ -20,7 +20,7 @@ public class MsgDeleteSerivce implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		/*
-			초대승인 시 : 1.팀 insert -> 2.메세지 Delete -> 3.메인화면으로
+			초대승인 시 : 1.팀 insert -> 2.메세지 Delete -> 3. 메세지 List보기(json)
 					초대승인 -> 2번 시작
 			
 			초대거절 시 : 메세지 Delete
@@ -40,13 +40,13 @@ public class MsgDeleteSerivce implements Action {
 			
 			forward = new ActionForward();
 			if(row > 0) { 
-				//삭제성공 -> 메인으로 돌아가게 한다 (현재는 test)
+				//삭제성공 -> 메세지 List보기(json)
 				forward.setRedirect(false);
-	       	    forward.setPath("/member_test/invite_choice_test.jsp");
+	       	    forward.setPath("/list.member");
 			}else {
 				//실패 (main 화면 가기)
 				forward.setRedirect(false);
-				forward.setPath("/member_test/invite_choice_test.jsp");
+				forward.setPath("/main.jsp");
 			}
 			
 		} catch (Exception e) {

@@ -183,39 +183,71 @@ $(function(){
 	//여기까지 헤더 관련 
 	
 	//헤더 관련 (profile 이미지 눌렀을 시) 초대메세지 리스트
+	
 	$("#profiledrop").click(function () {
-        var param = ${sessionScope.sessionId};
-        $.ajax({
+        var param = {userId : $('#getsession').val(), };
+        console.log($('#getsession').val());
+        
+       $.ajax({
             url:"list.member",
             datatype:"JSON",
             data:param,
             success:function(data){
-                console.log(">"+data.trim()+"<");
+            	console.log(">"+data.trim()+"<");
+            	
+                var json = JSON.parse(data);
                 
-                $("#subform").append("<p>"+data+"</p>");
+                $("#dropdownchilddiv").empty();
                 
-                $.each(data, function(index, obj) {
-                	String str = '<div class="dropdown-menu">';
-                	str += '<form id="fromUser" class="form container-fluid">';
+                $.each(json, function(index, obj) {
+                	var str = '<form id="fromUser'+index+'" class="form container-fluid">';
+                	str += '<div class="form-group">';
+                	str += '<label for="email">'+obj.inviteUserId+'님이 프로젝트로 초대 하였습니다</label>';
+                	str += '<input type="button" value="Y" onclick="msgaccept(this,'+obj.projectNum+')">';
+                	str += '<input type="button" value="N" onclick="msgreject(this,'+obj.projectNum+')">';
+                	str += '</div></form></div>';
+                	
+                	$("#dropdownchilddiv").append(str);
                 })
             }
             
         })
-        /* 
-        <div class="dropdown-menu">
-          <form id="fromUser" class="form container-fluid">
-            <div class="form-group">
-              <label for="email">프로젝트에 참여 하시겠습니까</label>
-              <input type="button" value="Y">
-              <input type="button" value="N">
-            </div>
-          </form>
-        </div>
-        */
+        
     })
-	//여기까지 초대메세지 리스트 뽑아오기
+    
+    function msgaccept(me, projectNum){
+		var params = {userid : $('#getsession').val(), projectnum : projectNum}
+		
+		console.log($('#getsession').val());
+		console.log(projectNum);
+		
+		/* $.ajax({
+            url:"msgagree.member",
+            datatype:"JSON",
+            data:params,
+            success:function(data){
+            	console.log(">"+data.trim()+"<");
+            	
+                var json = JSON.parse(data);
+                
+                $("#dropdownchilddiv").empty();
+                
+                $.each(json, function(index, obj) {
+                	var str = '<form id="fromUser'+index+'" class="form container-fluid">';
+                	str += '<div class="form-group">';
+                	str += '<label for="email">'+obj.inviteUserId+'님이 프로젝트로 초대 하였습니다</label>';
+                	str += '<input type="button" value="Y" onclick="msgaccept(this,'+obj.projectNum+')">';
+                	str += '<input type="button" value="N" onclick="msgreject(this,'+obj.projectNum+')">';
+                	str += '</div></form></div>';
+                	
+                	$("#dropdownchilddiv").append(str);
+                }) 
+            }
+            
+        }) */
+	}
+	//여기까지 초대메세지 리스트 뽑아오기(메세지 수락, 메세지 거절)
 })
-
 //사이드 숨길때
 function sideHide(){
 	$('#sideNav').css("width", "0px")
@@ -352,18 +384,15 @@ $(function() {
 			        </li>
 	        	</c:when>
 	        	<c:otherwise>
-	        		 <li ><a href = "logout.member">Logout <span class="glyphicon glyphicon-log-out"></span></a></li> 
-			         <li id="profiledrop" class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span></a>
-			          <div id="profilediv" class="dropdown-menu">
-			            <form id="fromUser" class="form container-fluid">
-			              <div class="form-group">
-			                <label for="email">프로젝트에 참여 하시겠습니까</label>
-			                <input type="button" value="Y">
-			                <input type="button" value="N">
-			              </div>
-			            </form>
-			          </div>
-			        </li>
+	        		<li ><a href = "logout.member">Logout <span class="glyphicon glyphicon-log-out"></span></a></li> 
+		        	<li id="profiledrop" class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span></a>
+			        	<input id="getsession" type="hidden" value="${sessionScope.sessionId}">
+			        	<div id = "dropdowndiv" class="dropdown-menu">
+				        	<a id="profilmodify">회원정보 수정</a>
+				        	<div id="dropdownchilddiv"></div>
+			        	</div>
+		        	</li>
+				     
 	        	</c:otherwise>
 	        </c:choose>
 	        

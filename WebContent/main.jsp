@@ -123,10 +123,10 @@ $(function(){
 		}
 	)
 	
-	$('body').attr({
+	/* $('body').attr({
 		oncontextmenu:"return false",
 	 	onselectstart:"return false",
-	}) 
+	})  */
 	
 })
 function sortable(){

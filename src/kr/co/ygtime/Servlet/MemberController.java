@@ -18,6 +18,7 @@ import kr.co.ygtime.service.member.InviteListService;
 import kr.co.ygtime.service.member.InviteMsgService;
 import kr.co.ygtime.service.member.MsgAgreeService;
 import kr.co.ygtime.service.member.MsgDeleteSerivce;
+import net.sf.json.JSONArray;
 import kr.co.ygtime.service.member.JoinService;
 import kr.co.ygtime.service.member.LoginService;
 
@@ -94,7 +95,7 @@ public class MemberController extends HttpServlet {
 				e.printStackTrace();
 			}
         	
-        }else if(cmdURI.equals("/member_test/list.member")) {
+        }else if(cmdURI.equals("/list.member")) {
         	action = new InviteListService();
         	try {
 				forward = action.execute(request, response);

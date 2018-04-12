@@ -22,7 +22,7 @@ public class MsgAgreeService implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		
-		//초대승인 -> 1.팀 insert -> 2.메세지 Delete -> 3.메인화면으로
+		//초대승인 -> 1.팀 insert -> 2.메세지 Delete -> 3.메세지 List보기(json)
 		
 		ActionForward forward = null;
 		
@@ -52,7 +52,7 @@ public class MsgAgreeService implements Action{
 			}else {
 				//실패 (main 화면 가기)
 				forward.setRedirect(false);
-				forward.setPath("/member_test/invite_choice_test.jsp");
+				forward.setPath("/main.jsp");
 				
 			}
 			

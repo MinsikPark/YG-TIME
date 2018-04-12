@@ -248,7 +248,7 @@ public class MemberDAO {
 
 			list = new ArrayList<>();
 			
-			if(rs.next()) {
+			while(rs.next()) {
 				
 				InviteMsgDTO msgDTO = new InviteMsgDTO();
 				msgDTO.setMsgNum(rs.getInt("msgNum"));
