@@ -45,7 +45,7 @@
 	
 	.sidenav .setting {
 		font-size:20px;
-		top:3em;
+		top:4em;
 	    float : left;
 	    color:white;
 	}
@@ -77,6 +77,8 @@
 	  position: relative;
 	  text-transform: uppercase;
 	  float:left;
+	  height: 102px;
+	  width: 245px;
 	}
 	
 	.button::before,
@@ -147,9 +149,111 @@
 		color:white;
 		width: 100px;
 	}
+	
+	/* 여기부터 상세페이지만을 위한 css  */
+	
+	input[type="checkbox"]{
+	  position:absolute; 
+	  overflow:hidden;
+	  clip:rect(0 0 0 0);
+	}
+	
+	p label{
+	  height:15px; 
+	  line-height:15px; 
+	  padding-left:20px; 
+	  display:inline-block; 
+	  background:url(http://hcs1105.com/wp/wp-content/themes/hcs1105/images/checkbox1.png) no-repeat 0 0; 
+	  font-size:15px; 
+	  vertical-align:middle; 
+	  cursor:pointer;
+	  font-weight: 1;
+	}
+	 
+	input[type="checkbox"]:checked + label{
+	  background-position: 0 -15px;
+	}
+	
+	.modalstyle {
+		width:50%;
+	}
+	textarea {
+		width:100%;
+		height: 200px;
+		float:left;
+		margin:0px 10px 10px 0px;
+	}
+	
+	.detailbutton{
+		width:80%; 
+		margin:20px 0px 0px 20px;
+	}
+	
+	.container {
+	  display: -webkit-flex;
+	  display: flex;
+	  width: 100%;
+	}
+	.flex1 {
+	  -webkit-flex: 1;
+	          flex: 1;
+	}
+	.flex2 {
+	  -webkit-flex: 4;
+	          flex: 4;
+	}
+	#btnFileUpload{
+		display: none;
+	}
+	.inputtextbox{
+		width:93%;
+		float:left;
+		margin : 4px 2px;
+	}
+	label[for=comment]{
+		margin:10px;
+	}
+	img {
+		float : left;
+		margin: 5px ;
+	}
+	.commentlist{
+		margin : 10px 5px;
+	}
+	.commentinputtextbox{
+		width:90%;
+		float:left;
+		margin : 5px 2px;
+	}
+	@media screen and (max-width: 600px) {
+		.inputtextbox{
+			width: 85%;
+		}
+		.commentinputtextbox{
+			width : 50%
+		}
+	}
+	@media screen and (max-width: 1000px) {
+		.commentinputtextbox{
+			width : 80%
+		}
+	}
+	@media screen and (min-width: 601px) {
+		.inputtextbox{
+			width:93%;
+		}
+	}
+	@media screen and (min-width: 1001px) {
+		.commentinputtextbox{
+			width : 90%
+		}
+	}
+	
+	/* 여기까지 상세페이지만을 위한 css  */
 </style>
 
 <script>
+var i = 1	
 $(function(){
 	$('.setting').hide()
 	$('.button').hide()
@@ -167,6 +271,13 @@ $(function(){
 		sideShow()
 	})
 	//여기까지 사이드 관련
+	$('#btnFileUpLoad').click(function() {
+		$('#btnFileUpload').click()
+	})
+	
+	$('#addCheckList').click(function(){
+		addCheckListForm()
+	})
 })
 
 //사이드 숨길때
@@ -189,6 +300,69 @@ function sideShow(){
 	$('.setting').delay(250).fadeIn()
 	$('.insert').delay(250).fadeIn()
 } 
+
+function changeValue(obj){
+	if(obj.value != ""){
+		var div = '<div><input type="text" class="form-control inputtextbox" value="첨부 파일  : '+ obj.value.substr(12)+'" readonly>'
+			div += '<button type="button" class="close" onclick="fileInputRemove(this)">&times;</button></div>'
+		$('#fileUploadForm').append(div)
+	}
+	obj.value =""; 
+}
+
+function fileInputRemove(obj){
+	obj.closest('div').remove()
+}
+
+function addCheckListForm(){
+	var div = '<div><input type="text" class="form-control inputtextbox">'
+		div += '<button type="button" class="close glyphicon" onclick="addCheckList(this)">&#xe013;</button></div>'
+
+		$('label[for=checklist]').after(div)
+}
+
+function addCheckList(obj) {
+	var value = $(obj).closest('div')[0].children[0].value
+	if(value != ""){
+		var div = '<p><input type="checkbox" id="checkbox'+i+'"><label for="checkbox'+i+'">'+value+'</label><button type="button" class="close" onclick="removeCheckList(this)">&times;</button></p>'
+		i++
+		
+		obj.closest('div').remove()
+		
+		$('#checkListForm').append(div)
+	}
+}
+
+function removeCheckList(obj){
+	$(obj).closest('p').remove()
+}
+
+function addComment(obj){
+	var value = $(obj).closest('div')[0].children[1].value
+	if(value != ""){
+		var div = '<div class="commentlist"><img src="img/bg-banner.jpg" class="img-circle person" alt="Random Name" width="30" height="30">'
+			div += '<input type="text" class="form-control commentinputtextbox" value="' + value + '" readonly>'
+			div += '<button type="button" class="close" onclick="removeComment(this)">&times;</button></div>'
+			
+		$('#commentListForm').append(div)
+		$(obj).closest('div')[0].children[1].value = ""
+	}
+}
+
+function removeComment(obj){
+	$(obj).closest('div').remove()
+}
+
+function updateDetail(obj){
+	console.log($('#contentDetail')[0].value)
+}
+
+//프로젝트 추가부분
+function addProjectForm(obj){
+	var button = '<div><button class="button btn-1"><input type="text" style="margin-left:-50px;"></button><a class="glyphicon glyphicon-cog setting"></a></div>'
+	$('#progress').append(button)
+}
+
 </script>  
 </head>
 <!-- SIDEBAR -->
@@ -196,13 +370,13 @@ function sideShow(){
 <div id="mySidenav" class="sidenav">
 
 	<div id="sideNav" class="sidenav">
-		<a href="#" class="glyphicon glyphicon-plus insert"></a>
+		<a href="#" class="glyphicon glyphicon-plus insert" onclick="addProjectForm()"></a>
 		<div class="tab-content">
 			<ul class="nav nav-tabs nav-tabs-modify">
-				<li class="active"><a data-toggle="tab" href="#home">진행중인 프로젝트</a></li>
-				<li><a data-toggle="tab" href="#menu1">완료된 &nbsp;   프로젝트</a></li>
+				<li class="active"><a data-toggle="tab" href="#progress">진행중인 프로젝트</a></li>
+				<li><a data-toggle="tab" href="#complete">완료된 &nbsp;   프로젝트</a></li>
 			</ul>
-			<div id="home" class="tab-pane fade in active">
+			<div id="progress" class="tab-pane fade in active">
 				<div>
 					<button class="button btn-1">Button 1</button>
 					<a class="glyphicon glyphicon-cog setting"></a>
@@ -212,7 +386,7 @@ function sideShow(){
 					<a class="glyphicon glyphicon-cog setting"></a>
 				</div>
 			</div>
-			<div id="menu1" class="tab-pane fade">
+			<div id="complete" class="tab-pane fade">
 				<div>
 					<button class="button btn-1">Button 3</button>
 					<a class="glyphicon glyphicon-cog setting"></a>
@@ -228,6 +402,7 @@ function sideShow(){
 
 <div id="navigationBars">
 <!-- SIDEBAR END -->
+
 <!-- HEADER -->
 <header>
 	<nav class="navbar">
@@ -237,7 +412,6 @@ function sideShow(){
 	    <div> 
 	      <!-- 로그인 창 -->
 	      <ul class="nav navbar-nav navbar-right">
-	        <li data-toggle="modal" data-target="#myModal1"><a href="#"><span class="glyphicon glyphicon-user"></span> 상세페이지</a></li>
 	        <li data-toggle="modal" data-target="#myModal"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 	        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Login <span class="glyphicon glyphicon-log-in"></span></a>
 	          <div class="dropdown-menu">
@@ -333,11 +507,59 @@ function sideShow(){
 
 
 <!--  보경이 상세페이지   -->
-
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body container">
+        	<div class="flex2">
+	        	<form action="#" method="post"> 
+		        	<div class="form-group">
+					    <label for="content">상세 내용</label>
+					</div>
+					<textarea id="contentDetail"></textarea>
+				  	<div class="form-group">
+				  		<button class="btn btn-success" type="button" onclick="updateDetail(this)">작성</button>
+				  	</div>
+		        	<div class="form-group" id="fileUploadForm">
+				    </div>
+				    <div class="form-group">
+					    <label for="checklist">Check List</label>
+					    <div id="checkListForm"></div>
+					</div>
+		        	<div class="form-group">
+					    <label for="comment">댓글</label>
+					    <input type="text" class="form-control commentlist" placeholder="댓글을 입력하세요">
+					    <button class="btn btn-success" type="button" onclick="addComment(this)">작성</button>
+					    <div id="commentListForm"></div>
+					</div>
+	        	</form>
+        	</div>
+			<div class="flex1"><br>
+				<input id="btnFileUpload" type="file" onchange="changeValue(this)">
+				<input class="detailbutton btn btn-primary" type="button" value="파일 추가 하기" id="btnFileUpLoad">
+				<input class="detailbutton btn btn-primary" type="button" value="Check List" id="addCheckList">
+				<div class="dropdown">
+					<input class="detailbutton btn btn-primary" type="button" value="Member" data-toggle="dropdown">
+					<ul class="dropdown-menu">
+						<li><a href="#">HTML</a></li>
+						<li><a href="#">CSS</a></li>
+						<li><a href="#">JavaScript</a></li>
+					</ul>
+				</div>
+			</div>
+	  	 </div>
+      </div>
+    </div>
+  </div> 
+ </div>
 
 <!--  보경이 상세페이지 끝   -->
 
-</div>
 
      
 </body>
