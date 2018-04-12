@@ -392,50 +392,46 @@ function sideShow(){
 	$('.setting').delay(250).fadeIn()
 	$('.insert').delay(250).fadeIn()
 } 
-
-//jquery 로 간단하게 유효성 check 하기
 $(function() {
 
- 	$('#joinForm').submit(function() {
-	   //alert("가입");
-	if ($('#email').val() == "") { //이메일검사
-   	alert('ID(email)를 입력해 주세요.');
-   	$('#email').focus();
-   return false;
-   
-  } else if ($('#password').val() == "") { //비밀번호 검사
-   alert('PWD를 입력해 주세요.');
-   $('#password').focus();
-   return false;
-   
-  }else if ($('#passwordCheck').val() == "" ) {//passwordCheck 검사
-	  
-  $('#passwordCheck').focus();
-   return false;
-   
-  }else if ($('#nickName').val() == "") { //nickName 검사
-   alert('nickName를 입력해 주세요.');
-   $('#nickName').focus();
-   return false;
-  }
-    
- });
-	/* //프로젝트 추가
-	$("#insertproject").on("click",function(){
-		console.log("btnclick");
-		$("#home").find($("#newprojectname").parent()).remove();
-		$("#home").prepend("<div><input style='float:left' type = 'text' id='newprojectname'  name = 'newprojectname' >"
-				          +"<a class='glyphicon glyphicon-remove' onclick='remove()'></a></div>");
-		nameinput();
-		$("#newprojectname").focus();
-	}) */
+	
+	//jquery 로 간단하게 유효성 check 하기
+	
+	 	$('#joinForm').submit(function() {
+		   //alert("가입");
+		if ($('#email').val() == "") { //이메일검사
+	   	alert('ID(email)를 입력해 주세요.');
+	   	$('#email').focus();
+	   return false;
+	   
+	  } else if ($('#password').val() == "") { //비밀번호 검사
+	   alert('PWD를 입력해 주세요.');
+	   $('#password').focus();
+	   return false;
+	   
+	  }else if ($('#passwordCheck').val() == "" ) {//passwordCheck 검사
+		  
+	  $('#passwordCheck').focus();
+	   return false;
+	   
+	  }else if ($('#nickName').val() == "") { //nickName 검사
+	   alert('nickName를 입력해 주세요.');
+	   $('#nickName').focus();
+	   return false;
+	  }
+	    
+	 });
+	 	
+ 	//로그인 체크 후 프로젝트 리스트 불러오는 함수
+ 	callprojectlist();
+	
 }); // onload 밖
 
 
 	//프로젝트 관리 함수
 	function addProjectForm(obj){
 	if($('#projectName').length == 0){
-		var button = '<div><button class="button btn-1"><input type="text" id="projectName" style="margin-left:-60px; color:black;"></button><a class="glyphicon setting" onclick="addProject(this)">&#xe013;</a></div>'
+		var button = '<div><button class="button btn-1"><input type="text" id="projectName" style="margin-left:-60px; color:black;"></button><a class="glyphicon setting" onclick="addProject()">&#xe013;</a></div>'
 			$('#progress').append(button)
 		$('#projectName').focus()
 	}
@@ -445,13 +441,19 @@ $(function() {
 	    confirm("멤버를 삭제하시겠습니까?");
 	}
 	
-	function addProject(obj) {
+	function addProject() {
 		var value = $('#projectName').val() 
+		
 		if(value.trim() != ""){
-			$(obj).closest('div').remove()
-			var div  = '<div><button class="button btn-1">'+value+'</button><a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a><ul class="dropdown-menu" style= "float: right; position: unset;">'
-				div += '<li><a onclick="projectDel(this)">프로젝트 삭제</a></li><li><a onclick="projectComplete(this)">프로젝트 완료</a></li></ul>	</div>'
-			$('#progress').append(div)
+			
+			$.ajax({
+				
+				
+				
+			})
+			
+			$('#progress').empty();
+			callprojectlist(); 
 		}else{
 			alert('프로젝트 명을 입력하세요')
 		}
@@ -483,8 +485,89 @@ $(function() {
 		console.log('프로젝트 아이디를 받아서 다시 뿌려줘요')
 	}
 	
+	
+	function addproajax(){
+		
+		 var data ={newprojectname:$("#newprojectname").val()};
+			$.ajax({
+				url: "addproject.project",
+				data:data,
+				datatype:"TEXT",
+				success:function(data){
+					console.log(">"+data.trim()+"<");
+					if(data.trim() =="success"){
+						$(this).parent().remove();
+						
+					}else{
+						alter("프로젝트 생성에 실패하였습니다");
+						$(this).parent().remove();
+					}
+				}
+				
+			}) 
+		
+	}
+	
+	
+	
+	
+	
+	
 	//프로젝트 관리 함수 UI부분 끝	
 		
+		
+
+	
+	function callprojectlist(){
+		var sessionId = '<%=session.getAttribute("sessionId")%>';
+		if(sessionId!=null){
+			console.log("sessionId : " + sessionId);
+			$.ajax({
+				url:"projectlist.project",
+				datatype:"json",
+				data: {userId:sessionId},
+				success:function(data){
+					//console.log(">"+data.trim()+"<");
+					var json = JSON.parse(data);
+					
+					console.log(json);
+					 $.each(json,function(key,value){
+						var proejectName = value.projectName;
+						var projectEndDate = value.projectEndDate;
+						var projectNum = value.projectNum;
+						//var projectStartDate = value.projectStartDate;
+						//console.log(projectEndDate);
+						
+						if(projectEndDate != ""){ //시작 날짜가 비어있지 않다면 >> 프로젝트가 완료 되었다면
+							$("#complete").append(
+								'<div value='+ projectNum+ '><button class="button btn-1">'
+								+ proejectName + '</button>'
+								+ '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
+								+ '<ul class="dropdown-menu" style="float: right; position: unset;">'
+								+ '<li><a onclick="projectView(this)">프로젝트 보기</a></li>'
+								+ '<li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li></ul></div>'	
+							);
+							
+						}else{ // 프로젝트가 현재도 진행중이라면
+							$("#progress").append(
+								'<div value='+projectNum+' ><button class="button btn-1">'
+								+ proejectName + '</button><a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
+								+'<ul class="dropdown-menu" style="float: right; position: unset;">'
+								+'<li><a onclick="projectDel(this)">프로젝트 삭제</a></li>'
+								+'<li><a onclick="projectComplete(this)">프로젝트 완료</a></li></ul></div>'
+							)
+							
+							
+						}
+					})  
+					
+				}
+			
+			})
+			
+		}
+		
+	}
 	
 
 
@@ -492,7 +575,6 @@ $(function() {
 	//프로젝트 생성 취소하기 
 
 	/* //프로젝트 생성 취소하기 
->>>>>>> d620bbc58e50a503ace1eae354701343613cf30f
 	function remove(){
 		console.log("삭제 클릭");
 		$("#newprojectname").parent().remove();
@@ -608,62 +690,11 @@ function idcheck() {
 						<li class="active"><a data-toggle="tab" href="#progress">진행중인 프로젝트</a></li>
 						<li><a data-toggle="tab" href="#complete">완료된 &nbsp;   프로젝트</a></li>
 					</ul>
-				<!-- 	<div id="home" class="tab-pane fade in active">
-					<div><input style='float:left' type = 'text' id='newprojectname' onfocus="" name = 'newprojectname' ></div>
-						<div>
-							<button class="button btn-1">Button 1</button>
-							<a class="glyphicon glyphicon-cog setting"></a>
-						</div>
-						<div>
-							<button class="button btn-1">Button 2</button>
-							<a class="glyphicon glyphicon-cog setting" ></a>
-						</div>
+			
+					<div id="progress" class="tab-pane fade in active"> <!-- 진행중인 프로젝트 -->
+					
 					</div>
-					<div id="menu1" class="tab-pane fade">
-						<div>
-							<button class="button btn-1">Button 3</button>
-							<a class="glyphicon glyphicon-cog setting"></a>
-						</div>
-						<div>
-							<button class="button btn-1">Button 4</button>
-							<a class="glyphicon glyphicon-cog setting"></a>
-						</div>
-					</div> -->
-					<div id="progress" class="tab-pane fade in active">
-						<div>
-							<button class="button btn-1">Button 1</button>
-							<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
-							<ul class="dropdown-menu" style="float: right; position: unset;">
-								<li><a onclick="projectDel(this)">프로젝트 삭제</a></li>
-								<li><a onclick="projectComplete(this)">프로젝트 완료</a></li>
-							</ul>
-						</div>
-						<div>
-							<button class="button btn-1">Button 2</button>
-							<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
-							<ul class="dropdown-menu" style="float: right; position: unset;">
-								<li><a onclick="projectDel(this)">프로젝트 삭제</a></li>
-								<li><a onclick="projectComplete(this)">프로젝트 완료</a></li>
-							</ul>
-						</div>
-					</div>
-					<div id="complete" class="tab-pane fade">
-						<div>
-							<button class="button btn-1">Button 3</button>
-							<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
-							<ul class="dropdown-menu" style="float: right; position: unset;">
-								<li><a onclick="projectView(this)">프로젝트 보기</a></li>
-								<li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>
-							</ul>
-						</div>
-						<div class="dropdown">
-							<button class="button btn-1">Button 4</button>
-							<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
-							<ul class="dropdown-menu" style="float: right; position: unset;">
-								<li><a onclick="projectView(this)">프로젝트 보기</a></li>
-								<li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>
-							</ul>
-						</div>
+					<div id="complete" class="tab-pane fade"> <!-- 완료 -->
 					</div>
 				</div>
 			</div>

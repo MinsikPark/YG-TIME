@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.service.project.ProjectAddService;
+import kr.co.ygtime.service.project.ProjectListService;
 
 @WebServlet("*.project")
 public class ProjectController extends HttpServlet {
@@ -39,6 +40,15 @@ public class ProjectController extends HttpServlet {
         
         if(cmdURI.equals("/addproject.project")) {
         	action = new ProjectAddService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
+        	
+        } else if(cmdURI.equals("/projectlist.project")) {
+        	action = new ProjectListService();
         	try {
 				forward = action.execute(request, response);
 			} 
