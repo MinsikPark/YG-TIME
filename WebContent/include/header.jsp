@@ -171,22 +171,108 @@ $(function(){
 	//여기까지 사이드 관련
 	
 	//헤더 관련
-		$("#btnLogin").click(function(){
-			console.log("login 클릭");
-	 		if($("#loginEmail").val() =="" || $("#loginPwd").val() ==""){
-				alert("아이디와 비밀번호를 입력해 주세요");
-				
-			}else{
-				$("#formLogin").submit();
-			}			
-		}) // 로그인 비동기 처리 함수 
+	$("#btnLogin").click(function(){
+		console.log("login 클릭");
+ 		if($("#loginEmail").val() =="" || $("#loginPwd").val() ==""){
+			alert("아이디와 비밀번호를 입력해 주세요");
+			
+		}else{
+			$("#formLogin").submit();
+		}			
+	}) // 로그인 비동기 처리 함수 
 	//여기까지 헤더 관련 
 	
 	//헤더 관련 (profile 이미지 눌렀을 시) 초대메세지 리스트
 	
-	//여기까지 초대메세지 리스트 뽑아오기
+	$("#profiledrop").click(function () {
+        var param = {userId : $('#getsession').val()};
+        console.log($('#getsession').val());
+        
+       $.ajax({
+            url:"list.member",
+            datatype:"JSON",
+            data:param,
+            success:function(data){
+            	console.log(data.trim());
+                var json = JSON.parse(data);
+                
+                $("#dropdownchilddiv").empty();
+                
+                $.each(json, function(index, obj) {
+                	var str = '<form id="fromUser'+index+'" class="form container-fluid">';
+                	str += '<div class="form-group">';
+                	str += '<label for="email">'+obj.inviteUserId+'님이 프로젝트로 초대 하였습니다</label>';
+                	str += '<input type="button" value="Y" onclick="msgaccept(this,'+obj.projectNum+')">';
+                	str += '<input type="button" value="N" onclick="msgreject(this,'+obj.projectNum+')">';
+                	str += '</div></form></div>';
+                	
+                	$("#dropdownchilddiv").append(str);
+                })
+            }
+            
+        })
+        
+    })
+    
+	//여기까지 초대메세지 리스트 뽑아오기(메세지 수락, 메세지 거절)
 })
 
+//초대승락
+function msgaccept(me, projectNum){
+	var param = {userid : $('#getsession').val(), projectnum : projectNum}
+	
+	$.ajax({
+          url:"msgagree.member",
+          datatype:"JSON",
+          data:param,
+          success:function(data){
+              var json = JSON.parse(data);
+              
+              $("#dropdownchilddiv").empty();
+              
+              $.each(json, function(index, obj) {
+              	var str = '<form id="fromUser'+index+'" class="form container-fluid">';
+              	str += '<div class="form-group">';
+              	str += '<label for="email">'+obj.inviteUserId+'님이 프로젝트로 초대 하였습니다</label>';
+              	str += '<input type="button" value="Y" onclick="msgaccept(this,'+obj.projectNum+')">';
+              	str += '<input type="button" value="N" onclick="msgreject(this,'+obj.projectNum+')">';
+              	str += '</div></form></div>';
+              	
+              	$("#dropdownchilddiv").append(str);
+              }) 
+          }
+          
+      })
+}
+
+//초대거절
+function msgreject(me, projectNum){
+	var param = {userid : $('#getsession').val(), projectnum : projectNum}
+	
+	$.ajax({
+          url:"msgdel.member",
+          datatype:"JSON",
+          data:param,
+          success:function(data){
+              var json = JSON.parse(data);
+              
+              $("#dropdownchilddiv").empty();
+              
+              $.each(json, function(index, obj) {
+              	var str = '<form id="fromUser'+index+'" class="form container-fluid">';
+              	str += '<div class="form-group">';
+              	str += '<label for="email">'+obj.inviteUserId+'님이 프로젝트로 초대 하였습니다</label>';
+              	str += '<input type="button" value="Y" onclick="msgaccept(this,'+obj.projectNum+')">';
+              	str += '<input type="button" value="N" onclick="msgreject(this,'+obj.projectNum+')">';
+              	str += '</div></form></div>';
+              	
+              	$("#dropdownchilddiv").append(str);
+              }) 
+          }
+          
+      })
+}
+	
 //사이드 숨길때
 function sideHide(){
 	$('#sideNav').css("width", "0px")
@@ -210,59 +296,84 @@ function sideShow(){
 
 //jquery 로 간단하게 유효성 check 하기
 $(function() {
- 	$('#joinForm').submit(function() {
-	   //alert("가입");
-	if ($('#email').val() == "") { //이메일검사
-   	alert('ID(email)를 입력해 주세요.');
-   	$('#email').focus();
-   return false;
-   
-  } else if ($('#password').val() == "") { //비밀번호 검사
-   alert('PWD를 입력해 주세요.');
-   $('#password').focus();
-   return false;
-   
-  }else if ($('#passwordCheck').val() == "" ) {//passwordCheck 검사
-	  
-  $('#passwordCheck').focus();
-   return false;
-   
-  }else if ($('#nickName').val() == "") { //nickName 검사
-   alert('nickName를 입력해 주세요.');
-   $('#nickName').focus();
-   return false;
-  }
-    
- });
- 	
-  function mykeychange() {
- 
-	 
- 			
-		 	if($('#password').val() != "$('#passwordCheck').val()="   ){
-		 		alert("일치");
-		 	   		
-		 	   	}else{
-		 	   		alert("불일치2");
-		 	   	}
-  }	
- 	
 
-  /* 
-  <div class="dropdown-menu">
-    <form id="fromUser" class="form container-fluid">
-      <div class="form-group">
-        <label for="email">프로젝트에 참여 하시겠습니까</label>
-        <input type="button" value="Y">
-        <input type="button" value="N">
-      </div>
-    </form>
-  </div>
-  */
-
+	$('#joinForm').submit(function() {
+		if ($('#email').val() == "" ) { //이메일검사
+	   	alert('아이디 중복확인 해주세요.');
+	   	$('#email').focus();
+	   return false;
+	   
+	  } else if ($('#password').val() == "") { //비밀번호 검사
+	   alert('PWD를 입력해 주세요.');
+	   $('#password').focus();
+	   return false;
+	   
+	  }else if ($('#passwordCheck').val() == "" ) {//passwordCheck 검사
+		  
+	  $('#passwordCheck').focus();
+	   return false;
+	   
+	  }else if ($('#nickName').val() == "") { //nickName 검사
+	   alert('nickName를 입력해 주세요.');
+	   $('#nickName').focus();
+	   return false;
+	  }
+		
+	});
+		
 	
- 
+
 });
+
+//비밀번호 일치여부
+function passwordfunction(){
+
+	if($("#password").val() != $("#passwordCheck").val()){
+		alert("패스워드 입력이 일치하지 않습니다");
+		$("#password").val('');
+		$("#passwordCheck").val('');
+		$("#password").focus();
+
+	}else{
+		alert("패스워드  일치");
+		$("#nickName").focus();
+	}
+}
+
+//아이디중복체크 비동기
+function idcheck() {
+	var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+	
+	$.ajax({
+	          url : "idcheck.member" ,
+	          data :  { email:$("#email").val()},
+	          success : function(data){
+	         
+	
+	               if(data == "true"){
+	                    $("#result").text("중복된 아이디입니다.");
+	                    $("#result").css("color","red");
+	                    
+	               } 
+	               else if(data == "false" || exptext.test($('#email').val()) == true){
+	                    $("#result").text("사용가능한 아이디입니다.");
+	                    $("#result").css("color","blue");
+	                    
+	               }
+	               if(exptext.test($('#email').val()) == false){
+	                   
+	        			  $("#result").text("이메일 형식이 올바르지 않습니다.");
+	                    $("#result").css("color","red");
+	               } 
+	               if (data == "empty" ) {
+	             	   $("#result").text("이메일을 입력해주세요");
+	                    $("#result").css("color","red");
+	 				 }
+	          }
+	      });
+}
+
+
 
 
 </script>  
@@ -338,18 +449,17 @@ $(function() {
 			        </li>
 	        	</c:when>
 	        	<c:otherwise>
-	        		 <li ><a href = "logout.member">Logout <span class="glyphicon glyphicon-log-out"></span></a></li> 
-			         <li id="profiledrop" class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span></a>
-			          <div class="dropdown-menu">
-			            <form id="fromUser" class="form container-fluid">
-			              <div class="form-group">
-			                <label for="email">프로젝트에 참여 하시겠습니까</label>
-			                <input type="button" value="Y">
-			                <input type="button" value="N">
-			              </div>
-			            </form>
-			          </div>
-			        </li>
+	        		<li ><a href = "logout.member">Logout <span class="glyphicon glyphicon-log-out"></span></a></li> 
+		        	<li id="profiledrop" class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span></a>
+			        	<input id="getsession" type="hidden" value="${sessionScope.sessionId}">
+			        	<div id = "dropdowndiv" class="dropdown-menu">
+				        	<a id="profilmodify">회원정보 수정</a><br>
+				        	<!-- <a>초대리스트</a> -->
+				        	<div id="dropdownchilddiv"></div>
+				        	
+			        	</div>
+		        	</li>
+				     
 	        	</c:otherwise>
 	        </c:choose>
 	        
@@ -388,23 +498,29 @@ $(function() {
         	<form id ="joinForm" action="Join.member" method="post">
 	        	<div class="form-group">
 				    <label for="email">이메일 주소</label>
-				    <input type="email" class="form-control" id="email" placeholder="이메일을 입력하세요">
+				    <button id="idcheckhover" type="button"  class ="btn btn-default" onclick="idcheck()">이메일 중복확인</button> 
+				    <span id="result"></span> <br><br>
+				    <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" >
+				 
+	
+					
+				
 				</div>
 	        	<div class="form-group">
 				    <label for="password">비밀 번호</label>
-				    <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요">
+				    <input type="password" class="form-control" id="password"  name="password" placeholder="비밀번호를 입력하세요">
 				</div>
 	        	<div class="form-group">
 				    <label for="passwordCheck">비밀 번호 확인</label>
-				    <input type="password" class="form-control" id="passwordCheck" placeholder="비밀번호를 입력하세요"  onchange = "mykeychange()">&nbsp;&nbsp;<span id="p"></span>     
+				    <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="비밀번호를 입력하세요"  onchange = "passwordfunction()">
 				</div>
 	        	<div class="form-group">
 				    <label for="nickName">닉네임</label>
-				    <input type="text" class="form-control" id="nickName" placeholder="닉네임을 입력하세요">
+				    <input type="text" class="form-control" id="nickName" name="nickName"  placeholder="닉네임을 입력하세요">
 				</div>
 				<div class="form-group">
 				    <label for="fileUpLoad">파일 업로드</label>
-				    <input type="file" id="fileUpLoad">
+				    <input type="file" id="fileUpLoad" name="fileUpLoad">
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-default">Submit</button>

@@ -29,31 +29,25 @@ import net.sf.json.JSONArray;
  */
 public class InviteListService implements Action{
 	
-	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response){
 		MemberDAO memberdao = null;
 		List<InviteMsgDTO> list = null;
 		String userId = null;
 		ActionForward forward = null;
+		
 		try {
 			memberdao = new MemberDAO();
 			userId = (String)request.getParameter("userId");
 			list = memberdao.inviteMsgSelect(userId);
-			System.out.println("userid : " + userId);
-			
 			
 			JSONArray json = JSONArray.fromObject(list);
-			System.out.println("json : " + json);
+			request.setAttribute("ajaxdata", json);
+			
 			forward = new ActionForward();
-			request.setAttribute("json", json);
 			forward.setRedirect(false);
-			forward.setPath("/member_test/ListOk_test.jsp");
-			System.out.println("메롱1");
-			System.out.println("list : "+ list);
+       	    forward.setPath("/ajaxpath/AjaxOk.jsp");
 			
-			
-			
-		} catch (NamingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return forward;

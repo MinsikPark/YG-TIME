@@ -8,7 +8,6 @@
 package kr.co.ygtime.DTO;
 
 public class InviteMsgDTO {
-	private int msgNum;
 	private String userId;
 	private int projectNum;
 	private String inviteUserId;
@@ -16,20 +15,13 @@ public class InviteMsgDTO {
 		
 	public InviteMsgDTO() {}
 	
-	public InviteMsgDTO(int msgNum, String userId, int projectNum, String inviteUserId, String msgDate) {
-		this.msgNum = msgNum;
+	public InviteMsgDTO(String userId, int projectNum, String inviteUserId, String msgDate) {
 		this.userId = userId;
 		this.projectNum = projectNum;
 		this.inviteUserId = inviteUserId;
 		this.msgDate = msgDate;
 	}
 	
-	public int getMsgNum() {
-		return msgNum;
-	}
-	public void setMsgNum(int msgNum) {
-		this.msgNum = msgNum;
-	}
 	public String getUserId() {
 		return userId;
 	}

@@ -335,10 +335,11 @@ public class ProjectDAO {
 		
 		try {
 			conn = ds.getConnection();
-			String sql = "insert into team(projectnum, userid, grade, projectlastmoddate) values(project_idx.val,?,?,sysdate)";
+			String sql = "insert into team(projectnum, userid, grade, projectlastmoddate) values(?,?,?,sysdate)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,team.getUserId());
-			pstmt.setInt(2, team.getGrade());
+			pstmt.setInt(1, team.getProjectNum());
+			pstmt.setString(2,team.getUserId());
+			pstmt.setInt(3, team.getGrade());
 			
 			resultrow = pstmt.executeUpdate();
 			

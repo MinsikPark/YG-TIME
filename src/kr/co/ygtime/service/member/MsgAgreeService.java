@@ -22,7 +22,7 @@ public class MsgAgreeService implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		
-		//초대승인 -> 1.팀 insert -> 2.메세지 Delete -> 3.메인화면으로
+		//초대승인 -> 1.팀 insert -> 2.메세지 Delete -> 3.메세지 List보기(json)
 		
 		ActionForward forward = null;
 		
@@ -30,7 +30,7 @@ public class MsgAgreeService implements Action{
 			//파라미터로 아이디와 초대받은 프로젝튼 넘버를 가져온다
 			String userid = request.getParameter("userid");
 			int projectnum = Integer.parseInt(request.getParameter("projectnum"));
-			
+			System.out.println("2 :"+userid+"/"+projectnum);
 			//TeamDTO 객체에 넣어준다.
 			//2. 팀 insert 팀원으로
 			TeamDTO teamdto = new TeamDTO();
@@ -41,9 +41,10 @@ public class MsgAgreeService implements Action{
 			ProjectDAO projectdao = new ProjectDAO();
 			
 			int row = projectdao.teamInsert(teamdto); //DB 팀에 넣어준다.
-			
+			System.out.println("3 :"+row);
 			forward = new ActionForward();
 			if(row > 0) {
+				System.out.println("4");
 				//초대 승인 (팀 insert) 성공
 				//3.메세지 Delete 경로
 				forward.setRedirect(false);
@@ -52,7 +53,7 @@ public class MsgAgreeService implements Action{
 			}else {
 				//실패 (main 화면 가기)
 				forward.setRedirect(false);
-				forward.setPath("/member_test/invite_choice_test.jsp");
+				forward.setPath("/main.jsp");
 				
 			}
 			
