@@ -94,8 +94,6 @@ public class MemberController extends HttpServlet {
         		e.printStackTrace();
         	}
         }else if(cmdURI.equals("/msgagree.member")) {
-        	System.out.println("1");
-        	
         	action = new MsgAgreeService();
         	
         	try {

@@ -7,10 +7,8 @@
 
 package kr.co.ygtime.service.member;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,7 +16,6 @@ import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.DAO.MemberDAO;
 import kr.co.ygtime.DTO.InviteMsgDTO;
-import kr.co.ygtime.DTO.MemberDTO;
 import net.sf.json.JSONArray;
 
 /**
@@ -29,6 +26,7 @@ import net.sf.json.JSONArray;
  */
 public class InviteListService implements Action{
 	
+	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response){
 		MemberDAO memberdao = null;
 		List<InviteMsgDTO> list = null;
@@ -39,7 +37,7 @@ public class InviteListService implements Action{
 			memberdao = new MemberDAO();
 			userId = (String)request.getParameter("userId");
 			list = memberdao.inviteMsgSelect(userId);
-			
+
 			JSONArray json = JSONArray.fromObject(list);
 			request.setAttribute("json", json);
 			

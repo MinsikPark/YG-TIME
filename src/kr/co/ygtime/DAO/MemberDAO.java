@@ -286,9 +286,8 @@ public class MemberDAO {
 			rs = pstmt.executeQuery();
 
 			list = new ArrayList<>();
-			System.out.println("드러왔니");
+			
 			while(rs.next()) {
-				
 				InviteMsgDTO msgDTO = new InviteMsgDTO();
 				msgDTO.setUserId(rs.getString("userId"));
 				msgDTO.setProjectNum(rs.getInt("projectNum"));
