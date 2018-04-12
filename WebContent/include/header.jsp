@@ -452,9 +452,12 @@ $(function() {
 	//프로젝트 관리 함수
 	function addProjectForm(obj){
 	if($('#projectName').length == 0){
-		var button = '<div><button class="button btn-1"><input type="text" id="projectName" style="margin-left:-60px; color:black;"></button><a class="glyphicon setting" onclick="addProject()">&#xe013;</a></div>'
-			$('#progress').append(button)
-		$('#projectName').focus()
+		var button = '<div><button class="button btn-1"><input type="text" id="projectName" name="projectName" style="margin-left:-60px; color:black;"></button><a class="glyphicon setting" onclick="addProject()">&#xe013;</a></div>'
+			$('#progress').prepend(button)
+		$('#projectName').focus();
+		
+	
+		
 	}
 	}
 	
@@ -466,18 +469,13 @@ $(function() {
 		var value = $('#projectName').val() 
 		
 		if(value.trim() != ""){
+		
+			addproajax(value);
 			
-			$.ajax({
-				
-				
-				
-			})
-			
-			$('#progress').empty();
-			callprojectlist(); 
 		}else{
 			alert('프로젝트 명을 입력하세요')
 		}
+		
 	}
 	
 	function projectDel(obj){
@@ -507,22 +505,21 @@ $(function() {
 	}
 	
 	
-	function addproajax(){
-		
-		 var data ={newprojectname:$("#newprojectname").val()};
+	function addproajax(value){
+		console.log("pname : " + value);
+		 var data ={
+				 newprojectname:value
+				   };
 			$.ajax({
 				url: "addproject.project",
 				data:data,
 				datatype:"TEXT",
 				success:function(data){
 					console.log(">"+data.trim()+"<");
-					if(data.trim() =="success"){
-						$(this).parent().remove();
-						
-					}else{
-						alter("프로젝트 생성에 실패하였습니다");
-						$(this).parent().remove();
+					if(data.trim()==null ||data.trim()<=0){
+						alert("프로젝트 생성에 실패하였습니다");				
 					}
+					callprojectlist(); 
 				}
 				
 			}) 
@@ -533,12 +530,7 @@ $(function() {
 	
 	
 	
-	
 	//프로젝트 관리 함수 UI부분 끝	
-		
-		
-
-	
 	function callprojectlist(){
 		$("#progress").empty();
 		$("#complete").empty();
