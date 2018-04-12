@@ -51,7 +51,7 @@ public class ProjectController extends HttpServlet {
 			}
         	
 
-        }else if(cmdURI.equals("/project_test/delete.project")) {
+        }else if(cmdURI.equals("/delete.project")) {
         	action = new ProjectDeleteService();
         	try {
         		forward = action.execute(request, response);
@@ -70,9 +70,7 @@ public class ProjectController extends HttpServlet {
 				e.printStackTrace();
 			}
         	
-        }
-
-        
+        }        
         else if(cmdURI.equals("/project_test/completeproject.project")){
         	action = new ProjectCompleteService();
         	try {
