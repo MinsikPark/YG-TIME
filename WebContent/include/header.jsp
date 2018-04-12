@@ -19,6 +19,9 @@
 	header {
 		margin : 0 20px; 
 	}
+	.z-index{
+		z-index: 10;
+	}
 	
 	.sidenav {
 	    height: 100%;
@@ -27,7 +30,7 @@
 	    z-index: 1;
 	    top: 0;
 	    left: 0;
-	    background-color: #111;
+	    background-color: #fed057;
 	    overflow-x: hidden;
 	    transition: 0.5s;
 	    padding-top: 10px;
@@ -47,7 +50,7 @@
 	
 	.sidenav .setting {
 		font-size:20px;
-		top:3em;
+		top:4em;
 	    float : left;
 	    color:white;
 	}
@@ -79,6 +82,8 @@
 	  position: relative;
 	  text-transform: uppercase;
 	  float:left;
+	  height: 102px;
+	  width: 245px;
 	}
 	
 	.button::before,
@@ -149,6 +154,107 @@
 		color:white;
 		width: 100px;
 	}
+	
+	/* 여기부터 상세페이지만을 위한 css  */
+	
+	input[type="checkbox"]{
+	  position:absolute; 
+	  overflow:hidden;
+	  clip:rect(0 0 0 0);
+	}
+	
+	p label{
+	  height:15px; 
+	  line-height:15px; 
+	  padding-left:20px; 
+	  display:inline-block; 
+	  background:url(http://hcs1105.com/wp/wp-content/themes/hcs1105/images/checkbox1.png) no-repeat 0 0; 
+	  font-size:15px; 
+	  vertical-align:middle; 
+	  cursor:pointer;
+	  font-weight: 1;
+	}
+	 
+	input[type="checkbox"]:checked + label{
+	  background-position: 0 -15px;
+	}
+	
+	.modalstyle {
+		width:50%;
+	}
+	textarea {
+		width:100%;
+		height: 200px;
+		float:left;
+		margin:0px 10px 10px 0px;
+		resize: none;	
+	}
+	
+	.detailbutton{
+		width:80%; 
+		margin:20px 0px 0px 20px;
+	}
+	
+	.container {
+	  display: -webkit-flex;
+	  display: flex;
+	  width: 100%;
+	}
+	.flex1 {
+	  -webkit-flex: 1;
+	          flex: 1;
+	}
+	.flex2 {
+	  -webkit-flex: 4;
+	          flex: 4;
+	}
+	#btnFileUpload{
+		display: none;
+	}
+	.inputtextbox{
+		width:93%;
+		float:left;
+		margin : 4px 2px;
+	}
+	label[for=comment]{
+		margin:10px;
+	}
+	img {
+		float : left;
+		margin: 5px ;
+	}
+	.commentlist{
+		margin : 10px 5px;
+	}
+	.commentinputtextbox{
+		width:90%;
+		float:left;
+		margin : 5px 2px;
+	}
+	@media screen and (max-width: 600px) {
+		.inputtextbox{
+			width: 85%;
+		}
+		.commentinputtextbox{
+			width : 50%
+		}
+	}
+	@media screen and (max-width: 1000px) {
+		.commentinputtextbox{
+			width : 80%
+		}
+	}
+	@media screen and (min-width: 601px) {
+		.inputtextbox{
+			width:93%;
+		}
+	}
+	@media screen and (min-width: 1001px) {
+		.commentinputtextbox{
+			width : 90%
+		}
+	}
+	
 </style>
 
 <script>
@@ -326,6 +432,63 @@ $(function() {
 	})
 }); // onload 밖
 
+	//프로젝트 관리 함수
+	function addProjectForm(obj){
+	if($('#projectName').length == 0){
+		var button = '<div><button class="button btn-1"><input type="text" id="projectName" style="margin-left:-60px; color:black;"></button><a class="glyphicon setting" onclick="addProject(this)">&#xe013;</a></div>'
+			$('#progress').append(button)
+		$('#projectName').focus()
+	}
+	}
+	
+	function memberDel() {
+	    confirm("멤버를 삭제하시겠습니까?");
+	}
+	
+	function addProject(obj) {
+		var value = $('#projectName').val() 
+		if(value.trim() != ""){
+			$(obj).closest('div').remove()
+			var div  = '<div><button class="button btn-1">'+value+'</button><a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a><ul class="dropdown-menu" style= "float: right; position: unset;">'
+				div += '<li><a onclick="projectDel(this)">프로젝트 삭제</a></li><li><a onclick="projectComplete(this)">프로젝트 완료</a></li></ul>	</div>'
+			$('#progress').append(div)
+		}else{
+			alert('프로젝트 명을 입력하세요')
+		}
+	}
+	
+	function projectDel(obj){
+		console.log($(obj).closest('div'))
+		$(obj).closest('div').remove()
+	}
+	
+	function projectComplete(obj){
+		var ul = $(obj).closest('ul')
+		var li = '<li><a onclick="projectView(this)">프로젝트 보기</a></li><li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>'
+		$(obj).closest('div').appendTo($('#complete'))
+		ul.empty()
+		ul.append(li)
+	}
+	
+	function projectProgress(obj){
+		console.log($(obj).closest('ul'))
+		var ul = $(obj).closest('ul')
+		var li = '<li><a onclick="projectDel(this)">프로젝트 삭제</a></li><li><a onclick="projectComplete(this)">프로젝트 완료</a></li>'
+		$(obj).closest('div').appendTo($('#progress'))
+		ul.empty()
+		ul.append(li)
+	}
+	
+	function projectView(obj){
+		console.log('프로젝트 아이디를 받아서 다시 뿌려줘요')
+	}
+	
+	//프로젝트 관리 함수 UI부분 끝	
+		
+	
+
+
+
 	//프로젝트 생성 취소하기 
 	function remove(){
 		console.log("삭제 클릭");
@@ -352,7 +515,7 @@ $(function() {
 							console.log(">"+data.trim()+"<");
 							if(data.trim() =="success"){
 								$(this).parent().remove();
-								$("#home").prepend(
+								$("#progress").prepend(
 									"<div><button class="+value+">Button 1</button>"
 									+"<a class='glyphicon glyphicon-cog setting'></a></div>"	
 								)
@@ -433,16 +596,17 @@ function idcheck() {
 		<div id="mySidenav" class="sidenav">
 		
 			<div id="sideNav" class="sidenav">
-				<button id="insertproject" class="glyphicon glyphicon-plus insert btn btn-sm"></button> 
+			
 				
 				<!-- <a href="#" class="glyphicon glyphicon-plus insert"></a> -->
 				<div class="tab-content">
+					<a href="#" class="glyphicon glyphicon-plus insert" onclick="addProjectForm()"></a>
 					<ul class="nav nav-tabs nav-tabs-modify">
-						<li class="active"><a data-toggle="tab" href="#home">진행중인 프로젝트</a></li>
-						<li><a data-toggle="tab" href="#menu1">완료된 &nbsp;   프로젝트</a></li>
+						<li class="active"><a data-toggle="tab" href="#progress">진행중인 프로젝트</a></li>
+						<li><a data-toggle="tab" href="#complete">완료된 &nbsp;   프로젝트</a></li>
 					</ul>
-					<div id="home" class="tab-pane fade in active">
-					<!-- <div><input style='float:left' type = 'text' id='newprojectname' onfocus="" name = 'newprojectname' ></div> -->
+				<!-- 	<div id="home" class="tab-pane fade in active">
+					<div><input style='float:left' type = 'text' id='newprojectname' onfocus="" name = 'newprojectname' ></div>
 						<div>
 							<button class="button btn-1">Button 1</button>
 							<a class="glyphicon glyphicon-cog setting"></a>
@@ -460,6 +624,42 @@ function idcheck() {
 						<div>
 							<button class="button btn-1">Button 4</button>
 							<a class="glyphicon glyphicon-cog setting"></a>
+						</div>
+					</div> -->
+					<div id="progress" class="tab-pane fade in active">
+						<div>
+							<button class="button btn-1">Button 1</button>
+							<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
+							<ul class="dropdown-menu" style="float: right; position: unset;">
+								<li><a onclick="projectDel(this)">프로젝트 삭제</a></li>
+								<li><a onclick="projectComplete(this)">프로젝트 완료</a></li>
+							</ul>
+						</div>
+						<div>
+							<button class="button btn-1">Button 2</button>
+							<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
+							<ul class="dropdown-menu" style="float: right; position: unset;">
+								<li><a onclick="projectDel(this)">프로젝트 삭제</a></li>
+								<li><a onclick="projectComplete(this)">프로젝트 완료</a></li>
+							</ul>
+						</div>
+					</div>
+					<div id="complete" class="tab-pane fade">
+						<div>
+							<button class="button btn-1">Button 3</button>
+							<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
+							<ul class="dropdown-menu" style="float: right; position: unset;">
+								<li><a onclick="projectView(this)">프로젝트 보기</a></li>
+								<li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>
+							</ul>
+						</div>
+						<div class="dropdown">
+							<button class="button btn-1">Button 4</button>
+							<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
+							<ul class="dropdown-menu" style="float: right; position: unset;">
+								<li><a onclick="projectView(this)">프로젝트 보기</a></li>
+								<li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>
+							</ul>
 						</div>
 					</div>
 				</div>
