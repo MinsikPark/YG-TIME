@@ -399,8 +399,10 @@ $(function() {
  	//로그인 체크 후 프로젝트 리스트 불러오는 함수
  	callprojectlist();
 	
- 	//회원가입 유효성 체크
-	$('#joinForm').submit(function() {
+}); // onload 밖
+
+	//회원가입 유효성 체크
+	function joinsubmit() {
 		   
 		  if ($('#email').val() == "") { //이메일검사
 			idcheck();
@@ -421,15 +423,25 @@ $(function() {
 		  }   
 		  
 		  joinclear();
-	});
+		  
+		  $.ajax({
+			  url : "Join.member",
+			  type : "post",
+			  data : {email:$("#email").val(), password:$("#password").val(), nickName:$("#nickName").val(), fileUpLoad:$('fileUpLoad').val() },
+			  success : function(data){
+				  alert("회원가입 되었습니다.");
+			  }
+		  });
+	}
 	
-}); // onload 밖
-
 	function joinclear(){
 		$("#email").val("");
 		$("#password").val("");
 		$("#passwordCheck").val("");
 		$("#nickName").val("");
+		$("#result").text("");
+		$("#pwdcheck").text("");
+		$("#nickcheck").text("");
 	}
 	//프로젝트 관리 함수
 	function addProjectForm(obj){
@@ -634,7 +646,7 @@ function passwordfunction(){
 		$("#password").focus();
 
 	}else{
-		$("#pwdcheck").css("color", "black");
+		$("#pwdcheck").css("color", "blue");
 		$("#pwdcheck").html("* 비밀번호 일치");
 		$("#nickName").focus();
 	}
@@ -791,13 +803,13 @@ function idcheck() {
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" onclick="joinclear()">&times;</button>
           <h4 class="modal-title">회원가입</h4>
         </div>
         
         
         <div class="modal-body">
-        	<form id ="joinForm" action="Join.member" method="post">
+        	<form id ="joinForm">
 	        	<div class="form-group">
 				    <label for="email">이메일 주소</label>
 				    <button id="idcheckhover" type="button"  class ="btn btn-default" onclick="idcheck()">이메일 중복확인</button> 
@@ -825,7 +837,7 @@ function idcheck() {
 				    <input type="file" id="fileUpLoad" name="fileUpLoad">
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="button" class="btn btn-default" onclick="joinsubmit()">Submit</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="joinclear()">Close</button>
 		        </div>
         	</form>
