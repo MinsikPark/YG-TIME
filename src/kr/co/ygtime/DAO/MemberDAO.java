@@ -92,7 +92,7 @@ public class MemberDAO {
 			conn = ds.getConnection();
 			
 			String sql = "SELECT userid, userpwd, usernicname, userprofile FROM MEMBER WHERE USERID=?";
-			
+			System.out.println(userId);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();	
@@ -104,8 +104,8 @@ public class MemberDAO {
 				memberDTO.setUserPwd(rs.getString("userpwd"));
 				memberDTO.setUserNicname(rs.getString("usernicname"));
 				memberDTO.setUserProfile(rs.getString("userprofile"));
-							
-			}
+				System.out.println("멤버rsnext : " + memberDTO.getUserId());			
+			} 
 						
 		} catch (Exception e) {
 			e.printStackTrace();

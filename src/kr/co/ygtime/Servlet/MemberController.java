@@ -20,6 +20,8 @@ import kr.co.ygtime.service.member.MsgAgreeService;
 import kr.co.ygtime.service.member.MsgDeleteSerivce;
 import kr.co.ygtime.service.member.JoinService;
 import kr.co.ygtime.service.member.LoginService;
+import kr.co.ygtime.service.member.MemberInfoService;
+import kr.co.ygtime.service.member.MemberModifyService;
 
 @WebServlet("*.member")
 public class MemberController extends HttpServlet {
@@ -41,7 +43,7 @@ public class MemberController extends HttpServlet {
 		String requestURI = request.getRequestURI();
         String contextPath = request.getContextPath();
         String cmdURI = requestURI.substring(contextPath.length());
-		System.out.println(cmdURI);
+		//System.out.println(cmdURI);
         ActionForward forward =null;
 	
         Action action = null;
@@ -111,8 +113,23 @@ public class MemberController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
 			}
+        }else if(cmdURI.equals("/member_test/mod.member")) {
+        	action = new MemberInfoService();
+        	try {
+        	forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.getMessage();
+        	}
+        }else if(cmdURI.equals("/member_test/mod1.member")) {
+        	action = new MemberModifyService();
+        	try {
+        	forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.getMessage();
+        	}
         }
-        
         //태우기 마지막
         if(forward != null){
         	if(forward.isRedirect()) {

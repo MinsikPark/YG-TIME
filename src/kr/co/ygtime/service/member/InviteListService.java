@@ -43,6 +43,7 @@ public class InviteListService implements Action{
 			
 			
 			JSONArray json = JSONArray.fromObject(list);
+			System.out.println("json : " + json);
 			forward = new ActionForward();
 			request.setAttribute("json", json);
 			forward.setRedirect(false);
