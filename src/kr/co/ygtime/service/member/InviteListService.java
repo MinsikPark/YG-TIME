@@ -19,6 +19,7 @@ import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.DAO.MemberDAO;
 import kr.co.ygtime.DTO.InviteMsgDTO;
 import kr.co.ygtime.DTO.MemberDTO;
+import net.sf.json.JSONArray;
 
 /**
  * 
@@ -28,30 +29,26 @@ import kr.co.ygtime.DTO.MemberDTO;
  */
 public class InviteListService implements Action{
 	
-	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response){
 		MemberDAO memberdao = null;
 		List<InviteMsgDTO> list = null;
 		String userId = null;
 		ActionForward forward = null;
+		
 		try {
 			memberdao = new MemberDAO();
 			userId = (String)request.getParameter("userId");
 			list = memberdao.inviteMsgSelect(userId);
-			System.out.println("userid : " + userId);
+			
+			JSONArray json = JSONArray.fromObject(list);
+			
+			request.setAttribute("ajaxdata", json);
 			
 			forward = new ActionForward();
-			request.setAttribute("list", list);
-			
 			forward.setRedirect(false);
-			forward.setPath("/member_test/invite_list_test.jsp");
-			System.out.println("메롱1");
-			System.out.println("list : "+ list);
+       	    forward.setPath("/ajaxpath/AjaxOk.jsp");
 			
-			
-			
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return forward;

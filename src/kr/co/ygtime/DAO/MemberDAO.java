@@ -36,6 +36,47 @@ public class MemberDAO {
 	
 	/**
 	 * 
+	 날      짜 : 2018. 4. 11.
+	 기      능 : 아이디 중복 체크
+	 작성자명 : 전 나 영
+	 */
+	public String isIdcheck(String id) {
+		String ischeckid= null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+				conn = ds.getConnection();
+				String sql = "select userId from MEMBER where userId=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+		
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) 
+				{
+					ischeckid = "true";
+				
+				}else {
+					ischeckid = "false";
+				}	
+				
+				if(id.equals("")) {
+		
+					ischeckid = "empty";
+				}
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally{
+			if(rs!=null) try{rs.close();}catch(SQLException ex){}
+			if(pstmt!=null) try{pstmt.close();}catch(SQLException ex){}
+			if(conn!=null) try{conn.close();}catch(SQLException ex){}
+		}
+		return ischeckid;
+	}
+	
+	/**
+	 * 
 	 날      짜 : 2018. 4. 9.
 	 기      능 : 회원가입
 	 작성자명 : 전 나 영
@@ -203,14 +244,12 @@ public class MemberDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = "INSERT INTO INVITEMSG(msgNum,userId,projectNum,inviteUserId,msgDate) VALUES (?,?,?,?,?)";
+			String sql = "INSERT INTO INVITEMSG(userId,projectNum,inviteUserId,msgDate) VALUES (?,?,?,sysdate)";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1,invitemsg.getMsgNum());
-			pstmt.setString(2,invitemsg.getUserId());
-			pstmt.setInt(3,invitemsg.getProjectNum());
-			pstmt.setString(4,invitemsg.getInviteUserId());
-			pstmt.setString(5,invitemsg.getMsgDate());
+			pstmt.setString(1,invitemsg.getUserId());
+			pstmt.setInt(2,invitemsg.getProjectNum());
+			pstmt.setString(3,invitemsg.getInviteUserId());
 			
 			row = pstmt.executeUpdate();
 			
@@ -247,11 +286,10 @@ public class MemberDAO {
 			rs = pstmt.executeQuery();
 
 			list = new ArrayList<>();
-			
-			if(rs.next()) {
+			System.out.println("드러왔니");
+			while(rs.next()) {
 				
 				InviteMsgDTO msgDTO = new InviteMsgDTO();
-				msgDTO.setMsgNum(rs.getInt("msgNum"));
 				msgDTO.setUserId(rs.getString("userId"));
 				msgDTO.setProjectNum(rs.getInt("projectNum"));
 				msgDTO.setInviteUserId(rs.getString("inviteUserId"));

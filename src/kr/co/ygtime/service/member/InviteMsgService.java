@@ -31,7 +31,7 @@ public class InviteMsgService implements Action{
 		String inviteUserId = request.getParameter("inviteUserId");
 		
 		//String msgDate = request.getParameter("msgDate");
-		invitemsgdto.setMsgNum(msgNum);
+		//invitemsgdto.setMsgNum(msgNum);
 		invitemsgdto.setUserId(userId);
 		invitemsgdto.setProjectNum(projectNum);
 		invitemsgdto.setInviteUserId(inviteUserId);
