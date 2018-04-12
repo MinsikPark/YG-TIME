@@ -41,11 +41,11 @@ public class InviteListService implements Action{
 			list = memberdao.inviteMsgSelect(userId);
 			
 			JSONArray json = JSONArray.fromObject(list);
-			request.setAttribute("ajaxdata", json);
+			request.setAttribute("json", json);
 			
 			forward = new ActionForward();
 			forward.setRedirect(false);
-       	    forward.setPath("/ajaxpath/AjaxOk.jsp");
+       	    forward.setPath("/ajaxpath/jsonArray.jsp");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

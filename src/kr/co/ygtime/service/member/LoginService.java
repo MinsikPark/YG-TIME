@@ -62,7 +62,7 @@ public class LoginService implements Action{
 		System.out.println("msg : " + msg);
 		request.setAttribute("path", "main.jsp");
 		ActionForward forward = new ActionForward();
-		forward.setPath("/member_test/redirect.jsp");
+		forward.setPath("/ajaxpath/loginOk.jsp");
 		
 		return forward;
 	}
