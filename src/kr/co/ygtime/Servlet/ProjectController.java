@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.service.project.ProjectAddService;
+import kr.co.ygtime.service.project.ProjectDeleteService;
 
 @WebServlet("*.project")
 public class ProjectController extends HttpServlet {
@@ -46,7 +47,16 @@ public class ProjectController extends HttpServlet {
 				e.printStackTrace();
 			}
         	
-        }
+        }else if(cmdURI.equals("/project_test/delete.project")) {
+        	action = new ProjectDeleteService();
+        	try {
+        		forward = action.execute(request, response);
+        	}
+        	catch (Exception e) {
+        		e.getMessage();
+        	}
+        	
+		}
         
         //마지막 태우기
         if(forward != null){
