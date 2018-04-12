@@ -176,6 +176,9 @@ function addList(e){
 		parent.append(div)
 	}
 }
+function hahaha(obj){
+	console.log($(obj).css('top'))
+}
 </script>
 </head>
 <body >
@@ -188,13 +191,13 @@ function addList(e){
 		<div id="content-md">
 			<div class="listbox">
 				<div class="listtitle">하고잇는것하고잇는것하고잇는</div>
-				<div class="card" data-toggle="modal" data-target="#myModal1">하하하하1</div>
-			    <div class="card" data-toggle="modal" data-target="#myModal1">하하하하2</div>
-			    <div class="card" data-toggle="modal" data-target="#myModal1">하하하하3</div>
-			    <div class="card" data-toggle="modal" data-target="#myModal1">하하하하4</div>
-			    <div class="card" data-toggle="modal" data-target="#myModal1">하하하하5</div>
-			    <div class="card" data-toggle="modal" data-target="#myModal1">하하하하6</div>
-			    <div class="card" data-toggle="modal" data-target="#myModal1">하하하하7</div>
+				<div class="card" data-toggle="modal" data-target="#myModal1" onclick="hahaha(this)" style="z-index: 9999">하하하하1</div>
+			    <div class="card" data-toggle="modal" data-target="#myModal1" onclick="hahaha(this)" >하하하하2</div>
+			    <div class="card" data-toggle="modal" data-target="#myModal1" onclick="hahaha(this)" >하하하하3</div>
+			    <div class="card" data-toggle="modal" data-target="#myModal1" onclick="hahaha(this)" >하하하하4</div>
+			    <div class="card" data-toggle="modal" data-target="#myModal1" onclick="hahaha(this)" >하하하하5</div>
+			    <div class="card" data-toggle="modal" data-target="#myModal1" onclick="hahaha(this)" >하하하하6</div>
+			    <div class="card" data-toggle="modal" data-target="#myModal1" onclick="hahaha(this)" >하하하하7</div>
 			    <a class="cardcreate" onclick="addCardView(this)">Add a card...</a>
 			</div>
 			<a class="listbox" onclick="addListView(this)">Add a list...</a>

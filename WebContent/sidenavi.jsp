@@ -411,6 +411,10 @@ function projectProgress(obj){
 function projectView(obj){
 	console.log('프로젝트 아이디를 받아서 다시 뿌려줘요')
 }
+
+function bokyeong(obj) {
+	console.log($(obj).css('left'))
+}
 </script>
 </head>
 <!-- SIDEBAR -->
@@ -472,7 +476,7 @@ function projectView(obj){
 <header>
 	<nav class="navbar z-index">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="#"><img src="images/logo.JPG" style="width: 110px; height: 30px;" onclick="project()"></a>
+	      <a class="navbar-brand" href="#"><img src="images/logo.JPG" style="width: 110px; height: 30px;" onclick=""></a>
 	    </div>
 	    <div> 
 	      <!-- 로그인 창 -->
@@ -522,10 +526,10 @@ function projectView(obj){
     </div>
     <div class="dropup">
 			<a class = "glyphicon glyphicon-user" onclick="memberDel()" style="font-size: 25pt; top: 7px;"></a>
-			<button type="button" class="btn btn-default" data-toggle="dropdown" style="margin: 0px 0px 10px 30px;">
-				<span class="glyphicon glyphicon-plus" ></span> 멤버 추가
+			<button type="button" class="btn btn-default" data-toggle="dropdown" style="margin: 0px 0px 10px 30px;"  onclick="bokyeong(this)">
+				<span class="glyphicon glyphicon-plus"></span> 멤버 추가
 			</button>
-			<ul class="dropdown-menu" style="width: 300px;">
+			<ul class="dropdown-menu" style="width: 300px; margin-left:100px;" id="addMemberSearch">
 				<li><div class="input-group">
 						<div class="form-group">
 				   			<input type="email" class="form-control" id="emailSearch" placeholder="이메일 입력..">
