@@ -369,13 +369,10 @@ function addProjectForm(obj){
 	}
 }
 
-<<<<<<< HEAD
 function memberDel() {
     confirm("멤버를 삭제하시겠습니까?");
 }
 
-</script>
-=======
 function addProject(obj) {
 	var value = $('#projectName').val() 
 	if(value.trim() != ""){
@@ -392,7 +389,6 @@ function projectDel(obj){
 	console.log($(obj).closest('div'))
 	$(obj).closest('div').remove()
 }
->>>>>>> f6dd536988dcd5f1b5a94d693288764afc841dff
 
 function projectComplete(obj){
 	var ul = $(obj).closest('ul')
