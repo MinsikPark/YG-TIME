@@ -256,17 +256,17 @@ public class ProjectDAO {
 		Connection conn = null;
 		ResultSet rs = null;
 		List<ProjectDTO> listprojectdto = null;
-		
+		System.out.println("allProjectSelect : " + userId);
 		try {
 			conn = ds.getConnection();
-			String sql = "select projectnum, projectname, projectstartdate,"
-					+ " projectenddate,deleteok from project where userid = ? order by projectenddate desc";
+			String sql = "select p.* from project p join team t on p.PROJECTNUM = t.PROJECTNUM where t.userid = ? and p.DELETEOK=0 order by t.projectlastmoddate desc";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
 			
 			listprojectdto = new ArrayList<>();
 			while(rs.next()) {
+				System.out.println("rs가 있다");
 				projectdto = new ProjectDTO();
 				projectdto.setProjectNum(rs.getInt("projectnum"));
 				projectdto.setProjectName(rs.getString("projectname"));

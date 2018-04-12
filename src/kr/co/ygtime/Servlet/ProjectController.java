@@ -14,6 +14,9 @@ import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.service.project.ProjectAddService;
 import kr.co.ygtime.service.project.ProjectCompleteService;
 
+import kr.co.ygtime.service.project.ProjectDeleteService;
+import kr.co.ygtime.service.project.ProjectListService;
+
 @WebServlet("*.project")
 public class ProjectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -47,7 +50,29 @@ public class ProjectController extends HttpServlet {
 				e.printStackTrace();
 			}
         	
+<<<<<<< HEAD
+        }else if(cmdURI.equals("/project_test/delete.project")) {
+        	action = new ProjectDeleteService();
+        	try {
+        		forward = action.execute(request, response);
+        	}
+        	catch (Exception e) {
+        		e.getMessage();
+        	}
+        	
+		}
+=======
+        } else if(cmdURI.equals("/projectlist.project")) {
+        	action = new ProjectListService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
+        	
         }
+>>>>>>> 451e405cf46d2071b20ec9cc7e3fdd88bf24c020
         
         else if(cmdURI.equals("/project_test/completeproject.project")){
         	action = new ProjectCompleteService();
