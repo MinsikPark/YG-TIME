@@ -452,19 +452,14 @@ $(function() {
 				$('#progress').prepend(button)
 			$('#projectName').focus();
 			nameinput();
-		
-			
+	
 		}
 	}
-	
 	//////멤버 삭제 
 	function memberDel() {
 	    confirm("멤버를 삭제하시겠습니까?");
 	}
-	
-	
-	
-	
+
 	/////프로젝트 추가
 	function addProject() {
 		var value = $('#projectName').val() 
@@ -494,26 +489,22 @@ $(function() {
 				})	
 		callprojectlist();
 	}
-	
-	
 	//////프로젝트 완료
 	function projectComplete(obj){
-		console.log($('#getsession').val()+"/"+obj);
+
 		$.ajax({
 			url : "completeproject.project",
 			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
 			datatype : "json" ,
 			success : function(data){
-				console.log(data);
+				$("#complete").empty();
+				$("#progress").empty();
+				callprojectlist();
 			}
 		});
-
-		callprojectlist();
 	}
 	
-	
-	
-	
+
 	///////프로젝트복구
 	function projectProgress(obj){
 		$.ajax({
@@ -521,10 +512,9 @@ $(function() {
 			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
 			datatype : "json" ,
 			success : function(data){
-				console.log(data);
+				callprojectlist();
 			}
 		});
-		callprojectlist();
 	}
 	
 	

@@ -28,14 +28,12 @@ public class ProjectCompleteService implements Action {
 		try {
 			ProjectDAO dao = new ProjectDAO();
 			row = dao.projectComplete(projectNum, userId);
-			
 			request.setAttribute("resultrow", row);
 			forward = new ActionForward();
 			forward.setPath("/ajaxpath/result_row.jsp");
 			
 			
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -7,7 +7,6 @@
 
 package kr.co.ygtime.service.member;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,12 +26,9 @@ import kr.co.ygtime.DTO.MemberDTO;
 public class LoginService implements Action{
 
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("LoginService 함수 실행");
 		String loginEmail = request.getParameter("loginEmail");
 		String loginPwd = request.getParameter("loginPwd");
 		String msg = "fail";
-	
-
 		try {
 			MemberDAO dao = new MemberDAO();
 			MemberDTO dto = dao.memberSelect(loginEmail);
@@ -41,14 +37,9 @@ public class LoginService implements Action{
 				if(loginPwd.equals(dto.getUserPwd())) { // 입력한 비밀번호가 user의 비밀번호와 같은지 체크
 					msg = "success";
 					request.getSession().setAttribute("sessionId", loginEmail);//비밀번호가 일치 한다면 session에 담아주세요
-
 				}
 			} 
-			
-			
-			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			msg = "error";
 			e.printStackTrace();
 		}
