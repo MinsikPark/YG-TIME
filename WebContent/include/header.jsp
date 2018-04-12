@@ -503,10 +503,13 @@ $(function() {
 			url : "completeproject.project",
 			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
 			datatype : "json" ,
-			success : function(data){}
+			success : function(data){
+				$("#complete").empty();
+				$("#progress").empty();
+				callprojectlist();
+			}
 		});
 
-		callprojectlist();
 	}
 	
 	
@@ -518,10 +521,13 @@ $(function() {
 			url : "progressproject.project",
 			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
 			datatype : "json" ,
-			success : function(data){}
+			success : function(data){
+				$("#complete").empty();
+				$("#progress").empty();
+				callprojectlist();
+			}
 		});
 		
-		callprojectlist();
 	}
 	
 	
