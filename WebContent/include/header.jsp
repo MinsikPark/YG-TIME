@@ -298,7 +298,6 @@ $(function(){
             datatype:"JSON",
             data:param,
             success:function(data){
-            	console.log(data.trim());
                 var json = JSON.parse(data);
                 
                 $("#dropdownchilddiv").empty();
@@ -421,7 +420,7 @@ $(function() {
   }
     
  });
-	//프로젝트 추가
+	/* //프로젝트 추가
 	$("#insertproject").on("click",function(){
 		console.log("btnclick");
 		$("#home").find($("#newprojectname").parent()).remove();
@@ -429,8 +428,9 @@ $(function() {
 				          +"<a class='glyphicon glyphicon-remove' onclick='remove()'></a></div>");
 		nameinput();
 		$("#newprojectname").focus();
-	})
+	}) */
 }); // onload 밖
+
 
 	//프로젝트 관리 함수
 	function addProjectForm(obj){
@@ -490,6 +490,9 @@ $(function() {
 
 
 	//프로젝트 생성 취소하기 
+
+	/* //프로젝트 생성 취소하기 
+>>>>>>> d620bbc58e50a503ace1eae354701343613cf30f
 	function remove(){
 		console.log("삭제 클릭");
 		$("#newprojectname").parent().remove();
@@ -533,7 +536,7 @@ $(function() {
 				$(this).remove();
 			}
 		})
-	}
+	} */
 	
 
 
