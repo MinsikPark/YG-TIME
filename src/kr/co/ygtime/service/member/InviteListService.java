@@ -39,13 +39,12 @@ public class InviteListService implements Action{
 			memberdao = new MemberDAO();
 			userId = (String)request.getParameter("userId");
 			list = memberdao.inviteMsgSelect(userId);
-			
+			System.out.println(list);
 			JSONArray json = JSONArray.fromObject(list);
-			
+			System.out.println(json);
 			response.getWriter().print(json);
 			
             forward.setRedirect(false);
-
 			
 			
 		} catch (Exception e) {

@@ -30,7 +30,7 @@ public class MsgAgreeService implements Action{
 			//파라미터로 아이디와 초대받은 프로젝튼 넘버를 가져온다
 			String userid = request.getParameter("userid");
 			int projectnum = Integer.parseInt(request.getParameter("projectnum"));
-			
+			System.out.println("2 :"+userid+"/"+projectnum);
 			//TeamDTO 객체에 넣어준다.
 			//2. 팀 insert 팀원으로
 			TeamDTO teamdto = new TeamDTO();
@@ -41,9 +41,10 @@ public class MsgAgreeService implements Action{
 			ProjectDAO projectdao = new ProjectDAO();
 			
 			int row = projectdao.teamInsert(teamdto); //DB 팀에 넣어준다.
-			
+			System.out.println("3 :"+row);
 			forward = new ActionForward();
 			if(row > 0) {
+				System.out.println("4");
 				//초대 승인 (팀 insert) 성공
 				//3.메세지 Delete 경로
 				forward.setRedirect(false);

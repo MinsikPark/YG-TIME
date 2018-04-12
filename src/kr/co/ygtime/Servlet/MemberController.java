@@ -13,7 +13,7 @@ import com.sun.org.apache.xml.internal.security.utils.resolver.implementations.R
 
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
-
+import kr.co.ygtime.service.member.IdcheckService;
 import kr.co.ygtime.service.member.InviteListService;
 import kr.co.ygtime.service.member.InviteMsgService;
 import kr.co.ygtime.service.member.MsgAgreeService;
@@ -73,13 +73,29 @@ public class MemberController extends HttpServlet {
         		
         	}
         }else if(cmdURI.equals("/Join.member")) {
-     
+    
+        	
          	action = new JoinService();
-
-
+        	try {
+        		forward = action.execute(request, response);
+        	} 
+        	catch (Exception e) {
+        		e.printStackTrace();
+        	}
+        }else if(cmdURI.equals("/idcheck.member")){
+        	
+        	action = new IdcheckService();
+        	try {
+        		forward = action.execute(request, response);
+        	} 
+        	catch (Exception e) {
+        		e.printStackTrace();
+        	}
         }else if(cmdURI.equals("/msgagree.member")) {
+        	System.out.println("1");
+        	
         	action = new MsgAgreeService();
-
+        	
         	try {
 				forward = action.execute(request, response);
 			} 
