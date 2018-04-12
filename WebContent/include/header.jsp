@@ -480,18 +480,37 @@ $(function() {
 	function projectComplete(obj){
 		var ul = $(obj).closest('ul')
 		var li = '<li><a onclick="projectView(this)">프로젝트 보기</a></li><li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>'
-		$(obj).closest('div').appendTo($('#complete'))
+		
+		$.ajax({
+			url : "completeproject.project",
+			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
+			datatype : "json" ,
+			success : function(data){
+				console.log(data);
+			}
+		});
+		
 		ul.empty()
 		ul.append(li)
+		callprojectlist();
 	}
 	
 	function projectProgress(obj){
-		console.log($(obj).closest('ul'))
 		var ul = $(obj).closest('ul')
 		var li = '<li><a onclick="projectDel(this)">프로젝트 삭제</a></li><li><a onclick="projectComplete(this)">프로젝트 완료</a></li>'
-		$(obj).closest('div').appendTo($('#progress'))
+		
+		/* $.ajax({
+			url : "completeproject.project",
+			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
+			datatype : "json" ,
+			success : function(data){
+				console.log(data);
+			}
+		}); */
+		
 		ul.empty()
 		ul.append(li)
+		callprojectlist();
 	}
 	
 	function projectView(obj){
@@ -500,7 +519,6 @@ $(function() {
 	
 	
 	function addproajax(value){
-		console.log("pname : " + value);
 		 var data ={
 				 newprojectname:value
 				   };
@@ -549,21 +567,21 @@ $(function() {
 						
 						if(projectEndDate != ""){ //시작 날짜가 비어있지 않다면 >> 프로젝트가 완료 되었다면
 							$("#complete").append(
-								'<div value='+ projectNum+ '><button class="button btn-1">'
+								'<div><button class="button btn-1">'
 								+ proejectName + '</button>'
 								+ '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
 								+ '<ul class="dropdown-menu" style="float: right; position: unset;">'
 								+ '<li><a onclick="projectView(this)">프로젝트 보기</a></li>'
-								+ '<li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li></ul></div>'	
+								+ '<li><a onclick="projectProgress('+projectNum+')">프로젝트 다시 진행</a></li></ul></div>'	
 							);
 							
 						}else{ // 프로젝트가 현재도 진행중이라면
 							$("#progress").append(
-								'<div value='+projectNum+' ><button class="button btn-1">'
+								'<div><button class="button btn-1">'
 								+ proejectName + '</button><a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
 								+'<ul class="dropdown-menu" style="float: right; position: unset;">'
 								+'<li><a onclick="projectDel(this)">프로젝트 삭제</a></li>'
-								+'<li><a onclick="projectComplete(this)">프로젝트 완료</a></li></ul></div>'
+								+'<li><a onclick="projectComplete('+projectNum+')">프로젝트 완료</a></li></ul></div>'
 							)
 							
 							

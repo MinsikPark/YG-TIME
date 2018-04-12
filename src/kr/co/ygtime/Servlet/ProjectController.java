@@ -73,7 +73,7 @@ public class ProjectController extends HttpServlet {
         }
 
         
-        else if(cmdURI.equals("/project_test/completeproject.project")){
+        else if(cmdURI.equals("/completeproject.project")){
         	action = new ProjectCompleteService();
         	try {
 				forward = action.execute(request, response);

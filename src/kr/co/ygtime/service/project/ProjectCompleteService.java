@@ -28,17 +28,12 @@ public class ProjectCompleteService implements Action {
 		ActionForward forward = null;
 		int row = 0;
 		try {
-			System.out.println("안녕");
-		
-			
 			ProjectDAO dao = new ProjectDAO();
-			 System.out.println("하세요");
 			row = dao.projectComplete(projectNum, userId);
 			
-			request.setAttribute("row", row);
-			System.out.println("반가워요");
+			request.setAttribute("resultrow", row);
 			forward = new ActionForward();
-			forward.setPath("/project_test/project_completeOk.jsp");
+			forward.setPath("/ajaxpath/result_row.jsp");
 			
 			
 		} catch (NamingException e) {
