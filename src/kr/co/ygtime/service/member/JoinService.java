@@ -41,11 +41,11 @@ public class JoinService implements Action{
 			result = dao.memberInsert(member);
 			
 			if(result>0) {
-				System.out.println("회원가입  성공");
+
 				request.setAttribute("result", "success");
 			}
 			else {
-				System.out.println("회원가입 입력 실패");
+
 				request.setAttribute("result", "fail");
 			}
 			

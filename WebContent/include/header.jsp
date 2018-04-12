@@ -296,44 +296,84 @@ function sideShow(){
 
 //jquery 로 간단하게 유효성 check 하기
 $(function() {
- 	$('#joinForm').submit(function() {
-	   //alert("가입");
-	if ($('#email').val() == "") { //이메일검사
-   	alert('ID(email)를 입력해 주세요.');
-   	$('#email').focus();
-   return false;
-   
-  } else if ($('#password').val() == "") { //비밀번호 검사
-   alert('PWD를 입력해 주세요.');
-   $('#password').focus();
-   return false;
-   
-  }else if ($('#passwordCheck').val() == "" ) {//passwordCheck 검사
-	  
-  $('#passwordCheck').focus();
-   return false;
-   
-  }else if ($('#nickName').val() == "") { //nickName 검사
-   alert('nickName를 입력해 주세요.');
-   $('#nickName').focus();
-   return false;
-  }
-    
- });
- 	
-  function mykeychange() {
- 
-	 
- 			
-		 	if($('#password').val() != "$('#passwordCheck').val()="   ){
-		 		alert("일치");
-		 	   		
-		 	   	}else{
-		 	   		alert("불일치2");
-		 	   	}
-  }	
- 
+
+	$('#joinForm').submit(function() {
+		if ($('#email').val() == "" ) { //이메일검사
+	   	alert('아이디 중복확인 해주세요.');
+	   	$('#email').focus();
+	   return false;
+	   
+	  } else if ($('#password').val() == "") { //비밀번호 검사
+	   alert('PWD를 입력해 주세요.');
+	   $('#password').focus();
+	   return false;
+	   
+	  }else if ($('#passwordCheck').val() == "" ) {//passwordCheck 검사
+		  
+	  $('#passwordCheck').focus();
+	   return false;
+	   
+	  }else if ($('#nickName').val() == "") { //nickName 검사
+	   alert('nickName를 입력해 주세요.');
+	   $('#nickName').focus();
+	   return false;
+	  }
+		
+	});
+		
+	
+
 });
+
+//비밀번호 일치여부
+function passwordfunction(){
+
+	if($("#password").val() != $("#passwordCheck").val()){
+		alert("패스워드 입력이 일치하지 않습니다");
+		$("#password").val('');
+		$("#passwordCheck").val('');
+		$("#password").focus();
+
+	}else{
+		alert("패스워드  일치");
+		$("#nickName").focus();
+	}
+}
+
+//아이디중복체크 비동기
+function idcheck() {
+	var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+	
+	$.ajax({
+	          url : "idcheck.member" ,
+	          data :  { email:$("#email").val()},
+	          success : function(data){
+	         
+	
+	               if(data == "true"){
+	                    $("#result").text("중복된 아이디입니다.");
+	                    $("#result").css("color","red");
+	                    
+	               } 
+	               else if(data == "false" || exptext.test($('#email').val()) == true){
+	                    $("#result").text("사용가능한 아이디입니다.");
+	                    $("#result").css("color","blue");
+	                    
+	               }
+	               if(exptext.test($('#email').val()) == false){
+	                   
+	        			  $("#result").text("이메일 형식이 올바르지 않습니다.");
+	                    $("#result").css("color","red");
+	               } 
+	               if (data == "empty" ) {
+	             	   $("#result").text("이메일을 입력해주세요");
+	                    $("#result").css("color","red");
+	 				 }
+	          }
+	      });
+}
+
+
 
 
 </script>  
@@ -458,23 +498,29 @@ $(function() {
         	<form id ="joinForm" action="Join.member" method="post">
 	        	<div class="form-group">
 				    <label for="email">이메일 주소</label>
-				    <input type="email" class="form-control" id="email" placeholder="이메일을 입력하세요">
+				    <button id="idcheckhover" type="button"  class ="btn btn-default" onclick="idcheck()">이메일 중복확인</button> 
+				    <span id="result"></span> <br><br>
+				    <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" >
+				 
+	
+					
+				
 				</div>
 	        	<div class="form-group">
 				    <label for="password">비밀 번호</label>
-				    <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요">
+				    <input type="password" class="form-control" id="password"  name="password" placeholder="비밀번호를 입력하세요">
 				</div>
 	        	<div class="form-group">
 				    <label for="passwordCheck">비밀 번호 확인</label>
-				    <input type="password" class="form-control" id="passwordCheck" placeholder="비밀번호를 입력하세요"  onchange = "mykeychange()">&nbsp;&nbsp;<span id="p"></span>     
+				    <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="비밀번호를 입력하세요"  onchange = "passwordfunction()">
 				</div>
 	        	<div class="form-group">
 				    <label for="nickName">닉네임</label>
-				    <input type="text" class="form-control" id="nickName" placeholder="닉네임을 입력하세요">
+				    <input type="text" class="form-control" id="nickName" name="nickName"  placeholder="닉네임을 입력하세요">
 				</div>
 				<div class="form-group">
 				    <label for="fileUpLoad">파일 업로드</label>
-				    <input type="file" id="fileUpLoad">
+				    <input type="file" id="fileUpLoad" name="fileUpLoad">
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-default">Submit</button>

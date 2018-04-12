@@ -24,7 +24,7 @@ public class IdcheckService implements Action{
 	
 		PrintWriter out = null;
 		String id = request.getParameter("email");
-		System.out.println(id);
+
 		
 		MemberDAO dao = null;
 		String check = null;
