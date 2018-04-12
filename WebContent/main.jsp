@@ -150,13 +150,15 @@ function addCardView(e) {
 function addCard(e){
 	var parent = $(e).closest('div')
 	var value = parent[0].firstChild.value
-	$(parent).empty()
-	parent[0].innerHTML = value
-	$(parent).attr({ 
-		'data-toggle':'modal',
-		'data-target':'#myModal1'
-	})
-	sortable()
+	if(value.trim() != ""){
+		$(parent).empty()
+		parent[0].innerHTML = value
+		$(parent).attr({ 
+			'data-toggle':'modal',
+			'data-target':'#myModal1'
+		})
+		sortable()
+	}
 }
 
 function addListView(e){
@@ -167,10 +169,12 @@ function addListView(e){
 function addList(e){
 	var parent = $(e).closest('.listbox')
 	var value = parent[0].firstChild.value
-	parent.empty()
-	var	div = '<div class="listtitle">' + value + '</div>'
-		div += "<a class='cardcreate' onclick='addCardView(this)'>Add a card...</a>"
-	parent.append(div)
+	if(value.trim() != ""){
+		parent.empty()
+		var	div = '<div class="listtitle">' + value + '</div>'
+			div += "<a class='cardcreate' onclick='addCardView(this)'>Add a card...</a>"
+		parent.append(div)
+	}
 }
 </script>
 </head>
