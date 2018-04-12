@@ -396,29 +396,22 @@ function sideShow(){
 //jquery 로 간단하게 유효성 check 하기
 $(function() {
 
- 	$('#joinForm').submit(function() {
-	   //alert("가입");
-	if ($('#email').val() == "") { //이메일검사
-   	alert('ID(email)를 입력해 주세요.');
-   	$('#email').focus();
-   return false;
-   
-  } else if ($('#password').val() == "") { //비밀번호 검사
-   alert('PWD를 입력해 주세요.');
-   $('#password').focus();
-   return false;
-   
-  }else if ($('#passwordCheck').val() == "" ) {//passwordCheck 검사
-	  
-  $('#passwordCheck').focus();
-   return false;
-   
-  }else if ($('#nickName').val() == "") { //nickName 검사
-   alert('nickName를 입력해 주세요.');
-   $('#nickName').focus();
-   return false;
-  }
-    
+	$('#joinForm').submit(function() {
+		   //alert("가입");
+		  if ($('#email').val() == "") { //이메일검사
+			idcheck();
+		    return false;
+		   
+		  } else if ($('#password').val() == "") { //비밀번호 검사
+		   /* alert('PWD를 입력해 주세요.');
+		   $('#password').focus(); */
+		   passwordfunction();
+		   return false;
+		   
+		  }else if ($("#nickName").val().trim() == "") { //nickName 검사
+		   Nicfunction();
+		   return false;
+		  }   
  });
 	/* //프로젝트 추가
 	$("#insertproject").on("click",function(){
@@ -543,18 +536,31 @@ $(function() {
 //비밀번호 일치여부
 function passwordfunction(){
 
-	if($("#password").val() != $("#passwordCheck").val()){
-		alert("패스워드 입력이 일치하지 않습니다");
+	if($("#password").val() != $("#passwordCheck").val() || $("#password").val()==""){
+		$("#pwdcheck").html("* 비밀번호가 일치 하지 않습니다.");
 		$("#password").val('');
 		$("#passwordCheck").val('');
 		$("#password").focus();
 
 	}else{
-		alert("패스워드  일치");
+		$("#pwdcheck").css("color", "black");
+		$("#pwdcheck").html("* 비밀번호 일치");
 		$("#nickName").focus();
 	}
+	
 }
+//닉네임 공백 여부 확인
+function Nicfunction(){
 
+	if($("#nickName").val().trim() == ""){
+		$("#nickcheck").html("* 닉네임을 입력해 주세요");
+		$("#password").focus();
+
+	}else{
+		$("#nickcheck").html("");
+	}
+	
+}
 //아이디중복체크 비동기
 function idcheck() {
 	var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
@@ -585,7 +591,7 @@ function idcheck() {
 	                    $("#result").css("color","red");
 	 				 }
 	          }
-	      });
+	});
 }
 
 
@@ -765,15 +771,15 @@ function idcheck() {
 				</div>
 	        	<div class="form-group">
 				    <label for="password">비밀 번호</label>
-				    <input type="password" class="form-control" id="password"  name="password" placeholder="비밀번호를 입력하세요">
+				    <input type="password" class="form-control" id="password"  name="password" >
 				</div>
 	        	<div class="form-group">
-				    <label for="passwordCheck">비밀 번호 확인</label>
-				    <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="비밀번호를 입력하세요"  onchange = "passwordfunction()">
+				    <label for="passwordCheck">비밀 번호 확인 <span id="pwdcheck" style="color: red;"></span></label>
+				    <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" onchange="passwordfunction()">
 				</div>
 	        	<div class="form-group">
-				    <label for="nickName">닉네임</label>
-				    <input type="text" class="form-control" id="nickName" name="nickName"  placeholder="닉네임을 입력하세요">
+				    <label for="nickName">닉네임  <span id="nickcheck" style="color: red;"></span></label>
+				    <input type="text" class="form-control" id="nickName" name="nickName">
 				</div>
 				<div class="form-group">
 				    <label for="fileUpLoad">파일 업로드</label>
