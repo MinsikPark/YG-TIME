@@ -185,6 +185,7 @@
 		height: 200px;
 		float:left;
 		margin:0px 10px 10px 0px;
+		resize: none;	
 	}
 	
 	.detailbutton{
