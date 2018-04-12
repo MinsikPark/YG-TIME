@@ -41,7 +41,6 @@ $(function() { // $(document).ready
 		selectHelper: true, // 일자 드래그하면 보드바를 표시
 		select: function(start, end) { // 이벤트객체에 입력될 시작일, 종료일 파라미터
 			var endDate = dateProcess(end.format(), -1);
-			console.log("달력에 표시되는 종료일: " + endDate); // 확인용 콘솔 코드
 			
 			$('#eventStart').val(start.format()); // start.format() : 시작일 값
 			$('#eventEnd').val(endDate); // 종료일 값
@@ -51,75 +50,17 @@ $(function() { // $(document).ready
 		editable: true, // 달력에 종료일 수정 여부 (드래그, 크기 조정)
 		eventLimit: true, // 하루에 표시되는 이벤트의 수를 제한. 나머지는 팝 오버에 나타남.
 		displayEventTime: false, // 
-		events: [
-			{
-				id: 'jino',
-				title: '지너니',
-				start: '2018-04-07',
-				end: '2018-04-10',
-				color: '#000000'
-			},
-			{
-				title: '재우기',
-				url: 'http://www.daum.net/',
-				start: '2018-04-15',
-				end: '2018-04-17',
-				color: '#336699'
-			},
-			{
-				title: '윤그니',
-				url: 'http://www.naver.com/',
-				start: '2018-04-20',
-				end: '2018-04-22',
-				color: 'red'
-			}
-			/*참고 코드
-			var eventObject = {
-                    type: 2,
-                    id: $(this).attr("data-id"),
-                    title: $(this).attr("data-name"),
-                    duration: $(this).attr("data-duration"),
-                    guid: $(this).attr("data-guid"),
-                    color: $(this).attr("data-color")
-                };
-			*/
-		],
 		eventClick: function(event) {
 			$('#calendar').hide();
 			$('#mainScreen').show();
 		},
 		eventDrop: function(event, delta, revertFunc) { // Drag를 통한 날짜 변경 처리 함수
-			// 데이터 확인용 콘솔 코드
-			console.log("<< eventDrop >>");
-			eventDataPrint(event);
-			
-			/*
-			if(!confirm("날짜를 변경하시겠습니까?")) {
-				revertFunc(); //날짜 변경 전의 값으로 되돌림
-			}
-			*/
+		
 		},
 		eventResize: function(event, delta, revertFunc) { // Editable을 통한 날짜 변경 처리 함수
-			// 데이터 확인용 콘솔 코드
-			console.log("<< eventResize >>");
-			eventDataPrint(event);
 			
-			/*
-			if(!confirm("날짜를 변경하시겠습니까?")) {
-				revertFunc(); //날짜 변경 전의 값으로 되돌림
-			}
-			*/
 		},
 	}); // end - fullCalendar
-	
-	// 보드 데이터 콘솔 확인 (추후 지울것)
-	function eventDataPrint(event) {
-		console.log("event.id: " + event.id);
-		console.log("event.title: " + event.title);
-		console.log("event.start: " + event.start.format());
-		console.log("event.end: " + event.end.format());
-		console.log("event.color: " + event.color);
-	}
 	
 	// dialog 초기화
 	function clearDialog() {
@@ -148,8 +89,6 @@ $(function() { // $(document).ready
 				var end = dateProcess($('#eventEnd').val(), 1); // 가공된 종료일 값
 				var color = $('#eventColor').val();
 				var eventData = null; // 이벤트 객체 변수 선언
-				console.log("datepicker로 받은 endDate: " + $('#eventEnd').val());
-				console.log("실제 endDate: " + end);
 				
 				if(title === "" ){
 					alert("보드명을 입력해주세요.");
@@ -163,13 +102,6 @@ $(function() { // $(document).ready
 							color: color,
 						};
 						$('#calendar').fullCalendar('renderEvent', eventData, true);
-						// 데이터 확인용 콘솔 코드
-						console.log("<< createEvent >>");
-						console.log("eventData.id: " + eventData.id);
-						console.log("eventData.title: " + eventData.title);
-						console.log("eventData.start: " + eventData.start);
-						console.log("eventData.end: " + eventData.end);
-						console.log("eventData.color: " + eventData.color);
 					}
 					$('#calendar').fullCalendar('unselect');
 					$(this).dialog('close');
@@ -186,12 +118,6 @@ $(function() { // $(document).ready
 		},				
 	}); // end - calEventDialog
 	
-	//샘플 데이터
-	
-	console.log("sampleData: " + sampleData);
-	console.log("sampleData Length: " + sampleData.length);
-	console.log("sample1: " + sampleData[0].id);
-	
 }); // end - $(document).ready
 
 var sampleData = [
@@ -200,32 +126,27 @@ var sampleData = [
 		title: "안녕", //프로젝트명
 		start: "2018-04-01", //프로젝트시작날짜
 		end: "2018-04-02", //프로젝트종료날짜
-		color: "#336699", //라벨색
-		url: "#", //url
+		color: "#336699" //라벨색
 	},
 	{
 		id: "sample2",
 		title: "뚱이",
 		start: "2018-04-12",
 		end: "2018-04-14",
-		color: "#d25386",
-		url: "http://www.naver.com/",
+		color: "#d25386"
 	},
 	{
 		id: "sample3",
 		title: "스폰지밥",
 		start: "2018-04-20",
 		end: "2018-04-30",
-		color: "yellow",
-		url: "http://www.google.com/",
+		color: "yellow"
 	},
 ];
 
 function project() {
 	$('#calendar').fullCalendar('removeEvents');
 	for(var i in sampleData) {
-		console.log("i: " + i);
-		console.log("sampleData[i].id: " + sampleData[i].id);
 		$('#calendar').fullCalendar('renderEvent', sampleData[i], true);	
 	}
 	$('#mainScreen').hide()
