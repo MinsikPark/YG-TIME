@@ -499,22 +499,17 @@ $(function() {
 	
 	//////프로젝트 완료
 	function projectComplete(obj){
-		var ul = $(obj).closest('ul')
-		var li = '<li><a onclick="projectView('+obj+')">프로젝트 보기</a></li><li><a onclick="projectProgress('+obj+')">프로젝트 다시 진행</a></li>'
-		console.log($('#getsession').val()+"/"+obj);
-		console.log(ul);
 		$.ajax({
 			url : "completeproject.project",
 			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
 			datatype : "json" ,
 			success : function(data){
-				console.log(data);
+				$("#complete").empty();
+				$("#progress").empty();
+				callprojectlist();
 			}
 		});
-		
-		ul.empty()
-		ul.append(li)
-		callprojectlist();
+
 	}
 	
 	
@@ -522,21 +517,17 @@ $(function() {
 	
 	///////프로젝트복구
 	function projectProgress(obj){
-		var ul = $(obj).closest('ul')
-		var li = '<li><a onclick="projectDel('+obj+')">프로젝트 삭제</a></li><li><a onclick="projectComplete('+obj+')">프로젝트 완료</a></li>'
-		
 		$.ajax({
 			url : "progressproject.project",
 			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
 			datatype : "json" ,
 			success : function(data){
-				console.log(data);
+				$("#complete").empty();
+				$("#progress").empty();
+				callprojectlist();
 			}
 		});
 		
-		ul.empty()
-		ul.append(li)
-		callprojectlist();
 	}
 	
 	

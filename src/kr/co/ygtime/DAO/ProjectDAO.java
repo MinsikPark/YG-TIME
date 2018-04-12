@@ -178,12 +178,11 @@ public class ProjectDAO {
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) { 
-					pstmt.close();
 					//아이디가 일치하는지 확인
 					if(rs.getInt("grade") == 0) {
+						pstmt.close();
 						pstmt = conn.prepareStatement(sql2);
 						pstmt.setInt(1, projectNum);
-						
 						
 						row = pstmt.executeUpdate();
 					}
@@ -234,12 +233,11 @@ public class ProjectDAO {
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) { 
-					pstmt.close();
 					//아이디가 일치하는지 확인
 					if(rs.getInt("grade") == 0) {
+						pstmt.close();
 						pstmt = conn.prepareStatement(sql2);
 						pstmt.setInt(1, projectNum);
-						
 						
 						row = pstmt.executeUpdate();
 					}
