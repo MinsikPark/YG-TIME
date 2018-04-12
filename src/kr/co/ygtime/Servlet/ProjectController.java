@@ -16,6 +16,7 @@ import kr.co.ygtime.service.project.ProjectCompleteService;
 
 import kr.co.ygtime.service.project.ProjectDeleteService;
 import kr.co.ygtime.service.project.ProjectListService;
+import kr.co.ygtime.service.project.ProjectProgressService;
 
 @WebServlet("*.project")
 public class ProjectController extends HttpServlet {
@@ -68,11 +69,16 @@ public class ProjectController extends HttpServlet {
 				e.printStackTrace();
 			}
         	
-        }
-
-        
-        else if(cmdURI.equals("/completeproject.project")){
+        } else if(cmdURI.equals("/completeproject.project")){
         	action = new ProjectCompleteService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
+        } else if(cmdURI.equals("/progressproject.project")){
+        	action = new ProjectProgressService();
         	try {
 				forward = action.execute(request, response);
 			} 

@@ -278,7 +278,6 @@ $(function(){
 	
 	//헤더 관련
 	$("#btnLogin").click(function(){
-		console.log("login 클릭");
  		if($("#loginEmail").val() =="" || $("#loginPwd").val() ==""){
 			alert("아이디와 비밀번호를 입력해 주세요");
 			
@@ -479,8 +478,9 @@ $(function() {
 	
 	function projectComplete(obj){
 		var ul = $(obj).closest('ul')
-		var li = '<li><a onclick="projectView(this)">프로젝트 보기</a></li><li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>'
-		
+		var li = '<li><a onclick="projectView('+obj+')">프로젝트 보기</a></li><li><a onclick="projectProgress('+obj+')">프로젝트 다시 진행</a></li>'
+		console.log($('#getsession').val()+"/"+obj);
+		console.log(ul);
 		$.ajax({
 			url : "completeproject.project",
 			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
@@ -497,16 +497,16 @@ $(function() {
 	
 	function projectProgress(obj){
 		var ul = $(obj).closest('ul')
-		var li = '<li><a onclick="projectDel(this)">프로젝트 삭제</a></li><li><a onclick="projectComplete(this)">프로젝트 완료</a></li>'
+		var li = '<li><a onclick="projectDel('+obj+')">프로젝트 삭제</a></li><li><a onclick="projectComplete('+obj+')">프로젝트 완료</a></li>'
 		
-		/* $.ajax({
-			url : "completeproject.project",
+		$.ajax({
+			url : "progressproject.project",
 			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
 			datatype : "json" ,
 			success : function(data){
 				console.log(data);
 			}
-		}); */
+		});
 		
 		ul.empty()
 		ul.append(li)
@@ -527,7 +527,6 @@ $(function() {
 				data:data,
 				datatype:"TEXT",
 				success:function(data){
-					console.log(">"+data.trim()+"<");
 					if(data.trim()==null ||data.trim()<=0){
 						alert("프로젝트 생성에 실패하였습니다");				
 					}
@@ -548,22 +547,18 @@ $(function() {
 		$("#complete").empty();
 		var sessionId = '<%=session.getAttribute("sessionId")%>';
 		if(sessionId!=null){
-			console.log("sessionId : " + sessionId);
 			$.ajax({
 				url:"projectlist.project",
 				datatype:"json",
 				data: {userId:sessionId},
 				success:function(data){
-					//console.log(">"+data.trim()+"<");
 					var json = JSON.parse(data);
 					
-					console.log(json);
 					 $.each(json,function(key,value){
 						var proejectName = value.projectName;
 						var projectEndDate = value.projectEndDate;
 						var projectNum = value.projectNum;
 						//var projectStartDate = value.projectStartDate;
-						//console.log(projectEndDate);
 						
 						if(projectEndDate != ""){ //시작 날짜가 비어있지 않다면 >> 프로젝트가 완료 되었다면
 							$("#complete").append(
@@ -571,7 +566,7 @@ $(function() {
 								+ proejectName + '</button>'
 								+ '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
 								+ '<ul class="dropdown-menu" style="float: right; position: unset;">'
-								+ '<li><a onclick="projectView(this)">프로젝트 보기</a></li>'
+								+ '<li><a onclick="projectView('+projectNum+')">프로젝트 보기</a></li>'
 								+ '<li><a onclick="projectProgress('+projectNum+')">프로젝트 다시 진행</a></li></ul></div>'	
 							);
 							
@@ -580,7 +575,7 @@ $(function() {
 								'<div><button class="button btn-1">'
 								+ proejectName + '</button><a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
 								+'<ul class="dropdown-menu" style="float: right; position: unset;">'
-								+'<li><a onclick="projectDel(this)">프로젝트 삭제</a></li>'
+								+'<li><a onclick="projectDel('+projectNum+')">프로젝트 삭제</a></li>'
 								+'<li><a onclick="projectComplete('+projectNum+')">프로젝트 완료</a></li></ul></div>'
 							)
 							
