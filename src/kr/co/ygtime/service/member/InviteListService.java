@@ -41,7 +41,6 @@ public class InviteListService implements Action{
 			list = memberdao.inviteMsgSelect(userId);
 			
 			JSONArray json = JSONArray.fromObject(list);
-			
 			request.setAttribute("ajaxdata", json);
 			
 			forward = new ActionForward();
