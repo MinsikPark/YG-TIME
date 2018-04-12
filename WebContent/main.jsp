@@ -38,9 +38,9 @@
 	}
 	
 	.listbox {
-	    border:10px solid #e2e4e6;
+	    border:10px solid #fbedc8;
 	    border-radius: 12px;
-	    background-color: #e2e4e6;
+	    background-color: #fbedc8;
 	    margin:10px;
 	    width:300px;
 	    float:left;

@@ -300,6 +300,7 @@ function sideShow(){
 	$('.setting').delay(250).fadeIn()
 	$('.insert').delay(250).fadeIn()
 } 
+<<<<<<< HEAD
 
 function changeValue(obj){
 	if(obj.value != ""){
@@ -364,6 +365,12 @@ function addProjectForm(obj){
 }
 
 </script>  
+=======
+        function myFunction() {
+    	confirm("멤버를 삭제 하시겠습니까?");}
+
+</script>
+>>>>>>> 93e80b700f4dc09747924f4a2973b2b6a031590c
 </head>
 <!-- SIDEBAR -->
 <body>
@@ -373,27 +380,48 @@ function addProjectForm(obj){
 		<a href="#" class="glyphicon glyphicon-plus insert" onclick="addProjectForm()"></a>
 		<div class="tab-content">
 			<ul class="nav nav-tabs nav-tabs-modify">
+<<<<<<< HEAD
 				<li class="active"><a data-toggle="tab" href="#progress">진행중인 프로젝트</a></li>
 				<li><a data-toggle="tab" href="#complete">완료된 &nbsp;   프로젝트</a></li>
+=======
+				<li class="active"><a data-toggle="tab" href="#home">진행</a></li>
+				<li><a data-toggle="tab" href="#menu1">완료</a></li>
+>>>>>>> 93e80b700f4dc09747924f4a2973b2b6a031590c
 			</ul>
 			<div id="progress" class="tab-pane fade in active">
 				<div>
 					<button class="button btn-1">Button 1</button>
-					<a class="glyphicon glyphicon-cog setting"></a>
+					<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
+    				<ul class="dropdown-menu" style= "float: right; position: unset;">
+      					<li><a href="#">프로젝트 삭제</a></li>
+      					<li><a href="#">프로젝트 완료</a></li>
+    				</ul>	
 				</div>
 				<div>
 					<button class="button btn-1">Button 2</button>
-					<a class="glyphicon glyphicon-cog setting"></a>
+					<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
+    				<ul class="dropdown-menu" style= "float: right; position: unset;">
+      					<li><a href="#">프로젝트 삭제</a></li>
+      					<li><a href="#">프로젝트 완료</a></li>
+    				</ul>	
 				</div>
 			</div>
 			<div id="complete" class="tab-pane fade">
 				<div>
 					<button class="button btn-1">Button 3</button>
-					<a class="glyphicon glyphicon-cog setting"></a>
+					<a class="glyphicon glyphicon-cog setting"  data-toggle="dropdown"></a>
+    				<ul class="dropdown-menu" style= "float: right; position: unset;">
+      					<li><a href="#">프로젝트 삭제</a></li>
+      					<li><a href="#">프로젝트 완료</a></li>
+    				</ul>	
 				</div>
-				<div>
+				<div class="dropdown">
 					<button class="button btn-1">Button 4</button>
-					<a class="glyphicon glyphicon-cog setting"></a>
+					<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
+    				<ul class="dropdown-menu" style= "float: right; position: unset;">
+      					<li><a href="#">프로젝트 삭제</a></li>
+      					<li><a href="#">프로젝트 완료</a></li>
+    				</ul>	
 				</div>
 			</div>
 		</div>
@@ -436,7 +464,8 @@ function addProjectForm(obj){
 	          <div class="dropdown-menu">
 	            <form id="fromUser" class="form container-fluid">
 	              <div class="form-group">
-	                <label for="email">프로젝트에 참여 하시겠습니까</label>
+	              	<li data-toggle="modal" data-target="#myModal2"><a href="#">프로필 수정</a></li>
+					<label for="email">프로젝트에 참여 하시겠습니까</label>
 	                <input type="button" value="Y">
 	                <input type="button" value="N">
 	              </div>
@@ -453,13 +482,27 @@ function addProjectForm(obj){
 <!-- FOOTER -->
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">진행중인 MEMBER</a>
+      <a class="navbar-brand" href="#">진행중인 MEMBER &nbsp;&nbsp;&nbsp;</a>
     </div>
-    <div> 
-      <ul class="nav navbar-nav">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> 지너니 </a></li> 
-      </ul>
-    </div>
+    <div class="dropup">
+			<a class = "glyphicon glyphicon-user" onclick="myFunction()" style="font-size: 25pt; top: 7px;"></a>
+			<button type="button" class="btn btn-default" data-toggle="dropdown" style="margin: 0px 0px 10px 30px;">
+				<span class="glyphicon glyphicon-plus" ></span> 멤버 추가
+			</button>
+			<ul class="dropdown-menu" style="width: 300px;">
+				<li><div class="input-group">
+						<div class="form-group">
+				   			<input type="email" class="form-control" id="email" placeholder="이메일 입력..">
+						</div>
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</span>
+					</div>
+				</li>
+			</ul>
+		</div>
 </nav>
 <!-- FOOTER END -->
 
@@ -491,7 +534,7 @@ function addProjectForm(obj){
 				    <input type="text" class="form-control" id="nickName" placeholder="닉네임을 입력하세요">
 				</div>
 				<div class="form-group">
-				    <label for="fileUpLoad">파일 업로드</label>
+				    <label for="fileUpLoad">프로필 사진 설정</label>
 				    <input type="file" id="fileUpLoad">
 				</div>
 				<div class="modal-footer">
