@@ -39,13 +39,14 @@ public class InviteListService implements Action{
 			memberdao = new MemberDAO();
 			userId = (String)request.getParameter("userId");
 			list = memberdao.inviteMsgSelect(userId);
-			System.out.println(list);
+			
 			JSONArray json = JSONArray.fromObject(list);
-			System.out.println(json);
-			response.getWriter().print(json);
 			
-            forward.setRedirect(false);
+			request.setAttribute("ajaxdata", json);
 			
+			forward = new ActionForward();
+			forward.setRedirect(false);
+       	    forward.setPath("/ajaxpath/AjaxOk.jsp");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
