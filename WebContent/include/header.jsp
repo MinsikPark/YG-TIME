@@ -540,6 +540,8 @@ $(function() {
 
 	
 	function callprojectlist(){
+		$("#progress").empty();
+		$("#complete").empty();
 		var sessionId = '<%=session.getAttribute("sessionId")%>';
 		if(sessionId!=null){
 			console.log("sessionId : " + sessionId);
