@@ -499,9 +499,6 @@ $(function() {
 	
 	//////프로젝트 완료
 	function projectComplete(obj){
-
-		console.log($('#getsession').val()+"/"+obj);
-
 		$.ajax({
 			url : "completeproject.project",
 			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
