@@ -28,30 +28,34 @@ public class ProjectAddService implements Action{
 		
 		try {
 			//파라미터로 프로젝트 명을 가져온다
-			String projectname = request.getParameter("projectname");
+			String newprojectname = request.getParameter("newprojectname");
 			
 			//ProjectDTO 객체에 넣어준다.
 			ProjectDTO projectdto = new ProjectDTO();
-			projectdto.setProjectName(projectname);
-			
+			projectdto.setProjectName(newprojectname);
+		
 			ProjectDAO projectdao = new ProjectDAO();
 			
 			//1. 프로젝트 insert
-			int row = projectdao.projectInsert(projectdto); 
+			int projectnum = projectdao.projectInsert(projectdto); 
 			
 			forward = new ActionForward();
-			if(row > 0) {
+			if(projectnum > 0) {
 				//프로젝트 insert 성공
 				//2. 팀 insert 관리자로
-				String userid = request.getSession().getId(); //확실한지 로그인 만들어진 후 테스트
-				
+				String userid = (String) request.getSession().getAttribute("sessionId"); //확실한지 로그인 만들어진 후 테스트
+				System.out.println("userid : " + userid);
 				TeamDTO teamdto = new TeamDTO();
+				System.out.println("-1");
 				teamdto.setUserId(userid);
-				teamdto.setGrade(1);
-				
+				System.out.println("0");
+				teamdto.setGrade(0);
+				teamdto.setProjectNum(projectnum);
+				System.out.println("1");
 				
 				int insertrow = projectdao.teamInsert(teamdto); //DB 팀에 넣어준다.
-	       	    
+				System.out.println("2");
+				
 				if(insertrow > 0) {
 					//초대 승인 (팀 insert) 성공
 					//2.프로젝트 list 경로 현재는 test
