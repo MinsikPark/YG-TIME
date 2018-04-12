@@ -426,7 +426,8 @@ function projectView(obj){
 			</ul>
 			<div id="progress" class="tab-pane fade in active">
 				<div>
-					<button class="button btn-1">Button 1</button>
+					<button class="button btn-1" onclick="project()" value="1">Button 1</button>
+					
 					<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
     				<ul class="dropdown-menu" style= "float: right; position: unset;">
       					<li><a onclick="projectDel(this)">프로젝트 삭제</a></li>
@@ -471,7 +472,7 @@ function projectView(obj){
 <header>
 	<nav class="navbar z-index">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="#"><img src="images/logo.JPG" style="width: 110px; height: 30px;"></a>
+	      <a class="navbar-brand" href="#"><img src="images/logo.JPG" style="width: 110px; height: 30px;" onclick="project()"></a>
 	    </div>
 	    <div> 
 	      <!-- 로그인 창 -->
@@ -638,6 +639,25 @@ function projectView(obj){
 
 <!--  보경이 상세페이지 끝   -->
 
+<!-- 성훈이형 보드추가 -->
+
+	<div hidden id="calEventDialog">
+	    <form>
+	        <fieldset>
+		        <label for="eventTitle">보드명</label>
+		        <input type="text" name="eventTitle" id="eventTitle" /><br>
+		        <label for="eventStart">시작일</label>
+		        <input type="text" name="eventStart" id="eventStart" /><br>
+		        <label for="eventEnd">종료일</label>
+		        <input type="text" name="eventEnd" id="eventEnd" /><br>
+		        <label for="eventColor">보드바 색상</label>
+		        <input type="color" name="eventColor" id="eventColor" /><br>
+	        </fieldset>
+	    </form>
+	</div>
+	
+
+<!-- 성훈이형 보드추가 끝-->
 
      
 </body>

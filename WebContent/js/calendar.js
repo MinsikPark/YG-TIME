@@ -84,6 +84,10 @@ $(function() { // $(document).ready
                 };
 			*/
 		],
+		eventClick: function(event) {
+			$('#calendar').hide();
+			$('#mainScreen').show();
+		},
 		eventDrop: function(event, delta, revertFunc) { // Drag를 통한 날짜 변경 처리 함수
 			// 데이터 확인용 콘솔 코드
 			console.log("<< eventDrop >>");
@@ -183,57 +187,48 @@ $(function() { // $(document).ready
 	}); // end - calEventDialog
 	
 	//샘플 데이터
-	var sampleData = [
-			{ // 이벤트 객체
-				//id: "sample1", //프로젝트넘버
-				title: "안녕", //프로젝트명
-				start: "2018-04-01", //프로젝트시작날짜
-				end: "2018-04-02", //프로젝트종료날짜
-				color: "#336699", //라벨색
-				url: "http://www.daum.net/", //url
-			},
-			{
-				id: "sample2",
-				title: "뚱이",
-				start: "2018-04-12",
-				end: "2018-04-14",
-				color: "#d25386",
-				url: "http://www.naver.com/",
-			},
-			{
-				id: "sample3",
-				title: "스폰지밥",
-				start: "2018-04-20",
-				end: "2018-04-30",
-				color: "yellow",
-				url: "http://www.google.com/",
-			},
-	];
+	
 	console.log("sampleData: " + sampleData);
 	console.log("sampleData Length: " + sampleData.length);
 	console.log("sample1: " + sampleData[0].id);
 	
-	//프로젝트 추가/변경/삭제 처리
-	$('#project1').click(function() {
-		$('#calendar').fullCalendar('removeEvents');
-	});
-	
-	$('#project2').click(function() {
-		for(var i in sampleData) {
-			console.log("i: " + i);
-			console.log("sampleData[i].id: " + sampleData[i].id);
-			$('#calendar').fullCalendar('renderEvent', sampleData[i], true);	
-		}
-		
-	});
-	
-	$('#project3').click(function() {
-		$('#calendar').fullCalendar('removeEvents');
-		for(var i in sampleData) {
-			console.log("i: " + i);
-			console.log("sampleData[i].id: " + sampleData[i].id);
-			$('#calendar').fullCalendar('renderEvent', sampleData[i], true);	
-		}
-	});
-	
 }); // end - $(document).ready
+
+var sampleData = [
+	{ // 이벤트 객체
+		//id: "sample1", //프로젝트넘버
+		title: "안녕", //프로젝트명
+		start: "2018-04-01", //프로젝트시작날짜
+		end: "2018-04-02", //프로젝트종료날짜
+		color: "#336699", //라벨색
+		url: "#", //url
+	},
+	{
+		id: "sample2",
+		title: "뚱이",
+		start: "2018-04-12",
+		end: "2018-04-14",
+		color: "#d25386",
+		url: "http://www.naver.com/",
+	},
+	{
+		id: "sample3",
+		title: "스폰지밥",
+		start: "2018-04-20",
+		end: "2018-04-30",
+		color: "yellow",
+		url: "http://www.google.com/",
+	},
+];
+
+function project() {
+	$('#calendar').fullCalendar('removeEvents');
+	for(var i in sampleData) {
+		console.log("i: " + i);
+		console.log("sampleData[i].id: " + sampleData[i].id);
+		$('#calendar').fullCalendar('renderEvent', sampleData[i], true);	
+	}
+	$('#mainScreen').hide()
+	$('#calendar').show()
+	
+}
