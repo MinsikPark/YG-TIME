@@ -52,7 +52,9 @@ public class ProjectController extends HttpServlet {
 			}
         	
 
+
         }else if(cmdURI.equals("/delete.project")) {
+
         	action = new ProjectDeleteService();
         	try {
         		forward = action.execute(request, response);
@@ -60,6 +62,11 @@ public class ProjectController extends HttpServlet {
         	catch (Exception e) {
         		e.getMessage();
         	}
+
+        	
+		
+
+
         } else if(cmdURI.equals("/projectlist.project")) {
         	action = new ProjectListService();
         	try {
@@ -68,9 +75,8 @@ public class ProjectController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
 			}
-        	
+
         } else if(cmdURI.equals("/completeproject.project")){
-        	System.out.println("1");
         	action = new ProjectCompleteService();
         	try {
 				forward = action.execute(request, response);
@@ -78,6 +84,7 @@ public class ProjectController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
 			}
+        	
         } else if(cmdURI.equals("/progressproject.project")){
         	action = new ProjectProgressService();
         	try {
