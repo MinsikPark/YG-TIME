@@ -31,7 +31,7 @@ public class ProjectDeleteService implements Action{
 			request.setAttribute("resultrow", resultrow);
 			forward = new ActionForward();
 			System.out.println("메롱2");
-			forward.setPath("/project_test/project_delete_ok.jsp");
+			forward.setPath("/ajaxpath/result_row.jsp");
 			
 		} catch (NamingException e) {
 			e.printStackTrace();
