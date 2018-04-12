@@ -407,7 +407,7 @@ $(function() {
 			idcheck();
 		    return false;
 		   
-		  } else if($('#result').html() != "사용가능한 아이디입니다."){
+		  } else if($('#result').html() == "사용가능한 아이디입니다."){
 			alert("아이디를 형식 또는 중복을 확인하세요");
 			return false;
 		  } else if ($('#password').val() == "") { //비밀번호 검사
