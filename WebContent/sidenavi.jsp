@@ -17,6 +17,9 @@
 	header {
 		margin : 0 20px; 
 	}
+	.z-index{
+		z-index: 10;
+	}
 	
 	.sidenav {
 	    height: 100%;
@@ -300,7 +303,6 @@ function sideShow(){
 	$('.setting').delay(250).fadeIn()
 	$('.insert').delay(250).fadeIn()
 } 
-<<<<<<< HEAD
 
 function changeValue(obj){
 	if(obj.value != ""){
@@ -364,13 +366,8 @@ function addProjectForm(obj){
 	$('#progress').append(button)
 }
 
-</script>  
-=======
-        function myFunction() {
-    	confirm("멤버를 삭제 하시겠습니까?");}
-
 </script>
->>>>>>> 93e80b700f4dc09747924f4a2973b2b6a031590c
+
 </head>
 <!-- SIDEBAR -->
 <body>
@@ -382,8 +379,6 @@ function addProjectForm(obj){
 			<ul class="nav nav-tabs nav-tabs-modify">
 				<li class="active"><a data-toggle="tab" href="#progress">진행중인 프로젝트</a></li>
 				<li><a data-toggle="tab" href="#complete">완료된 &nbsp;   프로젝트</a></li>
-				<li class="active"><a data-toggle="tab" href="#home">진행</a></li>
-				<li><a data-toggle="tab" href="#menu1">완료</a></li>
 			</ul>
 			<div id="progress" class="tab-pane fade in active">
 				<div>
@@ -430,7 +425,7 @@ function addProjectForm(obj){
 
 <!-- HEADER -->
 <header>
-	<nav class="navbar">
+	<nav class="navbar z-index">
 	    <div class="navbar-header">
 	      <a class="navbar-brand" href="#"><img src="images/logo.JPG" style="width: 110px; height: 30px;"></a>
 	    </div>
@@ -461,8 +456,7 @@ function addProjectForm(obj){
 	          <div class="dropdown-menu">
 	            <form id="fromUser" class="form container-fluid">
 	              <div class="form-group">
-	              	<li data-toggle="modal" data-target="#myModal2"><a href="#">프로필 수정</a></li>
-					<label for="email">프로젝트에 참여 하시겠습니까</label>
+					<label>프로젝트에 참여 하시겠습니까</label>
 	                <input type="button" value="Y">
 	                <input type="button" value="N">
 	              </div>
@@ -489,7 +483,7 @@ function addProjectForm(obj){
 			<ul class="dropdown-menu" style="width: 300px;">
 				<li><div class="input-group">
 						<div class="form-group">
-				   			<input type="email" class="form-control" id="email" placeholder="이메일 입력..">
+				   			<input type="email" class="form-control" id="emailSearch" placeholder="이메일 입력..">
 						</div>
 						<span class="input-group-btn">
 							<button class="btn btn-default" type="button">
