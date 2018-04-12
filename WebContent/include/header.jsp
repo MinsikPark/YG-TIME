@@ -401,11 +401,14 @@ $(function() {
 	
  	//회원가입 유효성 체크
 	$('#joinForm').submit(function() {
-		   //alert("가입");
+		   
 		  if ($('#email').val() == "") { //이메일검사
 			idcheck();
 		    return false;
 		   
+		  } else if($('#result').html() == "중복된 아이디입니다."){
+			alert("중복된 아이디 입니다.");
+			return false;
 		  } else if ($('#password').val() == "") { //비밀번호 검사
 		   /* alert('PWD를 입력해 주세요.');
 		   $('#password').focus(); */
@@ -416,11 +419,18 @@ $(function() {
 		   Nicfunction();
 		   return false;
 		  }   
+		  
+		  joinclear();
 	});
 	
 }); // onload 밖
 
-
+	function joinclear(){
+		$("#email").val("");
+		$("#password").val("");
+		$("#passwordCheck").val("");
+		$("#nickName").val("");
+	}
 	//프로젝트 관리 함수
 	function addProjectForm(obj){
 	if($('#projectName').length == 0){
@@ -655,7 +665,6 @@ function idcheck() {
 	               if(data == "true"){
 	                    $("#result").text("중복된 아이디입니다.");
 	                    $("#result").css("color","red");
-	                    
 	               } 
 	               else if(data == "false" || exptext.test($('#email').val()) == true){
 	                    $("#result").text("사용가능한 아이디입니다.");
@@ -793,7 +802,7 @@ function idcheck() {
 				    <label for="email">이메일 주소</label>
 				    <button id="idcheckhover" type="button"  class ="btn btn-default" onclick="idcheck()">이메일 중복확인</button> 
 				    <span id="result"></span> <br><br>
-				    <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" >
+				    <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" onfocus="idcheck()" onchange="idcheck()">
 				 
 	
 					
@@ -817,7 +826,7 @@ function idcheck() {
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-default">Submit</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="joinclear()">Close</button>
 		        </div>
         	</form>
         </div>
