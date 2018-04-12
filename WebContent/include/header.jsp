@@ -343,6 +343,8 @@ function msgaccept(me, projectNum){
               }) 
           }
       })
+      
+      callprojectlist();
 }
 
 //초대거절
@@ -394,45 +396,21 @@ function sideShow(){
 } 
 $(function() {
 
-
-	
-	//jquery 로 간단하게 유효성 check 하기
-	
-	 	$('#joinForm').submit(function() {
-		   //alert("가입");
-		if ($('#email').val() == "") { //이메일검사
-	   	alert('ID(email)를 입력해 주세요.');
-	   	$('#email').focus();
-	   return false;
-	   
-	  } else if ($('#password').val() == "") { //비밀번호 검사
-	   alert('PWD를 입력해 주세요.');
-	   $('#password').focus();
-	   return false;
-	   
-	  }else if ($('#passwordCheck').val() == "" ) {//passwordCheck 검사
-		  
-	  $('#passwordCheck').focus();
-	   return false;
-	   
-	  }else if ($('#nickName').val() == "") { //nickName 검사
-	   alert('nickName를 입력해 주세요.');
-	   $('#nickName').focus();
-	   return false;
-	  }
-	    
-	 });
-	 	
  	//로그인 체크 후 프로젝트 리스트 불러오는 함수
  	callprojectlist();
 	
+}); // onload 밖
 
-	$('#joinForm').submit(function() {
-		   //alert("가입");
+	//회원가입 유효성 체크
+	function joinsubmit() {
+		   
 		  if ($('#email').val() == "") { //이메일검사
 			idcheck();
 		    return false;
 		   
+		  } else if($('#result').html() == "중복된 아이디입니다."){
+			alert("중복된 아이디 입니다.");
+			return false;
 		  } else if ($('#password').val() == "") { //비밀번호 검사
 		   /* alert('PWD를 입력해 주세요.');
 		   $('#password').focus(); */
@@ -443,18 +421,37 @@ $(function() {
 		   Nicfunction();
 		   return false;
 		  }   
- });
+		  
+		  joinclear();
+		  
+		  $.ajax({
+			  url : "Join.member",
+			  type : "post",
+			  data : {email:$("#email").val(), password:$("#password").val(), nickName:$("#nickName").val(), fileUpLoad:$('fileUpLoad').val() },
+			  success : function(data){
+				  alert("회원가입 되었습니다.");
+			  }
+		  });
+	}
 	
-
-}); // onload 밖
-
-
+	function joinclear(){
+		$("#email").val("");
+		$("#password").val("");
+		$("#passwordCheck").val("");
+		$("#nickName").val("");
+		$("#result").text("");
+		$("#pwdcheck").text("");
+		$("#nickcheck").text("");
+	}
 	//프로젝트 관리 함수
 	function addProjectForm(obj){
 	if($('#projectName').length == 0){
-		var button = '<div><button class="button btn-1"><input type="text" id="projectName" style="margin-left:-60px; color:black;"></button><a class="glyphicon setting" onclick="addProject()">&#xe013;</a></div>'
-			$('#progress').append(button)
-		$('#projectName').focus()
+		var button = '<div><button class="button btn-1"><input type="text" id="projectName" name="projectName" style="margin-left:-60px; color:black;"></button><a class="glyphicon setting" onclick="addProject()">&#xe013;</a></div>'
+			$('#progress').prepend(button)
+		$('#projectName').focus();
+		
+	
+		
 	}
 	}
 	
@@ -466,18 +463,13 @@ $(function() {
 		var value = $('#projectName').val() 
 		
 		if(value.trim() != ""){
+		
+			addproajax(value);
 			
-			$.ajax({
-				
-				
-				
-			})
-			
-			$('#progress').empty();
-			callprojectlist(); 
 		}else{
 			alert('프로젝트 명을 입력하세요')
 		}
+		
 	}
 	
 	function projectDel(obj){
@@ -488,18 +480,37 @@ $(function() {
 	function projectComplete(obj){
 		var ul = $(obj).closest('ul')
 		var li = '<li><a onclick="projectView(this)">프로젝트 보기</a></li><li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>'
-		$(obj).closest('div').appendTo($('#complete'))
+		
+		$.ajax({
+			url : "completeproject.project",
+			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
+			datatype : "json" ,
+			success : function(data){
+				console.log(data);
+			}
+		});
+		
 		ul.empty()
 		ul.append(li)
+		callprojectlist();
 	}
 	
 	function projectProgress(obj){
-		console.log($(obj).closest('ul'))
 		var ul = $(obj).closest('ul')
 		var li = '<li><a onclick="projectDel(this)">프로젝트 삭제</a></li><li><a onclick="projectComplete(this)">프로젝트 완료</a></li>'
-		$(obj).closest('div').appendTo($('#progress'))
+		
+		/* $.ajax({
+			url : "completeproject.project",
+			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
+			datatype : "json" ,
+			success : function(data){
+				console.log(data);
+			}
+		}); */
+		
 		ul.empty()
 		ul.append(li)
+		callprojectlist();
 	}
 	
 	function projectView(obj){
@@ -507,22 +518,20 @@ $(function() {
 	}
 	
 	
-	function addproajax(){
-		
-		 var data ={newprojectname:$("#newprojectname").val()};
+	function addproajax(value){
+		 var data ={
+				 newprojectname:value
+				   };
 			$.ajax({
 				url: "addproject.project",
 				data:data,
 				datatype:"TEXT",
 				success:function(data){
 					console.log(">"+data.trim()+"<");
-					if(data.trim() =="success"){
-						$(this).parent().remove();
-						
-					}else{
-						alter("프로젝트 생성에 실패하였습니다");
-						$(this).parent().remove();
+					if(data.trim()==null ||data.trim()<=0){
+						alert("프로젝트 생성에 실패하였습니다");				
 					}
+					callprojectlist(); 
 				}
 				
 			}) 
@@ -533,12 +542,7 @@ $(function() {
 	
 	
 	
-	
 	//프로젝트 관리 함수 UI부분 끝	
-		
-		
-
-	
 	function callprojectlist(){
 		$("#progress").empty();
 		$("#complete").empty();
@@ -563,21 +567,21 @@ $(function() {
 						
 						if(projectEndDate != ""){ //시작 날짜가 비어있지 않다면 >> 프로젝트가 완료 되었다면
 							$("#complete").append(
-								'<div value='+ projectNum+ '><button class="button btn-1">'
+								'<div><button class="button btn-1">'
 								+ proejectName + '</button>'
 								+ '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
 								+ '<ul class="dropdown-menu" style="float: right; position: unset;">'
 								+ '<li><a onclick="projectView(this)">프로젝트 보기</a></li>'
-								+ '<li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li></ul></div>'	
+								+ '<li><a onclick="projectProgress('+projectNum+')">프로젝트 다시 진행</a></li></ul></div>'	
 							);
 							
 						}else{ // 프로젝트가 현재도 진행중이라면
 							$("#progress").append(
-								'<div value='+projectNum+' ><button class="button btn-1">'
+								'<div><button class="button btn-1">'
 								+ proejectName + '</button><a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
 								+'<ul class="dropdown-menu" style="float: right; position: unset;">'
 								+'<li><a onclick="projectDel(this)">프로젝트 삭제</a></li>'
-								+'<li><a onclick="projectComplete(this)">프로젝트 완료</a></li></ul></div>'
+								+'<li><a onclick="projectComplete('+projectNum+')">프로젝트 완료</a></li></ul></div>'
 							)
 							
 							
@@ -649,13 +653,14 @@ $(function() {
 function passwordfunction(){
 
 	if($("#password").val() != $("#passwordCheck").val() || $("#password").val()==""){
+		$("#pwdcheck").css("color", "red");
 		$("#pwdcheck").html("* 비밀번호가 일치 하지 않습니다.");
 		$("#password").val('');
 		$("#passwordCheck").val('');
 		$("#password").focus();
 
 	}else{
-		$("#pwdcheck").css("color", "black");
+		$("#pwdcheck").css("color", "blue");
 		$("#pwdcheck").html("* 비밀번호 일치");
 		$("#nickName").focus();
 	}
@@ -686,7 +691,6 @@ function idcheck() {
 	               if(data == "true"){
 	                    $("#result").text("중복된 아이디입니다.");
 	                    $("#result").css("color","red");
-	                    
 	               } 
 	               else if(data == "false" || exptext.test($('#email').val()) == true){
 	                    $("#result").text("사용가능한 아이디입니다.");
@@ -813,18 +817,18 @@ function idcheck() {
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" onclick="joinclear()">&times;</button>
           <h4 class="modal-title">회원가입</h4>
         </div>
         
         
         <div class="modal-body">
-        	<form id ="joinForm" action="Join.member" method="post">
+        	<form id ="joinForm">
 	        	<div class="form-group">
 				    <label for="email">이메일 주소</label>
 				    <button id="idcheckhover" type="button"  class ="btn btn-default" onclick="idcheck()">이메일 중복확인</button> 
 				    <span id="result"></span> <br><br>
-				    <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" >
+				    <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" onfocus="idcheck()" onchange="idcheck()">
 				 
 	
 					
@@ -847,8 +851,8 @@ function idcheck() {
 				    <input type="file" id="fileUpLoad" name="fileUpLoad">
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-default">Submit</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" onclick="joinsubmit()">Submit</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="joinclear()">Close</button>
 		        </div>
         	</form>
         </div>

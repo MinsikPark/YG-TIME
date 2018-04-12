@@ -59,9 +59,6 @@ public class ProjectController extends HttpServlet {
         	catch (Exception e) {
         		e.getMessage();
         	}
-        	
-		
-
         } else if(cmdURI.equals("/projectlist.project")) {
         	action = new ProjectListService();
         	try {
@@ -74,7 +71,7 @@ public class ProjectController extends HttpServlet {
         }
 
         
-        else if(cmdURI.equals("/project_test/completeproject.project")){
+        else if(cmdURI.equals("/completeproject.project")){
         	action = new ProjectCompleteService();
         	try {
 				forward = action.execute(request, response);

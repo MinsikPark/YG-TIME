@@ -29,13 +29,13 @@ public class ProjectAddService implements Action{
 		try {
 			//파라미터로 프로젝트 명을 가져온다
 			String newprojectname = request.getParameter("newprojectname");
-			
+			System.out.println("param : " + newprojectname);
 			//ProjectDTO 객체에 넣어준다.
 			ProjectDTO projectdto = new ProjectDTO();
 			projectdto.setProjectName(newprojectname);
 		
 			ProjectDAO projectdao = new ProjectDAO();
-			
+			System.out.println("");
 			//1. 프로젝트 insert
 			int projectnum = projectdao.projectInsert(projectdto); 
 			
@@ -54,28 +54,16 @@ public class ProjectAddService implements Action{
 				System.out.println("1");
 				
 				int insertrow = projectdao.teamInsert(teamdto); //DB 팀에 넣어준다.
+				System.out.println("insertrow : " + insertrow);
 				System.out.println("2");
 				
-				if(insertrow > 0) {
-					//초대 승인 (팀 insert) 성공
-					//2.프로젝트 list 경로 현재는 test
-					forward.setRedirect(false);
-		       	    forward.setPath("/project_test/project_insert.jsp");
-				}else {
-					//실패 (main 화면 가기)
-					forward.setRedirect(false);
-					forward.setPath("/project_test/project_insert.jsp");
-				}
-			}else {
-				//실패 (main 화면 가기)
-				forward.setRedirect(false);
-				forward.setPath("/project_test/project_insert.jsp");
-				
+				request.setAttribute("resultrow", insertrow);
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		forward.setPath("/ajaxpath/result_row.jsp");
 		
 		return forward;
 	}
