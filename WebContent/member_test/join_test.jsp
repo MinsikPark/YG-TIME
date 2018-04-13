@@ -346,11 +346,10 @@ $(function() {
 	    <div> 
 	      <!-- 로그인 창 -->
 	      <ul class="nav navbar-nav navbar-right">
-	        
-	         <c:choose>
+	    <c:choose>
 	        	<c:when test = "${sessionScope.sessionId eq null}"> 
 			        <li data-toggle="modal" data-target="#myModal"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-			        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Login <span class="glyphicon glyphicon-log-in"></span></a>
+			        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Login <span id="loginImg" class="glyphicon glyphicon-log-in"></span></a>
 			          <div class="dropdown-menu">
 			            <form id="formLogin" class="form container-fluid" action="login.member">
 			              <div class="form-group">

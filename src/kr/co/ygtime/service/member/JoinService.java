@@ -18,9 +18,14 @@ import kr.co.ygtime.DTO.MemberDTO;
 
 public class JoinService implements Action{
 
-	@Override
+	@Override 
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+
+
+		
+
 		System.out.println("JoinService");
+
 		ActionForward forward = null;
 		
 		String userId = request.getParameter("email");
