@@ -411,7 +411,7 @@ $(function() {
 				$('#progress').prepend(button)
 			$('#projectName').focus();
 			nameinput();
-	
+
 		}
 	}
 	//////멤버 삭제 
