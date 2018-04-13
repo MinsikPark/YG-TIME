@@ -504,8 +504,6 @@ $(function() {
 			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
 			datatype : "json" ,
 			success : function(data){
-				$("#complete").empty();
-				$("#progress").empty();
 				callprojectlist();
 			}
 		});
@@ -522,8 +520,6 @@ $(function() {
 			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
 			datatype : "json" ,
 			success : function(data){
-				$("#complete").empty();
-				$("#progress").empty();
 				callprojectlist();
 			}
 		});
@@ -594,29 +590,38 @@ $(function() {
 						var proejectName = value.projectName;
 						var projectEndDate = value.projectEndDate;
 						var projectNum = value.projectNum;
-						//var projectStartDate = value.projectStartDate;
 						
-						if(projectEndDate != ""){ //시작 날짜가 비어있지 않다면 >> 프로젝트가 완료 되었다면
-							$("#complete").append(
-								'<div><button class="button btn-1">'
-								+ proejectName + '</button>'
-								+ '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
-								+ '<ul class="dropdown-menu" style="float: right; position: unset;">'
-								+ '<li><a onclick="projectView('+projectNum+')">프로젝트 보기</a></li>'
-								+ '<li><a onclick="projectProgress('+projectNum+')">프로젝트 다시 진행</a></li></ul></div>'	
-							);
-							
-						}else{ // 프로젝트가 현재도 진행중이라면
-							$("#progress").append(
-								'<div><button class="button btn-1">'
-								+ proejectName + '</button><a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
-								+'<ul class="dropdown-menu" style="float: right; position: unset;">'
-								+'<li><a onclick="projectDel('+projectNum+')">프로젝트 삭제</a></li>'
-								+'<li><a onclick="projectComplete('+projectNum+')">프로젝트 완료</a></li></ul></div>'
-							)
-							
-							
-						}
+						$.ajax({
+							url:"projectadmin.project",
+							datatype:"text",
+							data: {projectnum:projectNum, userid:sessionId},
+							success:function(data){
+								var cp = '<div><button class="button btn-1">'+ proejectName +'</button>';
+								var pg = '<div><button class="button btn-1">' + proejectName + '</button>';
+								
+								if(data.trim()=="0"){
+									cp += '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
+									+ '<ul class="dropdown-menu" style="float: right; position: unset;">'
+									+ '<li><a onclick="projectView('+projectNum+')">프로젝트 보기</a></li>'
+									+ '<li><a onclick="projectProgress('+projectNum+')">프로젝트 다시 진행</a></li></ul>';
+									
+									pg += '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
+									+'<ul class="dropdown-menu" style="float: right; position: unset;">'
+									+'<li><a onclick="projectDel('+projectNum+')">프로젝트 삭제</a></li>'
+									+'<li><a onclick="projectComplete('+projectNum+')">프로젝트 완료</a></li></ul>';
+								}
+								cp += '</div>';
+								pg += '</div>';
+								
+								if(projectEndDate != ""){ //시작 날짜가 비어있지 않다면 >> 프로젝트가 완료 되었다면
+									$("#complete").append(cp);
+									
+								}else{ // 프로젝트가 현재도 진행중이라면
+									$("#progress").append(pg);
+									
+								}
+							}
+						});
 					})  
 					
 				}

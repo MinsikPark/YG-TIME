@@ -133,7 +133,6 @@ public class MemberDAO {
 			conn = ds.getConnection();
 			
 			String sql = "SELECT userid, userpwd, usernicname, userprofile FROM MEMBER WHERE USERID=?";
-			System.out.println(userId);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();	
