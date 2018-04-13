@@ -24,26 +24,26 @@ public class InviteMsgService implements Action{
 		MemberDAO memberdao = null;
 		ActionForward forward = null;
 		
-		int invite = 0;
-		int msgNum = Integer.parseInt(request.getParameter("msgNum"));
+		int resultrow = 0;
 		String userId = request.getParameter("userId");
 		int projectNum = Integer.parseInt(request.getParameter("projectNum"));
 		String inviteUserId = request.getParameter("inviteUserId");
-		
+		System.out.println("userId : " + userId);
+		System.out.println("projectNum : " + projectNum);
+		System.out.println("inviteUserId : "+inviteUserId );
 		invitemsgdto.setUserId(userId);
 		invitemsgdto.setProjectNum(projectNum);
 		invitemsgdto.setInviteUserId(inviteUserId);
 		
 		try {
 			memberdao =new MemberDAO();
-			invite = memberdao.inviteMsgInsert(invitemsgdto);
+			resultrow = memberdao.inviteMsgInsert(invitemsgdto);
 			
 			forward = new ActionForward();
-			request.setAttribute("invite", invite);
+			request.setAttribute("resultrow", resultrow);
 			forward.setRedirect(false);
-			forward.setPath("/member_test/invite_test.jsp");
+			forward.setPath("/ajaxpath/reslt_row.jsp");
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
