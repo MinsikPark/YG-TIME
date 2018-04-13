@@ -449,11 +449,11 @@ $(function() {
 		callprojectlist();
 	}
 	//////프로젝트 완료
-	function projectComplete(obj){
+	function projectComplete(projectNum){
 
 		$.ajax({
 			url : "completeproject.project",
-			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
+			data : {projectNum:projectNum, userId:$('#getsession').val()},//projectNum,userId
 			datatype : "json" ,
 			success : function(data){
 				callprojectlist();
@@ -463,10 +463,10 @@ $(function() {
 	
 
 	///////프로젝트복구
-	function projectProgress(obj){
+	function projectProgress(projectNum){
 		$.ajax({
 			url : "progressproject.project",
-			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
+			data : {projectNum:projectNum, userId:$('#getsession').val()},//projectNum,userId
 			datatype : "json" ,
 			success : function(data){
 				callprojectlist();
@@ -477,7 +477,7 @@ $(function() {
 	
 	
 	/////////프로젝트 선택보기
-	function projectView(obj){
+	function projectView(projectNum){
 		console.log('프로젝트 아이디를 받아서 다시 뿌려줘요')
 	}
 	
@@ -544,8 +544,8 @@ $(function() {
 							datatype:"text",
 							data: {projectnum:projectNum, userid:sessionId},
 							success:function(data){
-								var cp = '<div><button class="button btn-1">'+ proejectName +'</button>';
-								var pg = '<div><button class="button btn-1">' + proejectName + '</button>';
+								var cp = '<div><button class="button btn-1" onclick="projectView('+projectNum+')">'+ proejectName +'</button>';
+								var pg = '<div><button class="button btn-1" onclick="projectView('+projectNum+')">' + proejectName + '</button>';
 								
 								if(data.trim()=="0"){
 									cp += '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
