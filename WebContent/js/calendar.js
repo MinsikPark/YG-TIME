@@ -51,9 +51,30 @@ $(function() { // $(document).ready
 		eventLimit: true, // 하루에 표시되는 이벤트의 수를 제한. 나머지는 팝 오버에 나타남.
 		displayEventTime: false, // 
 		eventClick: function(event) {
-			$('#calendar').hide();
-			console.log("id? "+event.id);
-			$('#mainScreen').show();
+			$.ajax({
+				url:"Listlist.list",
+	            datatype:"JSON",
+	            data:{boardnum:event.id},
+	            success:function(data){
+	                var json = JSON.parse(data);
+	                console.log(json);
+	                $('#calendar').hide();
+	                
+	                $('#content-md .listbox').remove();
+	                var content =""
+	                $.each(json, function(index, json) {
+	                	content += '<div class="listbox">'
+	                		+ '<div class="listtitle">'+ json.listName +'</div>'
+	                		+ '<a class="cardcreate" onclick="addCardView(this)">Add a card...</a>'
+	                		+ '</div>';
+	                });
+	                content +='<a class="listbox" onclick="addListView(this)">Add a list...</a>'
+	                $('#content-md').prepend(content);
+	                $('#mainScreen').show();
+	                autoWidth();
+	            }
+			});
+			
 		},
 		eventDrop: function(event, delta, revertFunc) { // Drag를 통한 날짜 변경 처리 함수
 		
