@@ -76,7 +76,7 @@ public class MemberController extends HttpServlet {
         	}
         }else if(cmdURI.equals("/Join.member")) {
     
-        	
+        	System.out.println("Join.member");
          	action = new JoinService();
         	try {
         		forward = action.execute(request, response);
@@ -128,7 +128,8 @@ public class MemberController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
 			}
-        }else if(cmdURI.equals("/member_test/mod.member")) {
+        }else if(cmdURI.equals("/mod.member")) {
+
         	action = new MemberInfoService();
         	try {
         	forward = action.execute(request, response);
@@ -136,7 +137,7 @@ public class MemberController extends HttpServlet {
         	catch(Exception e) {
         		e.getMessage();
         	}
-        }else if(cmdURI.equals("/member_test/mod1.member")) {
+        }else if(cmdURI.equals("/mod1.member")) {
         	action = new MemberModifyService();
         	try {
         	forward = action.execute(request, response);

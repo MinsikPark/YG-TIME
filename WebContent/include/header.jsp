@@ -400,48 +400,7 @@ $(function() {
 	
 }); // onload 밖
 
-	//회원가입 유효성 체크
-	function joinsubmit() {
-		   
-		  if ($('#email').val() == "") { //이메일검사
-			idcheck();
-		    return false;
-		   
-		  } else if($('#result').html() != "사용가능한 아이디입니다."){
-			alert("아이디 형식 또는 중복을 확인하세요");
-			return false;
-		  } else if ($('#password').val() == "") { //비밀번호 검사
-		   /* alert('PWD를 입력해 주세요.');
-		   $('#password').focus(); */
-		   passwordfunction();
-		   return false;
-		   
-		  }else if ($("#nickName").val().trim() == "") { //nickName 검사
-		   Nicfunction();
-		   return false;
-		  }   
-		  
-		  joinclear();
-		  
-		  $.ajax({
-			  url : "Join.member",
-			  type : "post",
-			  data : {email:$("#email").val(), password:$("#password").val(), nickName:$("#nickName").val(), fileUpLoad:$('fileUpLoad').val() },
-			  success : function(data){
-				  alert("회원가입 되었습니다.");
-			  }
-		  });
-	}
 	
-	function joinclear(){
-		$("#email").val("");
-		$("#password").val("");
-		$("#passwordCheck").val("");
-		$("#nickName").val("");
-		$("#result").text("");
-		$("#pwdcheck").text("");
-		$("#nickcheck").text("");
-	}
 	
 	///////////////////////////////프로젝트 관리 함수//////////////////////////////////////
 	
@@ -497,8 +456,6 @@ $(function() {
 			data : {projectNum:obj, userId:$('#getsession').val()},//projectNum,userId
 			datatype : "json" ,
 			success : function(data){
-				$("#complete").empty();
-				$("#progress").empty();
 				callprojectlist();
 			}
 		});
@@ -581,29 +538,38 @@ $(function() {
 						var proejectName = value.projectName;
 						var projectEndDate = value.projectEndDate;
 						var projectNum = value.projectNum;
-						//var projectStartDate = value.projectStartDate;
 						
-						if(projectEndDate != ""){ //시작 날짜가 비어있지 않다면 >> 프로젝트가 완료 되었다면
-							$("#complete").append(
-								'<div><button class="button btn-1">'
-								+ proejectName + '</button>'
-								+ '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
-								+ '<ul class="dropdown-menu" style="float: right; position: unset;">'
-								+ '<li><a onclick="projectView('+projectNum+')">프로젝트 보기</a></li>'
-								+ '<li><a onclick="projectProgress('+projectNum+')">프로젝트 다시 진행</a></li></ul></div>'	
-							);
-							
-						}else{ // 프로젝트가 현재도 진행중이라면
-							$("#progress").append(
-								'<div><button class="button btn-1">'
-								+ proejectName + '</button><a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
-								+'<ul class="dropdown-menu" style="float: right; position: unset;">'
-								+'<li><a onclick="projectDel('+projectNum+')">프로젝트 삭제</a></li>'
-								+'<li><a onclick="projectComplete('+projectNum+')">프로젝트 완료</a></li></ul></div>'
-							)
-							
-							
-						}
+						$.ajax({
+							url:"projectadmin.project",
+							datatype:"text",
+							data: {projectnum:projectNum, userid:sessionId},
+							success:function(data){
+								var cp = '<div><button class="button btn-1">'+ proejectName +'</button>';
+								var pg = '<div><button class="button btn-1">' + proejectName + '</button>';
+								
+								if(data.trim()=="0"){
+									cp += '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
+									+ '<ul class="dropdown-menu" style="float: right; position: unset;">'
+									+ '<li><a onclick="projectView('+projectNum+')">프로젝트 보기</a></li>'
+									+ '<li><a onclick="projectProgress('+projectNum+')">프로젝트 다시 진행</a></li></ul>';
+									
+									pg += '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
+									+'<ul class="dropdown-menu" style="float: right; position: unset;">'
+									+'<li><a onclick="projectDel('+projectNum+')">프로젝트 삭제</a></li>'
+									+'<li><a onclick="projectComplete('+projectNum+')">프로젝트 완료</a></li></ul>';
+								}
+								cp += '</div>';
+								pg += '</div>';
+								
+								if(projectEndDate != ""){ //시작 날짜가 비어있지 않다면 >> 프로젝트가 완료 되었다면
+									$("#complete").append(cp);
+									
+								}else{ // 프로젝트가 현재도 진행중이라면
+									$("#progress").append(pg);
+									
+								}
+							}
+						});
 					})  
 					
 				}
@@ -616,9 +582,60 @@ $(function() {
 	
 	//프로젝트 관리 함수 끝
 
+//////////////////회원 가입 관련 함수 ////////////////////////////////////////
 
-
-
+  //회원가입 유효성 체크
+	function joinsubmit() {
+		   
+		  if ($('#email').val() == "") { //이메일검사
+			idcheck();
+		    return false;
+		   
+		  } else if($('#result').html() != "사용가능한 아이디입니다."){
+			alert("아이디 형식 또는 중복을 확인하세요");
+			return false;
+		  } else if ($('#password').val() == "") { //비밀번호 검사
+		   /* alert('PWD를 입력해 주세요.');
+		   $('#password').focus(); */
+		   passwordfunction();
+		   return false;
+		   
+		  }else if ($("#nickName").val().trim() == "") { //nickName 검사
+		   Nicfunction();
+		   return false;
+		  }   
+		  
+		  data = $("#joinForm").serialize();
+		  console.log("data : " + data);
+		  $.ajax({
+			  url : "Join.member",
+			  type : "post",
+			  data : data,
+			  success : function(data){
+				 console.log(data);
+				 if(data.trim()=="success"){
+					 alert("회원가입에 성공하셨습니다");
+					 joinclear();
+					 $("#joinclose").trigger('click');
+				 }else{
+					 alert("회원가입에 실패하였습니다");
+				 }
+				 
+			  }
+		  });
+	}
+	
+	
+	///회원가입창 clear
+	function joinclear(){
+		$("#email").val("");
+		$("#password").val("");
+		$("#passwordCheck").val("");
+		$("#nickName").val("");
+		$("#result").text("");
+		$("#pwdcheck").text("");
+		$("#nickcheck").text("");
+	}
 
 //비밀번호 일치여부
 function passwordfunction(){
@@ -649,6 +666,7 @@ function Nicfunction(){
 	}
 	
 }
+
 //아이디중복체크 비동기
 function idcheck() {
 	var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
@@ -681,6 +699,107 @@ function idcheck() {
 	});
 }
 
+/////회원가입 관련 끝 
+
+//////////////회원정보 수정관련 함수
+$(function(){
+	
+	$("#profilmodify").click(function(){
+			var datas = {userId:'<%=session.getAttribute("sessionId")%>'};
+			console.log(datas)
+			console.log("데이터 뒤뒤뒤")
+			$.ajax({
+				 url:"mod.member",
+		            datatype:"JSON",
+		            data:datas,
+		            success:function(data){
+		            	console.log("여기ㅣㅣ")
+		                console.log(">"+data.trim()+"<");
+		            	 var json = JSON.parse(data);
+		            	 $("#modemail").val(json.userId);
+		            	 //$("#password").val(json.userPwd);
+		            	 $("#modnickName").val(json.userNicname);
+		            	 $("#modfileUpLoad").val(json.userProfile);
+						}
+				});
+			
+			});
+})			
+
+	function modsubmit(){
+		
+		var param = $("#modForm").serialize();
+		console.log(param)
+		
+		 if ($('#modpassword').val() == "") { //비밀번호 검사
+		   alert('PWD를 입력해 주세요.');
+		   $('#password').focus(); 
+		   modpasswordfunction();
+		   return false;
+		   
+		  }else if ($("#modnickName").val().trim() == "") { //nickName 검사
+		   modNicfunction();
+		   return false;
+		  }   
+
+		$.ajax({
+				url:"mod1.member",
+				datatype:"JSON",
+				data:param,
+				success: function (data) {
+					console.log("data124 : "+ data);
+					if(data <=0){
+						alert("회원정보 수정에 실패하였습니다");
+					}else{
+						alert("회원정보 수정에 성공하였습니다.");
+						$("#modclose").trigger("click");
+					}
+				}
+				})
+		
+		}
+
+
+///비밀번호 일치 여부 확인
+function modpasswordfunction(){
+
+	if($("#modpassword").val() != $("#modpasswordCheck").val() || $("#modpassword").val()==""){
+		$("#modpwdcheck").css("color", "red");
+		$("#modpwdcheck").html("* 비밀번호가 일치 하지 않습니다.");
+		$("#modpassword").val('');
+		$("#modpasswordCheck").val('');
+		$("#modpassword").focus();
+
+	}else{
+		$("#modpwdcheck").css("color", "blue");
+		$("#modpwdcheck").html("* 비밀번호 일치");
+		$("#modnickName").focus();
+	}
+	
+}
+
+//닉네임 공백 여부 확인
+function modNicfunction(){
+
+	if($("#modnickName").val().trim() == ""){
+		$("#modnickcheck").html("* 닉네임을 입력해 주세요");
+		$("#modpassword").focus();
+
+	}else{
+		$("#modnickcheck").html("");
+	}
+	
+} 
+
+function modclear(){
+	$("#modemail").val("");
+	$("#modpassword").val("");
+	$("#modpasswordCheck").val("");
+	$("#modnickName").val("");
+	$("#modresult").text("");
+	$("#modpwdcheck").text("");
+	$("#modnickcheck").text("");
+}
 
 
 
@@ -753,7 +872,11 @@ function idcheck() {
 		        	<li id="profiledrop" class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span></a>
 			        	<input id="getsession" type="hidden" value="${sessionScope.sessionId}">
 			        	<div id = "dropdowndiv" class="dropdown-menu">
-				        	<a id="profilmodify">회원정보 수정</a><br>
+			        	<ul>
+							<li data-toggle="modal" data-target="#myModal2">
+				        	<a id="profilmodify">회원정보 수정</a><br>							
+							</li>			        				        	
+			        	</ul>
 				        	<!-- <a>초대리스트</a> -->
 				        	<div id="dropdownchilddiv"></div>
 				        	
@@ -801,10 +924,6 @@ function idcheck() {
 				    <button id="idcheckhover" type="button"  class ="btn btn-default" onclick="idcheck()">이메일 중복확인</button> 
 				    <span id="result"></span> <br><br>
 				    <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" onfocus="idcheck()" onchange="idcheck()">
-				 
-	
-					
-				
 				</div>
 	        	<div class="form-group">
 				    <label for="password">비밀 번호</label>
@@ -823,8 +942,8 @@ function idcheck() {
 				    <input type="file" id="fileUpLoad" name="fileUpLoad">
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" onclick="joinsubmit()">Submit</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="joinclear()">Close</button>
+					<button type="button" class="btn btn-default " onclick="joinsubmit()">Submit</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal" id="joinclose" onclick="joinclear()">Close</button>
 		        </div>
         	</form>
         </div>
@@ -832,12 +951,12 @@ function idcheck() {
     </div>
   </div> 
   <!-- 회원수정 -->
-  <div class="modal fade" id="myModa2" role="dialog">
+  <div class="modal fade" id="myModal2" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" onclick="joinclear()">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" onclick="modclear()">&times;</button>
           <h4 class="modal-title">회원정보 수정</h4>
         </div>
         
@@ -846,7 +965,7 @@ function idcheck() {
         	<form id ="modForm">
 	        	<div class="form-group">
 				    <label for="modemail">이메일 주소</label>
-				    <input type="text" value = "${sessionScope.sessionId}" readonly="readonly" class="form-control">
+				    <input type="text"  name="userId" value = "${sessionScope.sessionId}" readonly="readonly" class="form-control">
 				</div>
 	        	<div class="form-group">
 				    <label for="modpassword">비밀 번호</label>
@@ -857,16 +976,16 @@ function idcheck() {
 				    <input type="password" class="form-control" id="modpasswordCheck" name="modpasswordCheck" onchange="modpasswordfunction()">
 				</div>
 	        	<div class="form-group">
-				    <label for="nickName">닉네임  <span id="nickcheck" style="color: red;"></span></label>
-				    <input type="text" class="form-control" id="nickName" name="nickName">
+				    <label for="modnickName">닉네임  <span id="modnickcheck" style="color: red;"></span></label>
+				    <input type="text" class="form-control" id="modnickName" name="modnickName">
 				</div>
 				<div class="form-group">
-				    <label for="fileUpLoad">파일 업로드</label>
-				    <input type="file" id="fileUpLoad" name="fileUpLoad">
+				    <label for="modfileUpLoad">파일 업로드</label>
+				    <input type="file" id="modfileUpLoad" name="modfileUpLoad">
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" onclick="joinsubmit()">Submit</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="joinclear()">Close</button>
+					<button type="button" class="btn btn-default" onclick="modsubmit()">Submit</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal" id="modclose" onclick="modclear()">Close</button>
 		        </div>
         	</form>
         </div>
