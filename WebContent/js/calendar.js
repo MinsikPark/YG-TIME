@@ -90,12 +90,39 @@ $(function() { // $(document).ready
 			});
 		},
 		eventDrop: function(event, delta, revertFunc) { // Drag를 통한 날짜 변경 처리 함수
-		
+			boarddateupdate(event);
 		},
 		eventResize: function(event, delta, revertFunc) { // Editable을 통한 날짜 변경 처리 함수
-			
+			boarddateupdate(event);
 		},
 	}); // end - fullCalendar
+	
+	
+	//board 날짜 변경 비동기 함수
+	
+	function boarddateupdate(event){
+		console.log("event.end.format() : " + event.end.format())
+		var data = {
+				boardNum:event.id,
+				boardStartDate:event.start.format(),
+				boardEndDate:event.end.format(),
+				   };
+		
+		$.ajax({
+			url:"boarddatemodify.board",
+			datatype:"text",
+			data:data,
+			success:function(data){
+				console.log(">"+data.trim()+"<")
+				if(data.trim() <= 0){
+					alert("날짜 변경 실패");
+				}
+			}
+			
+		})
+		
+	}
+	
 	
 	// dialog 초기화
 	function clearDialog() {
@@ -142,6 +169,8 @@ $(function() { // $(document).ready
 								label: eventData.color,
 
 						};
+						
+						
 						//////
 						$.ajax({
 							url:"boardadd.board",

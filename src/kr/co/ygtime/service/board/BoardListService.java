@@ -29,6 +29,7 @@ public class BoardListService implements Action{
 				dao = new BoardDAO();
 				list = dao.allBoardSelect(projectNum);
 				request.getSession().setAttribute("projectNum", projectNum);
+				System.out.println("pnum : "+request.getSession().getAttribute("projectNum"));
 				JSONArray json = JSONArray.fromObject(list);
 				request.setAttribute("json", json);
 				
