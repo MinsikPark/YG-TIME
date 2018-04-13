@@ -24,26 +24,18 @@ public class MemberInfoService implements Action{
 		ActionForward forward = null;
 		MemberDAO memberdao = null;
 		String userId = request.getParameter("userId");
+		System.out.println("수정 들어옴");
 		MemberDTO memberdto = null;
-		System.out.println("test1");
 		try {
 			memberdao = new MemberDAO();
-			//System.out.println(userId + "멤버 액션");
 			memberdto = memberdao.memberSelect(userId);
-			//System.out.println(memberdto);
 			JSONObject json = JSONObject.fromObject(memberdto);
-			//System.out.println(json);
-			request.setAttribute("ajaxdata", json);
-		//	System.out.println("json : " + json);
+			request.setAttribute("json", json);
 			forward = new ActionForward();
-			forward.setPath("/member_test/AjaxOk.jsp");
+			forward.setPath("/ajaxpath/jsonObject.jsp");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
 		
 		return forward;
 	}

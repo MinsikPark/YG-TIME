@@ -404,29 +404,24 @@ public class ProjectDAO {
 	 기      능 : 팀장 조회 select
 	 작성자명 : 최 재 욱
 	 */
-	public boolean ownerSelect(int projectNum, String userId) {
+	public int ownerSelect(int projectNum, String userId) {
 		PreparedStatement pstmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
 		int grade = -1;
-		boolean result = false;
 		
 		try {
 			conn = ds.getConnection();
-			String sql = "select grade from team where projectnum = ? and userid = ?";
+			String sql = "select grade from team where projectnum=? and userid=?";
 			
 			pstmt = conn.prepareStatement(sql);
+			
 			pstmt.setInt(1, projectNum);
 			pstmt.setString(2, userId);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
 				grade = rs.getInt("grade");
-				if(grade == 0) {
-					result = true;
-				}else {
-					result = false;
-				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -440,7 +435,7 @@ public class ProjectDAO {
 			}
 		}
 		
-		return result;
+		return grade;
 	}
 
 	/**
@@ -504,6 +499,7 @@ public class ProjectDAO {
 			if(rs.next()) {
 				//아이디가 일치하는지 확인
 				if(userId.equals(rs.getString("userid"))) {
+					pstmt.close();
 					pstmt = conn.prepareStatement(sql2);
 					pstmt.setInt(1, projectNum);
 					pstmt.setString(2, userId);
@@ -561,5 +557,4 @@ public class ProjectDAO {
 	
 		return resultrow;
 	}
-
 }

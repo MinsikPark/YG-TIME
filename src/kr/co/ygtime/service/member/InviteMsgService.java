@@ -28,16 +28,16 @@ public class InviteMsgService implements Action{
 		String userId = request.getParameter("userId");
 		int projectNum = Integer.parseInt(request.getParameter("projectNum"));
 		String inviteUserId = request.getParameter("inviteUserId");
+<<<<<<< HEAD
 		System.out.println("userId : " + userId);
 		System.out.println("projectNum : " + projectNum);
 		System.out.println("inviteUserId : "+inviteUserId );
 		//String msgDate = request.getParameter("msgDate");
 		//invitemsgdto.setMsgNum(msgNum);
+
 		invitemsgdto.setUserId(userId);
 		invitemsgdto.setProjectNum(projectNum);
 		invitemsgdto.setInviteUserId(inviteUserId);
-		//invitemsgdto.setMsgDate(msgDate);
-		//msgNum,userId,projectNum,inviteUserId,msgDate) VALUES (?,?,?,?,?)"
 		
 		try {
 			memberdao =new MemberDAO();

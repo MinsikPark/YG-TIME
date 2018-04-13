@@ -14,6 +14,7 @@ import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.service.member.MemberModifyService;
 import kr.co.ygtime.service.project.MemberLeaveService;
 import kr.co.ygtime.service.project.ProjectAddService;
+import kr.co.ygtime.service.project.ProjectAdmin;
 import kr.co.ygtime.service.project.ProjectCompleteService;
 
 import kr.co.ygtime.service.project.ProjectDeleteService;
@@ -54,8 +55,6 @@ public class ProjectController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
 			}
-        	
-
 
         }else if(cmdURI.equals("/delete.project")) {
 
@@ -66,10 +65,6 @@ public class ProjectController extends HttpServlet {
         	catch (Exception e) {
         		e.getMessage();
         	}
-
-        	
-		
-
 
         } else if(cmdURI.equals("/projectlist.project")) {
         	action = new ProjectListService();
@@ -90,6 +85,7 @@ public class ProjectController extends HttpServlet {
 			}
         	
         } else if(cmdURI.equals("/progressproject.project")){
+        	System.out.println("/progressproject.project");
         	action = new ProjectProgressService();
         	try {
 				forward = action.execute(request, response);
@@ -97,6 +93,7 @@ public class ProjectController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
 			}
+<<<<<<< HEAD
         }else if(cmdURI.equals("/project_test/memberlist.project")) {
         	action = new ProjectMemberListService();
         	System.out.println("안녕하세요");
@@ -124,9 +121,18 @@ public class ProjectController extends HttpServlet {
         	}
         	catch(Exception e) {
         	e.printStackTrace();
+=======
+        } else if(cmdURI.equals("/projectadmin.project")){
+        	action = new ProjectAdmin();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+>>>>>>> 06b79fd3e58ce2a41fa8ab98407bbe2907df5df6
         	}
         }
-        
+        	
         //마지막 태우기
         if(forward != null){
         	if(forward.isRedirect()) {

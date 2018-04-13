@@ -22,22 +22,18 @@ public class ProjectCompleteService implements Action {
 	
 		int projectNum = Integer.parseInt(request.getParameter("projectNum"));
 		String userId = request.getParameter("userId");
-		System.out.println("userid : " + userId);
-		System.out.println("projectnum : " + projectNum);
-		System.out.println("2");
+
 		ActionForward forward = null;
 		int row = 0;
 		try {
 			ProjectDAO dao = new ProjectDAO();
 			row = dao.projectComplete(projectNum, userId);
-			System.out.println("3:"+row);
 			request.setAttribute("resultrow", row);
 			forward = new ActionForward();
 			forward.setPath("/ajaxpath/result_row.jsp");
 			
 			
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
