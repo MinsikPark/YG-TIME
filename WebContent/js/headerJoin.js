@@ -41,19 +41,19 @@ function joinsubmit() {
 
 //조인 모델 창 클리어
 function joinclear() {
-	$("#email").val("");
-	$("#password").val("");
-	$("#passwordCheck").val("");
-	$("#nickName").val("");
-	$("#result").text("");
-	$("#pwdcheck").text("");
-	$("#nickcheck").text("");
+	$("#joinemail").val("");
+	$("#joinpassword").val("");
+	$("#joinpasswordCheck").val("");
+	$("#joinnickName").val("");
+	$("#joinresult").text("");
+	$("#joinpwdcheck").text("");
+	$("#joinnickcheck").text("");
 }
 
 //비밀번호 일치여부
 function passwordfunction() {
 
-	if ($("#password").val() != $("#passwordCheck").val()
+	if ($("#joinpassword").val() != $("#passwordCheck").val()
 			|| $("#password").val() == "") {
 		$("#pwdcheck").css("color", "red");
 		$("#pwdcheck").html("* 비밀번호가 일치 하지 않습니다.");

@@ -123,22 +123,6 @@ public class MemberController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
 			}
-        }else if(cmdURI.equals("/member_test/mod.member")) {
-        	action = new MemberInfoService();
-        	try {
-        	forward = action.execute(request, response);
-        	}
-        	catch(Exception e) {
-        		e.getMessage();
-        	}
-        }else if(cmdURI.equals("/member_test/mod1.member")) {
-        	action = new MemberModifyService();
-        	try {
-        	forward = action.execute(request, response);
-        	}
-        	catch(Exception e) {
-        		e.getMessage();
-        	}
         }else if(cmdURI.equals("/mod.member")) {
 
             action = new MemberInfoService();
