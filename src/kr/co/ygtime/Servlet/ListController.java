@@ -41,7 +41,7 @@ public class ListController extends HttpServlet {
 	
         Action action = null;
         
-        if(cmdURI.equals("/list_test/Listlist.list")) {
+        if(cmdURI.equals("/Listlist.list")) {
         	try{
 				action = new Listlistsevice();
         		forward= action.execute(request, response);
