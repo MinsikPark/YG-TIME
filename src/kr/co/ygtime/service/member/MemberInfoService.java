@@ -23,7 +23,7 @@ public class MemberInfoService implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
 		MemberDAO memberdao = null;
-		String userId = request.getParameter("userId");
+		String userId = (String) request.getSession().getAttribute("sessionId");
 		MemberDTO memberdto = null;
 		try {
 			memberdao = new MemberDAO();

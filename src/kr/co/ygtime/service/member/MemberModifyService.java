@@ -24,7 +24,7 @@ public class MemberModifyService implements Action{
 		ActionForward forward = null;
 		MemberDTO memberdto = null;
 		int resultrow = 0;
-		String userId =  request.getParameter("userId");
+		String userId =  (String)request.getSession().getAttribute("sessionId");
 		String userPwd = request.getParameter("modpassword");
 		String userNicname = request.getParameter("modnickName");
 		String userProfile = request.getParameter("modfileUpLoad");
