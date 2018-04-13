@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
-import kr.co.ygtime.board.BoardListService;
+import kr.co.ygtime.service.board.BoardAddService;
+import kr.co.ygtime.service.board.BoardListService;
 
 
 /**
@@ -52,8 +53,7 @@ public class BoardController extends HttpServlet {
 	
         Action action = null;
 		
-        if(cmdURI.equals("/allboardlist.board")) {
-        	System.out.println("allboardlist");
+        if(cmdURI.equals("/allboardlist.board")) { 
         	action = new BoardListService();
         	try {
         	forward = action.execute(request, response);
@@ -62,9 +62,9 @@ public class BoardController extends HttpServlet {
         		e.getMessage();
         	}
         }else if(cmdURI.equals("/boardadd.board")) {
-        	//action = new BoardAddService();
+        	action = new BoardAddService();
         	try {
-        	//forward = action.execute(request, response);
+        	forward = action.execute(request, response);
         	}
         	catch(Exception e) {
         		e.getMessage();

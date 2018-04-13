@@ -1,5 +1,5 @@
 
-package kr.co.ygtime.board;
+package kr.co.ygtime.service.board;
 
 import java.util.List;
 
@@ -28,6 +28,7 @@ public class BoardListService implements Action{
 			try {
 				dao = new BoardDAO();
 				list = dao.allBoardSelect(projectNum);
+				request.getSession().setAttribute("projectNum", projectNum);
 				JSONArray json = JSONArray.fromObject(list);
 				request.setAttribute("json", json);
 				
