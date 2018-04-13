@@ -144,7 +144,25 @@ public class MemberController extends HttpServlet {
         	catch(Exception e) {
         		e.getMessage();
         	}
+        }else if(cmdURI.equals("/mod.member")) {
+
+            action = new MemberInfoService();
+            try {
+            forward = action.execute(request, response);
+            }
+            catch(Exception e) {
+                e.getMessage();
+            }
+        }else if(cmdURI.equals("/mod1.member")) {
+            action = new MemberModifyService();
+            try {
+            forward = action.execute(request, response);
+            }
+            catch(Exception e) {
+                e.getMessage();
+            }
         }
+        
         //태우기 마지막
         if(forward != null){
         	if(forward.isRedirect()) {

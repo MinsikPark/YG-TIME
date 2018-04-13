@@ -31,6 +31,7 @@ public class ProjectListService implements Action {
 			list = dao.allProjectSelect(userId);
 			
 			JSONArray json = JSONArray.fromObject(list);
+			
 			request.setAttribute("json", json);
 		}catch(Exception e) {
 			e.printStackTrace();

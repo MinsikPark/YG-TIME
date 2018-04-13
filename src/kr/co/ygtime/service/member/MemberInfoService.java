@@ -29,9 +29,9 @@ public class MemberInfoService implements Action{
 			memberdao = new MemberDAO();
 			memberdto = memberdao.memberSelect(userId);
 			JSONObject json = JSONObject.fromObject(memberdto);
-			request.setAttribute("ajaxdata", json);
+			request.setAttribute("json", json);
 			forward = new ActionForward();
-			forward.setPath("/member_test/AjaxOk.jsp");
+			forward.setPath("/ajaxpath/jsonObject.jsp");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
