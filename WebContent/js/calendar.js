@@ -52,6 +52,7 @@ $(function() { // $(document).ready
 		displayEventTime: false, // 
 		eventClick: function(event) {
 			$('#calendar').hide();
+			console.log("id? "+event.id);
 			$('#mainScreen').show();
 		},
 		eventDrop: function(event, delta, revertFunc) { // Drag를 통한 날짜 변경 처리 함수
@@ -144,7 +145,7 @@ var sampleData = [
 	},
 ];
 
-function project() {
+/*function project() {
 	$('#calendar').fullCalendar('removeEvents');
 	for(var i in sampleData) {
 		$('#calendar').fullCalendar('renderEvent', sampleData[i], true);	
@@ -152,4 +153,4 @@ function project() {
 	$('#mainScreen').hide()
 	$('#calendar').show()
 	
-}
+}*/

@@ -67,9 +67,63 @@ function projectProgress(projectNum) {
 	});
 }
 
+//달력 표시
+function projectDisplay(sampleData) {
+	console.log(sampleData);
+	
+	$('#calendar').fullCalendar('removeEvents');
+	for(var i in sampleData) {
+		console.log(sampleData[i]);
+		$('#calendar').fullCalendar('renderEvent', sampleData[i], true);	
+	}
+	console.log("dis");
+	$('#mainScreen').hide()
+	$('#calendar').show()
+}
+
 //프로젝트 선택보기
-function projectView(projectNum) {
+function projectView(projectNum){
 	console.log('프로젝트 아이디를 받아서 다시 뿌려줘요')
+	var data = {projectNum:projectNum};
+	$.ajax({
+		url:"allboardlist.board",
+		datatype:"json",
+		data:data,
+		success: function(data){
+			console.log(">"+data.trim()+"<");
+			var json = JSON.parse(data);
+			console.log("json: "+json);
+			var boardArr = boardData(json);
+			projectDisplay(boardArr);
+		}
+		
+	})
+	
+}
+
+function boardData(json) {
+	var boardArr = [];
+	
+	
+	for(var i in json) {
+		boardArr.push(
+			{
+				id: json[i].boardNum,
+				title: json[i].boardTitle,
+				start: json[i].boardStartDate.substring(0,10),
+				end: json[i].boardEndDate.substring(0,10),
+				color: json[i].label
+			}
+		);
+		console.log(json[i].boardNum);
+		console.log(json[i].boardTitle);
+		console.log(json[i].boardStartDate);
+		console.log(json[i].boardEndDate);
+		console.log(json[i].label);
+		
+	}
+	
+	return boardArr;
 }
 
 //프로젝트 엔터누를 시 생성하도록 하는 함수

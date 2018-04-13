@@ -15,6 +15,7 @@
 <script src="js/locale-all.js"></script>
 <!-- script - calendar.js -->
 <script src="js/calendar.js"></script>
+<script src="js/sidebarProject.js"></script>
 
 <!-- calendar -->
 <div id="calendar">

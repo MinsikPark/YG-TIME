@@ -44,7 +44,7 @@ public class MemberController extends HttpServlet {
 		String requestURI = request.getRequestURI();
         String contextPath = request.getContextPath();
         String cmdURI = requestURI.substring(contextPath.length());
-		//System.out.println(cmdURI);
+		System.out.println(cmdURI);
         ActionForward forward =null;
 	
         Action action = null;
@@ -54,10 +54,6 @@ public class MemberController extends HttpServlet {
         	try{
 				action = new LoginService();
         		forward= action.execute(request, response);
-        		//response.getWriter().print(logincheck);
-
-				forward = action.execute(request, response);
-
 			} 
         	catch (Exception e) {
 				e.printStackTrace();
@@ -128,22 +124,6 @@ public class MemberController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
 			}
-        }else if(cmdURI.equals("/member_test/mod.member")) {
-        	action = new MemberInfoService();
-        	try {
-        	forward = action.execute(request, response);
-        	}
-        	catch(Exception e) {
-        		e.getMessage();
-        	}
-        }else if(cmdURI.equals("/member_test/mod1.member")) {
-        	action = new MemberModifyService();
-        	try {
-        	forward = action.execute(request, response);
-        	}
-        	catch(Exception e) {
-        		e.getMessage();
-        	}
         }else if(cmdURI.equals("/mod.member")) {
 
             action = new MemberInfoService();
