@@ -20,13 +20,16 @@ public class JoinService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		
+		System.out.println("JoinService");
 		ActionForward forward = null;
 		
 		String userId = request.getParameter("email");
 		String userPwd = request.getParameter("password");
 		String userNicname = request.getParameter("nickName");
 		String userProfile = request.getParameter("fileUpLoad");
+		System.out.println("userId : " + userId);
+		System.out.println("userPwd : " + userPwd);
+		System.out.println("userNicname : " + userNicname);
 		
 		MemberDTO member = new MemberDTO();
 		member.setUserId(userId);
@@ -42,11 +45,11 @@ public class JoinService implements Action{
 			
 			if(result>0) {
 
-				request.setAttribute("result", "success");
+				request.setAttribute("resultrow", "success");
 			}
 			else {
 
-				request.setAttribute("result", "fail");
+				request.setAttribute("resultrow", "fail");
 			}
 			
 			
@@ -59,7 +62,7 @@ public class JoinService implements Action{
 		forward = new ActionForward();
 		//회원가입 성공.
    		forward.setRedirect(false);
-   		forward.setPath("/main.jsp");
+   		forward.setPath("/ajaxpath/result_row.jsp");
  	
 		return forward;
 	}

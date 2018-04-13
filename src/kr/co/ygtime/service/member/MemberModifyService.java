@@ -25,9 +25,11 @@ public class MemberModifyService implements Action{
 		MemberDTO memberdto = null;
 		int resultrow = 0;
 		String userId =  request.getParameter("userId");
-		String userPwd = request.getParameter("userPwd");
-		String userNicname = request.getParameter("userNicname");
-		String userProfile = request.getParameter("userProfile");
+		String userPwd = request.getParameter("modpassword");
+		String userNicname = request.getParameter("modnickName");
+		String userProfile = request.getParameter("modfileUpLoad");
+		System.out.println("userPwd"+userPwd);
+		System.out.println(userNicname);
 		memberdto = new MemberDTO();
 		memberdto.setUserId(userId);
 		memberdto.setUserPwd(userPwd);
@@ -37,10 +39,9 @@ public class MemberModifyService implements Action{
 		try {
 			memberdao = new MemberDAO();
 			resultrow = memberdao.memberUpdate(memberdto);
-			JSONObject json = JSONObject.fromObject(resultrow);
-			request.setAttribute("ajaxdata", json);
+			request.setAttribute("resultrow", resultrow);
 			forward = new ActionForward();
-			forward.setPath("/member_test/AjaxData.jsp");
+			forward.setPath("/ajaxpath/result_row.jsp");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

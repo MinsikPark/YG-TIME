@@ -172,9 +172,12 @@ public class MemberDAO {
 		try {
 			conn = ds.getConnection();
 			String sql = "UPDATE MEMBER SET USERPWD = ? , usernicname = ? , USERPROFILE = ?  WHERE USERID = ?";
-			
+	
+			System.out.println("dao : " + member.getUserPwd()+ "/" +  member.getUserNicname());
 			pstmt = conn.prepareStatement(sql);
-
+			
+			
+			
 			pstmt.setString(1, member.getUserPwd());
 			pstmt.setString(2, member.getUserNicname());
 			pstmt.setString(3, member.getUserProfile());
