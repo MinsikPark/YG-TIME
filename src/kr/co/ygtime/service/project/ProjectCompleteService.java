@@ -22,6 +22,7 @@ public class ProjectCompleteService implements Action {
 	
 		int projectNum = Integer.parseInt(request.getParameter("projectNum"));
 		String userId = request.getParameter("userId");
+
 		ActionForward forward = null;
 		int row = 0;
 		try {

@@ -42,12 +42,14 @@ public class ProjectAddService implements Action{
 				//프로젝트 insert 성공
 				//2. 팀 insert 관리자로
 				String userid = (String) request.getSession().getAttribute("sessionId"); //확실한지 로그인 만들어진 후 테스트
+
 				TeamDTO teamdto = new TeamDTO();
 				teamdto.setUserId(userid);
 				teamdto.setGrade(0);
 				teamdto.setProjectNum(projectnum);
 				
 				int insertrow = projectdao.teamInsert(teamdto); //DB 팀에 넣어준다.
+
 				
 				request.setAttribute("resultrow", insertrow);
 			}
