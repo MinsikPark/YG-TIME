@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.service.board.BoardAddService;
+import kr.co.ygtime.service.board.BoardContentUpdateService;
+import kr.co.ygtime.service.board.BoardDateUpdateService;
+import kr.co.ygtime.service.board.BoardDeleteService;
 import kr.co.ygtime.service.board.BoardListService;
 
 
@@ -69,7 +72,32 @@ public class BoardController extends HttpServlet {
         	catch(Exception e) {
         		e.getMessage();
         	}
+        }else if(cmdURI.equals("/boarddelete.board")) {
+        	action = new BoardDeleteService();
+        	try {
+        	forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.getMessage();
+        	}
+        }else if(cmdURI.equals("/boarddatemodify.board")) {
+        	action = new BoardDateUpdateService();
+        	try {
+        	forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.getMessage();
+        	}
+        }else if(cmdURI.equals("/boardcontentmodify.board")) {
+        	action = new BoardContentUpdateService();
+        	try {
+        	forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.getMessage();
+        	}
         }
+        
         
         
         //태우기 마지막

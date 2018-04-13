@@ -4,9 +4,24 @@
 	작성일: 2018-04-12
 	작성자: 강성훈
 --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
 <link rel="stylesheet" href="css/fullcalendar.css" />
 <link rel='stylesheet' href="css/fullcalendar.print.min.css" media="print" />
+
+<script>
+
+$(function(){
+	
+
+	var projectNum = <%=session.getAttribute("projectNum")%>;
+	if(projectNum!=null && projectNum != ""){
+		projectView(projectNum);
+	}
+
+})
+
+</script>
 
 <script src="js/moment.min.js"></script>
 <!-- (주의: 순서)fullcalendar.js import는 위의 js files import 이후에 작성되어야 함 -->
