@@ -44,7 +44,6 @@ public class MemberController extends HttpServlet {
 		String requestURI = request.getRequestURI();
         String contextPath = request.getContextPath();
         String cmdURI = requestURI.substring(contextPath.length());
-		System.out.println(cmdURI);
         ActionForward forward =null;
 	
         Action action = null;
