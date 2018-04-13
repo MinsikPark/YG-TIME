@@ -20,6 +20,7 @@ public class JoinService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+//		String uploadpath = application.getRealPath("upload"); 
 		
 		ActionForward forward = null;
 		

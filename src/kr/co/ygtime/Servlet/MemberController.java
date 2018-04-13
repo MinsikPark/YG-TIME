@@ -145,6 +145,11 @@ public class MemberController extends HttpServlet {
         		e.getMessage();
         	}
         }
+        
+   
+        
+        
+        
         //태우기 마지막
         if(forward != null){
         	if(forward.isRedirect()) {
