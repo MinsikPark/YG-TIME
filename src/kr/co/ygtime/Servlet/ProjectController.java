@@ -97,6 +97,14 @@ public class ProjectController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
         	}
+        } else if(cmdURI.equals("/Listlist.project")){
+        	action = new ProjectAdmin();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+        	}
         }
         	
         //마지막 태우기
