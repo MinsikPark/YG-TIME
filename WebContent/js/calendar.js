@@ -31,6 +31,20 @@ $(function() { // $(document).ready
 		    	
 		    	var answer = confirm("정말 삭제 하시겠습니까?");
 		    	if (answer) {
+		    		/////////////
+		    		var data = {boardNum:event.id};
+		    		
+		    		$.ajax({
+		    			url:"boarddelete.board",
+		    			datatype:"text",
+		    			data:data,
+		    			success:function(data){
+		    				console.log(">"+data.trim()+"<");
+		    			}
+		    		
+		    		})
+		    		
+		    		//////////////
 		    		$('#calendar').fullCalendar('removeEvents', event._id);
 		    	}
 		    }
@@ -143,6 +157,10 @@ $(function() { // $(document).ready
 		},				
 	}); // end - calEventDialog
 	
+	
+	
+	
+	
 }); // end - $(document).ready
 
 var sampleData = [
@@ -168,6 +186,8 @@ var sampleData = [
 		color: "yellow"
 	},
 ];
+
+
 
 /*function project() {
 	$('#calendar').fullCalendar('removeEvents');
