@@ -25,11 +25,12 @@ public class InviteMsgService implements Action{
 		ActionForward forward = null;
 		
 		int invite = 0;
-		int msgNum = Integer.parseInt(request.getParameter("msgNum"));
 		String userId = request.getParameter("userId");
 		int projectNum = Integer.parseInt(request.getParameter("projectNum"));
 		String inviteUserId = request.getParameter("inviteUserId");
-		
+		System.out.println("userId : " + userId);
+		System.out.println("projectNum : " + projectNum);
+		System.out.println("inviteUserId : "+inviteUserId );
 		//String msgDate = request.getParameter("msgDate");
 		//invitemsgdto.setMsgNum(msgNum);
 		invitemsgdto.setUserId(userId);

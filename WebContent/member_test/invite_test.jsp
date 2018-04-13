@@ -10,7 +10,6 @@
 <body>
 
 <form action="<%= request.getContextPath()%>/invite.member" method="post">
-	<input type="text" name="msgNum" value="메세지번호">
 	<input type="text" name="userId" value="아이디">
 	<input type="text" name="projectNum" value="프로젝트번호">
 	<input type="text" name="inviteUserId" value="초대한사람아이디">

@@ -11,11 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
+import kr.co.ygtime.service.member.MemberModifyService;
+import kr.co.ygtime.service.project.MemberLeaveService;
 import kr.co.ygtime.service.project.ProjectAddService;
 import kr.co.ygtime.service.project.ProjectCompleteService;
 
 import kr.co.ygtime.service.project.ProjectDeleteService;
 import kr.co.ygtime.service.project.ProjectListService;
+import kr.co.ygtime.service.project.ProjectMemberInsertService;
+import kr.co.ygtime.service.project.ProjectMemberListService;
 import kr.co.ygtime.service.project.ProjectProgressService;
 
 @WebServlet("*.project")
@@ -93,6 +97,34 @@ public class ProjectController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
 			}
+        }else if(cmdURI.equals("/project_test/memberlist.project")) {
+        	action = new ProjectMemberListService();
+        	System.out.println("안녕하세요");
+        	try {
+        	forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        	e.printStackTrace();
+        	}
+        }else if(cmdURI.equals("/memberinsert.project")) {
+        	action = new ProjectMemberInsertService();
+        	try {
+        	forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        	e.printStackTrace();
+        	}
+        }else if(cmdURI.equals("/leave.project")) {
+        	System.out.println("메롱");
+        	action = new MemberLeaveService();
+        	System.out.println("메롱2");
+        	try {
+        	System.out.println("메롱1");
+        	forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        	e.printStackTrace();
+        	}
         }
         
         //마지막 태우기

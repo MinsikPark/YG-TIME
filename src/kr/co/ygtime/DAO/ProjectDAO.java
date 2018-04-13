@@ -19,7 +19,9 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.sun.javafx.application.PlatformImpl.FinishListener;
+import com.sun.org.apache.bcel.internal.generic.Select;
 
+import kr.co.ygtime.DTO.MemberDTO;
 import kr.co.ygtime.DTO.ProjectDTO;
 import kr.co.ygtime.DTO.TeamDTO;
 
@@ -302,6 +304,51 @@ public class ProjectDAO {
 		}
 		return projectdto;
 	}
+	/**
+	 날      짜 : 2018. 4. 13.
+	 기      능 : 해당 프로젝트에 모든 멤버
+	 작성자명 : 최 재 욱
+	 */
+	public List<MemberDTO> allProjectMemberSelect(int projectNum){
+		MemberDTO memberdto = null;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		List<MemberDTO> listmemberdto = null;
+		try {
+			conn = ds.getConnection();
+			String sql = "select m.* from team t join member m on t.userid = m.userid where projectnum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, projectNum);
+			rs = pstmt.executeQuery();
+			
+			listmemberdto = new ArrayList<>();
+			while(rs.next()) {
+
+				memberdto = new MemberDTO();
+				memberdto.setUserId(rs.getString("userid"));
+				memberdto.setUserNicname(rs.getString("usernicname"));
+				memberdto.setUserProfile(rs.getString("userprofile"));
+				memberdto.setUserPwd(rs.getString("userpwd"));
+				
+				listmemberdto.add(memberdto);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return listmemberdto;
+	}
 
 
 	/**
@@ -405,18 +452,18 @@ public class ProjectDAO {
 		int resultrow = 0;
 		PreparedStatement pstmt = null;
 		Connection conn = null;
-		
+		System.out.println("안녕하세요");
 		
 		try {
 			conn = ds.getConnection();
-			String sql = "insert into team(projectnum, userid, grade, projectlastmoddate) values(?,?,?,sysdate)";
+			String sql = "insert into team(projectnum, userid, grade, projectlastmoddate) values(?,?,0,sysdate)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, team.getProjectNum());
 			pstmt.setString(2,team.getUserId());
-			pstmt.setInt(3, team.getGrade());
+			
 			
 			resultrow = pstmt.executeUpdate();
-			
+			System.out.println("반가워요");
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
