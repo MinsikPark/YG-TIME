@@ -325,7 +325,6 @@ public class ProjectDAO {
 			
 			listprojectdto = new ArrayList<>();
 			while(rs.next()) {
-				System.out.println("rs가 있다");
 				projectdto = new ProjectDTO();
 				projectdto.setProjectNum(rs.getInt("projectnum"));
 				projectdto.setProjectName(rs.getString("projectname"));

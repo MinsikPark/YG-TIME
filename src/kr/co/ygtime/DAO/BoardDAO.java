@@ -46,13 +46,12 @@ public class BoardDAO {
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, board.getBoardNum());
-			pstmt.setInt(2, board.getProjectNum());
-			pstmt.setString(3, board.getBoardTitle());
-			pstmt.setString(4, board.getDetail());
-			pstmt.setString(5, board.getBoardStartDate());
-			pstmt.setString(6, board.getBoardEndDate());
-			pstmt.setString(7, board.getLabel());
+			pstmt.setInt(1, board.getProjectNum());
+			pstmt.setString(2, board.getBoardTitle());
+			pstmt.setString(3, board.getDetail());
+			pstmt.setString(4, board.getBoardStartDate());
+			pstmt.setString(5, board.getBoardEndDate());
+			pstmt.setString(6, board.getLabel());
 			resultrow = pstmt.executeUpdate();
 			
 		}catch(Exception e) {

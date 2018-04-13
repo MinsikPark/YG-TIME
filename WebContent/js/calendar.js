@@ -74,7 +74,6 @@ $(function() { // $(document).ready
 	                autoWidth();
 	            }
 			});
-			
 		},
 		eventDrop: function(event, delta, revertFunc) { // Drag를 통한 날짜 변경 처리 함수
 		
@@ -117,13 +116,36 @@ $(function() { // $(document).ready
 					return;
 				}else {
 						eventData = { // 이벤트 객체
-							id: boardCnt++, //id가 동일하면 drag, editable이 동일하게 동작
 							title: title,
 							start: start,
 							end: end,
 							color: color,
+						};	
+						var inputParam = {
+								boardTitle: eventData.title,
+								boardStartDate: eventData.start,
+								boardEndDate: eventData.end,
+								label: eventData.color,
+
 						};
-						$('#calendar').fullCalendar('renderEvent', eventData, true);
+						//////
+						$.ajax({
+							url:"boardadd.board",
+							datatype:"text",
+							data: inputParam,
+							success: function(data){
+								console.log("보드 생성 데이터 :" + data)
+								if(data.trim()<=0 ||data==null){
+									alert("보드 생성에 실패하셨습니다");
+								}else{
+									$('#calendar').fullCalendar('renderEvent', eventData, true);
+									alert("보드 생성했음");	
+								}
+							}
+
+						})
+						////////
+						
 					}
 					$('#calendar').fullCalendar('unselect');
 					$(this).dialog('close');
