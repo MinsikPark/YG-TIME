@@ -51,8 +51,6 @@ public class ProjectController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
 			}
-        	
-
 
         }else if(cmdURI.equals("/delete.project")) {
 
@@ -63,10 +61,6 @@ public class ProjectController extends HttpServlet {
         	catch (Exception e) {
         		e.getMessage();
         	}
-
-        	
-		
-
 
         } else if(cmdURI.equals("/projectlist.project")) {
         	action = new ProjectListService();
