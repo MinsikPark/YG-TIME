@@ -7,14 +7,7 @@
 
 $(function() { // $(document).ready
 	var boardCnt = 0;
-/*
-	function dateProcess(dateStr, days){ // date가공 메서드
-		var date = new Date(dateStr); // Date 객체 생성
-		date.setDate(date.getDate() + days); // Date 가감설정
-		var dateToISO = date.toISOString().substring(0,10); // Date -> String (ISO날짜 타입, 시간제거)
-		return dateToISO;
-	}
-*/
+	
 	// fullCalendar
 	$('#calendar').fullCalendar({
 		eventDragStop: function (event, jsEvent) { // Drag 후 삭제 기능
@@ -61,8 +54,8 @@ $(function() { // $(document).ready
 		},
 		editable: true, // 달력에 종료일 수정 여부 (드래그, 크기 조정)
 		eventLimit: true, // 하루에 표시되는 이벤트의 수를 제한. 나머지는 팝 오버에 나타남.
-		displayEventTime: false, // 
-		eventClick: function(event) {
+		displayEventTime: false, 
+		eventClick: function(event) { // 보드 클릭 시 이벤트
 		
 			$.ajax({
 				url:"Listlist.list",
@@ -99,7 +92,7 @@ $(function() { // $(document).ready
 	}); // end - fullCalendar
 	
 	
-	//board 날짜 변경 비동기 함수 (입력)
+	//board 날짜 변경 비동기 함수
 	function boarddateupdate(event){
 		console.log("event.end.format() : " + event.end.format());
 		var data = {
@@ -137,16 +130,14 @@ $(function() { // $(document).ready
 		width: 'auto',
 		maxWidth: 350,
 		height: 'auto',
-		//responsive: true,
 		modal: true,
 		fluid: true,
 		title: '보드 추가',
 		buttons: {
-			// '추가'버튼 클릭 시 (입력)
+			// '추가'버튼 클릭 시
 			추가: function() {
 				var title = $('#eventTitle').val(); // 제목 
 				var start = $('#eventStart').val(); // 시작일
-				//var end = dateProcess($('#eventEnd').val(), 1); // 가공된 종료일 값
 				var end = $('#eventEnd').val();
 				var color = $('#eventColor').val();
 				var eventData = null; // 이벤트 객체 변수 선언
@@ -169,25 +160,22 @@ $(function() { // $(document).ready
 
 						};
 						
-						
-						//////
+						//비동기 처리
 						$.ajax({
 							url:"boardadd.board",
-							datatype:"text",
+							datatype:"json",
 							data: inputParam,
 							success: function(data){
-								console.log("보드 생성 데이터 :" + data)
-								if(data.trim()<=0 ||data==null){
+								var json = JSON.parse(data);
+								if(json.resultrow <=0 || json.resultrow == null){
 									alert("보드 생성에 실패하셨습니다");
 								}else{
-									eventData.end = dateProcess(eventData.end, 1); //출력시 DB종료일 + 1일
-									$('#calendar').fullCalendar('renderEvent', eventData, true); //출력
+									projectView(json.projectNum);
 									alert("보드 생성했음");
 								}
 							}
 
 						})
-						////////
 						
 					}
 					$('#calendar').fullCalendar('unselect');
@@ -234,15 +222,3 @@ var sampleData = [
 		color: "yellow"
 	},
 ];
-
-
-
-/*function project() {
-	$('#calendar').fullCalendar('removeEvents');
-	for(var i in sampleData) {
-		$('#calendar').fullCalendar('renderEvent', sampleData[i], true);	
-	}
-	$('#mainScreen').hide()
-	$('#calendar').show()
-	
-}*/

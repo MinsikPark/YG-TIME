@@ -12,6 +12,7 @@
 <script src="js/footbar.js"></script>
 
 <c:if test="${!empty sessionScope.sessionId}">
+
 	<div id="mySidenav" class="sidenav">
 		<div id="sideNav" class="sidenav">
 			<div class="tab-content">
