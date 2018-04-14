@@ -41,24 +41,68 @@
 							</div></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="logout.member">Logout <span
-								class="glyphicon glyphicon-log-out"></span></a></li>
-						<li id="profiledrop" class="dropdown"><a
-							class="dropdown-toggle" data-toggle="dropdown"><span
-								class="glyphicon glyphicon-user"></span></a> <input id="getsession"
-							type="hidden" value="${sessionScope.sessionId}">
-							<div id="dropdowndiv" class="dropdown-menu">
-								<ul>
-									<li data-toggle="modal" data-target="#myModal2"><a
-										id="profilmodify">회원정보 수정</a><br></li>
-								</ul>
-								<!-- <a>초대리스트</a> -->
-								<div id="dropdownchilddiv"></div>
-
-							</div></li>
+						<input id="getsession" type="hidden" value="${sessionScope.sessionId}">
+						<li>
+							<a href="logout.member">Logout 
+								<span class="glyphicon glyphicon-log-out"></span>
+							</a>
+						</li>
+				        	
+						<li id="profiledrop" class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown">
+								<span class="glyphicon glyphicon-user"></span>
+							</a> 
+							<ul class="dropdown-menu">
+								<li data-toggle="modal"  data-target="#myModal2">
+							      <a id="profilmodify">회원정보 수정</a>
+								</li>
+							      <li>
+							        <a class="joinmessage" tabindex="-1" href="#">초대 메시지함<span class="caret"></span></a>
+							        <ul class="dropdown-menu">
+							      
+							          <li>  
+							          	<div id="dropdownchilddiv"></div>
+							          </li>
+							          <li><a tabindex="-1" href="#">2nd 프로젝트에 초대 되었습니다 </a>
+							          	<button style="float:right; margin:5px;" class="btn btn-warning">거절</button>
+							          	<button style="float:right; margin:5px;" class="btn btn-success">수락</button>
+						          	  </li>
+							        </ul>
+							      </li>
+							    </ul>
+							
+							<!-- 	<div id="dropdowndiv" class="dropdown-menu">
+									<ul>
+										<li data-toggle="modal" data-target="#myModal2">
+											<a id="profilmodify">회원정보 수정</a><br>
+										</li>
+									</ul>
+									<a>초대리스트</a>
+									<div id="dropdownchilddiv"></div>
+								</div> -->
+							</li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
+							<!-- <div class="dropdown">
+							    <a class = "glyphicon glyphicon-user" data-toggle="dropdown"></a>
+							    <ul class="dropdown-menu">
+							      <li><a tabindex="-1" href="#">프로필 수정</a></li>
+							      <li>
+							        <a class="joinmessage" tabindex="-1" href="#">초대 메시지함<span class="caret"></span></a>
+							        <ul class="dropdown-menu">
+							          <li><a tabindex="-1" href="#">1nd 프로젝트에 초대 되었습니다 </a>
+							          	<button style="float:right; margin:5px;" class="btn btn-warning">거절</button>
+							          	<button style="float:right; margin:5px;" class="btn btn-success">수락</button>
+							          </li>
+							          <li><a tabindex="-1" href="#">2nd 프로젝트에 초대 되었습니다 </a>
+							          	<button style="float:right; margin:5px;" class="btn btn-warning">거절</button>
+							          	<button style="float:right; margin:5px;" class="btn btn-success">수락</button>
+						          	  </li>
+							        </ul>
+							      </li>
+							    </ul>
+							  </div> -->
 		</div>
 	</nav>
 </header>

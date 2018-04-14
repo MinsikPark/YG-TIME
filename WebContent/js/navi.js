@@ -1,20 +1,11 @@
-var i = 1	
+var j = 1	
 $(function(){
-	$('.setting').hide()
-	$('.button').hide()
-	$('.tab-content').hide()
+	$('.setting, .button, .tab-content, #mainFooterbar').hide()
 	
 	//사이드 관련
-	$('#navigationBars').click(function() {
+	$('#navigationBars, #mainScreen, #calendar').click(function() {
 		sideHide()
 	}) 
-	$('#mainScreen').click(function() {
-		sideHide()
-	})
-	 
-	$('#calendar').click(function() {
-		sideHide()
-	})
 	
 	$('#mySidenav').click(function() {
 		sideShow()
@@ -27,6 +18,12 @@ $(function(){
 	$('#addCheckList').click(function(){
 		addCheckListForm()
 	})
+	
+	$('.dropdown a.joinmessage').on("click", function(e){
+		$(this).next('ul').toggle();
+		e.stopPropagation();
+		e.preventDefault();
+	});
 })
 
 //사이드 숨길때
@@ -34,20 +31,14 @@ function sideHide(){
 	$('#sideNav').css("width", "0px")
 	$('#navigationBars').css("marginLeft", "20px")
 	$('#mainScreen').css("marginLeft", "70px")
-	$('.setting').hide()
-	$('.insert').hide()
-	$('.button').hide()
-	$('.tab-content').hide()
+	$('.setting, .insert, .button, .tab-content').hide()
 }
 //사이드 보일때
 function sideShow(){
 	$('#sideNav').css("width", "330px")
 	$('#navigationBars').css("marginLeft", "330px")
 	$('#mainScreen').css("marginLeft", "380px")
-	$('.tab-content').delay(250).fadeIn()
-	$('.button').delay(250).fadeIn()
-	$('.setting').delay(250).fadeIn()
-	$('.insert').delay(250).fadeIn()
+	$('.setting, .insert, .button, .tab-content').delay(250).fadeIn()
 } 
 
 function changeValue(obj){
@@ -73,8 +64,8 @@ function addCheckListForm(){
 function addCheckList(obj) {
 	var value = $(obj).closest('div')[0].children[0].value
 	if(value.trim() != ""){
-		var div = '<p><input type="checkbox" id="checkbox'+i+'"><label for="checkbox'+i+'">'+value+'</label><button type="button" class="close" onclick="removeCheckList(this)">&times;</button></p>'
-		i++
+		var div = '<p><input type="checkbox" id="checkbox'+j+'"><label for="checkbox'+i+'">'+value+'</label><button type="button" class="close" onclick="removeCheckList(this)">&times;</button></p>'
+		j++
 		
 		obj.closest('div').remove()
 		

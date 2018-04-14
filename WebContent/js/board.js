@@ -39,10 +39,24 @@ $(function(){
 	
 })
 function sortable(){
-	$('.listbox').sortable({
+	$('div[class=listbox]').sortable({
 		items:'div:not(.listtitle)',
 		placeholder: "ui-state-highlight",
-		connectWith: '.listbox'
+		connectWith: '.listbox',
+		axis : 'y',
+		update: function(event, ui) {
+			var productOrder = $(this).sortable('toArray').toString();
+			$("#sortableTest").text (productOrder);
+			var children = $(this)[0].children
+			
+			if (children[1].className === 'cardcreate'){
+				var children0 = children[0], 
+					children1 = children[1], 
+					children2 = children[2]
+				$(this).empty()
+				$(this).append(children0, children2, children1)
+			}
+		}
 	}).disableSelection(); 
 }
 
@@ -52,10 +66,12 @@ function autoWidth(){
 	$('#mainScreen').css("width", width)
 }
 
-function addCardView(obj) {
-	var div = "<div class='card'><input class='inputtext' type='text' placeholder='card title' name='title'><a onclick='addCard(this)'>완료</a></div>"
-	$(obj).before(div)
+var i = 1
+function addCardView(e) {
+	var div = "<div class='card' id="+(i++)+"><input class='inputtext' type='text' placeholder='card title' name='title'><a onclick='addCard(this)'>완료</a></div>"
+	$(e).before(div)
 }
+
 
 function addCard(obj){
 	var parent = $(obj).closest('div')

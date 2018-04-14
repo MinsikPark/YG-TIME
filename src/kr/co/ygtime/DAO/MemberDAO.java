@@ -144,7 +144,6 @@ public class MemberDAO {
 				memberDTO.setUserPwd(rs.getString("userpwd"));
 				memberDTO.setUserNicname(rs.getString("usernicname"));
 				memberDTO.setUserProfile(rs.getString("userprofile"));
-				System.out.println("멤버rsnext : " + memberDTO.getUserId());			
 			} 
 						
 		} catch (Exception e) {

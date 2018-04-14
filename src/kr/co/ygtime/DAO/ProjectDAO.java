@@ -20,6 +20,7 @@ import javax.sql.DataSource;
 
 import com.sun.javafx.application.PlatformImpl.FinishListener;
 
+import kr.co.ygtime.DTO.MemberDTO;
 import kr.co.ygtime.DTO.ProjectDTO;
 import kr.co.ygtime.DTO.TeamDTO;
 
@@ -114,6 +115,52 @@ public class ProjectDAO {
 		
 		return resultrow;
 	}
+	/**
+	 날      짜 : 2018. 4. 13.
+	 기      능 : 해당 프로젝트에 모든 멤버
+	 작성자명 : 최 재 욱
+	 */
+	public List<MemberDTO> allProjectMemberSelect(int projectNum){
+		MemberDTO memberdto = null;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		List<MemberDTO> listmemberdto = null;
+		try {
+			conn = ds.getConnection();
+			String sql = "select m.* from team t join member m on t.userid = m.userid where projectnum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, projectNum);
+			rs = pstmt.executeQuery();
+			
+			listmemberdto = new ArrayList<>();
+			while(rs.next()) {
+
+				memberdto = new MemberDTO();
+				memberdto.setUserId(rs.getString("userid"));
+				memberdto.setUserNicname(rs.getString("usernicname"));
+				memberdto.setUserProfile(rs.getString("userprofile"));
+				memberdto.setUserPwd(rs.getString("userpwd"));
+				
+				listmemberdto.add(memberdto);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return listmemberdto;
+	}
+
 	
 	
 	/**
@@ -315,7 +362,6 @@ public class ProjectDAO {
 		Connection conn = null;
 		ResultSet rs = null;
 		List<ProjectDTO> listprojectdto = null;
-		System.out.println("allProjectSelect : " + userId);
 		try {
 			conn = ds.getConnection();
 			String sql = "select p.* from project p join team t on p.PROJECTNUM = t.PROJECTNUM where t.userid = ? and p.DELETEOK=0 order by t.projectlastmoddate desc";
@@ -360,7 +406,7 @@ public class ProjectDAO {
 		PreparedStatement pstmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
-		int grade = -1;
+		int grade = 0;
 		
 		try {
 			conn = ds.getConnection();
@@ -371,7 +417,6 @@ public class ProjectDAO {
 			pstmt.setInt(1, projectNum);
 			pstmt.setString(2, userId);
 			rs = pstmt.executeQuery();
-			
 			if(rs.next()) {
 				grade = rs.getInt("grade");
 			}
@@ -440,21 +485,23 @@ public class ProjectDAO {
 		
 		try {
 			conn = ds.getConnection();
-			String sql1 = "select userid from team where grade = 1 and projectnum=? ";
+			//아이디팀장검증
+			String sql1= "select grade from team where projectnum=? and userid=?";
 			
 			String sql2 = "delete from team where projectnum =? and userid =? ";
 			
 			pstmt = conn.prepareStatement(sql1);
 			pstmt.setInt(1, projectNum);
+			pstmt.setString(2,userId);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
 				//아이디가 일치하는지 확인
-				if(userId.equals(rs.getString("userid"))) {
+				if(rs.getInt("grade") == 0) {
 					pstmt.close();
 					pstmt = conn.prepareStatement(sql2);
 					pstmt.setInt(1, projectNum);
-					pstmt.setString(2, userId);
+					pstmt.setString(2, outUserId);
 					
 					resultrow = pstmt.executeUpdate();
 				}
@@ -475,6 +522,69 @@ public class ProjectDAO {
 		}
 	
 	return resultrow;
+	}
+	/**
+	 날      짜 : 2018. 4. 14.
+	 기      능 : 자신의권한업데이트
+	 작성자명 : 최 재 욱
+	 */
+	public int gradeUpdate(int projectNum, String userId, String modId) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int row = 0;
+		try {
+			conn = ds.getConnection();
+			//아이디팀장검증
+			String sql1= "select grade from team where projectnum=? and userid=?";
+			
+			//팀장위임
+			String sql2 = "update team set grade=? where projectnum=? and userid=?";
+
+			pstmt = conn.prepareStatement(sql1);
+			pstmt.setInt(1, projectNum);
+			pstmt.setString(2, userId);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) { 
+				//아이디가 일치하는지 확인
+				if(rs.getInt("grade") == 0) {
+					pstmt.close();
+					pstmt = conn.prepareStatement(sql2);
+					pstmt.setInt(1, 1);
+					pstmt.setInt(2, projectNum);
+					pstmt.setString(3, modId);
+					
+					row = pstmt.executeUpdate();
+					
+				}else {
+					pstmt.close();
+					pstmt = conn.prepareStatement(sql2);
+					pstmt.setInt(1, 0);
+					pstmt.setInt(2, projectNum);
+					pstmt.setString(3, modId);
+					
+					row = pstmt.executeUpdate();
+				}
+				
+				if(row > 0) {
+					conn.commit();
+				}
+			}
+		}catch (SQLException e) {
+			try {conn.rollback();} catch (SQLException e1) {e1.printStackTrace();}
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();
+			}catch (Exception e) {
+				
+			}
+		}
+		return  row;
+
 	}
 	
 	/**
