@@ -9,6 +9,7 @@
 <script src="js/headerMsg.js"></script>
 <script src="js/sidebarProject.js"></script>
 <script src="js/sidebarProjectList.js"></script>
+<script src="js/footbar.js"></script>
 
 <c:if test="${!empty sessionScope.sessionId}">
 	<div id="mySidenav" class="sidenav">

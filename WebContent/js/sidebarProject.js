@@ -106,15 +106,18 @@ function boardData(json) {
 	
 	
 	for(var i in json) {
-		boardArr.push(
-			{
-				id: json[i].boardNum,
-				title: json[i].boardTitle,
-				start: json[i].boardStartDate.substring(0,10),
-				end: json[i].boardEndDate.substring(0,10),
-				color: json[i].label
-			}
-		);
+		console.log(json[i].deleteOk);
+		if(json[i].deleteOk==0){
+			boardArr.push(
+					{
+						id: json[i].boardNum,
+						title: json[i].boardTitle,
+						start: json[i].boardStartDate.substring(0,10),
+						end: json[i].boardEndDate.substring(0,10),
+						color: json[i].label
+					}
+			);	
+		}
 		console.log(json[i].boardNum);
 		console.log(json[i].boardTitle);
 		console.log(json[i].boardStartDate);
