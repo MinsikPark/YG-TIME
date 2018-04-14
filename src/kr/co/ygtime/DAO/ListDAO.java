@@ -109,34 +109,28 @@ public class ListDAO {
 	 작성자명 : 박 민 식
 	*/
 	public int listUpdate(ListDTO list) {
-		System.out.println("listUpdate 함수");
 		int listNum = list.getListNum();
 		String listName = list.getListName();
-		int listSequential = list.getListSequential();
 		int resultRow = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String updateSql = "update list set listName=?,"
-				+ "listSequential = ? where listNum =?";
+		String updateSql = "update list set listName=? "
+				+ "where listNum =?";
 		
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(updateSql);
 			
 			pstmt.setString(1, listName);
-			pstmt.setInt(2, listSequential);
-			pstmt.setInt(3, listNum);
+			pstmt.setInt(2, listNum);
 			
 			resultRow = pstmt.executeUpdate();
-			
-					
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
 			try {
 				pstmt.close();
-			
 				conn.close();//반환
 			}catch (Exception e) {
 				
@@ -192,6 +186,7 @@ public class ListDAO {
 		String selectSql = "select * from list where listNum =?";
 		ListDTO dto = null;
 		try {
+			conn= ds.getConnection();
 			pstmt= conn.prepareStatement(selectSql);
 			pstmt.setInt(1, listNum);
 			rs = pstmt.executeQuery();
@@ -225,7 +220,45 @@ public class ListDAO {
 		return dto;
 		
 	}
+	
+	/**
+	 날      짜 : 2018. 4. 13.
+	 기      능 : 리스트넘버 가져오기
+	 작성자명 : 김 진 원
+	 */
+	public int listSelect(int boardNum, int listSequential) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int listnum = 0;
+		String selectSql = "select listNum from list where boardNum=? and listSequential=?";
+		try {
+			conn= ds.getConnection();
+			pstmt= conn.prepareStatement(selectSql);
+			pstmt.setInt(1, boardNum);
+			pstmt.setInt(2, listSequential);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				listnum = Integer.parseInt(rs.getString("listNum"));
+			}
+			
+		} catch(Exception e){
+			
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();//반환
+			}catch (Exception e) {
+			}
+		}
 		
+		return listnum;
+		
+	}
+	
 	/**
 	 날      짜 : 2018. 4. 10.
 	 기      능 : 모든 리스트조회 select
