@@ -1,6 +1,6 @@
 var j = 1	
 $(function(){
-	$('.setting, .button, .tab-content').hide()
+	$('.setting, .button, .tab-content, #mainFooterbar').hide()
 	
 	//사이드 관련
 	$('#navigationBars, #mainScreen, #calendar').click(function() {
