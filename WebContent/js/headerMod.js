@@ -10,6 +10,7 @@ $(function() {
 			datatype : "JSON",
 			data : datas,
 			success : function(data) {
+				console.log(data);
 				var json = JSON.parse(data);
 				$("#modemail").val(json.userId);
 				$("#modnickName").val(json.userNicname);

@@ -43,10 +43,6 @@
 				<div class="listtitle">하고잇는것하고잇는것하고잇는</div>
 			    <a class="cardcreate" onclick="addCardView(this)">Add a card...</a>
 			</div>
-			<div class="listbox">
-				<div class="listtitle">하고잇는것하고잇는것하고잇는</div>
-			    <a class="cardcreate" onclick="addCardView(this)">Add a card...</a>
-			</div>
 			<a class="listbox" onclick="addListView(this)">Add a list...</a>
 		</div>
 	</div>

@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
+import kr.co.ygtime.service.list.ListSelectSerivce;
+import kr.co.ygtime.service.list.ListUpdateService;
+import kr.co.ygtime.service.list.ListinsertService;
 import kr.co.ygtime.service.list.Listlistsevice;
 
 
@@ -51,9 +54,39 @@ public class ListController extends HttpServlet {
 				e.printStackTrace();
 			
 			}
+        } else if(cmdURI.equals("/listinsert.list")) {
+        	try{
+				action = new ListinsertService();
+        		forward= action.execute(request, response);
+
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			
+			}
+        } else if(cmdURI.equals("/listselect.list")) {
+        	try{
+				action = new ListSelectSerivce();
+        		forward= action.execute(request, response);
+
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			
+			}
+        } else if(cmdURI.equals("/listupdate.list")) {
+        	try{
+				action = new ListUpdateService();
+        		forward= action.execute(request, response);
+
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			
+			}
         }
         
-      //태우기 마지막
+        //태우기 마지막
         if(forward != null){
         	if(forward.isRedirect()) {
         		response.sendRedirect(forward.getPath());

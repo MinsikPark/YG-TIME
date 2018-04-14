@@ -181,7 +181,8 @@ public class BoardDAO {
 		String boardStartDate = board.getBoardStartDate();
 		String boardEndDate = board.getBoardEndDate();
 		String label = board.getLabel();
-		
+		System.out.println("boardEndDate " + boardEndDate);
+		System.out.println("boardStartDate " + boardStartDate);
 		PreparedStatement pstmt =null;
 		Connection conn = null;
 		String sql = "update board set boardtitle= ? , detail= ?, boardStartDate = ?, "
@@ -196,10 +197,10 @@ public class BoardDAO {
 			pstmt.setString(4, boardEndDate);
 			pstmt.setString(5, label);
 			pstmt.setInt(6, boardNum);
+			System.out.println("resultrow : " + resultrow);
 			resultrow = pstmt.executeUpdate();
-			
 		}catch(Exception e) {
-			
+			e.printStackTrace();
 		}finally {
 			try {
 				pstmt.close();
