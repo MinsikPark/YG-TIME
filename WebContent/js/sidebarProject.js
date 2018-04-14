@@ -67,16 +67,28 @@ function projectProgress(projectNum) {
 	});
 }
 
-//달력 표시
-function projectDisplay(sampleData) {
-	console.log(sampleData);
-	
-	$('#calendar').fullCalendar('removeEvents');
-	for(var i in sampleData) {
-		console.log(sampleData[i]);
-		$('#calendar').fullCalendar('renderEvent', sampleData[i], true);	
+//date가공 메서드
+function dateProcess(dateStr, days) {
+	var date = new Date(dateStr); // Date 객체 생성
+	date.setDate(date.getDate() + days); // Date 가감설정
+	var dateToISO = date.toISOString().substring(0,10); // Date -> String (ISO날짜 타입, 시간제거)
+	return dateToISO;
+}
+
+//arr일때 date 가공
+function dateProcessArray(arr, days) { 
+	for(var i in arr) {
+		arr[i].end = dateProcess(arr[i].end, days);
 	}
-	console.log("dis");
+}
+
+//달력 표시 (출력)
+function projectDisplay(dataArr) {
+	$('#calendar').fullCalendar('removeEvents');
+	dateProcessArray(dataArr, 1); //출력시 DB종료일 + 1일
+	for(var i in dataArr) {
+		$('#calendar').fullCalendar('renderEvent', dataArr[i], true);	
+	}
 	$('#mainScreen').hide()
 	$('#calendar').show()
 }
@@ -101,12 +113,11 @@ function projectView(projectNum){
 	
 }
 
+//DB데이터 -> 달력 출력용 데이터
 function boardData(json) {
 	var boardArr = [];
 	
-	
 	for(var i in json) {
-		console.log(json[i].deleteOk);
 		if(json[i].deleteOk==0){
 			boardArr.push(
 					{
@@ -116,14 +127,8 @@ function boardData(json) {
 						end: json[i].boardEndDate.substring(0,10),
 						color: json[i].label
 					}
-			);	
+			);
 		}
-		console.log(json[i].boardNum);
-		console.log(json[i].boardTitle);
-		console.log(json[i].boardStartDate);
-		console.log(json[i].boardEndDate);
-		console.log(json[i].label);
-		
 	}
 	
 	return boardArr;
