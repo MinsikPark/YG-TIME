@@ -26,11 +26,8 @@ public class InviteMsgService implements Action{
 		
 		int resultrow = 0;
 		String userId = request.getParameter("userId");
-		int projectNum = Integer.parseInt(request.getParameter("projectNum"));
+		int projectNum = (int) request.getSession().getAttribute("projectNum");
 		String inviteUserId = request.getParameter("inviteUserId");
-		System.out.println("userId : " + userId);
-		System.out.println("projectNum : " + projectNum);
-		System.out.println("inviteUserId : "+inviteUserId );
 		invitemsgdto.setUserId(userId);
 		invitemsgdto.setProjectNum(projectNum);
 		invitemsgdto.setInviteUserId(inviteUserId);
@@ -41,8 +38,9 @@ public class InviteMsgService implements Action{
 			
 			forward = new ActionForward();
 			request.setAttribute("resultrow", resultrow);
+			System.out.println(resultrow);
 			forward.setRedirect(false);
-			forward.setPath("/ajaxpath/reslt_row.jsp");
+			forward.setPath("/ajaxpath/result_row.jsp");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

@@ -17,6 +17,11 @@ import kr.co.ygtime.service.project.ProjectCompleteService;
 
 import kr.co.ygtime.service.project.ProjectDeleteService;
 import kr.co.ygtime.service.project.ProjectListService;
+import kr.co.ygtime.service.project.ProjectMemberDeleteService;
+import kr.co.ygtime.service.project.ProjectMemberListService;
+import kr.co.ygtime.service.project.ProjectOwnerKickOutService;
+import kr.co.ygtime.service.project.ProjectOwnerMendateService;
+import kr.co.ygtime.service.project.ProjectOwnerService;
 import kr.co.ygtime.service.project.ProjectProgressService;
 
 @WebServlet("*.project")
@@ -81,7 +86,6 @@ public class ProjectController extends HttpServlet {
 			}
         	
         } else if(cmdURI.equals("/progressproject.project")){
-        	System.out.println("/progressproject.project");
         	action = new ProjectProgressService();
         	try {
 				forward = action.execute(request, response);
@@ -105,7 +109,49 @@ public class ProjectController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
         	}
+        }else if(cmdURI.equals("/memberlist.project")){
+        	action = new ProjectMemberListService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+        	}
+        }else if(cmdURI.equals("/owner.project")){
+        	action = new ProjectOwnerService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+        	}
+        }else if(cmdURI.equals("/mendate.project")){
+        	action = new ProjectOwnerMendateService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+        	}
+        }else if(cmdURI.equals("/tokickout.project")){
+        	action = new ProjectOwnerKickOutService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+        	}
+        }else if(cmdURI.equals("/memberdeleteproject.project")){
+        	System.out.println("들어왔니??");
+        	action = new ProjectMemberDeleteService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+        	}
         }
+        
         	
         //마지막 태우기
         if(forward != null){

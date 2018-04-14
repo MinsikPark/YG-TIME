@@ -96,6 +96,8 @@ function projectDisplay(dataArr) {
 //프로젝트 선택보기
 function projectView(projectNum){
 	console.log('프로젝트 아이디를 받아서 다시 뿌려줘요')
+	console.log("projectNum : " + projectNum);
+	//$('#thisProjectNum').val(projectNum)
 	var data = {projectNum:projectNum};
 	$.ajax({
 		url:"allboardlist.board",
@@ -107,6 +109,8 @@ function projectView(projectNum){
 			console.log("json: "+json);
 			var boardArr = boardData(json);
 			projectDisplay(boardArr);
+			memberList();
+			
 		}
 		
 	})
