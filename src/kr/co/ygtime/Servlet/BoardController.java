@@ -16,6 +16,7 @@ import kr.co.ygtime.service.board.BoardContentUpdateService;
 import kr.co.ygtime.service.board.BoardDateUpdateService;
 import kr.co.ygtime.service.board.BoardDeleteService;
 import kr.co.ygtime.service.board.BoardListService;
+import kr.co.ygtime.service.card.CardListService;
 
 
 /**
@@ -95,6 +96,16 @@ public class BoardController extends HttpServlet {
         	}
         	catch(Exception e) {
         		e.getMessage();
+        	}
+        } else if(cmdURI.equals("/Cardlist.board")) {
+        	try {
+        		System.out.println("111111111111111111111");
+        		action = new CardListService();
+        		System.out.println("222222222222222222222");
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
         	}
         }
         

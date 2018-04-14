@@ -62,33 +62,8 @@ $(function() { // $(document).ready
 		editable: true, // 달력에 종료일 수정 여부 (드래그, 크기 조정)
 		eventLimit: true, // 하루에 표시되는 이벤트의 수를 제한. 나머지는 팝 오버에 나타남.
 		displayEventTime: false, // 
-		eventClick: function(event) {
-		
-			$.ajax({
-				url:"Listlist.list",
-	            datatype:"JSON",
-	            data:{boardnum:event.id},
-	            success:function(data){
-	            	
-	                var json = JSON.parse(data);
-	                
-	                $('#calendar').hide();
-	                
-	                $('#content-md .listbox').remove();
-	                var content =""
-	                $.each(json, function(index, elt) {
-	                	console.log(elt);
-	                	content += '<div class="listbox">'
-	                		+ '<div class="listtitle" onclick="listmodify(this, '+elt.listNum+',' + event.id +')">'+ elt.listName +'</div>'
-	                		+ '<a class="cardcreate" onclick="addCardView(this)">Add a card...</a>'
-	                		+ '</div>';
-	                });
-	                content +='<a class="listbox" onclick="addListView(this, '+ event.id +')">Add a list...</a>'
-	                $('#content-md').prepend(content);
-	                $('#mainScreen').show();
-	                autoWidth();
-	            }
-			});
+		eventClick: function(event) {			
+			boardclick(event.id);
 		},
 		eventDrop: function(event, delta, revertFunc) { // Drag를 통한 날짜 변경 처리 함수
 			boarddateupdate(event);
@@ -97,7 +72,6 @@ $(function() { // $(document).ready
 			boarddateupdate(event);
 		},
 	}); // end - fullCalendar
-	
 	
 	//board 날짜 변경 비동기 함수 (입력)
 	function boarddateupdate(event){
@@ -235,6 +209,49 @@ var sampleData = [
 	},
 ];
 
+//보드를 클릭하면 카드와 리스트를 가져온다 
+function boardclick(boardNum){
+	$.ajax({
+		url:"Listlist.list",
+        datatype:"JSON",
+        data:{boardnum:boardNum},
+        success:function(data){
+        	
+            var json = JSON.parse(data);
+            
+            $('#calendar').hide();
+            
+            $('#content-md .listbox').remove();
+            var content =""
+            $.each(json, function(index, elt) {
+            	console.log(elt);
+            	content += '<div class="listbox">'
+            		+ '<div id="listnum'+elt.listNum+'"class="listtitle"><label onclick="listmodify(this, '+elt.listNum+',' + boardNum +')">'+ elt.listName +'</label></div>'
+            		+ '<a class="cardcreate" onclick="addCardView(this)">Add a card...</a>'
+            	+ '</div>';
+            });
+            content +='<a class="listbox" onclick="addListView(this, '+ boardNum +')">Add a list...</a>'
+            $('#content-md').prepend(content);
+            $.each(json, function(index, elt) {
+            	$.ajax({
+            		url:"Cardlist.card",
+            		datatype:"JSON",
+            		data:{listnum:elt.listNum},
+            		success:function(carddata){
+            			var cardjson = JSON.parse(carddata);
+            			var cardcontent = "";
+            			$.each(cardjson, function(indexcard, eltcard) {
+            				cardcontent += '<div class="card ui-sortable-handle" data-toggle="modal" data-target="#myModal1" style="">'+eltcard.cardName+'</div>';
+            			});
+            			$("#listnum"+elt.listNum+" ").append(cardcontent);
+            		}
+            	})
+            });
+            $('#mainScreen').show();
+            autoWidth();
+        }
+	});
+}
 
 
 /*function project() {
