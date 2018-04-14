@@ -104,9 +104,7 @@ function projectView(projectNum){
 		datatype:"json",
 		data:data,
 		success: function(data){
-			console.log(">"+data.trim()+"<");
 			var json = JSON.parse(data);
-			console.log("json: "+json);
 			var boardArr = boardData(json);
 			projectDisplay(boardArr);
 			memberList();

@@ -7,14 +7,7 @@
 
 $(function() { // $(document).ready
 	var boardCnt = 0;
-/*
-	function dateProcess(dateStr, days){ // date가공 메서드
-		var date = new Date(dateStr); // Date 객체 생성
-		date.setDate(date.getDate() + days); // Date 가감설정
-		var dateToISO = date.toISOString().substring(0,10); // Date -> String (ISO날짜 타입, 시간제거)
-		return dateToISO;
-	}
-*/
+	
 	// fullCalendar
 	$('#calendar').fullCalendar({
 		eventDragStop: function (event, jsEvent) { // Drag 후 삭제 기능
@@ -62,33 +55,8 @@ $(function() { // $(document).ready
 		editable: true, // 달력에 종료일 수정 여부 (드래그, 크기 조정)
 		eventLimit: true, // 하루에 표시되는 이벤트의 수를 제한. 나머지는 팝 오버에 나타남.
 		displayEventTime: false, // 
-		eventClick: function(event) {
-		
-			$.ajax({
-				url:"Listlist.list",
-	            datatype:"JSON",
-	            data:{boardnum:event.id},
-	            success:function(data){
-	            	
-	                var json = JSON.parse(data);
-	                
-	                $('#calendar').hide();
-	                
-	                $('#content-md .listbox').remove();
-	                var content =""
-	                $.each(json, function(index, elt) {
-	                	console.log(elt);
-	                	content += '<div class="listbox">'
-	                		+ '<div class="listtitle" onclick="listmodify(this, '+elt.listNum+',' + event.id +')">'+ elt.listName +'</div>'
-	                		+ '<a class="cardcreate" onclick="addCardView(this)">Add a card...</a>'
-	                		+ '</div>';
-	                });
-	                content +='<a class="listbox" onclick="addListView(this, '+ event.id +')">Add a list...</a>'
-	                $('#content-md').prepend(content);
-	                $('#mainScreen').show();
-	                autoWidth();
-	            }
-			});
+		eventClick: function(event) {			
+			boardclick(event.id);
 		},
 		eventDrop: function(event, delta, revertFunc) { // Drag를 통한 날짜 변경 처리 함수
 			boarddateupdate(event);
@@ -98,10 +66,9 @@ $(function() { // $(document).ready
 		},
 	}); // end - fullCalendar
 	
-	
-	//board 날짜 변경 비동기 함수 (입력)
+	//board 날짜 변경 비동기 함수
+
 	function boarddateupdate(event){
-		console.log("event.end.format() : " + event.end.format());
 		var data = {
 				boardNum:event.id,
 				boardStartDate:event.start.format(),
@@ -137,16 +104,14 @@ $(function() { // $(document).ready
 		width: 'auto',
 		maxWidth: 350,
 		height: 'auto',
-		//responsive: true,
 		modal: true,
 		fluid: true,
 		title: '보드 추가',
 		buttons: {
-			// '추가'버튼 클릭 시 (입력)
+			// '추가'버튼 클릭 시
 			추가: function() {
 				var title = $('#eventTitle').val(); // 제목 
 				var start = $('#eventStart').val(); // 시작일
-				//var end = dateProcess($('#eventEnd').val(), 1); // 가공된 종료일 값
 				var end = $('#eventEnd').val();
 				var color = $('#eventColor').val();
 				var eventData = null; // 이벤트 객체 변수 선언
@@ -169,25 +134,22 @@ $(function() { // $(document).ready
 
 						};
 						
-						
-						//////
+						//비동기 처리
 						$.ajax({
 							url:"boardadd.board",
-							datatype:"text",
+							datatype:"json",
 							data: inputParam,
 							success: function(data){
-								console.log("보드 생성 데이터 :" + data)
-								if(data.trim()<=0 ||data==null){
+								var json = JSON.parse(data);
+								if(json.resultrow <=0 || json.resultrow == null){
 									alert("보드 생성에 실패하셨습니다");
 								}else{
-									eventData.end = dateProcess(eventData.end, 1); //출력시 DB종료일 + 1일
-									$('#calendar').fullCalendar('renderEvent', eventData, true); //출력
+									projectView(json.projectNum);
 									alert("보드 생성했음");
 								}
 							}
 
 						})
-						////////
 						
 					}
 					$('#calendar').fullCalendar('unselect');
@@ -205,44 +167,82 @@ $(function() { // $(document).ready
 		},				
 	}); // end - calEventDialog
 	
-	
-	
-	
+	//원하는 날짜로 이동
+	$('.fc-left').click(function() {
+		var selectDate = prompt("원하는 날짜를 입력해주세요 (예: 2018-04-12)");
+		if(selectDate === null || selectDate === '') {
+			return;
+		}
+		$('#calendar').fullCalendar('gotoDate', selectDate, true);
+	});	
 	
 }); // end - $(document).ready
 
-var sampleData = [
-	{ // 이벤트 객체
-		//id: "sample1", //프로젝트넘버
-		title: "안녕", //프로젝트명
-		start: "2018-04-01", //프로젝트시작날짜
-		end: "2018-04-02", //프로젝트종료날짜
-		color: "#336699" //라벨색
-	},
-	{
-		id: "sample2",
-		title: "뚱이",
-		start: "2018-04-12",
-		end: "2018-04-14",
-		color: "#d25386"
-	},
-	{
-		id: "sample3",
-		title: "스폰지밥",
-		start: "2018-04-20",
-		end: "2018-04-30",
-		color: "yellow"
-	},
-];
-
-
-
-/*function project() {
-	$('#calendar').fullCalendar('removeEvents');
-	for(var i in sampleData) {
-		$('#calendar').fullCalendar('renderEvent', sampleData[i], true);	
-	}
-	$('#mainScreen').hide()
-	$('#calendar').show()
-	
-}*/
+//보드를 클릭하면 카드와 리스트를 가져온다 
+function boardclick(boardNum){
+	$.ajax({
+		url:"Listlist.list",
+        datatype:"JSON",
+        data:{boardnum:boardNum},
+        success:function(data){
+        	
+            var json = JSON.parse(data);
+            
+            $('#calendar').hide();
+            
+            $('#content-md .listbox').remove();
+            
+            $.ajax({
+        		url:"boardselect.board",
+        		datatype:"json",
+        		data:{BoardNum:boardNum},
+        		success: function(data){
+        			var boardjson = JSON.parse(data);
+        			
+        			$('#boardTitle').html(boardjson.boardTitle);
+        			$('#boardTitle').attr("onclick", "boardTitleEdit(this, "+ boardNum +")");
+        			if(boardjson.detail == "" || boardjson.detail == null){
+        				$('#boardDetail').html("소제목을 입력하세요");
+        			}else{
+        				$('#boardDetail').html(boardjson.detail);
+        			}
+        			$('#boardDetail').attr("onclick", "boardDetailEdit(this, "+ boardNum +")");
+        		}
+        	});
+            
+            if($("#boardTitle").html() == ''){
+            	$("#boardTitle").html('클릭하여 보드명 변경');
+            }else{
+            	$("#boardTitle").html(json[0].boardTitle);
+            }
+            
+            var content =""
+            $.each(json, function(index, elt) {
+            	console.log(elt);
+            	content += '<div class="listbox">'
+            		+ '<div id="listnum'+elt.listNum+'"class="listtitle"><label onclick="listmodify(this, '+elt.listNum+',' + boardNum +')">'+ elt.listName +'</label></div>'
+            		+ '<a class="cardcreate" onclick="addCardView(this, '+ elt.listNum +')">Add a card...</a>'
+            	+ '</div>';
+            });
+            content +='<a class="listbox" onclick="addListView(this, '+ boardNum +')">Add a list...</a>'
+            $('#content-md').prepend(content);
+            $.each(json, function(index, elt) {
+            	$.ajax({
+            		url:"Cardlist.card",
+            		datatype:"JSON",
+            		data:{listnum:elt.listNum},
+            		success:function(carddata){
+            			var cardjson = JSON.parse(carddata);
+            			var cardcontent = "";
+            			$.each(cardjson, function(indexcard, eltcard) {
+            				cardcontent += '<div class="card ui-sortable-handle" data-toggle="modal" data-target="#myModal1" style="">'+eltcard.cardName+'</div>';
+            			});
+            			$("#listnum"+elt.listNum+" ").append(cardcontent);
+            		}
+            	})
+            });
+            $('#mainScreen').show();
+            autoWidth();
+        }
+	});
+}

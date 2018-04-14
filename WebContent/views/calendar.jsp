@@ -12,14 +12,13 @@
 <script>
 
 $(function(){
-	
 
 	var projectNum = <%=session.getAttribute("projectNum")%>;
 	if(projectNum!=null && projectNum != ""){
 		projectView(projectNum);
 	}
 
-})
+});
 
 </script>
 
@@ -30,7 +29,6 @@ $(function(){
 <script src="js/locale-all.js"></script>
 <!-- script - calendar.js -->
 <script src="js/calendar.js"></script>
-<script src="js/sidebarProject.js"></script>
 <!-- calendar -->
 <div id="calendar">
 	<br>

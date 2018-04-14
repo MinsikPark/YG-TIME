@@ -73,7 +73,6 @@ public class BoardDAO {
 	 기      능 : 보드 검색(선택)
 	 작성자명 : 박 민 식
 	 */
-	
 	public BoardDTO boardSelect(int boardNum){
 		System.out.println("boardSelect 함수");
 		PreparedStatement pstmt =null;
@@ -173,7 +172,6 @@ public class BoardDAO {
 	 작성자명 : 박 민 식
 	 */
 	public int boardUpdate(BoardDTO board) {
-		System.out.println("boardUpdate 함수");
 		
 		int boardNum = board.getBoardNum();
 		String boardTitle = board.getBoardTitle();
@@ -181,8 +179,6 @@ public class BoardDAO {
 		String boardStartDate = board.getBoardStartDate();
 		String boardEndDate = board.getBoardEndDate();
 		String label = board.getLabel();
-		System.out.println("boardEndDate " + boardEndDate);
-		System.out.println("boardStartDate " + boardStartDate);
 		PreparedStatement pstmt =null;
 		Connection conn = null;
 		String sql = "update board set boardtitle= ? , detail= ?, boardStartDate = ?, "
@@ -197,7 +193,6 @@ public class BoardDAO {
 			pstmt.setString(4, boardEndDate);
 			pstmt.setString(5, label);
 			pstmt.setInt(6, boardNum);
-			System.out.println("resultrow : " + resultrow);
 			resultrow = pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
