@@ -108,6 +108,7 @@ function addList(obj, boardnum){
         		var	div = '<div class="listtitle" onclick="listmodify(this, '+ data.trim() +',' + boardnum +')">' + value + '</div>'
         			div += "<a class='cardcreate' onclick='addCardView(this)'>Add a card...</a>"
         		parent.append(div)
+        		sortable()
             }
 		});
 		

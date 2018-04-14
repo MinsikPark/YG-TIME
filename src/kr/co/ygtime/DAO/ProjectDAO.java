@@ -323,15 +323,16 @@ public class ProjectDAO {
 			String sql = "select projectnum, projectname, projectstartdate, projectenddate,deleteok from project where projectNum = ?";
 			pstmt = conn.prepareStatement(sql);
 			projectdto = new ProjectDTO();
-			pstmt.setInt(1,projectdto.getProjectNum());
+			pstmt.setInt(1,projectNum);
 			rs = pstmt.executeQuery();
-			
+
 			while(rs.next()) {
 				projectdto.setProjectNum(rs.getInt("projectnum"));
 				projectdto.setProjectName(rs.getString("projectname"));
 				projectdto.setProjectStartDate(rs.getString("projectstartdate"));
 				projectdto.setProjectEndDate(rs.getString("projectenddate"));
 				projectdto.setDeleteOk(rs.getInt("deleteok"));
+	
 			}
 		} catch (SQLException e) {
 			
@@ -406,7 +407,7 @@ public class ProjectDAO {
 		PreparedStatement pstmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
-		int grade = 0;
+		int grade = 2;
 		
 		try {
 			conn = ds.getConnection();

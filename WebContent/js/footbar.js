@@ -1,21 +1,53 @@
 //초대메세지 보내기
 function memberinvite() {
 	var userId1 = $("#emailSearch").val();
+	$.ajax({
+		url : "idcheck.member",
+		data : {email : userId1},
+		success : function (datas) {
+			console.log(datas.trim())
+			if(datas.trim() === 'true'){
+				alert('없는 회원입니다')
+				return false;
+			}else{
+				alert('초대메시지가 전송 합니까?')
+				inviteIdCheck()
+			}
+		}
+	})
+}
+
+function inviteIdCheck(){
+	var userId1 = $("#emailSearch").val();
 	var inviteUserId1 = $("#getsession").val(); // session ID로 바꿔라
 	var data = {
 		userId : userId1,
 		inviteUserId : inviteUserId1
 	}
-	console.log(data);
+	
 	$.ajax({
-		url : "invite.member",
-		datatype : "JSON",
-		data : data,
+		url :"owner.project",
+		data : {userId : userId1},
 		success : function(datas) {
-			console.log("data : " + datas);
+			console.log('유자아이디가 있나여??')
+			console.log()
+			if(datas.trim() == 2){
+				alert('초대메시지가 발송 되었습니다')
+				$.ajax({
+					url : "invite.member",
+					datatype : "JSON",
+					data : data,
+					success : function(datas) {
+						console.log("data : " + datas);
+					}
+				})
+			}else{
+				alert('이미 가입된 회원입니다')
+			}
 		}
 	})
 }
+
 // 멤버리스트뿌려주기
 function memberList() {
 	memberOwnerView()
@@ -123,7 +155,5 @@ function memberDelete() {
 				memberList()
 				callprojectlist()
 			}
-			
-			})
-	
+		})
 }

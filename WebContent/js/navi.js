@@ -19,7 +19,7 @@ $(function(){
 		addCheckListForm()
 	})
 	
-	$('.dropdown a.joinmessage').on("click", function(e){
+	$('.dropdown a.message').on("click", function(e){
 		$(this).next('ul').toggle();
 		e.stopPropagation();
 		e.preventDefault();

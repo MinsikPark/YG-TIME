@@ -142,7 +142,6 @@ public class ProjectController extends HttpServlet {
 				e.printStackTrace();
         	}
         }else if(cmdURI.equals("/memberdeleteproject.project")){
-        	System.out.println("들어왔니??");
         	action = new ProjectMemberDeleteService();
         	try {
 				forward = action.execute(request, response);
