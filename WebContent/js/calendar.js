@@ -168,9 +168,14 @@ $(function() { // $(document).ready
 		},				
 	}); // end - calEventDialog
 	
-	
-	
-	
+	//원하는 날짜로 이동
+	$('.fc-left').click(function() {
+		var selectDate = prompt("원하는 날짜를 입력해주세요 (예: 2018-04-12)");
+		if(selectDate === null || selectDate === '') {
+			return;
+		}
+		$('#calendar').fullCalendar('gotoDate', selectDate, true);
+	});	
 	
 }); // end - $(document).ready
 
