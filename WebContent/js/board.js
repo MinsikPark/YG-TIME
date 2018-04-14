@@ -71,18 +71,77 @@ function addCard(obj){
 	}
 }
 
-function addListView(obj){
-	var div = "<div class='listbox'><input class='inputtext' type='text' placeholder='list title' name='title'><a onclick='addList(this)'>완료</a></div>"
+function addListView(obj, boardnum){
+	console.log(boardnum);
+	var div = "<div class='listbox'><input class='inputtext' type='text' placeholder='list title' name='title'><a onclick='addList(this,"+ boardnum +")'>완료</a></div>"
 	$(obj).before(div)
 	autoWidth()
 }
-function addList(obj){
+function addList(obj, boardnum){
 	var parent = $(obj).closest('.listbox')
 	var value = parent[0].firstChild.value
+	console.log(boardnum)
+	console.log(value)
 	if(value.trim() != ""){
-		parent.empty()
-		var	div = '<div class="listtitle">' + value + '</div>'
-			div += "<a class='cardcreate' onclick='addCardView(this)'>Add a card...</a>"
-		parent.append(div)
+		$.ajax({
+			url:"listinsert.list",
+            datatype:"JSON",
+            data:{boardNum:boardnum, listname:value},
+            success:function(data){
+            	parent.empty()
+        		var	div = '<div class="listtitle" onclick="listmodify(this, '+ data.trim() +',' + boardnum +')">' + value + '</div>'
+        			div += "<a class='cardcreate' onclick='addCardView(this)'>Add a card...</a>"
+        		parent.append(div)
+            }
+		});
+		
 	}
+}
+
+function listmodify(obj, listNum, boardnum){
+	var html = $(obj).html();
+	var text = "<input class='inputtext' type='text' placeholder='list title' name='title'><a onclick='listmodifyOk(this,"+ listNum + "," + boardnum +")'>완료</a>" 
+			+"<a onclick='listmodifyNo(this,"+ listNum + "," + boardnum +")'>취소</a>";
+	
+	$(obj).removeAttr("onclick");
+	$(obj).html("");
+	$(obj).append(text);
+	
+}
+
+function listmodifyOk(obj, listNum, boardnum){
+	var name = $(obj).parent().children("input").val();
+	console.log($(obj).parent().children("input").val());
+	if(name.trim() == ""){
+		alert("빈 문자열로 수정이 되지 않습니다");
+	} else {
+		$.ajax({
+			url:"listupdate.list",
+	        datatype:"text",
+	        data:{listnum:listNum, listname:name},
+	        success:function(data){
+	        	var div = $(obj).parent();
+	        	
+	        	div.empty();
+	        	div.html(name);
+	        	div.attr("onclick", 'listmodify(this, '+ listNum +',' + boardnum +')');
+	        }
+		});
+	}
+}
+
+function listmodifyNo(obj, listNum, boardnum){
+	$.ajax({
+		url:"listselect.list",
+        datatype:"JSON",
+        data:{listnum:listNum},
+        success:function(data){
+        	var div = $(obj).parent();
+        	console.log(div.attr("class"));
+        	var json = JSON.parse(data);
+        	div.empty();
+        	div.html(json.listName);
+        	div.attr("onclick", 'listmodify(this, '+ listNum +',' + boardnum +')');
+        }
+	});
 }

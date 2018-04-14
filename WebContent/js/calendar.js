@@ -63,24 +63,27 @@ $(function() { // $(document).ready
 		eventLimit: true, // 하루에 표시되는 이벤트의 수를 제한. 나머지는 팝 오버에 나타남.
 		displayEventTime: false, // 
 		eventClick: function(event) {
+		
 			$.ajax({
 				url:"Listlist.list",
 	            datatype:"JSON",
 	            data:{boardnum:event.id},
 	            success:function(data){
+	            	
 	                var json = JSON.parse(data);
-	                console.log(json);
+	                
 	                $('#calendar').hide();
 	                
 	                $('#content-md .listbox').remove();
 	                var content =""
-	                $.each(json, function(index, json) {
+	                $.each(json, function(index, elt) {
+	                	console.log(elt);
 	                	content += '<div class="listbox">'
-	                		+ '<div class="listtitle">'+ json.listName +'</div>'
+	                		+ '<div class="listtitle" onclick="listmodify(this, '+elt.listNum+',' + event.id +')">'+ elt.listName +'</div>'
 	                		+ '<a class="cardcreate" onclick="addCardView(this)">Add a card...</a>'
 	                		+ '</div>';
 	                });
-	                content +='<a class="listbox" onclick="addListView(this)">Add a list...</a>'
+	                content +='<a class="listbox" onclick="addListView(this, '+ event.id +')">Add a list...</a>'
 	                $('#content-md').prepend(content);
 	                $('#mainScreen').show();
 	                autoWidth();
