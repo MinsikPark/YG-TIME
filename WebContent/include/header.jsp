@@ -57,16 +57,12 @@
 							      <a id="profilmodify">회원정보 수정</a>
 								</li>
 							      <li>
-							        <a class="joinmessage" tabindex="-1" href="#">초대 메시지함<span class="caret"></span></a>
+							        <a class="message" tabindex="-1" href="#">초대 메시지함<span class="caret"></span></a>
 							        <ul class="dropdown-menu">
 							      
 							          <li>  
 							          	<div id="dropdownchilddiv"></div>
 							          </li>
-							          <li><a tabindex="-1" href="#">2nd 프로젝트에 초대 되었습니다 </a>
-							          	<button style="float:right; margin:5px;" class="btn btn-warning">거절</button>
-							          	<button style="float:right; margin:5px;" class="btn btn-success">수락</button>
-						          	  </li>
 							        </ul>
 							      </li>
 							    </ul>

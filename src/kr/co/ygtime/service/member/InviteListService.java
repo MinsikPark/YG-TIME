@@ -7,7 +7,10 @@
 
 package kr.co.ygtime.service.member;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.DAO.MemberDAO;
+import kr.co.ygtime.DAO.ProjectDAO;
 import kr.co.ygtime.DTO.InviteMsgDTO;
+import kr.co.ygtime.DTO.ProjectDTO;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * 
@@ -29,21 +35,39 @@ public class InviteListService implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response){
 		MemberDAO memberdao = null;
+		ProjectDAO projectdao = null;
 		List<InviteMsgDTO> list = null;
 		String userId = null;
 		ActionForward forward = null;
-		
+		Map<String, List<Object>> map = null;
 		try {
 			memberdao = new MemberDAO();
+			projectdao = new ProjectDAO();
+			map =  new HashMap<>();
+			
 			userId = (String)request.getParameter("userId");
 			list = memberdao.inviteMsgSelect(userId);
-
-			JSONArray json = JSONArray.fromObject(list);
+			
+			
+			int j = 1;		
+			for(InviteMsgDTO i : list) {
+				
+				ProjectDTO projectdto = projectdao.projectSelect(i.getProjectNum());
+				List<Object> li = new ArrayList<>();
+				li.add(i);
+				li.add(projectdto);
+				
+				map.put(String.valueOf(j), li);
+			
+				j++;
+			}
+			
+			JSONObject json = JSONObject.fromObject(map);
 			request.setAttribute("json", json);
 			
 			forward = new ActionForward();
 			forward.setRedirect(false);
-       	    forward.setPath("/ajaxpath/jsonArray.jsp");
+       	    forward.setPath("/ajaxpath/jsonObject.jsp");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

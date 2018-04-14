@@ -6,10 +6,7 @@
 */
 package kr.co.ygtime.service.member;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 
-import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,35 +18,30 @@ public class IdcheckService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-	
-		PrintWriter out = null;
+		ActionForward forward = null;
+		
 		String id = request.getParameter("email");
-
 		
 		MemberDAO dao = null;
-		String check = null;
+		System.out.println(id);
 		try {
-			out = response.getWriter(); 
 			dao = new MemberDAO();
 	
-			 check = dao.isIdcheck(id);
-
+			String result = dao.isIdcheck(id);
+				
+			if(result.equals("true")) {
+				result = "true";
+			}else if(result.equals("false")) {
+				result = "false";
+			}
+			request.setAttribute("result", result);
+			forward = new ActionForward();
+			forward.setPath("/ajaxpath/result.jsp");
+			
 		} catch (Exception e) {
-
 			e.printStackTrace();
 		}
-		
-		
-		if(check.equals("true")) {
-		    out.print("true");
-		}else if(check.equals("false")) {
-		    out.print("false");
-		}else if(check.equals("empty") ){
-			out.print("empty");
-		}
-
-	
-		return null;
+		return forward;
 	}
 
 }

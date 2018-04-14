@@ -219,6 +219,15 @@
 		float:left;
 		margin : 5px 2px;
 	}
+	
+	.joinbutton {
+		float:right; 
+		margin:5px;
+	}
+	.joinmessage{
+		width: 300px;
+		margin: 15px;
+	}
 	@media screen and (max-width: 600px) {
 		.inputtextbox{
 			width: 85%;

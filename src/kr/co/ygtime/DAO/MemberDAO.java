@@ -55,16 +55,12 @@ public class MemberDAO {
 				
 				if(rs.next()) 
 				{
-					ischeckid = "true";
+					ischeckid = "false";
 				
 				}else {
-					ischeckid = "false";
+					ischeckid = "true";
 				}	
 				
-				if(id.equals("")) {
-		
-					ischeckid = "empty";
-				}
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}finally{

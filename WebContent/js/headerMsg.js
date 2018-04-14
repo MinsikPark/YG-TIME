@@ -13,12 +13,12 @@ $(function(){
                 $("#dropdownchilddiv").empty();
                 
                 $.each(json, function(index, obj) {
-                	var str = '<form id="fromUser'+index+'" class="form container-fluid">';
-                	str += '<div class="form-group">';
-                	str += '<label for="email">'+obj.inviteUserId+'님이 프로젝트로 초대 하였습니다</label>';
-                	str += '<input type="button" value="Y" onclick="msgaccept(this,'+obj.projectNum+')">';
-                	str += '<input type="button" value="N" onclick="msgreject(this,'+obj.projectNum+')">';
-                	str += '</div></form></div>';
+                	console.log(obj)
+                	var str = '<div class="joinmessage" id="fromUser'+index+'">';
+                	str += '<label>'+obj[0].inviteUserId+'님이 "'+ obj[1].projectName +'" 프로젝트로 초대 하였습니다</label>';
+                	str += '<button  class="btn btn-warning joinbutton" value="N" onclick="msgreject(this,'+obj[0].projectNum+')">거절</button>';
+                	str += '<button  class="btn btn-success joinbutton" value="Y" onclick="msgaccept(this,'+obj[0].projectNum+')">수락</button>';
+                	str += '</div>';
                 	
                 	$("#dropdownchilddiv").append(str);
                 })
@@ -38,20 +38,6 @@ function msgaccept(me, projectNum){
           datatype:"JSON",
           data:param,
           success:function(data){
-              var json = JSON.parse(data);
-              
-              $("#dropdownchilddiv").empty();
-              
-              $.each(json, function(index, obj) {
-              	var str = '<form id="fromUser'+index+'" class="form container-fluid">';
-              	str += '<div class="form-group">';
-              	str += '<label for="email">'+obj.inviteUserId+'님이 프로젝트로 초대 하였습니다</label>';
-              	str += '<input type="button" value="Y" onclick="msgaccept(this,'+obj.projectNum+')">';
-              	str += '<input type="button" value="N" onclick="msgreject(this,'+obj.projectNum+')">';
-              	str += '</div></form></div>';
-              	
-              	$("#dropdownchilddiv").append(str);
-              })
               
               callprojectlist();
           }
@@ -65,22 +51,6 @@ function msgreject(me, projectNum){
 	$.ajax({
           url:"msgdel.member",
           datatype:"JSON",
-          data:param,
-          success:function(data){
-              var json = JSON.parse(data);
-              
-              $("#dropdownchilddiv").empty();
-              
-              $.each(json, function(index, obj) {
-              	var str = '<form id="fromUser'+index+'" class="form container-fluid">';
-              	str += '<div class="form-group">';
-              	str += '<label for="email">'+obj.inviteUserId+'님이 프로젝트로 초대 하였습니다</label>';
-              	str += '<input type="button" value="Y" onclick="msgaccept(this,'+obj.projectNum+')">';
-              	str += '<input type="button" value="N" onclick="msgreject(this,'+obj.projectNum+')">';
-              	str += '</div></form></div>';
-              	
-              	$("#dropdownchilddiv").append(str);
-              }) 
-          }
+          data:param
       })
 }
