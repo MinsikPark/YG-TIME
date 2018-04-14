@@ -21,7 +21,6 @@ public class BoardListService implements Action{
 	 */
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("BoardListService");
 			int projectNum = Integer.parseInt(request.getParameter("projectNum"));
 			BoardDAO dao = null;
 			List<BoardDTO> list = null;

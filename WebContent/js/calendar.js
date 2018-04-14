@@ -69,7 +69,6 @@ $(function() { // $(document).ready
 	//board 날짜 변경 비동기 함수
 
 	function boarddateupdate(event){
-		console.log("event.end.format() : " + event.end.format());
 		var data = {
 				boardNum:event.id,
 				boardStartDate:event.start.format(),
@@ -192,6 +191,31 @@ function boardclick(boardNum){
             $('#calendar').hide();
             
             $('#content-md .listbox').remove();
+            
+            $.ajax({
+        		url:"boardselect.board",
+        		datatype:"json",
+        		data:{BoardNum:boardNum},
+        		success: function(data){
+        			var boardjson = JSON.parse(data);
+        			
+        			$('#boardTitle').html(boardjson.boardTitle);
+        			$('#boardTitle').attr("onclick", "boardTitleEdit(this, "+ boardNum +")");
+        			if(boardjson.detail == "" || boardjson.detail == null){
+        				$('#boardDetail').html("소제목을 입력하세요");
+        			}else{
+        				$('#boardDetail').html(boardjson.detail);
+        			}
+        			$('#boardDetail').attr("onclick", "boardDetailEdit(this, "+ boardNum +")");
+        		}
+        	});
+            
+            if($("#boardTitle").html() == ''){
+            	$("#boardTitle").html('클릭하여 보드명 변경');
+            }else{
+            	$("#boardTitle").html(json[0].boardTitle);
+            }
+            
             var content =""
             $.each(json, function(index, elt) {
             	console.log(elt);

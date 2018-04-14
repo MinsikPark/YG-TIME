@@ -91,13 +91,6 @@ function addCard(obj, listnum){
 				sortable()
 			}
 		});
-		/*$(parent).empty()
-		parent[0].innerHTML = value
-		$(parent).attr({ 
-			'data-toggle':'modal',
-			'data-target':'#myModal1'
-		})
-		sortable()*/
 	}
 }
 
@@ -173,5 +166,69 @@ function listmodifyNo(obj, listNum, boardnum){
         	div.html(json.listName);
         	div.attr("onclick", 'listmodify(this, '+ listNum +',' + boardnum +')');
         }
+	});
+}
+
+//보드타이틀 클릭
+function boardTitleEdit(obj, boardNum){
+	$(obj).removeAttr("onclick");
+	$(obj).html('');
+	var edit = "<input class='inputtext' type='text' placeholder='board title' name='title'><a onclick='boardmodifyOk(this,"+ boardNum +")'>완료</a>" 
+			+"<a onclick='boardclick("+boardNum+")'>취소</a>";
+	
+	$(obj).append(edit);
+}
+
+//보다디테일 클릭
+function boardDetailEdit(obj, boardNum){
+	$(obj).removeAttr("onclick");
+	$(obj).html('');
+	var edit = "<input class='inputtext' type='text' placeholder='board detail' name='title'><a onclick='detailmodifyOk(this,"+ boardNum +")'>완료</a>" 
+	+"<a onclick='boardclick("+boardNum+")'>취소</a>";
+	
+	$(obj).append(edit);
+}
+
+function boardmodifyOk(obj, boardnum){
+	var title = $(obj).parent().children("input").val();
+	
+	var data = {
+			boardNum:boardnum,
+			boardTitle: title
+	};
+	
+	$.ajax({
+		url:"boardtitlemodify.board",
+		datatype:"text",
+		data:data,
+		success:function(data){
+			if(data.trim() <= 0){
+				alert("제목 변경 실패");
+			}else{
+				boardclick(boardnum);
+			}
+		}
+	});
+}
+
+function detailmodifyOk(obj, boardnum){
+	var detailtitle = $(obj).parent().children("input").val();
+	
+	var data = {
+			boardNum:boardnum,
+			detail: detailtitle
+	};
+	
+	$.ajax({
+		url:"boarddetailmodify.board",
+		datatype:"text",
+		data:data,
+		success:function(data){
+			if(data.trim() <= 0){
+				alert("제목 변경 실패");
+			}else{
+				boardclick(boardnum);
+			}
+		}
 	});
 }

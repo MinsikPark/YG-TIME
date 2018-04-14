@@ -36,7 +36,7 @@
 	<jsp:include page="views/calendar.jsp"></jsp:include>
 	
 	<div id="mainScreen">
-		<h2>Title</h2><p>세부내용 블라블라</p>
+		<h2 id='boardTitle'>Title</h2><p id='boardDetail'>세부내용 블라블라</p>
 		<h3><span id = "sortableTest"></span></h3>
 		<hr>
 		<div id="content-md">

@@ -15,7 +15,10 @@ import kr.co.ygtime.service.board.BoardAddService;
 import kr.co.ygtime.service.board.BoardContentUpdateService;
 import kr.co.ygtime.service.board.BoardDateUpdateService;
 import kr.co.ygtime.service.board.BoardDeleteService;
+import kr.co.ygtime.service.board.BoardDetailUpdateService;
 import kr.co.ygtime.service.board.BoardListService;
+import kr.co.ygtime.service.board.BoardSelectService;
+import kr.co.ygtime.service.board.BoardTitleUpdateService;
 import kr.co.ygtime.service.card.CardListService;
 
 
@@ -97,15 +100,29 @@ public class BoardController extends HttpServlet {
         	catch(Exception e) {
         		e.getMessage();
         	}
-        } else if(cmdURI.equals("/Cardlist.board")) {
+        } else if(cmdURI.equals("/boardselect.board")) {
         	try {
-        		System.out.println("111111111111111111111");
-        		action = new CardListService();
-        		System.out.println("222222222222222222222");
+        		action = new BoardSelectService();
         		forward = action.execute(request, response);
         	}
         	catch(Exception e) {
         		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/boardtitlemodify.board")) {
+        	action = new BoardTitleUpdateService();
+        	try {
+        	forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.getMessage();
+        	}
+        } else if(cmdURI.equals("/boarddetailmodify.board")) {
+        	action = new BoardDetailUpdateService();
+        	try {
+        	forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.getMessage();
         	}
         }
         
