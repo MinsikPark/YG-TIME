@@ -210,12 +210,6 @@ function boardclick(boardNum){
         		}
         	});
             
-            if($("#boardTitle").html() == ''){
-            	$("#boardTitle").html('클릭하여 보드명 변경');
-            }else{
-            	$("#boardTitle").html(json[0].boardTitle);
-            }
-            
             var content =""
             $.each(json, function(index, elt) {
             	console.log(elt);
