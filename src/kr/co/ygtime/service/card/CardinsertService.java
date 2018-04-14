@@ -19,36 +19,32 @@ public class CardinsertService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		CardDAO dao = null;
+		CardDAO carddao = null;
 		ActionForward forward = null;
 		try {
-			dao = new CardDAO();
+			carddao = new CardDAO();
 			
 			CardDTO carddto = new CardDTO(); 
 			int listNum = Integer.parseInt(request.getParameter("listNum"));
 			String cardName = request.getParameter("cardName");
-			String cardContents = request.getParameter("cardContents");
-			int cardSequential = dao.maxCardSequential(listNum);
+			
+			int cardSequential = carddao.maxCardSequential(listNum);
 			
 			
 			carddto.setListNum(listNum);
 			carddto.setCardName(cardName);
-			carddto.setCardContents(cardContents);
 			carddto.setCardSequential(cardSequential+1);
 			
-			dao.cardInsert(carddto);
+			int row = carddao.cardInsert(carddto);
 			
-			request.setAttribute("resultrow", carddto);
+			request.setAttribute("resultrow", row);
 			
 			forward = new ActionForward();
 			forward.setPath("/ajaxpath/result_row.jsp");
 			
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	
 		return forward;
 	}

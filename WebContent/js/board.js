@@ -67,23 +67,37 @@ function autoWidth(){
 }
 
 var i = 1
-function addCardView(e) {
-	var div = "<div class='card' id="+(i++)+"><input class='inputtext' type='text' placeholder='card title' name='title'><a onclick='addCard(this)'>완료</a></div>"
+function addCardView(e, listnum) {
+	var div = "<div class='card' id="+(i++)+"><input class='inputtext' type='text' placeholder='card title' name='title'><a onclick='addCard(this, "+ listnum +")'>완료</a></div>"
 	$(e).before(div)
 }
 
 
-function addCard(obj){
+function addCard(obj, listnum){
 	var parent = $(obj).closest('div')
-	var value = parent[0].firstChild.value
+	var value = parent[0].firstChild.value //cardname
 	if(value.trim() != ""){
-		$(parent).empty()
+		$.ajax({
+			url:"Cardinsert.card",
+			datatype:"JSON",
+			data:{listNum:listnum, cardName:value},
+			success:function(data){
+				$(parent).empty()
+				parent[0].innerHTML = value
+				$(parent).attr({ 
+					'data-toggle':'modal',
+					'data-target':'#myModal1'
+				})
+				sortable()
+			}
+		});
+		/*$(parent).empty()
 		parent[0].innerHTML = value
 		$(parent).attr({ 
 			'data-toggle':'modal',
 			'data-target':'#myModal1'
 		})
-		sortable()
+		sortable()*/
 	}
 }
 

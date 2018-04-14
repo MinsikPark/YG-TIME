@@ -192,7 +192,7 @@ function boardclick(boardNum){
             	console.log(elt);
             	content += '<div class="listbox">'
             		+ '<div id="listnum'+elt.listNum+'"class="listtitle"><label onclick="listmodify(this, '+elt.listNum+',' + boardNum +')">'+ elt.listName +'</label></div>'
-            		+ '<a class="cardcreate" onclick="addCardView(this)">Add a card...</a>'
+            		+ '<a class="cardcreate" onclick="addCardView(this, '+ elt.listNum +')">Add a card...</a>'
             	+ '</div>';
             });
             content +='<a class="listbox" onclick="addListView(this, '+ boardNum +')">Add a list...</a>'

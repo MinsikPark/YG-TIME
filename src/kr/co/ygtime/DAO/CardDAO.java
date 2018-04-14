@@ -47,15 +47,14 @@ public class CardDAO {
 		try {
 				conn = ds.getConnection();
 				String sql ="insert into CARD(cardnum, listnum, cardname, cardcontents, cardsequential, deleteok)" + 
-						    " values(card_idx.nextval,?,?,?,?,0)";
+						    " values(card_idx.nextval,?,?,null,?,0)";
 				
 				pstmt = conn.prepareStatement(sql);
 				
 				pstmt.setInt(1, card.getListNum());
 				pstmt.setString(2, card.getCardName());
-				pstmt.setString(3, card.getCardContents());
-				pstmt.setInt(4, card.getCardSequential());
-				// pstmt.setInt(4, card.getCardSequential()); <- 순서 리스트 안에 순서 최대값 찾고 최대값 + 1 넣어주기;
+				pstmt.setInt(3, card.getCardSequential());
+				// pstmt.setInt(3, card.getCardSequential()); <- 순서 리스트 안에 순서 최대값 찾고 최대값 + 1 넣어주기;
 				row = pstmt.executeUpdate();
 				
 		}catch (Exception e) {

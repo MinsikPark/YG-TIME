@@ -43,7 +43,7 @@ public class CardController extends HttpServlet {
         ActionForward forward =null;
         Action action = null;
         
-        if(cmdURI.equals("/cardinsert.card")) {
+        if(cmdURI.equals("/Cardinsert.card")) {
         	try{
         		action = new CardinsertService();
         		forward= action.execute(request, response);
