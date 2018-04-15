@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
+import kr.co.ygtime.service.card.CardContentsUpdateService;
 import kr.co.ygtime.service.card.CardListService;
 import kr.co.ygtime.service.card.CardinsertService;
 
@@ -53,9 +54,15 @@ public class CardController extends HttpServlet {
 			}
         } else if(cmdURI.equals("/Cardlist.card")) {
         	try {
-        		System.out.println("111111111111111111111");
         		action = new CardListService();
-        		System.out.println("222222222222222222222");
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/Cardcontentsupdate.card")) {
+        	try {
+        		action = new CardContentsUpdateService();
         		forward = action.execute(request, response);
         	}
         	catch(Exception e) {

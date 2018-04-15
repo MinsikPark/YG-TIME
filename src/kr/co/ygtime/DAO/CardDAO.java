@@ -132,8 +132,10 @@ public class CardDAO {
 				carddto = new CardDTO();
 				
 				if(rs.next()) {
-					carddto.setListNum(rs.getInt("cardnum"));
-					carddto.setCardNum(rs.getInt("listnum"));
+					//carddto.setListNum(rs.getInt("cardnum")); //진원씨 오타 났어요 이거
+					//carddto.setCardNum(rs.getInt("listnum")); //진원씨 오타 났어요 이거
+					carddto.setCardNum(rs.getInt("cardnum"));
+					carddto.setListNum(rs.getInt("listnum"));
 					carddto.setCardName(rs.getString("cardname"));
 					carddto.setCardContents(rs.getString("cardcontents"));
 					carddto.setDeleteCheck(rs.getInt("cardsequential"));
@@ -217,7 +219,7 @@ public class CardDAO {
 		int row = 0;
 		try {
 			conn = ds.getConnection();
-			String sql="update CARD set listnum=?, cardname=?, cardcontents=?, cardsequential=? "
+			String sql="update CARD set listnum=?, cardname=?, cardcontents=? " //sequential 뺌.
 					+ "where cardnum=?";
 			
 			pstmt = conn.prepareStatement(sql);

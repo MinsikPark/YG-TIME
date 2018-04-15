@@ -93,8 +93,28 @@ function removeComment(obj){
 	$(obj).closest('div').remove()
 }
 
-function updateDetail(obj){
-	console.log($('#contentDetail')[0].value)
+//카드 상세페이지, 상세내용 추가
+function updateDetail(obj, cardNum){
+	console.log("카드넘버: " + cardNum);
+	console.log($('#contentDetail').val());
+	var contentDetail = $('#contentDetail').val();
+	
+	$.ajax({
+		url:"Cardcontentsupdate.card",
+		datatype:"text",
+		data:{cardNum:cardNum, cardContents:contentDetail},
+		success:function(data){
+			console.log("카드 업데이트 : " + data);
+			alert("카드완료");
+			if(data == 1) {
+				alert("카드 내용이 추가되었습니다.");
+			}else {
+				alert("오류가 발생하였습니다.");
+			}
+			
+		}
+	});
+	
 }
 
 //프로젝트 추가부분
