@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
+import kr.co.ygtime.service.list.ListDeleteService;
 import kr.co.ygtime.service.list.ListSelectSerivce;
 import kr.co.ygtime.service.list.ListUpdateService;
 import kr.co.ygtime.service.list.ListinsertService;
@@ -77,6 +78,16 @@ public class ListController extends HttpServlet {
         } else if(cmdURI.equals("/listupdate.list")) {
         	try{
 				action = new ListUpdateService();
+        		forward= action.execute(request, response);
+
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			
+			}
+        } else if(cmdURI.equals("/listdelete.list")) {
+        	try{
+				action = new ListDeleteService();
         		forward= action.execute(request, response);
 
 			} 

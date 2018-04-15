@@ -126,14 +126,25 @@ function addList(obj, boardnum){
 		
 	}
 }
-
+function listDelete(obj) {
+	   console.log("나는리스트넘버야 : " + listNum)
+	  
+	   
+	}
 function listDel(obj){
 	console.log($(obj))
 	var input = confirm('삭제하시겠습니까?')
 	if(input){
 		console.log('true')
-		console.log($(obj).closest('.listbox'))
-		$(obj).closest('.listbox').remove()
+		 $.ajax({
+	         url : "listdelete.list",
+	         datatype : "JSON",
+	         data : {listNum : $(obj).closest('.listtitle')[0].id.substr(7)},
+	         success : function (data) {
+	            $(obj).closest('.listbox').remove()
+	            console.log('완료')
+	         }
+         })
 	}else{
 		console.log('false')
 	}

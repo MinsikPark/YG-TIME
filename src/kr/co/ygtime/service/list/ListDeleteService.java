@@ -28,7 +28,7 @@ public class ListDeleteService implements Action{
 			resultrow = listdao.listDelete(listNum);
 			request.setAttribute("resultrow", resultrow);
 			forward = new ActionForward();
-			forward.setPath("/ajaxpath/result_row");
+			forward.setPath("/ajaxpath/result_row.jsp");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
