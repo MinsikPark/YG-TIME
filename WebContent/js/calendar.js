@@ -228,23 +228,29 @@ function boardclick(boardNum){
             content +='<a class="listbox" onclick="addListView(this, '+ boardNum +')">Add a list...</a>'
             $('#content-md').prepend(content);
             $.each(json, function(index, elt) {
-            	$.ajax({
-            		url:"Cardlist.card",
-            		datatype:"JSON",
-            		data:{listnum:elt.listNum},
-            		success:function(carddata){
-            			var cardjson = JSON.parse(carddata);
-            			var cardcontent = "";
-            			$.each(cardjson, function(indexcard, eltcard) {
-            				cardcontent += '<div class="card ui-sortable-handle" data-toggle="modal" data-target="#myModal1" style="">'+eltcard.cardName+'</div>';
-            			});
-            			$("#listnum"+elt.listNum+" ").append(cardcontent);
-            			sortable()
-            		}
-            	})
+                ///카드리스트함수 호출
+                callCardList(elt.listNum);
             });
             $('#mainScreen').show();
             autoWidth();
         }
 	});
+}
+
+//카드 리스트 호출함수 
+function callCardList(listNum){
+    $("#listnum"+listNum).find("div").remove();
+      $.ajax({
+        url:"Cardlist.card",
+        datatype:"JSON",
+        data:{listnum:listNum},
+        success:function(carddata){
+            var cardjson = JSON.parse(carddata);
+            var cardcontent = "";
+            $.each(cardjson, function(indexcard, eltcard) {
+                cardcontent += '<div class="card ui-sortable-handle" id ="cardnum'+eltcard.cardNum+'" data-toggle="modal" data-target="#myModal1" style="">'+eltcard.cardName+'</div>';
+            });
+            $("#listnum"+listNum+" ").append(cardcontent);
+        }
+    });
 }
