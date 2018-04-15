@@ -241,7 +241,7 @@ $(function() {
 	
 
 });
-
+/* 	
 	//비밀번호 일치여부
 	function passwordfunction(){
 
@@ -257,7 +257,7 @@ $(function() {
 		}
 	}
 
-	//아이디중복체크 비동기
+//아이디중복체크 비동기
 	function idcheck() {
 		var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 		
@@ -267,36 +267,36 @@ $(function() {
              success : function(data){
             
 
-                  if(data == "true"){
+                  if(data.equals("false")){
                        $("#result").text("중복된 아이디입니다.");
                        $("#result").css("color","red");
                        
                   } 
-                  else if(data == "false" || exptext.test($('#email').val()) == true){
+                  if(data.equals("true") && exptext.test($('#email').val()) == true){
                        $("#result").text("사용가능한 아이디입니다.");
                        $("#result").css("color","blue");
                        
                   }
-                  if(exptext.test($('#email').val()) == false){
-                      
-           			  $("#result").text("이메일 형식이 올바르지 않습니다.");
-                       $("#result").css("color","red");
-                  } 
-                  if (data == "empty" ) {
+                
+                   if (data.equals("empty") ) {
                 	   $("#result").text("이메일을 입력해주세요");
                        $("#result").css("color","red");
-                 
-                  
-                 
-    			}
+     
+    			} if(exptext.test($('#email').val()) == false){
+                    
+         			  $("#result").text("이메일 형식이 올바르지 않습니다.");
+                     $("#result").css("color","red");
+                } 
     		
                   
              }
+        	
          });
-		
+	
+		 
 
-
-	}
+	} 
+	*/
 	
 </script>  
 </head>
