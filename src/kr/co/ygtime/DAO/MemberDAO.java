@@ -55,11 +55,17 @@ public class MemberDAO {
 				
 				if(rs.next()) 
 				{
-					ischeckid = "false";
+					ischeckid = "false"; //아이디가 중복될때
+				}
+				else {
+					ischeckid = "true"; //아이디가 없을때 
+				}
 				
-				}else {
-					ischeckid = "true";
-				}	
+				if(id.equals("")){
+					ischeckid ="empty"; //id가 빈값일때 
+					
+				}
+				
 				
 		}catch (Exception e) {
 			System.out.println(e.getMessage());

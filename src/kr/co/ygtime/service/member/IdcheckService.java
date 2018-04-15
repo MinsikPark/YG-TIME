@@ -28,11 +28,17 @@ public class IdcheckService implements Action{
 			dao = new MemberDAO();
 	
 			String result = dao.isIdcheck(id);
-				
-			if(result.equals("true")) {
-				result = "true";
-			}else if(result.equals("false")) {
+	
+			if(result.equals("false")) { //아이디가 있을때
 				result = "false";
+
+			}
+			if(result.equals("true")) { //아이디가 없을때
+				result = "true";
+
+			}if(result.equals("empty")) { //아이디가 빈값일때
+				result = "empty";
+
 			}
 			request.setAttribute("result", result);
 			forward = new ActionForward();

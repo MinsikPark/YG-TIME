@@ -61,7 +61,16 @@ public class CardController extends HttpServlet {
         	catch(Exception e) {
         		e.printStackTrace();
         	}
+        }else if(cmdURI.equals("/CardSequenceUpdate.card")) {
+        	try {
+        		//action = new cardsequence
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
         }
+		
 		
         //태우기 마지막
         if(forward != null){

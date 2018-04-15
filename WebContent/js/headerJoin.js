@@ -96,25 +96,24 @@ function idcheck() {
 			email : $("#email").val()
 		},
 		success : function(data) {
-
-			if (data == "true") {
+			if (data.trim() == "false") {		
 				$("#result").text("중복된 아이디입니다.");
 				$("#result").css("color", "red");
-			} else if (data == "false"
-					|| exptext.test($('#email').val()) == true) {
+			}if (data.trim()== "true" && exptext.test($('#email').val()) == true) {
+
 				$("#result").text("사용가능한 아이디입니다.");
 				$("#result").css("color", "blue");
 
-			}
-			if (exptext.test($('#email').val()) == false) {
+			}if (data.trim()=="empty") {
+
+				$("#result").text("이메일을 입력해주세요");
+				$("#result").css("color", "red");
+			}else if (exptext.test($('#email').val()) == false && !($('#email').val().trim() == "") ) {
 
 				$("#result").text("이메일 형식이 올바르지 않습니다.");
 				$("#result").css("color", "red");
 			}
-			if (data == "empty") {
-				$("#result").text("이메일을 입력해주세요");
-				$("#result").css("color", "red");
-			}
+			
 		}
 	});
 }
