@@ -220,7 +220,8 @@ function boardclick(boardNum){
             $.each(json, function(index, elt) {
             	console.log(elt);
             	content += '<div class="listbox">'
-            		+ '<div id="listnum'+elt.listNum+'"class="listtitle"><label onclick="listmodify(this, '+elt.listNum+',' + boardNum +')">'+ elt.listName +'</label></div>'
+            		+ '<div id="listnum'+elt.listNum+'"class="listtitle"><label onclick="listmodify(this, '+elt.listNum+',' + boardNum +')">'+ elt.listName +'</label>'
+            		+ '<a class="glyphicon close" style="font-size: 17px;" onclick="listDel(this)">&#xe020;</a></div>'
             		+ '<a class="cardcreate" onclick="addCardView(this, '+ elt.listNum +')">Add a card...</a>'
             	+ '</div>';
             });
@@ -238,6 +239,7 @@ function boardclick(boardNum){
             				cardcontent += '<div class="card ui-sortable-handle" data-toggle="modal" data-target="#myModal1" style="">'+eltcard.cardName+'</div>';
             			});
             			$("#listnum"+elt.listNum+" ").append(cardcontent);
+            			sortable()
             		}
             	})
             });

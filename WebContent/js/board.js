@@ -112,13 +112,26 @@ function addList(obj, boardnum){
             data:{boardNum:boardnum, listname:value},
             success:function(data){
             	parent.empty()
-        		var	div = '<div class="listtitle" onclick="listmodify(this, '+ data.trim() +',' + boardnum +')">' + value + '</div>'
+        		var	div = '<div class="listtitle" onclick="listmodify(this, '+ data.trim() +',' + boardnum +')">' + value
+        			div += '<a class="glyphicon close" style="font-size: 17px;" onclick="listDel(this)">&#xe020;</a></div>'
         			div += "<a class='cardcreate' onclick='addCardView(this)'>Add a card...</a>"
         		parent.append(div)
         		sortable()
             }
 		});
 		
+	}
+}
+
+function listDel(obj){
+	console.log($(obj))
+	var input = confirm('삭제하시겠습니까?')
+	if(input){
+		console.log('true')
+		console.log($(obj).closest('.listbox'))
+		$(obj).closest('.listbox').remove()
+	}else{
+		console.log('false')
 	}
 }
 
