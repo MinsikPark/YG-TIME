@@ -98,12 +98,15 @@ function addCard(obj, listnum){
 	}
 }
 
+//리스트생성 텍스트박스를 불러오기
 function addListView(obj, boardnum){
 	console.log(boardnum);
 	var div = "<div class='listbox'><input class='inputtext' type='text' placeholder='list title' name='title'><a onclick='addList(this,"+ boardnum +")'>완료</a></div>"
 	$(obj).before(div)
 	autoWidth()
 }
+
+//리스트 생성
 function addList(obj, boardnum){
 	var parent = $(obj).closest('.listbox')
 	var value = parent[0].firstChild.value
@@ -116,21 +119,19 @@ function addList(obj, boardnum){
             data:{boardNum:boardnum, listname:value},
             success:function(data){
             	parent.empty()
-        		var	div = '<div class="listtitle" onclick="listmodify(this, '+ data.trim() +',' + boardnum +')">' + value
-        			div += '<a class="glyphicon close" style="font-size: 17px;" onclick="listDel(this)">&#xe020;</a></div>'
-        			div += "<a class='cardcreate' onclick='addCardView(this)'>Add a card...</a>"
-        		parent.append(div)
-        		sortable()
+            	boardclick(boardnum);
+            	sortable();
             }
 		});
 		
 	}
 }
+
 function listDelete(obj) {
 	   console.log("나는리스트넘버야 : " + listNum)
-	  
-	   
-	}
+}
+
+//리스트 삭제
 function listDel(obj){
 	console.log($(obj))
 	var input = confirm('삭제하시겠습니까?')
@@ -150,6 +151,7 @@ function listDel(obj){
 	}
 }
 
+//(텍스트 클릭하면 텍스트박스 불러오기)리스트 수정
 function listmodify(obj, listNum, boardnum){
 	var html = $(obj).html();
 	var text = "<input class='inputtext' type='text' placeholder='list title' name='title'><a onclick='listmodifyOk(this,"+ listNum + "," + boardnum +")'>완료</a>" 
@@ -161,6 +163,7 @@ function listmodify(obj, listNum, boardnum){
 	
 }
 
+//리스트 수정 확인
 function listmodifyOk(obj, listNum, boardnum){
 	var name = $(obj).parent().children("input").val();
 	console.log($(obj).parent().children("input").val());
@@ -182,6 +185,7 @@ function listmodifyOk(obj, listNum, boardnum){
 	}
 }
 
+//리스트 수정 취소
 function listmodifyNo(obj, listNum, boardnum){
 	$.ajax({
 		url:"listselect.list",
@@ -218,6 +222,7 @@ function boardDetailEdit(obj, boardNum){
 	$(obj).append(edit);
 }
 
+//보드제목 수정 확인
 function boardmodifyOk(obj, boardnum){
 	var title = $(obj).parent().children("input").val();
 	
@@ -240,6 +245,7 @@ function boardmodifyOk(obj, boardnum){
 	});
 }
 
+//보드 디테일 수정 확인
 function detailmodifyOk(obj, boardnum){
 	var detailtitle = $(obj).parent().children("input").val();
 	
