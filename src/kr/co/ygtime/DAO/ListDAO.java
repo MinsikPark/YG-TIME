@@ -269,7 +269,7 @@ public class ListDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String selectListSql = "select * from list where boardNum =? order by listSequential asc";
+		String selectListSql = "select * from list where boardNum =? and deleteok = 0 order by listSequential asc";
 		List<ListDTO> dtolist =null;
 		
 		try {

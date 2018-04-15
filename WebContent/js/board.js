@@ -66,10 +66,11 @@ function autoWidth(){
 	$('#mainScreen').css("width", width)
 }
 
-var i = 1
+
 function addCardView(e, listnum) {
-	var div = "<div class='card' id="+(i++)+"><input class='inputtext' type='text' placeholder='card title' name='title'><a onclick='addCard(this, "+ listnum +")'>완료</a></div>"
-	$(e).before(div)
+	$(e).parent().find("#addcard").remove();
+		var div = "<div class='card' id='addcard'><input class='inputtext' type='text' placeholder='card title' name='title'><a onclick='addCard(this, "+ listnum +")'>완료</a></div>"
+		$(e).before(div);
 }
 
 
@@ -82,13 +83,16 @@ function addCard(obj, listnum){
 			datatype:"JSON",
 			data:{listNum:listnum, cardName:value},
 			success:function(data){
-				$(parent).empty()
-				parent[0].innerHTML = value
+				console.log("카드 추가 돼었나? "+ data.trim());
+				$(parent).remove();
+				
+/*				parent[0].innerHTML = value
 				$(parent).attr({ 
 					'data-toggle':'modal',
 					'data-target':'#myModal1'
 				})
-				sortable()
+				sortable()*/
+				callCardList(listnum);
 			}
 		});
 	}
@@ -112,13 +116,37 @@ function addList(obj, boardnum){
             data:{boardNum:boardnum, listname:value},
             success:function(data){
             	parent.empty()
-        		var	div = '<div class="listtitle" onclick="listmodify(this, '+ data.trim() +',' + boardnum +')">' + value + '</div>'
+        		var	div = '<div class="listtitle" onclick="listmodify(this, '+ data.trim() +',' + boardnum +')">' + value
+        			div += '<a class="glyphicon close" style="font-size: 17px;" onclick="listDel(this)">&#xe020;</a></div>'
         			div += "<a class='cardcreate' onclick='addCardView(this)'>Add a card...</a>"
         		parent.append(div)
         		sortable()
             }
 		});
 		
+	}
+}
+function listDelete(obj) {
+	   console.log("나는리스트넘버야 : " + listNum)
+	  
+	   
+	}
+function listDel(obj){
+	console.log($(obj))
+	var input = confirm('삭제하시겠습니까?')
+	if(input){
+		console.log('true')
+		 $.ajax({
+	         url : "listdelete.list",
+	         datatype : "JSON",
+	         data : {listNum : $(obj).closest('.listtitle')[0].id.substr(7)},
+	         success : function (data) {
+	            $(obj).closest('.listbox').remove()
+	            console.log('완료')
+	         }
+         })
+	}else{
+		console.log('false')
 	}
 }
 
