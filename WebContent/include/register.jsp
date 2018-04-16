@@ -13,7 +13,7 @@
 			</div>
 
 			<div class="modal-body">
-				<form id="joinForm">
+				<form id="joinForm" method="post">
 					<div class="form-group">
 						<label for="email">이메일 주소</label>
 						<button id="idcheckhover" type="button" class="btn btn-default"
