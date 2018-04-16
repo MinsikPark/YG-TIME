@@ -456,7 +456,7 @@ public class CardDAO {
 		try {
 			conn = ds.getConnection();
 			String sql="update CHECKBOX set checked=?, checkboxcontents=? "
-					+ "where cardnum=? checknum=?";
+					+ "where cardnum=? and checknum=?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, check.getChecked());
@@ -497,12 +497,14 @@ public class CardDAO {
 				String sql="delete from CHECKBOX where cardnum=? and checknum=?";
 				
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, checkNum);
-				pstmt.setInt(2, cardNum);
+				pstmt.setInt(1, cardNum);
+				pstmt.setInt(2, checkNum);
 				
 				delrow = pstmt.executeUpdate();
 				
 				if(delrow > 0) {
+					pstmt.close();
+					
 					String numminus = "update CHECKBOX set checknum=checknum-1 "
 									+ "where checknum > ?";
 					

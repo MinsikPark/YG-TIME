@@ -280,9 +280,14 @@ function cardDetail(obj){
 	$('#detaiAddbtn').attr("onclick", "updateDetail(this,"+ cardnum +")");
 }
 
+//카드 상세 페이지
 function cardViewDetail(cardnum){
-	console.log("cardViewDetail:cardnum:"+cardnum);
-	//카드디테일이 있었다면 보여주기
+	cardViewContents(cardnum);
+	cardViewCheckList(cardnum);
+}
+
+//카드제목 보여주기 & 카드내용이 있었다면 보여주기
+function cardViewContents(cardnum){
 	$.ajax({
 		url:"Cardselect.card",
 		datatype:"json",
@@ -290,11 +295,14 @@ function cardViewDetail(cardnum){
 		success:function(data){
 			var json = JSON.parse(data);
 			//json : cardContents, cardName, cardNum, cardSequential, deleteCheck, listNum
+			$('#modalHeader').html(json.cardName);
 			$('#contentDetail').html(json.cardContents);
 		}
 	});
-	
-	//카드체크리스트 있다면 보여주기
+}
+
+//카드체크리스트 있다면 보여주기
+function cardViewCheckList(cardnum){
 	$.ajax({
 		url:"Checklist.card",
 		datatype:"json",
@@ -305,15 +313,14 @@ function cardViewDetail(cardnum){
 			$('#checkListForm').empty();
 			var htmldata = '';
 			$.each(json, function(index, elt) {
-				if(elt.checked = '0'){
-					htmldata += '<p><input type="checkbox" id="checkbox'+elt.checkNum+'"><label for="checkbox'+elt.checkNum+'">'+elt.checkBoxContents+'</label><button type="button" class="close" onclick="removeCheckList(this)">&times;</button></p>';
+				if(elt.checked == '0'){
+					htmldata += '<p><input type="checkbox" id="checkbox'+elt.checkNum+'" onclick="checkClick(this, '+elt.checkNum+')"><label for="checkbox'+elt.checkNum+'">'+elt.checkBoxContents+'</label><button type="button" class="close" onclick="removeCheckList(this, '+elt.checkNum+')">&times;</button><button type="button" class="glyphicon close" onclick="checkBoxMod(this, '+elt.checkNum+')">&#xe065;</button></p>';
 				} else{
-					htmldata += '<p><input type="checkbox" id="checkbox'+elt.checkNum+'" checked><label for="checkbox'+elt.checkNum+'">'+elt.checkBoxContents+'</label><button type="button" class="close" onclick="removeCheckList(this)">&times;</button></p>';
+					htmldata += '<p><input type="checkbox" id="checkbox'+elt.checkNum+'" onclick="checkClick(this, '+elt.checkNum+')" checked><label for="checkbox'+elt.checkNum+'" style="text-decoration:line-through; font-style: oblique;">'+elt.checkBoxContents+'</label><button type="button" class="close" onclick="removeCheckList(this)">&times;</button><button type="button" class="glyphicon close" onclick="checkBoxMod(this, '+elt.checkNum+')">&#xe065;</button></p>';
 				}
 			});
 			
 			$('#checkListForm').html(htmldata);
 		}
 	});
-
 }
