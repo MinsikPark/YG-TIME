@@ -1,9 +1,10 @@
-/*
-    파일명: MemberInfoService.java
-    설명: 프로젝트 내용 추가 Service부
-    작성일: 2018. 4. 11.
-    작성자: 최 재 욱
+/* 
+    파일명: MemeberSelectService.java
+    설명: 
+    작성일: 2018. 4. 16.
+    작성자: 김 진 원
 */
+
 package kr.co.ygtime.service.member;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,14 +16,15 @@ import kr.co.ygtime.DAO.MemberDAO;
 import kr.co.ygtime.DTO.MemberDTO;
 import net.sf.json.JSONObject;
 
-public class MemberInfoService implements Action{
+public class MemeberSelectService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
 		MemberDAO memberdao = null;
-		String userId = (String) request.getSession().getAttribute("sessionId");
+		String userId = request.getParameter("userId");
 		MemberDTO memberdto = null;
+		
 		try {
 			memberdao = new MemberDAO();
 			memberdto = memberdao.memberSelect(userId);
@@ -36,5 +38,5 @@ public class MemberInfoService implements Action{
 		
 		return forward;
 	}
-
+	
 }

@@ -284,6 +284,7 @@ function cardDetail(obj){
 function cardViewDetail(cardnum){
 	cardViewContents(cardnum);
 	cardViewCheckList(cardnum);
+	cardViewReplys(cardnum);
 }
 
 //카드제목 보여주기 & 카드내용이 있었다면 보여주기
@@ -321,6 +322,61 @@ function cardViewCheckList(cardnum){
 			});
 			
 			$('#checkListForm').html(htmldata);
+		}
+	});
+}
+
+//카드댓글이 있다면 보여주기
+function cardViewReplys(cardnum){
+	$.ajax({
+		url:"Replylist.card",
+		datatype:"json",
+		data:{CardNum:cardnum},
+		success:function(data){
+			var json = JSON.parse(data);
+			console.log(json);
+			userMember();
+			//json : cardNum, replyContents, replyNum, userId
+			$('#commentListForm').empty();
+			
+			var arr = [];
+			
+			var htmldata = '';
+			$.each(json, function(index, elt) {
+				htmldata += '<div id="replyNum'+ elt.replyNum +'" class="commentlist">'
+						+ '<input type="text" class="form-control commentinputtextbox" value="' + elt.replyContents + '" readonly>'
+						+ '<button type="bRutton" class="close" onclick="removeComment(this)">&times;</button></div>';
+				
+				arr.push({userId:elt.userId, replyNum:elt.replyNum});
+			});
+			
+			$('#commentListForm').html(htmldata);
+			
+			$.each(arr, function(i, elt) {
+				userMember(elt.userId, elt.replyNum);
+			});
+		}
+	});
+}
+
+//멤버 찾아서 멤버 프로필 보여주기
+function userMember(userid, replynum){
+	$.ajax({
+		url : "userSelect.member",
+		datatype : "JSON",
+		data : {userId:userid},
+		success : function(data) {
+			//json : userId, userNicname, userProfile
+			var json = JSON.parse(data);
+			console.log(json);
+			var htmldata = '';
+			if(json.userProfile == "" || json.userProfile == null){
+				htmldata += '<img src="profile/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">';
+			}else{
+				htmldata += '<img src="profile/'+json.userProfile+'" class="img-circle person" alt="Random Name" width="30" height="30">';
+			}
+			
+			$('#replyNum'+replynum).prepend(htmldata);
 		}
 	});
 }

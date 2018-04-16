@@ -806,7 +806,7 @@ public class CardDAO {
 		int maxreply = 0;
 		try {
 				conn = ds.getConnection();
-				String sql ="select max(replynum) as replymax from REPLY where cardnum=?";
+				String sql ="select nvl(max(replynum), 0) as replymax from REPLY where cardnum=?";
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, cardnum);

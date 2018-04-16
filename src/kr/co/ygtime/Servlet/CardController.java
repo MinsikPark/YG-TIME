@@ -21,6 +21,8 @@ import kr.co.ygtime.service.card.CheckInsertService;
 import kr.co.ygtime.service.card.CheckDeleteService;
 import kr.co.ygtime.service.card.CheckListService;
 import kr.co.ygtime.service.card.CheckedUpdateService;
+import kr.co.ygtime.service.card.ReplyAddService;
+import kr.co.ygtime.service.card.ReplyListService;
 
 /**
   클래스명 : CardController
@@ -126,6 +128,22 @@ public class CardController extends HttpServlet {
         } else if(cmdURI.equals("/CardNameUpdate.card")) {
         	try {
         		action = new CardNameUpdateService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/ReplyAdd.card")) {
+        	try {
+        		action = new ReplyAddService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/Replylist.card")) {
+        	try {
+        		action = new ReplyListService();
         		forward = action.execute(request, response);
         	}
         	catch(Exception e) {
