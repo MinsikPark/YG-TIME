@@ -57,3 +57,49 @@ function callprojectlist(){
 	}
 }
 //프로젝트 관리 함수 끝
+
+//프로젝트 차트
+//And for a doughnut chart
+function chart() {
+	var userId = $("#getsession").val();
+	var strat = null;
+	var end = null;
+	$.ajax({
+			url : "startcount.project",
+			datatype : "text",
+			data : {userId : userId},
+			success : function (data) {
+				console.log("안녕재욱아");
+				start = data.trim();
+			}
+			});
+	$.ajax({
+			url : "endcount.project",
+			datatype : "text",
+			data : {userId : userId},
+			success : function(datas){
+				console.log("반가워재욱아");
+				end = datas.trim();
+			}
+			});
+	var myDoughnutChart = new Chart(ctx,{
+		
+		// And for a doughnut chart
+		    type: 'doughnut',
+		    data:  {
+		        datasets: [{
+		            data: [start, end]
+		        }],
+
+		        // These labels appear in the legend and in the tooltips when hovering different arcs
+		        labels: [
+		            'Red',
+		            'Yellow'
+		            
+		        ]
+		    },
+		    options: options
+		});
+}
+
+
