@@ -13,11 +13,14 @@ import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.service.card.CardContentsUpdateService;
 import kr.co.ygtime.service.card.CardListService;
+import kr.co.ygtime.service.card.CardNameUpdateService;
 import kr.co.ygtime.service.card.CardSelectService;
 import kr.co.ygtime.service.card.CardSequenceUpdateService;
 import kr.co.ygtime.service.card.CardinsertService;
-import kr.co.ygtime.service.card.ChackInsertService;
+import kr.co.ygtime.service.card.CheckInsertService;
+import kr.co.ygtime.service.card.CheckDeleteService;
 import kr.co.ygtime.service.card.CheckListService;
+import kr.co.ygtime.service.card.CheckedUpdateService;
 
 /**
   클래스명 : CardController
@@ -90,7 +93,7 @@ public class CardController extends HttpServlet {
         	}
         } else if(cmdURI.equals("/Checkinsert.card")) {
         	try {
-        		action = new ChackInsertService();
+        		action = new CheckInsertService();
         		forward = action.execute(request, response);
         	}
         	catch(Exception e) {
@@ -99,6 +102,30 @@ public class CardController extends HttpServlet {
         } else if(cmdURI.equals("/Checklist.card")) {
         	try {
         		action = new CheckListService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/Checkupdate.card")) {
+        	try {
+        		action = new CheckedUpdateService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/Checkdelete.card")) {
+        	try {
+        		action = new CheckDeleteService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/CardNameUpdate.card")) {
+        	try {
+        		action = new CardNameUpdateService();
         		forward = action.execute(request, response);
         	}
         	catch(Exception e) {

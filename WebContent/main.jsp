@@ -36,7 +36,7 @@
 	</div>
 	
 	<jsp:include page="views/calendar.jsp"></jsp:include>
-	
+	<input type="hidden" id="hiddenBoardnum">
 	<div id="mainScreen">
 		<h2 id='boardTitle'>Title</h2><p id='boardDetail'>세부내용 블라블라</p>
 		<hr>
