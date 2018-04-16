@@ -58,48 +58,137 @@ function callprojectlist(){
 }
 //프로젝트 관리 함수 끝
 
+
+
+function chartClose() {
+	$("#myChart").remove();
+	var div = "<canvas id='myChart'></canvas>"
+		$("#chartprojectForm input:eq(1)").after(div);
+}
+
+
 //프로젝트 차트
 //And for a doughnut chart
-function chart() {
-	var userId = $("#getsession").val();
-	var strat = null;
-	var end = null;
-	$.ajax({
-			url : "startcount.project",
-			datatype : "text",
-			data : {userId : userId},
-			success : function (data) {
-				console.log("안녕재욱아");
-				start = data.trim();
-			}
-			});
-	$.ajax({
-			url : "endcount.project",
-			datatype : "text",
-			data : {userId : userId},
-			success : function(datas){
-				console.log("반가워재욱아");
-				end = datas.trim();
-			}
-			});
+function chart(start, end) {
+	chartClose()
+	
+	var ctx = document.getElementById('myChart').getContext('2d');
 	var myDoughnutChart = new Chart(ctx,{
 		
 		// And for a doughnut chart
 		    type: 'doughnut',
 		    data:  {
+		    	
+		    	labels: [
+		            '진행중프로젝트',
+		            '완료된프로젝트'
+		            
+		        ],
 		        datasets: [{
-		            data: [start, end]
-		        }],
+		            data: [start, end],
+		        
 
 		        // These labels appear in the legend and in the tooltips when hovering different arcs
-		        labels: [
-		            'Red',
-		            'Yellow'
-		            
-		        ]
+		        
+		        backgroundColor: [
+	                'rgba(255, 99, 132, 0.7)',
+	                'rgba(54, 162, 235, 0.7)'
+	             
+	            ]
+		        }]
 		    },
-		    options: options
+
+		    
+		});
+}
+//리스트 차트
+//And for a doughnut chart
+function listChart(start, end) {
+	chartClose()
+	
+	var ctx = document.getElementById('myChart').getContext('2d');
+	var myDoughnutChart = new Chart(ctx,{
+		
+		// And for a doughnut chart
+		    type: 'doughnut',
+		    data:  {
+		    	
+		    	labels: [
+		           
+		            '진행중인프로젝트리스트갯수',
+		            '진행중인프로젝트카드갯수',
+		            
+		        ],
+		        datasets: [{
+		            data: [start, end],
+		        
+
+		        // These labels appear in the legend and in the tooltips when hovering different arcs
+		        
+		        backgroundColor: [
+	                'rgba(255, 99, 132, 0.7)',
+	                'rgba(54, 162, 235, 0.7)'
+	             
+	            ]
+		        }]
+		    },
+
+		    
 		});
 }
 
+//프로젝트 차트보여주기
+function projectChartView(){
+	console.log("들어왔니?123")
+	var userId = $("#getsession").val();
+	var start =null;
+	var end = null;
+	
+	$.ajax({
+			url : "startcount.project",
+			datatype : "text",
+			data : {userId : userId},
+			success : function (data) {
+				start = data.trim();
+				
+				$.ajax({
+					url : "endcount.project",
+					datatype : "text",
+					data : {userId : userId},
+					success : function(datas){
+						end = datas.trim();
+						
+						chart(start,end);
+					}
+					});
+			}
+			});
+	
+}
 
+//리스트차트보여주기
+function listChartView() {
+	var userId = $("#getsession").val();
+	var start = null;
+	var end = null;
+	
+	$.ajax({
+			url : "listcount.project",
+			datatype : "text",
+			data : {userId : userId},
+			success: function (data) {
+				start = data.trim();
+				
+				$.ajax({
+						url : "cardcount.project",
+						datatype : "text",
+						data : {userId : userId},
+						success : function (datas) {
+							end = datas.trim();
+							listChart(start,end);
+							
+						}
+						})		
+			}
+			})
+}

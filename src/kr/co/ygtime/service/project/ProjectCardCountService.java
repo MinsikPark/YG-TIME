@@ -1,5 +1,5 @@
 /*
-    파일명: ProjectStartCountService.java
+    파일명: ProjectCardCountService.java
     설명: 프로젝트 내용 추가 Service부
     작성일: 2018. 4. 16.
     작성자: 최 재 욱
@@ -14,28 +14,23 @@ import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.DAO.ProjectDAO;
 
-public class ProjectStartCountService implements Action{
+public class ProjectCardCountService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+		ProjectDAO projectdao = null;
 		ActionForward forward = null;
-		ProjectDAO projectdao =null;
 		int resultrow = 0;
 		String userId = request.getParameter("userId");
-		System.out.println("들어왔니??재욱아");
-		
 		try {
 			projectdao = new ProjectDAO();
-			resultrow = projectdao.countStartProject(userId);
+			resultrow = projectdao.countcardProject(userId);
 			request.setAttribute("resultrow", resultrow);
 			forward = new ActionForward();
 			forward.setPath("/ajaxpath/result_row.jsp");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
 		return forward;
 	}
 

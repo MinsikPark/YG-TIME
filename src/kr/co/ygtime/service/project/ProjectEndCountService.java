@@ -22,6 +22,7 @@ public class ProjectEndCountService implements Action{
 		ProjectDAO projectdao = null;
 		String userId = request.getParameter("userId");
 		int resultrow = 0;
+		System.out.println("들어왔니??재욱아123");
 		
 		try {
 			projectdao = new ProjectDAO();
