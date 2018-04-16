@@ -32,7 +32,10 @@ $(function(){
 <!-- calendar -->
 <div id="calendar">
 	<br>
-	<img id="trashCan" src="images/cal-trash.png"> <!-- 쓰레기통 이미지 -->
+	<!-- <img id="trashCan" src="images/cal-trash.png"> --> <!-- 쓰레기통 이미지 -->
+</div>
+<div id="trashCan" style="background-color:black; color:white; text-align: center; height:150px; ">
+Delete here...
 </div>
 
 	
