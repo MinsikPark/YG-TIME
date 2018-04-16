@@ -19,9 +19,9 @@
 				<a href="#" class="glyphicon glyphicon-plus insert"
 					onclick="addProjectForm()"></a>
 				<ul class="nav nav-tabs nav-tabs-modify">
-					<li class="active"><a data-toggle="tab" href="#progress">진행중인
-							프로젝트</a></li>
-					<li><a data-toggle="tab" href="#complete">완료된 &nbsp; 프로젝트</a></li>
+					<li><img src="https://png.icons8.com/ios/50/ffffff/combo-chart-filled.png" style='width:35px; border:none;'></li>
+					<li class="active"><a data-toggle="tab" href="#progress">진행</a></li>
+					<li><a data-toggle="tab" href="#complete">완료</a></li> 
 				</ul>
 
 				<div id="progress" class="tab-pane fade in active">

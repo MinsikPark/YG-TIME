@@ -242,7 +242,7 @@ function callCardList(listNum){
             var cardjson = JSON.parse(carddata);
             var cardcontent = "";
             $.each(cardjson, function(indexcard, eltcard) {
-                cardcontent += '<div class="card ui-sortable-handle" id ="cardnum'+eltcard.cardNum+'" data-toggle="modal" data-target="#myModal1" style="">'+eltcard.cardName+'</div>';
+                cardcontent += '<div class="card ui-sortable-handle" id ="'+eltcard.cardNum+'" data-toggle="modal" data-target="#myModal1" onclick="cardDetail(this)" style="">'+eltcard.cardName+'</div>';
             });
             $("#listnum"+listNum+" ").append(cardcontent);
             sortable()
