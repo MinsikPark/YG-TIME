@@ -5,9 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	body { text-decoration:line-through }
+</style>
 </head>
 <body>
-
 DDDF
 </body>
 </html>
