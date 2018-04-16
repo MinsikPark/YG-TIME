@@ -18,7 +18,7 @@
 	    z-index: 1;
 	    top: 0;
 	    left: 0;
-	    background-color: #fed057;
+	    background-color: #194769;
 	    overflow-x: hidden;
 	    transition: 0.5s;
 	    padding-top: 10px;
@@ -136,6 +136,7 @@
 	.nav-tabs-modify{
 	  margin-left: 90px;
 	  margin-bottom:10px;
+	  border:none;
 	}
 	
 	.nav-tabs li a {
