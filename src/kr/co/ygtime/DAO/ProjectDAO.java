@@ -620,4 +620,70 @@ public class ProjectDAO {
 	
 		return resultrow;
 	}
+	/**
+	 날      짜 : 2018. 4. 16.
+	 기      능 : 진행중 프로젝트 갯수 구하기
+	 작성자명 : 최 재 욱
+	 */
+	public int countStartProject(String userId) {
+		int resultrow = 0;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			conn = ds.getConnection();
+			String sql = "select count(p.projectnum) as projectcnt from project p join team t on p.projectnum = t.projectnum where t.userid = ? and p.PROJECTENDDATE is null";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				resultrow = rs.getInt("projectcnt");
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();
+			}catch (Exception e) {}
+		}
+		
+		
+		return  resultrow;
+	}
+	/**
+	 날      짜 : 2018. 4. 16.
+	 기      능 : 완료된 프로젝트 갯수 구하기
+	 작성자명 : 최 재 욱
+	 */
+	public int countEndProject(String userId) {
+		int resultrow = 0;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			conn = ds.getConnection();
+			String sql = "select count(p.projectnum) as projectcnt from project p join team t on p.projectnum = t.projectnum where t.userid = ? and p.PROJECTENDDATE is not null";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				resultrow = rs.getInt("projectcnt");
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();
+			}catch (Exception e) {}
+		}
+		
+		
+		return  resultrow;
+	}
 }
