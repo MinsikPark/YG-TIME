@@ -13,10 +13,12 @@ import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.service.project.ProjectAddService;
 import kr.co.ygtime.service.project.ProjectAdmin;
+import kr.co.ygtime.service.project.ProjectCardCountService;
 import kr.co.ygtime.service.project.ProjectCompleteService;
 
 import kr.co.ygtime.service.project.ProjectDeleteService;
 import kr.co.ygtime.service.project.ProjectEndCountService;
+import kr.co.ygtime.service.project.ProjectListCountService;
 import kr.co.ygtime.service.project.ProjectListService;
 import kr.co.ygtime.service.project.ProjectMemberDeleteService;
 import kr.co.ygtime.service.project.ProjectMemberListService;
@@ -161,6 +163,22 @@ public class ProjectController extends HttpServlet {
         	}
         }else if(cmdURI.equals("/endcount.project")){
         	action = new ProjectEndCountService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+        	}
+        }else if(cmdURI.equals("/listcount.project")){
+        	action = new ProjectListCountService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+        	}
+        }else if(cmdURI.equals("/cardcount.project")){
+        	action = new ProjectCardCountService();
         	try {
 				forward = action.execute(request, response);
 			} 

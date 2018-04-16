@@ -33,10 +33,11 @@
 		<jsp:include page="include/wifi.jsp"></jsp:include>
 		<jsp:include page="include/footer.jsp"></jsp:include>
 		<jsp:include page="include/register.jsp"></jsp:include>
+		<jsp:include page="include/chart.jsp"></jsp:include>
 	</div>
 	
 	<jsp:include page="views/calendar.jsp"></jsp:include>
-	
+	<input type="hidden" id="hiddenBoardnum">
 	<div id="mainScreen">
 		<h2 id='boardTitle'>Title</h2><p id='boardDetail'>세부내용 블라블라</p>
 		<hr>

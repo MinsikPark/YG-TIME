@@ -6,7 +6,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Modal Header</h4>
+				<h4 id="modalHeader" class="modal-title">Modal Header</h4>
 			</div>
 			<div class="modal-body container">
 				<div class="flex2">
@@ -35,7 +35,7 @@
 					<br> 
 					<input id="btnFileUpload" type="file" onchange="changeValue(this)"> 
 					<input class="detailbutton btn btn-primary" type="button" value="파일 추가 하기" id="btnFileUpLoad"> 
-					<input class="detailbutton btn btn-primary" type="button" value="Check List" id="addCheckList">
+					<input class="detailbutton btn btn-primary" type="button" value="Check List" id="addCheckList" onclick="addCheckListForm()">
 					<div class="dropdown">
 						<input class="detailbutton btn btn-primary" type="button" value="Member" data-toggle="dropdown">
 						<ul class="dropdown-menu">

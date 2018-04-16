@@ -57,6 +57,7 @@ $(function() { // $(document).ready
 		displayEventTime: false, // 
 		eventClick: function(event) {			
 			boardclick(event.id);
+			$('#hiddenBoardnum').attr("value", event.id);
 		},
 		eventDrop: function(event, delta, revertFunc) { // Drag를 통한 날짜 변경 처리 함수
 			boarddateupdate(event);
