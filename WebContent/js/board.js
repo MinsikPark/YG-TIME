@@ -288,7 +288,22 @@ function detailmodifyOk(obj, boardnum){
 	});
 }
 
-//보드 디테일 모달창 띄우기 (카드넘버를 가져가게 만들었다)
+//보드 디테일 모달창 띄우기
 function cardDetail(obj){
-	$('#detaiAddbtn').attr("onclick", "updateDetail(this,"+ $(obj).attr('id') +")");
+	//$(obj).attr('id') == 카드넘버
+	var cardnum = $(obj).attr('id');
+	//카드디테일이 있었다면 보여주기
+	$.ajax({
+		url:"Cardselect.card",
+		datatype:"json",
+		data:{CardNum:cardnum},
+		success:function(data){
+			var json = JSON.parse(data);
+			//json : cardContents, cardName, cardNum, cardSequential, deleteCheck, listNum
+			$('#contentDetail').html(json.cardContents);
+		}
+	});
+	
+	//onclick 변경 (카드넘버 가지고)
+	$('#detaiAddbtn').attr("onclick", "updateDetail(this,"+ cardnum +")");
 }
