@@ -1134,4 +1134,38 @@ public class CardDAO {
 		
 		return row;
 	}
+	
+	/**
+	 날      짜 : 2018. 4. 10.
+	 기      능 : 카드 수정
+	 작성자명 : 김 진 원
+	*/
+	public int cardSequenceUpdate(CardDTO card) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row = 0;
+		try {
+			conn = ds.getConnection();
+			String sql="update CARD set listnum=?, cardsequential=? where cardnum=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, card.getListNum());
+			pstmt.setInt(2, card.getCardSequential());
+			pstmt.setInt(3, card.getCardNum());
+			
+			row = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();//반환
+			}catch (Exception e) {
+				
+			}
+		}
+		
+		return row;
+	}
 }

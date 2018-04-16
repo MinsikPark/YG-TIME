@@ -39,16 +39,17 @@ $(function(){
 	
 })
 function sortable(){
+	var i = 0
 	$('div[class=listbox]').sortable({
 		items:'div:not(.listtitle)',
 		placeholder: "ui-state-highlight",
 		connectWith: '.listbox',
 		axis : 'y',
 		update: function(event, ui) {
+			
 			var productOrder = $(this).sortable('toArray').toString();
 			$("#sortableTest").text (productOrder);
 			var children = $(this)[0].children
-			
 			if (children[1].className === 'cardcreate'){
 				var children0 = children[0], 
 					children1 = children[1], 
@@ -56,6 +57,25 @@ function sortable(){
 				$(this).empty()
 				$(this).append(children0, children2, children1)
 			}
+			if(i == 1){
+				console.log('----------------------------- 순서수정 시작 --------------------------------')
+				var id = children[0].id
+				console.log(id)
+				
+				$.ajax({
+					url : 'CardSequenceUpdate.card',
+					data : { 
+								listNum : children[0].id,
+								sequential : productOrder
+							},
+					success : function(){
+						console.log("와 됬다!!")
+						alert('성공!!')
+					}
+				})
+				
+			}
+			i++
 		}
 	}).disableSelection(); 
 }
