@@ -13,7 +13,7 @@
 				<form id="chartprojectForm">
 					<input class ='btn btn-primary' type = "button"  id="startchart" onclick = "projectChartView()" value = "진행률">
 					<input class ='btn btn-danger' type = "button"  id="listchart" onclick ="listChartView()" value = "리스트/카드">
-					<canvas id="myChart"></canvas>
+					<div id="divChart"></div>
 
 					<div class="modal-footer">
 						

@@ -61,9 +61,9 @@ function callprojectlist(){
 
 
 function chartClose() {
-	$("#myChart").remove();
+	$("#divChart").empty()
 	var div = "<canvas id='myChart'></canvas>"
-		$("#chartprojectForm input:eq(1)").after(div);
+		$("#divChart").append(div);
 }
 
 
