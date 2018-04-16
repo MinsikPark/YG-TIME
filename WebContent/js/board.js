@@ -271,6 +271,17 @@ function detailmodifyOk(obj, boardnum){
 function cardDetail(obj){
 	//$(obj).attr('id') == 카드넘버
 	var cardnum = $(obj).attr('id');
+	$('#hiddenCardnum').attr("value", cardnum);
+	console.log("cardDetail:cardnum:"+cardnum);
+	//view DB뿌려주기
+	cardViewDetail(cardnum);
+	
+	//onclick 변경 (카드넘버 가지고)
+	$('#detaiAddbtn').attr("onclick", "updateDetail(this,"+ cardnum +")");
+}
+
+function cardViewDetail(cardnum){
+	console.log("cardViewDetail:cardnum:"+cardnum);
 	//카드디테일이 있었다면 보여주기
 	$.ajax({
 		url:"Cardselect.card",
@@ -283,6 +294,26 @@ function cardDetail(obj){
 		}
 	});
 	
-	//onclick 변경 (카드넘버 가지고)
-	$('#detaiAddbtn').attr("onclick", "updateDetail(this,"+ cardnum +")");
+	//카드체크리스트 있다면 보여주기
+	$.ajax({
+		url:"Checklist.card",
+		datatype:"json",
+		data:{CardNum:cardnum},
+		success:function(data){
+			var json = JSON.parse(data);
+			//json : cardNum, checkBoxContents, checkNum, checked
+			$('#checkListForm').empty();
+			var htmldata = '';
+			$.each(json, function(index, elt) {
+				if(elt.checked = '0'){
+					htmldata += '<p><input type="checkbox" id="checkbox'+elt.checkNum+'"><label for="checkbox'+elt.checkNum+'">'+elt.checkBoxContents+'</label><button type="button" class="close" onclick="removeCheckList(this)">&times;</button></p>';
+				} else{
+					htmldata += '<p><input type="checkbox" id="checkbox'+elt.checkNum+'" checked><label for="checkbox'+elt.checkNum+'">'+elt.checkBoxContents+'</label><button type="button" class="close" onclick="removeCheckList(this)">&times;</button></p>';
+				}
+			});
+			
+			$('#checkListForm').html(htmldata);
+		}
+	});
+
 }

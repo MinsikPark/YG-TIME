@@ -21,6 +21,7 @@
 						<div class="form-group" id="fileUploadForm"></div>
 						<div class="form-group">
 							<label for="checklist">Check List</label>
+							<input id="hiddenCardnum" type="hidden">
 							<div id="checkListForm"></div>
 						</div>
 						<div class="form-group">
