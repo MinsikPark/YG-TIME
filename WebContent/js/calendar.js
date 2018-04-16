@@ -245,6 +245,7 @@ function callCardList(listNum){
                 cardcontent += '<div class="card ui-sortable-handle" id ="cardnum'+eltcard.cardNum+'" data-toggle="modal" data-target="#myModal1" style="">'+eltcard.cardName+'</div>';
             });
             $("#listnum"+listNum+" ").append(cardcontent);
+            sortable()
         }
     });
 }
