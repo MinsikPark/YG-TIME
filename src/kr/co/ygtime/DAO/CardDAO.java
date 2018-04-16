@@ -506,10 +506,11 @@ public class CardDAO {
 					pstmt.close();
 					
 					String numminus = "update CHECKBOX set checknum=checknum-1 "
-									+ "where checknum > ?";
+									+ "where cardnum=? and checknum > ?";
 					
 					pstmt = conn.prepareStatement(numminus);
-					pstmt.setInt(1, checkNum);
+					pstmt.setInt(1, cardNum);
+					pstmt.setInt(2, checkNum);
 					
 					uprow = pstmt.executeUpdate();
 					

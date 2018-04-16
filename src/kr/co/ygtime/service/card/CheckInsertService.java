@@ -16,7 +16,7 @@ import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.DAO.CardDAO;
 import kr.co.ygtime.DTO.CheckBoxDTO;
 
-public class ChackInsertService implements Action{
+public class CheckInsertService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {

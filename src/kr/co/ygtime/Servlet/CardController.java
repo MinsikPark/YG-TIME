@@ -17,7 +17,7 @@ import kr.co.ygtime.service.card.CardNameUpdateService;
 import kr.co.ygtime.service.card.CardSelectService;
 import kr.co.ygtime.service.card.CardSequenceUpdateService;
 import kr.co.ygtime.service.card.CardinsertService;
-import kr.co.ygtime.service.card.ChackInsertService;
+import kr.co.ygtime.service.card.CheckInsertService;
 import kr.co.ygtime.service.card.CheckDeleteService;
 import kr.co.ygtime.service.card.CheckListService;
 import kr.co.ygtime.service.card.CheckedUpdateService;
@@ -93,7 +93,7 @@ public class CardController extends HttpServlet {
         	}
         } else if(cmdURI.equals("/Checkinsert.card")) {
         	try {
-        		action = new ChackInsertService();
+        		action = new CheckInsertService();
         		forward = action.execute(request, response);
         	}
         	catch(Exception e) {
