@@ -16,6 +16,7 @@ import kr.co.ygtime.service.project.ProjectAdmin;
 import kr.co.ygtime.service.project.ProjectCompleteService;
 
 import kr.co.ygtime.service.project.ProjectDeleteService;
+import kr.co.ygtime.service.project.ProjectEndCountService;
 import kr.co.ygtime.service.project.ProjectListService;
 import kr.co.ygtime.service.project.ProjectMemberDeleteService;
 import kr.co.ygtime.service.project.ProjectMemberListService;
@@ -23,6 +24,7 @@ import kr.co.ygtime.service.project.ProjectOwnerKickOutService;
 import kr.co.ygtime.service.project.ProjectOwnerMendateService;
 import kr.co.ygtime.service.project.ProjectOwnerService;
 import kr.co.ygtime.service.project.ProjectProgressService;
+import kr.co.ygtime.service.project.ProjectStartCountService;
 
 @WebServlet("*.project")
 public class ProjectController extends HttpServlet {
@@ -143,6 +145,22 @@ public class ProjectController extends HttpServlet {
         	}
         }else if(cmdURI.equals("/memberdeleteproject.project")){
         	action = new ProjectMemberDeleteService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+        	}
+        }else if(cmdURI.equals("/startcount.project")){
+        	action = new ProjectStartCountService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+        	}
+        }else if(cmdURI.equals("/endcount.project")){
+        	action = new ProjectEndCountService();
         	try {
 				forward = action.execute(request, response);
 			} 

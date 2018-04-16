@@ -1133,9 +1133,9 @@ public class CardDAO {
 	}
 	
 	/**
-	 날      짜 : 2018. 4. 10.
-	 기      능 : 카드 수정
-	 작성자명 : 김 진 원
+	 날      짜 : 2018. 4. 16.
+	 기      능 : 카드 순서 수정
+	 작성자명 : 아 윤 근
 	*/
 	public int cardSequenceUpdate(CardDTO card) {
 		Connection conn = null;

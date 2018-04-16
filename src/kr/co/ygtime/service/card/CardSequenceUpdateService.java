@@ -14,34 +14,32 @@ import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.DAO.CardDAO;
 import kr.co.ygtime.DTO.CardDTO;
-import net.sf.json.JSONObject;
 
 public class CardSequenceUpdateService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("들어옴?");
-		String listNum = request.getParameter("listNum");
-		String seq = request.getParameter("sequential");
-		System.out.println(listNum);
-		System.out.println(seq);
-		System.out.println("왜 스트링??");
-		/*CardDAO dao = null;
+		CardDAO dao = null;
+		int listNum = Integer.parseInt(request.getParameter("listNum").substring(7));
+		String[] seq = (request.getParameter("sequential")).split(",");
 		try {
 			dao = new CardDAO();
-			CardDTO carddto = dao.cardSelect(CardNum);
 			
-			JSONObject json = JSONObject.fromObject(carddto);
-			request.setAttribute("json", json);
-			
-		}catch(Exception e) {
+			for(int i = 0; i < seq.length; i++) {
+				CardDTO card = new CardDTO();
+				card.setListNum(listNum);
+				card.setCardNum(Integer.parseInt(seq[i]));
+				card.setCardSequential(i);
+				dao.cardSequenceUpdate(card);
+			}
+		
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		ActionForward forward = new ActionForward();
 		forward.setPath("/ajaxpath/jsonObject.jsp");
 		
-		return forward;*/
-		return null;
+		return forward;
 	}
 
 	
