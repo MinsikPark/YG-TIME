@@ -132,8 +132,6 @@ public class CardDAO {
 				carddto = new CardDTO();
 				
 				if(rs.next()) {
-					//carddto.setListNum(rs.getInt("cardnum")); //진원씨 오타 났어요 이거
-					//carddto.setCardNum(rs.getInt("listnum")); //진원씨 오타 났어요 이거
 					carddto.setCardNum(rs.getInt("cardnum"));
 					carddto.setListNum(rs.getInt("listnum"));
 					carddto.setCardName(rs.getString("cardname"));
@@ -290,15 +288,14 @@ public class CardDAO {
 		try {
 				conn = ds.getConnection();
 				String sql ="insert into CHECKBOX(checknum, cardnum, checked, checkboxcontents)" + 
-						    " values(?,?,?,0,?)";
+						    " values(?,?,0,?)";
 				
 				pstmt = conn.prepareStatement(sql);
 				
 				pstmt.setInt(1, check.getCheckNum());
 				//1-> 카드넘버에 해당하는 체크넘버의 최대넘버 + 1
 				pstmt.setInt(2, check.getCardNum());
-				pstmt.setInt(3, check.getChecked());
-				pstmt.setString(4, check.getCheckBoxContents());
+				pstmt.setString(3, check.getCheckBoxContents());
 				
 				row = pstmt.executeUpdate();
 				
@@ -329,7 +326,7 @@ public class CardDAO {
 		int maxCheck = 0;
 		try {
 				conn = ds.getConnection();
-				String sql ="select max(checknum) as checkmax from CHECKBOX where cardnum=?";
+				String sql ="select nvl(max(checknum), 0) as checkmax from CHECKBOX where cardnum=?";
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, cardnum);

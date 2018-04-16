@@ -1,13 +1,12 @@
 /* 
-    파일명: cardListSerice.java
+    파일명: CheckListService.java
     설명: 
-    작성일: 2018. 4. 14.
+    작성일: 2018. 4. 16.
     작성자: 김 진 원
 */
 
 package kr.co.ygtime.service.card;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -17,21 +16,21 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.DAO.CardDAO;
-import kr.co.ygtime.DTO.CardDTO;
+import kr.co.ygtime.DTO.CheckBoxDTO;
 import net.sf.json.JSONArray;
 
-public class CardListService implements Action{
+public class CheckListService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		List<CardDTO> cardlist = null;
+		List<CheckBoxDTO> checklist = null;
 		
 		try {
 			CardDAO carddao = new CardDAO();
-			int listnum = Integer.parseInt(request.getParameter("listnum"));
+			int CardNum = Integer.parseInt(request.getParameter("CardNum"));
 			
-			cardlist = carddao.allCardSelect(listnum);
-			JSONArray json = JSONArray.fromObject(cardlist);
+			checklist = carddao.allCheckSelect(CardNum);
+			JSONArray json = JSONArray.fromObject(checklist);
 			
 			request.setAttribute("json", json);
 			
