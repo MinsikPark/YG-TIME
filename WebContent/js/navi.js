@@ -54,22 +54,37 @@ function fileInputDel(obj){
 	obj.closest('div').remove()
 }
 
+//Check List 버튼을 클릭시
 function addCheckListForm(){
 	var div = '<div><input type="text" class="form-control inputtextbox">'
 		div += '<button type="button" class="close glyphicon" onclick="addCheckList(this)">&#xe013;</button></div>'
 
-		$('label[for=checklist]').after(div)
+	$('label[for=checklist]').after(div)
+	//$('#checkListForm').append(div);
 }
 
+//체크리스트를 추가 했을 때
 function addCheckList(obj) {
+	var cardnum = $('#hiddenCardnum').val();
 	var value = $(obj).closest('div')[0].children[0].value
+	
 	if(value.trim() != ""){
-		var div = '<p><input type="checkbox" id="checkbox'+j+'"><label for="checkbox'+i+'">'+value+'</label><button type="button" class="close" onclick="removeCheckList(this)">&times;</button></p>'
+		$.ajax({
+			url:"Checkinsert.card",
+			datatype:"text",
+			data:{cardNum:cardnum, checkboxcontents:value},
+			success:function(data){
+				console.log(data.trim());
+				cardViewDetail(cardnum);
+			}
+		});
+		
+		/*var div = '<p><input type="checkbox" id="checkbox'+j+'"><label for="checkbox'+i+'">'+value+'</label><button type="button" class="close" onclick="removeCheckList(this)">&times;</button></p>'
 		j++
 		
 		obj.closest('div').remove()
 		
-		$('#checkListForm').append(div)
+		$('#checkListForm').append(div)*/
 	}
 }
 

@@ -21,10 +21,11 @@ function joinsubmit() {
 
 	data = $("#joinForm").serialize();
 	console.log("data : " + data);
-	$.ajax({
+	$("#joinForm").ajaxForm({
 		url : "Join.member",
 		type : "post",
 		data : data,
+		enctype: "multipart/form-data",
 		success : function(data) {
 			console.log(data);
 			if (data.trim() == "success") {
@@ -37,6 +38,7 @@ function joinsubmit() {
 
 		}
 	});
+	$("#joinForm").submit();
 }
 
 //조인 모델 창 클리어
@@ -89,7 +91,7 @@ function Nicfunction() {
 //아이디중복체크 비동기
 function idcheck() {
 	var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-
+	console.log("idc")
 	$.ajax({
 		url : "idcheck.member",
 		data : {
