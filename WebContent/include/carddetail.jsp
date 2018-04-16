@@ -11,6 +11,7 @@
 			<div class="modal-body container">
 				<div class="flex2">
 					<form action="#" method="post">
+						
 						<div class="form-group">
 							<label for="content">상세 내용</label>
 						</div>
@@ -21,7 +22,6 @@
 						<div class="form-group" id="fileUploadForm"></div>
 						<div class="form-group">
 							<label for="checklist">Check List</label>
-							<input id="hiddenCardnum" type="hidden">
 							<div id="checkListForm"></div>
 						</div>
 						<div class="form-group">
@@ -33,8 +33,11 @@
 				</div>
 				<div class="flex1">
 					<br> 
-					<input id="btnFileUpload" type="file" onchange="changeValue(this)"> 
-					<input class="detailbutton btn btn-primary" type="button" value="파일 추가 하기" id="btnFileUpLoad"> 
+					<form id= "cardfileupload" method="post">
+						<input id="hiddenCardnum" type="hidden" name="hiddenCardnum" >
+						<input id="cardFileUpload" type="file" name="cardFileUpload" onchange="changeValue(this)">
+						<input class="detailbutton btn btn-primary" type="button" value="파일 추가 하기" id="btnFileUpLoad" >			
+					</form>
 					<input class="detailbutton btn btn-primary" type="button" value="Check List" id="addCheckList">
 					<div class="dropdown">
 						<input class="detailbutton btn btn-primary" type="button" value="Member" data-toggle="dropdown">
@@ -49,4 +52,4 @@
 		</div>
 	</div>
 </div>
-</div>
+

@@ -293,7 +293,8 @@ function cardViewDetail(cardnum){
 			$('#contentDetail').html(json.cardContents);
 		}
 	});
-	
+	//파일리스트 있으면 불러오기 
+	callUploadList(cardnum);
 	//카드체크리스트 있다면 보여주기
 	$.ajax({
 		url:"Checklist.card",
@@ -316,4 +317,39 @@ function cardViewDetail(cardnum){
 		}
 	});
 
+}
+
+
+// 카드에 업로드되어 있는 파일 목록 불러오기
+function callUploadList(cardNum){
+	console.log("uploadlist")
+	$('#fileUploadForm').empty();
+	
+	$.ajax({
+		url:"carduploadlist.card",
+		data:{cardNum:cardNum},
+		datatype:"json",
+		success:function(data){
+			console.log(">"+data+"<");
+			var json = JSON.parse(data);
+			$.each(json, function(index,json){
+				var div = '<form><input type="button" class="form-control inputtextbox" value="첨부 파일  : '+ json.originFileName+'" onclick = "download(\''+json.filePath+'\')">'
+
+				div += '<button type="button" class="close" onclick="fileInputDel(this)">&times;</button></form>'
+				$('#fileUploadForm').append(div)			
+			})	
+		}
+	})
+}
+
+function download(fileName){
+	var data = {fileName:fileName};
+	$.ajax({
+		url:"download.card",
+		data:data,
+		datatype:"text",
+		success: function(data){
+			
+		}
+	})
 }

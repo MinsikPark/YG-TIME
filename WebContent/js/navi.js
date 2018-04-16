@@ -1,5 +1,6 @@
 var j = 1	
 $(function(){
+	$("#cardFileUpload").hide()
 	$('.setting, .button, .tab-content, #mainFooterbar').hide()
 	
 	//사이드 관련
@@ -12,7 +13,7 @@ $(function(){
 	})
 	//여기까지 사이드 관련
 	$('#btnFileUpLoad').click(function() {
-		$('#btnFileUpload').click()
+		$('#cardFileUpload').click()
 	})
 	
 	$('#addCheckList').click(function(){
@@ -41,14 +42,38 @@ function sideShow(){
 	$('.setting, .insert, .button, .tab-content').delay(250).fadeIn()
 } 
 
+
+//카드에 파일 업로드 하기 
 function changeValue(obj){
+	console.log("파일 업로드");
+	
+	var data = $("#cardfileupload").serialize();
+
 	if(obj.value != ""){
-		var div = '<div><input type="text" class="form-control inputtextbox" value="첨부 파일  : '+ obj.value.substr(12)+'" readonly>'
-			div += '<button type="button" class="close" onclick="fileInputDel(this)">&times;</button></div>'
-		$('#fileUploadForm').append(div)
+		
+		$("#cardfileupload").ajaxForm({
+			url: "cardfileupload.card",
+			data: data,
+			type : "post",
+			datatype: "text",
+			enctype:"multipart/form-data",
+			success: function(data){
+				if(data.trim()<=0){
+					console.log(">"+data+"<")
+					console.log(">"+data.trim()+"<")
+					alert("파일 업로드 실패");
+				}
+				callUploadList($("#hiddenCardnum").val());
+				
+			}
+		})
 	}
+	$("#cardfileupload").submit();
 	obj.value =""; 
+	
 }
+
+
 
 function fileInputDel(obj){
 	obj.closest('div').remove()
@@ -130,57 +155,6 @@ function updateDetail(obj, cardNum){
 		}
 	});
 	
-}
-
-//프로젝트 추가부분
-function addProjectForm(obj){
-	if($('#projectName').length == 0){
-		var button = '<div><button class="button btn-1"><input type="text" id="projectName" style="margin-left:-60px; color:black;"></button><a class="glyphicon setting" onclick="addProject(this)">&#xe013;</a></div>'
-			$('#progress').append(button)
-		$('#projectName').focus()
-	}
-}
-
-function memberDel() {
-    confirm("멤버를 삭제하시겠습니까?");
-}
-
-function addProject(obj) {
-	var value = $('#projectName').val() 
-	if(value.trim() != ""){
-		$(obj).closest('div').remove()
-		var div  = '<div><button class="button btn-1">'+value+'</button><a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a><ul class="dropdown-menu" style= "float: right; position: unset;">'
-			div += '<li><a onclick="projectDel(this)">프로젝트 삭제</a></li><li><a onclick="projectComplete(this)">프로젝트 완료</a></li></ul>	</div>'
-		$('#progress').append(div)
-	}else{
-		alert('프로젝트 명을 입력하세요')
-	}
-}
-
-function projectDel(obj){
-	console.log($(obj).closest('div'))
-	$(obj).closest('div').remove()
-}
-
-function projectComplete(obj){
-	var ul = $(obj).closest('ul')
-	var li = '<li><a onclick="projectView(this)">프로젝트 보기</a></li><li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>'
-	$(obj).closest('div').appendTo($('#complete'))
-	ul.empty()
-	ul.append(li)
-}
-
-function projectProgress(obj){
-	console.log($(obj).closest('ul'))
-	var ul = $(obj).closest('ul')
-	var li = '<li><a onclick="projectDel(this)">프로젝트 삭제</a></li><li><a onclick="projectComplete(this)">프로젝트 완료</a></li>'
-	$(obj).closest('div').appendTo($('#progress'))
-	ul.empty()
-	ul.append(li)
-}
-
-function projectView(obj){
-	console.log('프로젝트 아이디를 받아서 다시 뿌려줘요')
 }
 
 function bokyeong(obj) {
