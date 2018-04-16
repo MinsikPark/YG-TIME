@@ -16,7 +16,7 @@
 						</div>
 						<textarea id="contentDetail"></textarea>
 						<div class="form-group">
-							<button class="btn btn-success" type="button" onclick="updateDetail(this, 34)">작성</button>
+							<button id="detaiAddbtn" class="btn btn-success" type="button">작성</button>
 						</div>
 						<div class="form-group" id="fileUploadForm"></div>
 						<div class="form-group">

@@ -287,3 +287,8 @@ function detailmodifyOk(obj, boardnum){
 		}
 	});
 }
+
+//보드 디테일 모달창 띄우기 (카드넘버를 가져가게 만들었다)
+function cardDetail(obj){
+	$('#detaiAddbtn').attr("onclick", "updateDetail(this,"+ $(obj).attr('id') +")");
+}
