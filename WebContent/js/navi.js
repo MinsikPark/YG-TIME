@@ -188,15 +188,28 @@ function focusoutdelay(cardnum){
 	}, 500);
 }
 
+//댓글을 추가하다
 function addComment(obj){
+	//userid, cardnum, replycontents
+	var id = $('#getsession').val();
+	var cardnum = $('#hiddenCardnum').val();
 	var value = $(obj).closest('div')[0].children[1].value
+	
 	if(value.trim() != ""){
-		var div = '<div class="commentlist"><img src="images/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">'
+		$.ajax({
+			url:"ReplyAdd.card",
+			datatype:"text",
+			data:{UserId:id, CardNum:cardnum, ReplyContents:value},
+			success:function(data){
+				cardViewDetail(cardnum);
+			}
+		});
+		/*var div = '<div class="commentlist"><img src="images/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">'
 			div += '<input type="text" class="form-control commentinputtextbox" value="' + value + '" readonly>'
-			div += '<button type="button" class="close" onclick="removeComment(this)">&times;</button></div>'
+			div += '<button type="bRutton" class="close" onclick="removeComment(this)">&times;</button></div>'
 			
 		$('#commentListForm').append(div)
-		$(obj).closest('div')[0].children[1].value = ""
+		$(obj).closest('div')[0].children[1].value = ""*/
 	}
 }
 
