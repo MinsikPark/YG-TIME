@@ -632,7 +632,7 @@ public class ProjectDAO {
 		ResultSet rs = null;
 		try {
 			conn = ds.getConnection();
-			String sql = "select count(p.projectnum) as projectcnt from project p join team t on p.projectnum = t.projectnum where t.userid = ? and p.PROJECTENDDATE is null";
+			String sql = "select count(p.projectnum) as projectcnt from project p join team t on p.projectnum = t.projectnum where t.userid = ? and p.PROJECTENDDATE is null and p.DELETEOK = 0";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
@@ -671,6 +671,74 @@ public class ProjectDAO {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				resultrow = rs.getInt("projectcnt");
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();
+			}catch (Exception e) {}
+		}
+		
+		
+		return  resultrow;
+	}
+	/**
+	 날      짜 : 2018. 4. 16.
+	 기      능 : list 갯수 구하기
+	 작성자명 : 최 재 욱
+	 */
+	public int countListProject(String userId) {
+		int resultrow = 0;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			conn = ds.getConnection();
+			String sql = "select count(l.listnum) as listcnt from list l join board b on l.BOARDNUM = b.BOARDNUM where l.DELETEOK = 0 and b.PROJECTNUM in(select p.projectnum from project p join team t on p.projectnum = t.projectnum where t.userid = ? and p.projectenddate is null)";
+					
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				resultrow = rs.getInt("listcnt");
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();
+			}catch (Exception e) {}
+		}
+		
+		
+		return  resultrow;
+	}
+	/**
+	 날      짜 : 2018. 4. 16.
+	 기      능 : card 갯수 구하기
+	 작성자명 : 최 재 욱
+	 */
+	public int countcardProject(String userId) {
+		int resultrow = 0;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			conn = ds.getConnection();
+			String sql = "select count(c.cardnum) as cardcnt from card c join list l on c.LISTNUM = l.LISTNUM where c.DELETEOK = 0 and l.BOARDNUM in (select b.boardnum from board b join PROJECT p on b.projectnum = p.projectnum where p.PROJECTENDDATE is null and p.projectnum in (select projectnum from team where userid=?))";
+					
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				resultrow = rs.getInt("cardcnt");
 			}
 		} catch (SQLException e) {
 			
