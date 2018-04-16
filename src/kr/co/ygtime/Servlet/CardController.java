@@ -13,6 +13,7 @@ import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.service.card.CardContentsUpdateService;
 import kr.co.ygtime.service.card.CardListService;
+import kr.co.ygtime.service.card.CardSelectService;
 import kr.co.ygtime.service.card.CardSequenceUpdateService;
 import kr.co.ygtime.service.card.CardinsertService;
 
@@ -69,9 +70,17 @@ public class CardController extends HttpServlet {
         	catch(Exception e) {
         		e.printStackTrace();
         	}
-        }else if(cmdURI.equals("/CardSequenceUpdate.card")) {
+        } else if(cmdURI.equals("/CardSequenceUpdate.card")) {
         	try {
         		action = new CardSequenceUpdateService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/Cardselect.card")) {
+        	try {
+        		action = new CardSelectService();
         		forward = action.execute(request, response);
         	}
         	catch(Exception e) {
