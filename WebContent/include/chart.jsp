@@ -11,8 +11,8 @@
 
 			<div class="modal-body">
 				<form id="chartprojectForm">
-					<input type = "button"  id="startchart" onclick = "projectChartView()" value = "진행률">
-					<input type = "button"  id="listchart" onclick ="listChartView()" value = "리스트/카드">
+					<input class ='btn btn-primary' type = "button"  id="startchart" onclick = "projectChartView()" value = "진행률">
+					<input class ='btn btn-danger' type = "button"  id="listchart" onclick ="listChartView()" value = "리스트/카드">
 					<canvas id="myChart"></canvas>
 
 					<div class="modal-footer">

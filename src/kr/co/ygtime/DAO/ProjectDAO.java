@@ -632,7 +632,7 @@ public class ProjectDAO {
 		ResultSet rs = null;
 		try {
 			conn = ds.getConnection();
-			String sql = "select count(p.projectnum) as projectcnt from project p join team t on p.projectnum = t.projectnum where t.userid = ? and p.PROJECTENDDATE is null";
+			String sql = "select count(p.projectnum) as projectcnt from project p join team t on p.projectnum = t.projectnum where t.userid = ? and p.PROJECTENDDATE is null and p.DELETEOK = 0";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();

@@ -128,11 +128,9 @@ function listChart(start, end) {
 		        backgroundColor: [
 	                'rgba(255, 99, 132, 0.7)',
 	                'rgba(54, 162, 235, 0.7)'
-	             
 	            ]
 		        }]
-		    },
-
+		    }
 		    
 		});
 }
