@@ -6,8 +6,9 @@
 --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+
 <link rel="stylesheet" href="css/fullcalendar.css" />
-<link rel='stylesheet' href="css/fullcalendar.print.min.css" media="print" />
+<link rel="stylesheet" href="css/fullcalendar.print.min.css" media="print" />
 
 <script>
 
@@ -32,10 +33,7 @@ $(function(){
 <!-- calendar -->
 <div id="calendar">
 	<br>
-	<!-- <img id="trashCan" src="images/cal-trash.png"> --> <!-- 쓰레기통 이미지 -->
-</div>
-<div id="trashCan" style="background-color:black; color:white; text-align: center; height:150px; ">
-Delete here...
+	<img id="trashCan" src="images/trashcan.png" height="35px" width="35px"> 
 </div>
 
 	
