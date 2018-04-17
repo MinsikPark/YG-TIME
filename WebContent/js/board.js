@@ -366,7 +366,7 @@ function cardViewReplys(cardnum){
 			$.each(json, function(index, elt) {
 				htmldata += '<div id="replyNum'+ elt.replyNum +'" class="commentlist">'
 						+ '<input type="text" class="form-control commentinputtextbox" value="' + elt.replyContents + '" readonly onclick="replyMod(this, '+ elt.replyNum +')">'
-						+ '<button type="button" class="close" onclick="removeComment(this)">&times;</button></div>';
+						+ '<button type="button" class="close" onclick="removeComment(this)">&times;</button></div><br>';
 				arr.push({userId:elt.userId, replyNum:elt.replyNum});
 			});
 			
@@ -393,7 +393,7 @@ function userMember(arr){
 				}else{
 					htmldata += '<img src="profile/'+json.userProfile+'" class="img-circle person" alt="Random Name" width="30" height="30">';
 				}
-				htmldata += '<label>'+json.userNicname+'</label>';
+				htmldata += '<label>'+json.userNicname+'</label><br>';
 				
 				$('#replyNum'+elt.replyNum).prepend(htmldata);
 			}

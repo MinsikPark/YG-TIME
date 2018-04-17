@@ -146,6 +146,7 @@ function checkUpdate(checked, content, checknum){
 		data:{Checked:checked, Checkboxcontents:content, Cardnum:cardnum, Checknum:checknum},
 		success:function(data){
 			//성공 아무것도 없어도 됨.
+			focusoutdelay(cardnum);
 		}
 	});
 }
