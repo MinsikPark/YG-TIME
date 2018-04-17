@@ -243,8 +243,13 @@ function callCardList(listNum){
         success:function(carddata){
             var cardjson = JSON.parse(carddata);
             var cardcontent = "";
+            console.log(cardjson);
             $.each(cardjson, function(indexcard, eltcard) {
-                cardcontent += '<div class="card ui-sortable-handle" id ="'+eltcard.cardNum+'" data-toggle="modal" data-target="#myModal1" onclick="cardDetail(this)" style="">'+eltcard.cardName+'</div>';
+            	console.log("카드넘카드넘카드넘" + eltcard.cardNum);
+                cardcontent += '<div id ="div'+eltcard.cardNum+'">';
+            	cardcontent += '<div class="card ui-sortable-handle" id ="'+eltcard.cardNum+'" data-toggle="modal" data-target="#myModal1" onclick="cardDetail(this)" style="">'+eltcard.cardName+'</div>';
+                cardcontent += '<button type="button" class="close" onclick="deleteCard('+eltcard.cardNum+','+listNum+')">&times;</button>';
+                cardcontent += '</div>';
             });
             $("#listnum"+listNum+" ").append(cardcontent);
             sortable()

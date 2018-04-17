@@ -168,7 +168,7 @@ public class CardDAO {
 			
 			conn = ds.getConnection();
 			String sql= 	"select cardnum, listnum, cardname, cardcontents, cardsequential, deleteok "
-							+ "from CARD where listnum=? ORDER BY cardsequential ASC";
+							+ "from CARD where listnum=? and deleteok=0 ORDER BY cardsequential ASC";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, listNum); 
@@ -182,10 +182,10 @@ public class CardDAO {
 				carddto.setListNum(rs.getInt("listnum"));
 				carddto.setCardName(rs.getString("cardname"));
 				carddto.setCardContents(rs.getString("cardcontents"));
-				carddto.setCardSequential(rs.getInt("deleteok"));
+				carddto.setDeleteCheck(rs.getInt("deleteok"));
 				
 				//순번 
-				carddto.setDeleteCheck(rs.getInt("cardsequential"));
+				carddto.setCardSequential(rs.getInt("cardsequential"));
 
 				cardlist.add(carddto);
 				
@@ -247,7 +247,7 @@ public class CardDAO {
 	 기      능 : 카드 삭제 (삭제여부 업데이트)
 	 작성자명 : 김 진 원
 	*/
-	public int cardDelete(int carNum) {
+	public int cardDelete(int cardNum) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int row = 0;
@@ -256,7 +256,7 @@ public class CardDAO {
 			String sql="update CARD set deleteok=1, cardsequential=-1 where cardnum=?";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, carNum);
+			pstmt.setInt(1, cardNum);
 			
 			row = pstmt.executeUpdate();
 			
@@ -981,6 +981,9 @@ public class CardDAO {
 				//게시글 삭제
 				String del_reply_sql = "delete from REPLY where replynum=? and cardnum=?";
 				
+				//게시글 삭제후 삭제한 댓글넘버 보다 큰 댓글들 넘버 -1
+				String up_reply_sql = "update REPLY set replynum=replynum-1 where cardnum=? and replynum > ?";
+				
 				pstmt = conn.prepareStatement(sel_id_sql);
 				pstmt.setInt(1, replyNum);
 				pstmt.setInt(2, cardNum);
@@ -990,11 +993,22 @@ public class CardDAO {
 				if(rs.next()) { 
 					//아이디가 일치하는지 확인
 					if(userid.equals(rs.getString("userid"))) {
+						pstmt.close();
+						//실제 삭제
 						pstmt = conn.prepareStatement(del_reply_sql);
 						pstmt.setInt(1, replyNum);
 						pstmt.setInt(2, cardNum);
 						
 						row = pstmt.executeUpdate();
+						if(row > 0) {
+							pstmt.close();
+							//삭제 성공 후 댓글넘버 업데이트
+							pstmt = conn.prepareStatement(up_reply_sql);
+							pstmt.setInt(1, cardNum);
+							pstmt.setInt(2, replyNum);
+							
+							row += pstmt.executeUpdate();
+						}
 					}
 				}
 						

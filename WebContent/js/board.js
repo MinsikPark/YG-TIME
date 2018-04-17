@@ -96,6 +96,22 @@ function addCard(obj, listnum){
 		});
 	}
 }
+//카드삭제
+function deleteCard(cardid, listNum) {
+	var cardNum = cardid;
+	console.log("메롱메롱" + cardNum);
+	$.ajax({
+			url : "carddelete.card",
+			datatype:"text",
+			data:{cardNum:cardNum},
+			success:function(data){
+				console.log("너는 누구냐?" + data.trim());
+				console.log("listNum이래요 : " + listNum)
+				$('#div'+cardid).remove();
+				callCardList(listNum)
+			}
+			})
+}
 
 //리스트생성 텍스트박스를 불러오기
 function addListView(obj, boardnum){
@@ -336,49 +352,47 @@ function cardViewReplys(cardnum){
 		data:{CardNum:cardnum},
 		success:function(data){
 			var json = JSON.parse(data);
-			console.log(json);
-			userMember();
 			//json : cardNum, replyContents, replyNum, userId
-			$('#commentListForm').empty();
-			
 			var arr = [];
 			
 			var htmldata = '';
 			$.each(json, function(index, elt) {
 				htmldata += '<div id="replyNum'+ elt.replyNum +'" class="commentlist">'
 						+ '<input type="text" class="form-control commentinputtextbox" value="' + elt.replyContents + '" readonly>'
-						+ '<button type="bRutton" class="close" onclick="removeComment(this)">&times;</button></div>';
+						+ '<button type="button" class="glyphicon close" onclick="replyMod(this, '+elt.checkNum+')">&#xe065;</button>'
+						+ '<button type="button" class="close" onclick="removeComment(this)">&times;</button></div>';
 				
 				arr.push({userId:elt.userId, replyNum:elt.replyNum});
 			});
 			
 			$('#commentListForm').html(htmldata);
-			
-			$.each(arr, function(i, elt) {
-				userMember(elt.userId, elt.replyNum);
-			});
+
+			userMember(arr);
 		}
 	});
 }
 
 //멤버 찾아서 멤버 프로필 보여주기
-function userMember(userid, replynum){
-	$.ajax({
-		url : "userSelect.member",
-		datatype : "JSON",
-		data : {userId:userid},
-		success : function(data) {
-			//json : userId, userNicname, userProfile
-			var json = JSON.parse(data);
-			console.log(json);
-			var htmldata = '';
-			if(json.userProfile == "" || json.userProfile == null){
-				htmldata += '<img src="profile/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">';
-			}else{
-				htmldata += '<img src="profile/'+json.userProfile+'" class="img-circle person" alt="Random Name" width="30" height="30">';
+function userMember(arr){
+	$.each(arr, function(i, elt) {
+		$.ajax({
+			url : "userSelect.member",
+			datatype : "JSON",
+			data : {userId:elt.userId},
+			success : function(data) {
+				//json : userId, userNicname, userProfile
+				var json = JSON.parse(data);
+				console.log(json);
+				var htmldata = '';
+				if(json.userProfile == "" || json.userProfile == null){
+					htmldata += '<img src="profile/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">';
+				}else{
+					htmldata += '<img src="profile/'+json.userProfile+'" class="img-circle person" alt="Random Name" width="30" height="30">';
+				}
+				htmldata += '<label>'+json.userNicname+'</label>';
+				
+				$('#replyNum'+elt.replyNum).prepend(htmldata);
 			}
-			
-			$('#replyNum'+replynum).prepend(htmldata);
-		}
+		});
 	});
 }
