@@ -30,6 +30,7 @@ public class LoginService implements Action{
 		String loginPwd = request.getParameter("loginPwd");
 		System.out.println("여기까지가 끝인가보오  " + loginEmail + " : " + loginPwd);
 		String msg = "fail";
+		String path = "login.jsp";
 		try {
 			MemberDAO dao = new MemberDAO();
 			MemberDTO dto = dao.memberSelect(loginEmail);
@@ -37,19 +38,18 @@ public class LoginService implements Action{
 			if(dto !=null) { // 해당하는 멤버가 있다면
 				if(loginPwd.equals(dto.getUserPwd())) { // 입력한 비밀번호가 user의 비밀번호와 같은지 체크
 					msg = "success";
+					path = "main.jsp";
 					request.getSession().setAttribute("sessionId", loginEmail);//비밀번호가 일치 한다면 session에 담아주세요
 				}
-			} 
+			}
+			
 		} catch (Exception e) {
 			msg = "error";
 			e.printStackTrace();
 		}
+		request.setAttribute("path", path);
 		request.setAttribute("msg", msg);
-		if(loginEmail.equals("")) {
-			request.setAttribute("path", "login.jsp");	
-		}else {
-			request.setAttribute("path", "main.jsp");
-		}
+		
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath("/ajaxpath/loginOk.jsp");

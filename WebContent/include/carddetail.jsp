@@ -25,7 +25,7 @@
 							<div id="checkListForm"></div>
 						</div>
 						<div class="form-group">
-							<label for="comment">댓글</label> <input type="text" class="form-control commentlist" placeholder="댓글을 입력하세요">
+							<label for="comment">댓글</label> <input type="text" class="form-control commentlist" placeholder="댓글을 입력하세요" onkeyup="fnChkByte(this, 80)">
 							<button class="btn btn-success" type="button" onclick="addComment(this)">작성</button>
 							<div id="commentListForm"></div>
 						</div>

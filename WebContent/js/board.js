@@ -157,7 +157,6 @@ function listDelete(obj) {
 
 //리스트 삭제
 function listDel(obj){
-	console.log($(obj))
 	var input = confirm('삭제하시겠습니까?')
 	if(input){
 		console.log('true')
@@ -178,14 +177,13 @@ function listDel(obj){
 //(텍스트 클릭하면 텍스트박스 불러오기)리스트 수정
 function listmodify(obj, listNum, boardnum){
 	var html = $(obj).html();
-	var text = "<input class='inputtext' type='text' placeholder=" + html + " name='title' onkeyup='fnChkByte(this,20)' ><a onclick='listmodifyOk(this,"+ listNum + "," + boardnum +")'>완료</a>" 
-			+"<a onclick='boardclick(" + boardnum +")'>취소</a>";
+	var text = "<input onfocusout='focusOutBoardDelay("+boardnum+")' class='inputtext' type='text' placeholder=" + html + " name='title' onkeyup='fnChkByte(this,20)' ><a onclick='listmodifyOk(this,"+ listNum + "," + boardnum +")'>완료</a>";;
 	
 	$(obj).removeAttr("onclick");
 	$(obj).html("");
 	$(obj).parent().children('a').remove();
 	$(obj).append(text);
-	
+	$(obj).children('input').focus();
 }
 
 //리스트 수정 확인
@@ -211,32 +209,30 @@ function boardTitleEdit(obj, boardNum){
 	var htmlObj = $(obj).html();
 	$(obj).removeAttr("onclick");
 	$(obj).html('');
-	var edit = "<input class='inputtext' type='text' placeholder=" + htmlObj + " name='title' onkeyup='fnChkByte(this,20)'><a onclick='boardmodifyOk(this,"+ boardNum +")'>완료</a>" 
-			+"<a onclick='boardclick("+boardNum+")'>취소</a>";
+	var edit = "<input onfocusout='focusOutBoardDelay("+boardNum+")' class='inputtext' type='text' placeholder=" + htmlObj + " name='title' onkeyup='fnChkByte(this,20)'><a onclick='boardmodifyOk(this,"+ boardNum +")'>완료</a>";
 	
 	$(obj).append(edit);
+	$(obj).children('input').focus();
 }
 
-//보다디테일 클릭
+//보드디테일 클릭
 function boardDetailEdit(obj, boardNum){
 	var htmlObj = $(obj).html();
 	$(obj).removeAttr("onclick");
 	$(obj).html('');
-	var edit = "<input class='inputtext' type='text' placeholder=" + htmlObj + " name='title' onkeyup='fnChkByte(this,30)'><a onclick='detailmodifyOk(this,"+ boardNum +")'>완료</a>" 
-	+"<a onclick='boardclick("+boardNum+")'>취소</a>";
+	var edit = "<input onfocusout='focusOutBoardDelay("+boardNum+")' class='inputtext' type='text' placeholder=" + htmlObj + " name='title' onkeyup='fnChkByte(this,30)'><a onclick='detailmodifyOk(this,"+ boardNum +")'>완료</a>";
 	
 	$(obj).append(edit);
+	$(obj).children('input').focus();
 }
 
 //보드제목 수정 확인
 function boardmodifyOk(obj, boardnum){
 	var title = $(obj).parent().children("input").val();
-	
 	var data = {
 			boardNum:boardnum,
 			boardTitle: title
 	};
-	
 	$.ajax({
 		url:"boardtitlemodify.board",
 		datatype:"text",
@@ -254,7 +250,6 @@ function boardmodifyOk(obj, boardnum){
 //보드 디테일 수정 확인
 function detailmodifyOk(obj, boardnum){
 	var detailtitle = $(obj).parent().children("input").val();
-	
 	var data = {
 			boardNum:boardnum,
 			detail: detailtitle
