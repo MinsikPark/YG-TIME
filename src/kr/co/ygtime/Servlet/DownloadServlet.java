@@ -1,34 +1,26 @@
-/* 
-    파일명: DownLoadService.java
-    설명: 프로젝트 내용 추가 Service부
-    작성일: 2018. 4. 16.
-    작성자: 박 민 식
-*/
+package kr.co.ygtime.Servlet;
 
-package kr.co.ygtime.service.card;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
+import java.io.IOException;
+import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.java.util.jar.pack.Package.File;
 
-import kr.co.ygtime.Action.Action;
-import kr.co.ygtime.Action.ActionForward;
+@WebServlet("/download")
+public class DownloadServlet extends HttpServlet {
+ private static final long serialVersionUID = 1L;
+   
+ protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-public class DownLoadService implements Action{
-
-	@Override
-	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		
-		String filename = request.getParameter("fileName");
-		String savepath = "cardfile";
+	 	String filename = request.getParameter("fileName");
+		String savepath = "upload";
 		String downloadpath = request.getRealPath(savepath);
 		String FilePath = downloadpath + "\\" + filename;
-		System.out.println("FilePath : " + FilePath);
 		byte[] b = new byte[4096];
 		try {
 			
@@ -57,10 +49,11 @@ public class DownLoadService implements Action{
 			
 			e.printStackTrace();
 		}
-		
-		ActionForward forward = new ActionForward();
-		forward.setPath("/ajax/result_row.jsp");
-		return forward;
-	}
-	
+
+ }
+
+ protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  doGet(request, response);
+ }
+
 }

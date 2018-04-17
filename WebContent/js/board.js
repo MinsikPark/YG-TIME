@@ -333,23 +333,23 @@ function callUploadList(cardNum){
 			console.log(">"+data+"<");
 			var json = JSON.parse(data);
 			$.each(json, function(index,json){
-				var div = '<form><input type="button" class="form-control inputtextbox" value="첨부 파일  : '+ json.originFileName+'" onclick = "download(\''+json.filePath+'\')">'
-
-				div += '<button type="button" class="close" onclick="fileInputDel(this)">&times;</button></form>'
+				var div = '<div><input type="button" class="form-control inputtextbox" value="첨부 파일  : '+ json.originFileName+'">'
+				div += '<a href="download?fileName='+json.filePath+'">다운로드</a>'
+				div += '<button type="button" class="close" onclick="fileInputDel(this)">&times;</button></div>'
 				$('#fileUploadForm').append(div)			
 			})	
 		}
 	})
 }
 
-function download(fileName){
+/*function download(fileName){
 	var data = {fileName:fileName};
 	$.ajax({
-		url:"download.card",
+		url:"download",
 		data:data,
 		datatype:"text",
 		success: function(data){
 			
 		}
 	})
-}
+}*/

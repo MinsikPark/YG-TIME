@@ -30,7 +30,7 @@ public class CardFileUploadService implements Action{
 		
 		MultipartRequest multi = null; // 파일 업로드를 위한 cos.jar 추가 및 객체 생성
 		int filesize = 10*1024*1024; // 업로드 파일 max 사이즈 10메가
-		String savepath = request.getRealPath("/cardfile");
+		String savepath = request.getRealPath("/upload");
 		int resultrow =0;
 		
 		try {
