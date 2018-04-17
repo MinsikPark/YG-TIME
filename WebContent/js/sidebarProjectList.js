@@ -25,8 +25,8 @@ function callprojectlist(){
 						datatype:"text",
 						data: {projectnum:projectNum, userid:sessionId},
 						success:function(data){
-							var cp = '<div><button class="button btn-1" onclick="projectView('+projectNum+')">'+ proejectName +'</button>';
-							var pg = '<div><button class="button btn-1" onclick="projectView('+projectNum+')">' + proejectName + '</button>';
+							var cp = '<div><button class="button btn-1" onclick="projectView('+projectNum+',this)">'+ proejectName +'</button>';
+							var pg = '<div><button class="button btn-1" onclick="projectView('+projectNum+',this)">' + proejectName + '</button>';
 							
 							if(data.trim()=="0"){
 								cp += '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
