@@ -15,15 +15,15 @@
 		<button type="button" id = "plus" class="btn btn-default"  data-toggle="dropdown" style="margin: 0px 0px 10px 30px;">
 			<span class="glyphicon glyphicon-plus" ></span> 멤버 추가
 		</button>
-		<ul class="dropdown-menu" style="width: 300px;">
+		<ul class="dropdown-menu" id = "friend" style="width: 300px; height:300px;">
 			<li><div class="input-group">
 					<div class="form-group">
-			   			<input type="email" class="form-control" id="emailSearch" value="userId" placeholder="이메일 입력..">
+			   			<input type="email" class="form-control" id="emailSearch" onclick="autoComplet()" placeholder="이메일 입력..">
 					</div>
 					<span class="input-group-btn">
 						<input type="hidden" id="thisProjectNum">
 						<button class="btn btn-default" type="button"  onclick="memberinvite()">
-							<span class="glyphicon glyphicon-search" ></span>
+							<span class="glyphicon">&#xe171;</span>
 						</button>
 					</span>
 				</div>

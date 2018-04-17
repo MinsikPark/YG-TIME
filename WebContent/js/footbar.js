@@ -136,11 +136,29 @@ function memberToKickOut(obj) {
 				console.log(data);
 				memberList()
 				callprojectlist()
+				
 				}
 			})
 	
 }
+//오토컴플릿
+function autoComplet() {
+	console.log("바보바보")
+	 $.ajax({
+		 		url : "comple.member",
+		 		datatype : "JSON",
+		 		success : function (data) {
+					var param = JSON.parse(data);
 
+					$('#emailSearch').autocomplete({
+						 source: param,
+						 appendTo: "#friend"
+					})
+				}
+		 		
+	 		})
+}
+ 
 //팀탈퇴
 function memberDelete() {
 	console.log("메롱메롱메롱")

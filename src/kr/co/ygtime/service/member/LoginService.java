@@ -45,7 +45,12 @@ public class LoginService implements Action{
 			e.printStackTrace();
 		}
 		request.setAttribute("msg", msg);
-		request.setAttribute("path", "main.jsp");
+		if(loginEmail.equals("")) {
+			request.setAttribute("path", "login.jsp");	
+		}else {
+			request.setAttribute("path", "main.jsp");
+		}
+		
 		ActionForward forward = new ActionForward();
 		forward.setPath("/ajaxpath/loginOk.jsp");
 		
