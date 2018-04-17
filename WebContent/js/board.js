@@ -324,7 +324,6 @@ function cardViewDetail(cardnum){
 function callUploadList(cardNum){
 	console.log("uploadlist")
 	$('#fileUploadForm').empty();
-	
 	$.ajax({
 		url:"carduploadlist.card",
 		data:{cardNum:cardNum},
@@ -333,8 +332,7 @@ function callUploadList(cardNum){
 			console.log(">"+data+"<");
 			var json = JSON.parse(data);
 			$.each(json, function(index,json){
-				var div = '<div><input type="button" class="form-control inputtextbox" value="첨부 파일  : '+ json.originFileName+'">'
-				div += '<a href="download?fileName='+json.filePath+'">다운로드</a>'
+				var div ='<div><a class="down" href="download?fileName='+json.filePath+'">'+ json.originFileName+'</a>' 
 				div += '<button type="button" class="close" onclick="fileInputDel(this)">&times;</button></div>'
 				$('#fileUploadForm').append(div)			
 			})	
@@ -342,14 +340,9 @@ function callUploadList(cardNum){
 	})
 }
 
-/*function download(fileName){
-	var data = {fileName:fileName};
-	$.ajax({
-		url:"download",
-		data:data,
-		datatype:"text",
-		success: function(data){
-			
-		}
-	})
+/*function downloadclick(obj){
+	//$(obj).find("a").click();
+	console.log($(obj).parent().find('a'));
+	$(obj).parent().find('a').trigger("click");
 }*/
+
