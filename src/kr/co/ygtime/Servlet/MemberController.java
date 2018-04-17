@@ -18,6 +18,7 @@ import kr.co.ygtime.service.member.InviteListService;
 import kr.co.ygtime.service.member.InviteMsgService;
 import kr.co.ygtime.service.member.MsgAgreeService;
 import kr.co.ygtime.service.member.MsgDeleteSerivce;
+import kr.co.ygtime.service.member.ProfileImgService;
 import net.sf.json.JSONArray;
 import kr.co.ygtime.service.member.JoinService;
 import kr.co.ygtime.service.member.LoginService;
@@ -141,6 +142,14 @@ public class MemberController extends HttpServlet {
             catch(Exception e) {
                 e.getMessage();
             }
+        }else if(cmdURI.equals("/profileimg.member")) {
+        	action = new ProfileImgService();
+        	  try {
+                  forward = action.execute(request, response);
+                  }
+                  catch(Exception e) {
+                      e.getMessage();
+                  }
         }else if(cmdURI.equals("/userSelect.member")) {
 
             action = new MemeberSelectService();
