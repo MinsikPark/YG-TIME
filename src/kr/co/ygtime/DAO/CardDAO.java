@@ -937,13 +937,12 @@ public class CardDAO {
 		try {
 			conn = ds.getConnection();
 			String sql="update REPLY set replycontents=? "
-					+ "where replynum=? and userid=? and cardnum=?";
+					+ "where replynum=? and cardnum=?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, reply.getReplyContents());
 			pstmt.setInt(2, reply.getReplyNum());
-			pstmt.setString(3, reply.getUserId());
-			pstmt.setInt(4, reply.getCardNum());
+			pstmt.setInt(3, reply.getCardNum());
 			
 			row = pstmt.executeUpdate();
 			
