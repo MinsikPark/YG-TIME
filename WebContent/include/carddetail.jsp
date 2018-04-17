@@ -41,13 +41,14 @@
 					</form>
 					<input class="detailbutton btn btn-primary" type="button" value="Check List" id="addCheckList" onclick="addCheckListForm()">
 					<div class="dropdown">
-						<input class="detailbutton btn btn-primary" type="button" value="Member" data-toggle="dropdown">
+						<input class="detailbutton btn btn-primary" type="button" value="Member" data-toggle="dropdown" onclick="cardMemberAddList(this)">
 						<ul class="dropdown-menu">
 							<li><a href="#">HTML</a></li>
 							<li><a href="#">CSS</a></li>
 							<li><a href="#">JavaScript</a></li>
 						</ul>
 					</div>
+					<div id="cardMemberView"></div>
 				</div>
 			</div>
 		</div>

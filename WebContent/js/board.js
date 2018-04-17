@@ -320,7 +320,8 @@ function cardViewDetail(cardnum){
 	
 	cardViewContents(cardnum);
 	cardViewCheckList(cardnum);
-	cardViewReplys(cardnum);	
+	cardViewReplys(cardnum);
+	cardMemberListView(cardnum);
 }
 
 //카드제목 보여주기 & 카드내용이 있었다면 보여주기
@@ -341,9 +342,6 @@ function cardViewContents(cardnum){
 
 //카드체크리스트 있다면 보여주기
 function cardViewCheckList(cardnum){
-
-
-	//카드체크리스트 있다면 보여주기
 	$.ajax({
 		url:"Checklist.card",
 		datatype:"json",
@@ -417,18 +415,14 @@ function userMember(arr){
 	});
 }
 
-
-
 // 카드에 업로드되어 있는 파일 목록 불러오기
 function callUploadList(cardNum){
-	console.log("uploadlist")
 	$('#fileUploadForm').empty();
 	$.ajax({
 		url:"carduploadlist.card",
 		data:{cardNum:cardNum},
 		datatype:"json",
 		success:function(data){
-			console.log(">"+data+"<");
 			var json = JSON.parse(data);
 			$.each(json, function(index,json){
 				var div ='<div><a class="down" href="download?fileName='+json.filePath+'">'+ json.originFileName+'</a>' 
@@ -439,4 +433,27 @@ function callUploadList(cardNum){
 	})
 }
 
-
+// 해당카드의 카드멤버 목록 불러오기
+function cardMemberListView(cardnum){
+	$.ajax({
+		url:"CardMemberList.card",
+		datatype:"json",
+		data:{cardNum:cardnum},
+		success:function(data){
+			var json = JSON.parse(data);
+			//json : userId, userNicname, userProfile, userPwd
+			var htmldata = '';
+			$.each(json, function(i, elt) {
+				htmldata += '<div onclick="cardMemberDel(this)" class="close">';
+				if(json.userProfile == "" || json.userProfile == null){
+					htmldata += '<img src="profile/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">';
+				}else{
+					htmldata += '<img src="profile/'+json.userProfile+'" class="img-circle person" alt="Random Name" width="30" height="30">';
+				}
+				htmldata += '<input type="hidden" value="'+elt.userId+'"></div>'
+			});
+			
+			$('#cardMemberView').html(htmldata);
+		}
+	});
+}
