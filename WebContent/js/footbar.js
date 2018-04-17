@@ -50,6 +50,7 @@ function inviteIdCheck(){
 
 // 멤버리스트뿌려주기
 function memberList() {
+	$('#thisProjctMeber').empty();
 	memberOwnerView()
 	var userId = $("#getsession").val()
 	
@@ -58,8 +59,8 @@ function memberList() {
 		datatype : "JSON",
 		success : function(data) {
 			memberOwnerView()
+			console.log(data);
 			var json = JSON.parse(data)
-			console.log(json);
 			var div = ""
 			$('#thisProjctMeber').empty()
 			var grade = $('#thisMemberGrade').val()
