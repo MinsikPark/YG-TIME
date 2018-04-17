@@ -6,7 +6,7 @@
 */
 package kr.co.ygtime.service.member;
 
-import javax.naming.NamingException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,7 +14,7 @@ import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.DAO.MemberDAO;
 import kr.co.ygtime.DTO.MemberDTO;
-import net.sf.json.JSONObject;
+
 
 public class MemberModifyService implements Action{
 
@@ -27,22 +27,23 @@ public class MemberModifyService implements Action{
 		String userId =  (String)request.getSession().getAttribute("sessionId");
 		String userPwd = request.getParameter("modpassword");
 		String userNicname = request.getParameter("modnickName");
-		String userProfile = request.getParameter("modfileUpLoad");
-		memberdto = new MemberDTO();
-		memberdto.setUserId(userId);
-		memberdto.setUserPwd(userPwd);
-		memberdto.setUserNicname(userNicname);
-		memberdto.setUserProfile(userProfile);
-		
 		try {
 			memberdao = new MemberDAO();
-			resultrow = memberdao.memberUpdate(memberdto);
-			request.setAttribute("resultrow", resultrow);
-			forward = new ActionForward();
-			forward.setPath("/ajaxpath/result_row.jsp");
-		} catch (NamingException e) {
+
+			memberdto = memberdao.memberSelect(userId);
+			
+			if(memberdto!=null) {
+				memberdto.setUserPwd(userPwd);
+				memberdto.setUserNicname(userNicname);
+				resultrow = memberdao.memberUpdate(memberdto);
+			}
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		request.setAttribute("resultrow", resultrow);
+		forward = new ActionForward();
+		forward.setPath("/ajaxpath/result_row.jsp");
 		return forward;
 	}
 

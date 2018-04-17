@@ -18,12 +18,12 @@
 		<ul class="dropdown-menu" style="width: 300px;">
 			<li><div class="input-group">
 					<div class="form-group">
-			   			<input type="email" class="form-control" id="emailSearch" value="userId" placeholder="이메일 입력..">
+			   			<input type="email" class="form-control" id="emailSearch" placeholder="이메일 입력..">
 					</div>
 					<span class="input-group-btn">
 						<input type="hidden" id="thisProjectNum">
 						<button class="btn btn-default" type="button"  onclick="memberinvite()">
-							<span class="glyphicon glyphicon-search" ></span>
+							<span class="glyphicon">&#xe171;</span>
 						</button>
 					</span>
 				</div>

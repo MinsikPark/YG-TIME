@@ -1,5 +1,6 @@
 var j = 1	
 $(function(){
+	$("#cardFileUpload").hide()
 	$('.setting, .button, .tab-content, #mainFooterbar').hide()
 	
 	//사이드 관련
@@ -13,6 +14,7 @@ $(function(){
 	//여기까지 사이드 관련
 	$('#btnFileUpLoad').click(function() {
 		$('#btnFileUpload').click()
+		$('#cardFileUpload').click()
 	})
 	
 	$('#modalHeader').click(function(){
@@ -41,14 +43,41 @@ function sideShow(){
 	$('.setting, .insert, .button, .tab-content').delay(250).fadeIn()
 } 
 
+
+//카드에 파일 업로드 하기 
 function changeValue(obj){
+	console.log("파일 업로드");
+	
+	var data = $("#cardfileupload").serialize();
+
 	if(obj.value != ""){
 		var div = '<div><input type="text" class="form-control inputtextbox" value="첨부 파일  : '+ obj.value.substr(12)+'" readonly>'
 			div += '<button type="button" class="close" onclick="fileInputDel(this)">&times;</button></div>'
 		$('#fileUploadForm').append(div)
+		
+		$("#cardfileupload").ajaxForm({
+			url: "cardfileupload.card",
+			data: data,
+			type : "post",
+			datatype: "text",
+			enctype:"multipart/form-data",
+			success: function(data){
+				if(data.trim()<=0){
+					console.log(">"+data+"<")
+					console.log(">"+data.trim()+"<")
+					alert("파일 업로드 실패");
+				}
+				callUploadList($("#hiddenCardnum").val());
+				
+			}
+		})
 	}
+	$("#cardfileupload").submit();
 	obj.value =""; 
+	
 }
+
+
 
 function fileInputDel(obj){
 	obj.closest('div').remove()
@@ -146,6 +175,7 @@ function checkUpdate(checked, content, checknum){
 		data:{Checked:checked, Checkboxcontents:content, Cardnum:cardnum, Checknum:checknum},
 		success:function(data){
 			//성공 아무것도 없어도 됨.
+			focusoutdelay(cardnum);
 		}
 	});
 }
@@ -293,6 +323,7 @@ function updateDetail(obj, cardNum){
 			}
 		}
 	});
+
 }
 
 function bokyeong(obj) {

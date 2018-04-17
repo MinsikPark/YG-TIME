@@ -14,7 +14,7 @@ $(function() {
 				var json = JSON.parse(data);
 				$("#modemail").val(json.userId);
 				$("#modnickName").val(json.userNicname);
-				$("#modfileUpLoad").val(json.userProfile);
+				$("#currentProfile").attr("src", "profile/"+json.userProfile);
 			}
 		});
 

@@ -33,8 +33,8 @@
 	    margin:10px;
 	    width:300px;
 	    float:left;
-	    overflow-y: auto;
-	    overflow-x: hidden;
+	    overflow-x: auto;
+	    overflow-y: unset;
 	    position:relative;
 	    max-height: 600px;
 	}
@@ -43,6 +43,7 @@
 		text-align:left;
 	    font-weight:bold;
 	    overflow: auto;
+	    margin: 10px;
 	    z-index: 2;
 	}
 	

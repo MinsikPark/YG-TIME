@@ -59,6 +59,7 @@ function memberList() {
 		success : function(data) {
 			memberOwnerView()
 			var json = JSON.parse(data)
+			console.log(json);
 			var div = ""
 			$('#thisProjctMeber').empty()
 			var grade = $('#thisMemberGrade').val()
