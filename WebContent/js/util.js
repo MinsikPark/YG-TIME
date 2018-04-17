@@ -1,7 +1,5 @@
 function fnChkByte(obj, maxByte){
-	console.log($(obj))
 	var str = obj.value;
-	console.log(obj.value)
 	var str_len = str.length;
 	
 	var rbyte = 0;

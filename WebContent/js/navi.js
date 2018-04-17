@@ -89,7 +89,7 @@ function cardNameMod(){
 	var cardnum = $('#hiddenCardnum').val();
 	var htmlObj = $('#modalHeader').html();
 	
-	var div = '<div onfocusout="focusoutdelay('+ cardnum +')"><input type="text" class="form-control inputtextbox" placeholder=' + htmlObj + '>'
+	var div = '<div onfocusout="focusoutdelay('+ cardnum +')"><input type="text" class="form-control inputtextbox" placeholder="' + htmlObj + '" onkeyup="fnChkByte(this, 20)">'
 		+ '<button type="button" class="close glyphicon" onclick="cardNameModOk()">&#xe013;</button></div>';
 
 	$('#modalHeader').html(div);
@@ -120,7 +120,7 @@ function cardNameModOk(){
 function addCheckListForm(){
 	var cardnum = $('#hiddenCardnum').val();
 	
-	var div = '<div id="addCheckListdiv"><input type="text" class="form-control inputtextbox">'
+	var div = '<div id="addCheckListdiv"><input type="text" class="form-control inputtextbox" onkeyup="fnChkByte(this, 50)">'
 		div += '<button type="button" class="close glyphicon" onclick="addCheckList(this)">&#xe013;</button></div>'
 	
 	$('#addCheckList').attr('onclick', 'addCancel()');
@@ -200,7 +200,7 @@ function checkBoxMod(obj, checknum){
 	var p = $(obj).closest('p');
 	var text = p.children('label').html();
 	
-	var div = '<div onfocusout="focusoutdelay('+ cardnum +')"><input type="text" class="form-control inputtextbox">'
+	var div = '<div onfocusout="focusoutdelay('+ cardnum +')"><input type="text" class="form-control inputtextbox" onkeyup="fnChkByte(this, 50)">'
 		+ '<button type="button" class="close glyphicon" onclick="checkBoxModOk(this, '+checknum+')">&#xe013;</button></div>';
 	p.empty();
 	p.html(div);
@@ -213,10 +213,17 @@ function checkBoxModOk(obj, checknum){
 	checkUpdate(0, content, checknum);
 }
 
-//포커스 아웃 딜레이
+//포커스 아웃 딜레이(카드)
 function focusoutdelay(cardnum){
 	setTimeout(function() {
 		cardViewDetail(cardnum);
+	}, 300);
+}
+
+//포커스 아웃 딜레이(보드 -> 리스트와 카드)
+function focusOutBoardDelay(boardNum){
+	setTimeout(function() {
+		boardclick(boardNum);
 	}, 300);
 }
 
