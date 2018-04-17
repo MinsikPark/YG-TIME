@@ -98,6 +98,7 @@ function addCard(obj, listnum){
 }
 //카드삭제
 function deleteCard(cardid, listNum) {
+	event.stopPropagation();//상위 이벤트 중지
 	var cardNum = cardid;
 	console.log("메롱메롱" + cardNum);
 	$.ajax({
@@ -298,9 +299,15 @@ function cardDetail(obj){
 
 //카드 상세 페이지
 function cardViewDetail(cardnum){
-	cardViewContents(cardnum);
-	cardViewCheckList(cardnum);
-	cardViewReplys(cardnum);
+	/*console.log($('#'+cardnum).closest('button').click.bind(this));
+	if($('#'+cardnum).closest('button').click){
+		console.log("123132132132132321321321")
+	}else{*/
+		cardViewContents(cardnum);
+		cardViewCheckList(cardnum);
+		cardViewReplys(cardnum);	
+	//}
+	
 }
 
 //카드제목 보여주기 & 카드내용이 있었다면 보여주기
