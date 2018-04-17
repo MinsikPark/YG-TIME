@@ -400,7 +400,7 @@ function projectDel(obj){
 
 function projectComplete(obj){
 	var ul = $(obj).closest('ul')
-	var li = '<li><a onclick="projectView(this)">프로젝트 보기</a></li><li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>'
+	var li = '<li><a onclick="projectView(this, this)">프로젝트 보기</a></li><li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>'
 	$(obj).closest('div').appendTo($('#complete'))
 	ul.empty()
 	ul.append(li)
@@ -515,7 +515,7 @@ function memberList(projectNum2) {
 					<button class="button btn-1">Button 3</button>
 					<a class="glyphicon glyphicon-cog setting"  data-toggle="dropdown"></a>
     				<ul class="dropdown-menu" style= "float: right; position: unset;">
-      					<li><a onclick="projectView(this)">프로젝트 보기</a></li>
+      					<li><a onclick="projectView(this, this)">프로젝트 보기</a></li>
       					<li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>
     				</ul>	
 				</div>
@@ -523,7 +523,7 @@ function memberList(projectNum2) {
 					<button class="button btn-1">Button 4</button>
 					<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
     				<ul class="dropdown-menu" style= "float: right; position: unset;">
-      					<li><a onclick="projectView(this)">프로젝트 보기</a></li>
+      					<li><a onclick="projectView(this, this)">프로젝트 보기</a></li>
       					<li><a onclick="projectProgress(this)">프로젝트 다시 진행</a></li>
     				</ul>	
 				</div>

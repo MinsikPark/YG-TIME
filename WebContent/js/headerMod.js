@@ -87,6 +87,7 @@ function profileimgmodify() {
 
 	 });
 	 $("#modprofile").submit();
+	 l
 }
 
 ///비밀번호 일치 여부 확인
