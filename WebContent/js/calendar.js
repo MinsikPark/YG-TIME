@@ -10,6 +10,7 @@ $(function() { // $(document).ready
 	
 	// fullCalendar
 	$('#calendar').fullCalendar({
+		themeSystem: "bootstrap3",
 		eventDragStop: function (event, jsEvent) { // Drag 후 삭제 기능
 		    var trashEl = $('#trashCan');
 		    var ofs = trashEl.offset();

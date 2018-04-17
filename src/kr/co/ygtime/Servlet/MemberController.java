@@ -23,6 +23,7 @@ import kr.co.ygtime.service.member.JoinService;
 import kr.co.ygtime.service.member.LoginService;
 import kr.co.ygtime.service.member.MemberInfoService;
 import kr.co.ygtime.service.member.MemberModifyService;
+import kr.co.ygtime.service.member.MemeberSelectService;
 
 @WebServlet("*.member")
 public class MemberController extends HttpServlet {
@@ -134,6 +135,15 @@ public class MemberController extends HttpServlet {
             }
         }else if(cmdURI.equals("/mod1.member")) {
             action = new MemberModifyService();
+            try {
+            forward = action.execute(request, response);
+            }
+            catch(Exception e) {
+                e.getMessage();
+            }
+        }else if(cmdURI.equals("/userSelect.member")) {
+
+            action = new MemeberSelectService();
             try {
             forward = action.execute(request, response);
             }
