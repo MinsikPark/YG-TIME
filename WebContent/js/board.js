@@ -43,7 +43,19 @@ function sortable(){
 		items:'div:not(.listtitle)',
 		placeholder: "ui-state-highlight",
 		connectWith: '.listbox',
-		axis : 'y',
+		/*axis : 'y',*/
+		/*start : function(event, ui){
+			console.log(ui.item)
+			$('body').append(ui.item)
+			$('.listbox').css({
+				overflow : 'unset'
+			})
+		},*/
+		sort : function (event,ui){
+			
+			console.log(ui.item)
+			$('#content-md').append(ui.item)
+		},
 		update: function(event, ui) {
 			var productOrder = $(this).sortable('toArray').toString();
 			var children = $(this)[0].children
@@ -54,6 +66,7 @@ function sortable(){
 				$(this).empty()
 				$(this).append(children0, children2, children1)
 			}
+			
 			$.ajax({
 				url : 'CardSequenceUpdate.card',
 				data : { 
@@ -301,15 +314,13 @@ function cardDetail(obj){
 
 //카드 상세 페이지
 function cardViewDetail(cardnum){
-	/*console.log($('#'+cardnum).closest('button').click.bind(this));
-	if($('#'+cardnum).closest('button').click){
-		console.log("123132132132132321321321")
-	}else{*/
-		cardViewContents(cardnum);
-		cardViewCheckList(cardnum);
-		cardViewReplys(cardnum);	
-	//}
+
+	//파일리스트 있으면 불러오기 
+	callUploadList(cardnum);
 	
+	cardViewContents(cardnum);
+	cardViewCheckList(cardnum);
+	cardViewReplys(cardnum);	
 }
 
 //카드제목 보여주기 & 카드내용이 있었다면 보여주기
@@ -325,10 +336,14 @@ function cardViewContents(cardnum){
 			$('#contentDetail').html(json.cardContents);
 		}
 	});
+
 }
 
 //카드체크리스트 있다면 보여주기
 function cardViewCheckList(cardnum){
+
+
+	//카드체크리스트 있다면 보여주기
 	$.ajax({
 		url:"Checklist.card",
 		datatype:"json",
@@ -350,6 +365,7 @@ function cardViewCheckList(cardnum){
 		}
 	});
 }
+
 
 //카드댓글이 있다면 보여주기
 function cardViewReplys(cardnum){
@@ -400,3 +416,27 @@ function userMember(arr){
 		});
 	});
 }
+
+
+
+// 카드에 업로드되어 있는 파일 목록 불러오기
+function callUploadList(cardNum){
+	console.log("uploadlist")
+	$('#fileUploadForm').empty();
+	$.ajax({
+		url:"carduploadlist.card",
+		data:{cardNum:cardNum},
+		datatype:"json",
+		success:function(data){
+			console.log(">"+data+"<");
+			var json = JSON.parse(data);
+			$.each(json, function(index,json){
+				var div ='<div><a class="down" href="download?fileName='+json.filePath+'">'+ json.originFileName+'</a>' 
+				div += '<button type="button" class="close" onclick="fileInputDel(this)">&times;</button></div>'
+				$('#fileUploadForm').append(div)			
+			})	
+		}
+	})
+}
+
+
