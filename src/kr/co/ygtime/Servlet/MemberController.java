@@ -13,6 +13,7 @@ import com.sun.org.apache.xml.internal.security.utils.resolver.implementations.R
 
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
+import kr.co.ygtime.service.member.CompleteService;
 import kr.co.ygtime.service.member.IdcheckService;
 import kr.co.ygtime.service.member.InviteListService;
 import kr.co.ygtime.service.member.InviteMsgService;
@@ -153,6 +154,16 @@ public class MemberController extends HttpServlet {
         }else if(cmdURI.equals("/userSelect.member")) {
 
             action = new MemeberSelectService();
+            try {
+            forward = action.execute(request, response);
+            }
+            catch(Exception e) {
+                e.getMessage();
+            }
+        }
+        else if(cmdURI.equals("/comple.member")) {
+
+            action = new CompleteService();
             try {
             forward = action.execute(request, response);
             }

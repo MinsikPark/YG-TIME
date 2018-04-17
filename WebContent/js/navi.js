@@ -26,6 +26,7 @@ $(function(){
 		e.stopPropagation();
 		e.preventDefault();
 	});
+	
 })
 
 //사이드 숨길때
@@ -107,11 +108,11 @@ function cardNameModOk(){
 			success:function(data){
 				var boardnum = $('#hiddenBoardnum').val();
 				boardclick(boardnum);
-				cardViewDetail(cardnum);
+				cardViewContents(cardnum);
 			}
 		});
 	}else{
-		cardViewDetail(cardnum);
+		cardViewContents(cardnum);
 	}
 }
 
@@ -144,7 +145,7 @@ function addCheckList(obj) {
 			data:{cardNum:cardnum, checkboxcontents:value},
 			success:function(data){
 				console.log(data.trim());
-				cardViewDetail(cardnum);
+				cardViewCheckList(cardnum);
 				addCancel();
 			}
 		});
@@ -175,7 +176,7 @@ function checkUpdate(checked, content, checknum){
 		data:{Checked:checked, Checkboxcontents:content, Cardnum:cardnum, Checknum:checknum},
 		success:function(data){
 			//성공 아무것도 없어도 됨.
-			cardViewDetail(cardnum);
+			cardViewCheckList(cardnum);
 		}
 	});
 }
@@ -188,7 +189,7 @@ function removeCheckList(obj, checknum){
 		datatype:"text",
 		data:{Cardnum:cardnum, Checknum:checknum},
 		success:function(data){
-			cardViewDetail(cardnum);
+			cardViewCheckList(cardnum);
 		}
 	});
 }
@@ -232,7 +233,7 @@ function addComment(obj){
 			datatype:"text",
 			data:{UserId:id, CardNum:cardnum, ReplyContents:value},
 			success:function(data){
-				cardViewDetail(cardnum);
+				cardViewReplys(cardnum);
 			}
 		});
 	}
@@ -254,7 +255,7 @@ function removeComment(obj){
 				alert('댓글을 등록한 멤버가 아닙니다');
 			}else{
 				alert('삭제가 완료 되었습니다.');
-				cardViewDetail(cardnum);
+				cardViewReplys(cardnum);
 			}
 		}
 	});
@@ -271,7 +272,6 @@ function replyMod(obj, replyNum){
 		data:{CardNum:cardnum, ReplyNum:replyNum},
 		success:function(data){
 			var json = JSON.parse(data);
-			console.log(json);
 			if(json.userId == id){
 				$(obj).removeAttr('readonly');
 				$(obj).attr('onfocusout', 'focusoutdelay('+ cardnum +')');
@@ -305,8 +305,6 @@ function replyModOk(obj, replyNum){
 
 //카드 상세페이지, 상세내용 추가
 function updateDetail(obj, cardNum){
-	console.log("카드넘버: " + cardNum);
-	console.log($('#contentDetail').val());
 	var contentDetail = $('#contentDetail').val();
 	
 	$.ajax({
@@ -324,6 +322,54 @@ function updateDetail(obj, cardNum){
 		}
 	});
 
+}
+
+//프로젝트 멤버의 모든 리스트를 넣어준다.
+function cardMemberAddList(obj){
+	$.ajax({
+		url:"CardMemeberAddList.card",
+		datatype:"json",
+		success:function(data){
+			var json = JSON.parse(data);
+			console.log(json);
+			var htmldata = "";
+			$.each(json, function(index, elt){
+				htmldata += '<li><a onclick="cardMemberAdd(this)">'+ elt.userId +'</a></li>'; 
+			})	
+			
+			$(obj).parent().children('ul').html(htmldata);
+		}
+	});
+}
+
+//해당 카드에 카드멤버를 추가 시킨다
+function cardMemberAdd(obj){
+	var id = $(obj).html();
+	var cardnum = $('#hiddenCardnum').val();
+	
+	$.ajax({
+		url:"CardMemeberAdd.card",
+		datatype:"text",
+		data:{cardNum:cardnum, userId:id},
+		success:function(data){
+			cardMemberListView(cardnum);
+		}
+	});
+}
+
+//해당 카드에 카드멤버를 삭제 시킨다
+function cardMemberDel(obj){
+	var id = $(obj).children('input').val();
+	var cardnum = $('#hiddenCardnum').val();
+	
+	$.ajax({
+		url:"CardMemeberDel.card",
+		datatype:"text",
+		data:{cardNum:cardnum, userId:id},
+		success:function(data){
+			cardMemberListView(cardnum);
+		}
+	});
 }
 
 function bokyeong(obj) {

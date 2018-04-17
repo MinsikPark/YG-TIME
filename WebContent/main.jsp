@@ -21,7 +21,16 @@
 <script src="js/jquery.form.js"></script>
 <script src="js/board.js"></script>
 <script src="js/navi.js"></script>
-
+<!-- <style type="text/css">
+.glyphicon-user:before {
+    content: "\e008";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style> -->
 </head>
 <body >
 	<div id="movingBox" style = 'position: absolute;'></div>
