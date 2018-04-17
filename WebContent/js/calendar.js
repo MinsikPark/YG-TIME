@@ -10,6 +10,7 @@ $(function() { // $(document).ready
 	
 	// fullCalendar
 	$('#calendar').fullCalendar({
+		themeSystem: "bootstrap3",
 		eventDragStop: function (event, jsEvent) { // Drag 후 삭제 기능
 		    var trashEl = $('#trashCan');
 		    var ofs = trashEl.offset();
@@ -57,6 +58,7 @@ $(function() { // $(document).ready
 		displayEventTime: false, // 
 		eventClick: function(event) {			
 			boardclick(event.id);
+			$('#hiddenBoardnum').attr("value", event.id);
 		},
 		eventDrop: function(event, delta, revertFunc) { // Drag를 통한 날짜 변경 처리 함수
 			boarddateupdate(event);
@@ -241,8 +243,12 @@ function callCardList(listNum){
         success:function(carddata){
             var cardjson = JSON.parse(carddata);
             var cardcontent = "";
+            console.log(cardjson);
             $.each(cardjson, function(indexcard, eltcard) {
-                cardcontent += '<div class="card ui-sortable-handle" id ="'+eltcard.cardNum+'" data-toggle="modal" data-target="#myModal1" onclick="cardDetail(this)" style="">'+eltcard.cardName+'</div>';
+            	console.log("카드넘카드넘카드넘" + eltcard.cardNum);
+                cardcontent += '<div id ="div'+eltcard.cardNum+'">';
+            	cardcontent += '<div class="card ui-sortable-handle" id ="'+eltcard.cardNum+'" data-toggle="modal" data-target="#myModal1" onclick="cardDetail(this)" style="">'+eltcard.cardName+'<button type="button" class="close" onclick="deleteCard('+eltcard.cardNum+','+listNum+')">&times;</button>'+'</div>';
+                cardcontent += '</div>';
             });
             $("#listnum"+listNum+" ").append(cardcontent);
             sortable()

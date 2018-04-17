@@ -24,6 +24,7 @@ import kr.co.ygtime.service.member.JoinService;
 import kr.co.ygtime.service.member.LoginService;
 import kr.co.ygtime.service.member.MemberInfoService;
 import kr.co.ygtime.service.member.MemberModifyService;
+import kr.co.ygtime.service.member.MemeberSelectService;
 
 @WebServlet("*.member")
 public class MemberController extends HttpServlet {
@@ -64,7 +65,7 @@ public class MemberController extends HttpServlet {
         	try {
         		request.getSession().invalidate();
             	forward = new ActionForward();
-            	forward.setPath("main.jsp");
+            	forward.setPath("login.jsp");
         	} 
         	catch (Exception e) {
         		e.printStackTrace();
@@ -149,6 +150,15 @@ public class MemberController extends HttpServlet {
                   catch(Exception e) {
                       e.getMessage();
                   }
+        }else if(cmdURI.equals("/userSelect.member")) {
+
+            action = new MemeberSelectService();
+            try {
+            forward = action.execute(request, response);
+            }
+            catch(Exception e) {
+                e.getMessage();
+            }
         }
         
         //태우기 마지막

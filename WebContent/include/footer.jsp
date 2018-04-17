@@ -9,12 +9,6 @@
     <input type="hidden" id="thisMemberGrade">
     <div id="thisProjctMeber">
 		<div class="dropdown" style="float:left;">
-			<a class = "glyphicon glyphicon-user" data-toggle="dropdown" style="font-size: 25pt; top: 7px;"></a>
-			<ul class="dropdown-menu">
-				<li><a onclick="memberDel()">맴버제명</a></li>
-				<li><a>맴버위임</a></li>
-				<li><a>맴버탈퇴</a></li>
-			</ul>
 		</div>
 	</div>
     <div class="dropup"  style="float:left; margin-top:10px;">

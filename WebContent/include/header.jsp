@@ -3,12 +3,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-
+<script>
+	function project(){
+		$('#mainScreen').hide()
+		$('#calendar').show()
+	}
+</script>
 <header>
 	<nav class="navbar z-index">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#"><img src="images/logo.JPG"
 				style="width: 110px; height: 30px;" onclick="project()"></a>
+			<div class="navbar-brand">
+				<img src ="images/wifiLogo.png" style="height: 30px;" data-toggle="modal" data-target="#modalWifiMap">
+			</div>
 		</div>
 		<div>
 			<ul class="nav navbar-nav navbar-right">
