@@ -94,10 +94,9 @@ function projectDisplay(dataArr) {
 }
 
 //프로젝트 선택보기
-function projectView(projectNum){
+function projectView(element, projectNum){
 	console.log('프로젝트 아이디를 받아서 다시 뿌려줘요')
 	console.log("projectNum : " + projectNum);
-	//$('#thisProjectNum').val(projectNum)
 	var data = {projectNum:projectNum};
 	$.ajax({
 		url:"allboardlist.board",
@@ -105,13 +104,31 @@ function projectView(projectNum){
 		data:data,
 		success: function(data){
 			var json = JSON.parse(data);
-			var boardArr = boardData(json);
-			projectDisplay(boardArr);
-			memberList();
-			$('#mainFooterbar').show()
+			//프로젝트 내에 보드가 존재할 때, 존재하지 않으면 아래 코드 실행되지 않음
+			if(json.length > 0) {
+				var boardArr = boardData(json);
+				projectDisplay(boardArr);
+				completedProjectView(element, json);
+				memberList();
+				$('#mainFooterbar').show()
+			}
+		}
+	});
+	
+}
+
+//완료된 프로젝트의 가장 오래된 보드 날짜로 달력 이동
+function completedProjectView(element, json) {
+	if(element.id == "cp") {
+		var oldestStartDate = json[0].boardStartDate;
+		for(var i in json) {
+			oldestStartDate = (json[i].boardStartDate < oldestStartDate) ? json[i].boardStartDate : oldestStartDate;
 		}
 		
-	})
+		$('#calendar').fullCalendar('gotoDate', oldestStartDate, true);
+	}else{
+		$('#calendar').fullCalendar('today');
+	}
 	
 }
 
