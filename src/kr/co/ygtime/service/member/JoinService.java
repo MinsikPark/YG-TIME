@@ -31,6 +31,7 @@ public class JoinService implements Action{
 		System.out.println("1");
 	
 		String savepath = request.getRealPath("/profile");
+		System.out.println(savepath);
 		System.out.println("2");
 
 		int result =0;

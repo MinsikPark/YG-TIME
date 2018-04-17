@@ -108,6 +108,7 @@ function projectView(projectNum){
 			var boardArr = boardData(json);
 			projectDisplay(boardArr);
 			memberList();
+		
 			$('#mainFooterbar').show()
 		}
 		

@@ -33,7 +33,7 @@
 			});
 	$("#btn1").click(function () {
 		var param = $("#joinForm").serialize();
-		console.log(param)
+		console.log(param +"dddd")
 		if($("#password").val()==$("#passwordCheck").val()){
 						alert("수정성공");	
 		$.ajax({

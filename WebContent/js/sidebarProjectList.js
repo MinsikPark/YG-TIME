@@ -80,7 +80,7 @@ function chart() {
 			success : function(datas){
 				console.log("반가워재욱아");
 				end = datas.trim();
-			}
+			} 
 			});
 	var myDoughnutChart = new Chart(ctx,{
 		
