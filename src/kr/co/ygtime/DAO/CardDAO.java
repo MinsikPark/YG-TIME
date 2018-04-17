@@ -168,7 +168,7 @@ public class CardDAO {
 			
 			conn = ds.getConnection();
 			String sql= 	"select cardnum, listnum, cardname, cardcontents, cardsequential, deleteok "
-							+ "from CARD where listnum=? ORDER BY cardsequential ASC";
+							+ "from CARD where listnum=? and deleteok=0 ORDER BY cardsequential ASC";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, listNum); 
@@ -182,10 +182,10 @@ public class CardDAO {
 				carddto.setListNum(rs.getInt("listnum"));
 				carddto.setCardName(rs.getString("cardname"));
 				carddto.setCardContents(rs.getString("cardcontents"));
-				carddto.setCardSequential(rs.getInt("deleteok"));
+				carddto.setDeleteCheck(rs.getInt("deleteok"));
 				
 				//순번 
-				carddto.setDeleteCheck(rs.getInt("cardsequential"));
+				carddto.setCardSequential(rs.getInt("cardsequential"));
 
 				cardlist.add(carddto);
 				
@@ -247,7 +247,7 @@ public class CardDAO {
 	 기      능 : 카드 삭제 (삭제여부 업데이트)
 	 작성자명 : 김 진 원
 	*/
-	public int cardDelete(int carNum) {
+	public int cardDelete(int cardNum) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int row = 0;
@@ -256,7 +256,7 @@ public class CardDAO {
 			String sql="update CARD set deleteok=1, cardsequential=-1 where cardnum=?";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, carNum);
+			pstmt.setInt(1, cardNum);
 			
 			row = pstmt.executeUpdate();
 			

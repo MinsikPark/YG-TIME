@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.service.card.CardContentsUpdateService;
+import kr.co.ygtime.service.card.CardDeleteService;
 import kr.co.ygtime.service.card.CardListService;
 import kr.co.ygtime.service.card.CardNameUpdateService;
 import kr.co.ygtime.service.card.CardSelectService;
@@ -144,6 +145,14 @@ public class CardController extends HttpServlet {
         } else if(cmdURI.equals("/Replylist.card")) {
         	try {
         		action = new ReplyListService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        }else if(cmdURI.equals("/carddelete.card")) {
+        	try {
+        		action = new CardDeleteService();
         		forward = action.execute(request, response);
         	}
         	catch(Exception e) {

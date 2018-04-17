@@ -96,6 +96,22 @@ function addCard(obj, listnum){
 		});
 	}
 }
+//카드삭제
+function deleteCard(cardid, listNum) {
+	var cardNum = cardid;
+	console.log("메롱메롱" + cardNum);
+	$.ajax({
+			url : "carddelete.card",
+			datatype:"text",
+			data:{cardNum:cardNum},
+			success:function(data){
+				console.log("너는 누구냐?" + data.trim());
+				console.log("listNum이래요 : " + listNum)
+				$('#div'+cardid).remove();
+				callCardList(listNum)
+			}
+			})
+}
 
 //리스트생성 텍스트박스를 불러오기
 function addListView(obj, boardnum){
