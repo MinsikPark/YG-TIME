@@ -9,6 +9,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/headerLogin.js"></script>
+<script src="js/headerJoin.js"></script>
 <title>Insert title here</title>
 <style type="text/css"> 
 body {
@@ -31,9 +32,9 @@ body {
 <body>
 <jsp:include page="include/register.jsp"></jsp:include>
 	<div class="container">
-		<div style="margin-top: 50px; top: 200px;"
+		<div style="top: 100px;"
 			class="col-md-6 col-md-offset-3">
-				YG TIME
+				<img src="images/ygtime.png" style="width:100%">
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<div class="panel-title">Sign In</div>
@@ -65,8 +66,8 @@ body {
 					<div class="form-group">
 						<div class="col-md-14 control">
 							<div style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-								Don't have an account! 
-								<a data-toggle="modal" data-target="#myModal">Sign Up Here </a>
+								계정이 없으신가요?
+								<a data-toggle="modal" data-target="#myModal">회원가입 </a>
 							</div>
 						</div>
 					</div>

@@ -504,7 +504,6 @@ public class CardDAO {
 				
 				if(delrow > 0) {
 					pstmt.close();
-					
 					String numminus = "update CHECKBOX set checknum=checknum-1 "
 									+ "where cardnum=? and checknum > ?";
 					
@@ -547,8 +546,8 @@ public class CardDAO {
 		int row = 0;
 		try {
 				conn = ds.getConnection();
-				String sql ="insert into UPLOAD(filenum, cardnum, filepath)" + 
-						    " values(?,?,?)";
+				String sql ="insert into UPLOAD(filenum, cardnum, filepath, originfilename)" + 
+						    " values(?,?,?,?)";
 				
 				pstmt = conn.prepareStatement(sql);
 				
@@ -556,7 +555,7 @@ public class CardDAO {
 				//1-> 카드넘버에 해당하는 파일넘버의 최대넘버 + 1
 				pstmt.setInt(2, upLoad.getCardNum());
 				pstmt.setString(3, upLoad.getFilePath());
-				
+				pstmt.setString(4, upLoad.getOriginFileName());
 				row = pstmt.executeUpdate();
 				
 		}catch (Exception e) {
@@ -594,7 +593,7 @@ public class CardDAO {
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
-					maxfile =  rs.getInt("checkmax");
+					maxfile =  rs.getInt("filemax");
 				}
 				
 		}catch (Exception e) {
@@ -616,7 +615,7 @@ public class CardDAO {
 	 기      능 : 업로드 검색(선택)
 	 작성자명 : 김 진 원
 	*/
-	public UpLoadDTO upLoadSelect(int upLodadNum, int cardNum) {
+	public UpLoadDTO upLoadSelect(int upLoadNum, int cardNum) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -624,11 +623,11 @@ public class CardDAO {
 		
 		try {
 				conn = ds.getConnection();
-				String sql ="select filenum, cardnum, filepath "
+				String sql ="select filenum, cardnum, filepath , originfilename "
 							+ "from UPLOAD where checknum = ? and cardnum = ?";
 				
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, upLodadNum);
+				pstmt.setInt(1, upLoadNum);
 				pstmt.setInt(2, cardNum);
 				
 				rs = pstmt.executeQuery();
@@ -639,6 +638,7 @@ public class CardDAO {
 					uploaddto.setFileNum(rs.getInt("filenum"));
 					uploaddto.setCardNum(rs.getInt("cardnum"));
 					uploaddto.setFilePath(rs.getString("filepath"));
+					uploaddto.setOriginFileName(rs.getString("originfilename"));
 				}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -668,7 +668,7 @@ public class CardDAO {
 		try {
 			
 			conn = ds.getConnection();
-			String sql= "select filenum, cardnum, filepath "
+			String sql= "select filenum, cardnum, filepath, originfilename "
 						+ "from UPLOAD where cardnum=? ORDER BY filenum ASC";
 			pstmt = conn.prepareStatement(sql);
 			
@@ -682,7 +682,7 @@ public class CardDAO {
 				uploaddto.setFileNum(rs.getInt("filenum"));
 				uploaddto.setCardNum(rs.getInt("cardnum"));
 				uploaddto.setFilePath(rs.getString("filepath"));
-				
+				uploaddto.setOriginFileName(rs.getString("originfilename"));
 				uploadlist.add(uploaddto);  
 				
 			}
@@ -725,11 +725,13 @@ public class CardDAO {
 				delrow = pstmt.executeUpdate();
 				
 				if(delrow > 0) {
+					pstmt.close();
 					String numminus = "update UPLOAD set filenum=filenum-1 "
-									+ "where filenum > ?";
+									+ "where cardnum=? and filenum > ?";
 					
 					pstmt = conn.prepareStatement(numminus);
-					pstmt.setInt(1, upLoadNum);
+					pstmt.setInt(1, cardNum);
+					pstmt.setInt(2, upLoadNum);
 					
 					uprow = pstmt.executeUpdate();
 					

@@ -38,10 +38,6 @@
 							style="color: red;"></span></label> <input type="text"
 							class="form-control" id="nickName" name="nickName">
 					</div>
-					<div class="form-group">
-						<label for="fileUpLoad">파일 업로드</label> <input type="file"
-							id="fileUpLoad" name="fileUpLoad">
-					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default"
 							onclick="joinsubmit()">Submit</button>
@@ -59,15 +55,28 @@
 	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
-			<div class="modal-header">
+			<div class="modal-header text-center">
 				<button type="button" class="close" data-dismiss="modal"
 					onclick="modclear()">&times;</button>
-				<h4 class="modal-title">회원정보 수정</h4>
+				<h3 class="modal-title"><b>회원정보 수정</b></h3>
 			</div>
 
 
 			<div class="modal-body">
+				<form id= "modprofile">
+				<h4>프로필 수정</h4>
+					<br>
+					<div class="form-group">
+						<label for="modfileUpLoad">프로필 수정</label>
+						<img class = "img-circle" id= "currentProfile" style="width: 150px;height:150px" /> 
+						<input type="file"
+						id="modfileUpLoad" name="modfileUpLoad">
+					</div>
+				</form>
 				<form id="modForm">
+					<hr>
+					<h4>기본정보 수정</h4>
+					<br>
 					<div class="form-group">
 						<label for="modemail">이메일 주소</label> <input type="text"
 							name="userId" value="${sessionScope.sessionId}"
@@ -88,10 +97,7 @@
 							style="color: red;"></span></label> <input type="text"
 							class="form-control" id="modnickName" name="modnickName">
 					</div>
-					<div class="form-group">
-						<label for="modfileUpLoad">파일 업로드</label> <input type="file"
-							id="modfileUpLoad" name="modfileUpLoad">
-					</div>
+
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default"
 							onclick="modsubmit()">Submit</button>

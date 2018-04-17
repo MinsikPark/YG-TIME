@@ -18,7 +18,10 @@
 		<ul class="dropdown-menu" id = "friend" style="width: 300px; height:300px;">
 			<li><div class="input-group">
 					<div class="form-group">
+
 			   			<input type="email" class="form-control" id="emailSearch" onclick="autoComplet()" placeholder="이메일 입력..">
+
+
 					</div>
 					<span class="input-group-btn">
 						<input type="hidden" id="thisProjectNum">
