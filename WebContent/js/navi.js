@@ -57,8 +57,9 @@ function fileInputDel(obj){
 //상세페이지 카드명 클릭시 텍스트 생성
 function cardNameMod(){
 	var cardnum = $('#hiddenCardnum').val();
+	var htmlObj = $('#modalHeader').html();
 	
-	var div = '<div onfocusout="focusoutdelay('+ cardnum +')"><input type="text" class="form-control inputtextbox">'
+	var div = '<div onfocusout="focusoutdelay('+ cardnum +')"><input type="text" class="form-control inputtextbox" placeholder=' + htmlObj + '>'
 		+ '<button type="button" class="close glyphicon" onclick="cardNameModOk()">&#xe013;</button></div>';
 
 	$('#modalHeader').html(div);
