@@ -51,6 +51,7 @@ function inviteIdCheck(){
 // 멤버리스트뿌려주기
 function memberList() {
 	memberOwnerView()
+	var userId = $("#getsession").val()
 	
 	$.ajax({
 		url : "memberlist.project",
@@ -65,10 +66,10 @@ function memberList() {
 				div += '<div class="dropdown" style="float:left;">'
 				div += '<a class = "glyphicon glyphicon-user" data-toggle="dropdown" style="font-size: 25pt; top: 7px;"></a>'
 				div += '<ul class="dropdown-menu">'
-				if(grade == '0'){
+				if(grade == '0' && elt.userId!=userId){
 					div += '<li><input type="hidden" value="'+ elt.userId +'"><a onclick="memberToKickOut(this)">맴버제명</a></li>'
 					div += '<li><input type="hidden" value="'+ elt.userId +'"><a onclick="memberMendate(this)">팀장위임</a></li>'
-				}else if ($("#getsession").val() ==  elt.userId) {
+				}else if ($("#getsession").val() ==  elt.userId && grade=='1') {
 					div += '<li><a onclick="memberDelete()">멤버탈퇴</a></li>'
 				}
 				div += '<li><a>'+ elt.userNicname+'</a></li>'
@@ -89,10 +90,8 @@ function memberOwnerView() {
 			data : {userId : userId},
 			datatype : "JSON",
 			success: function (data) {
-				
 				owner = data.trim()
 				$('#thisMemberGrade').val(owner)
-
 			}
 			
 		})

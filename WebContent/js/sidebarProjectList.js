@@ -80,8 +80,8 @@ function chart(start, end) {
 		    data:  {
 		    	
 		    	labels: [
-		            '진행중프로젝트',
-		            '완료된프로젝트'
+		            '진행중 프로젝트',
+		            '완료된 프로젝트'
 		            
 		        ],
 		        datasets: [{
@@ -115,8 +115,8 @@ function listChart(start, end) {
 		    	
 		    	labels: [
 		           
-		            '진행중인프로젝트리스트갯수',
-		            '진행중인프로젝트카드갯수',
+		            '진행중인 리스트',
+		            '진행중인 카드'
 		            
 		        ],
 		        datasets: [{
@@ -126,8 +126,8 @@ function listChart(start, end) {
 		        // These labels appear in the legend and in the tooltips when hovering different arcs
 		        
 		        backgroundColor: [
-	                'rgba(255, 99, 132, 0.7)',
-	                'rgba(54, 162, 235, 0.7)'
+	                'rgba(255, 99, 132, 0.8)',
+	                'rgba(54, 162, 235, 0.8)'
 	            ]
 		        }]
 		    }

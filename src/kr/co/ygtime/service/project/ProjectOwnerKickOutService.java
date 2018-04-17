@@ -15,18 +15,17 @@ import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.DAO.ProjectDAO;
 import net.sf.json.JSONObject;
 
-public class ProjectOwnerKickOutService implements Action{
+public class ProjectOwnerKickOutService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ProjectDAO projectdao = null;
 		ActionForward forward = null;
 		int resultrow = 0;
-		int projectNum = (int)request.getSession().getAttribute("projectNum");
+		int projectNum = (int) request.getSession().getAttribute("projectNum");
 		String userId = request.getParameter("userId");
 		String outUserId = request.getParameter("outUserId");
-		
-		
+
 		try {
 			projectdao = new ProjectDAO();
 			resultrow = projectdao.teamMemberDelete(projectNum, userId, outUserId);
@@ -37,8 +36,8 @@ public class ProjectOwnerKickOutService implements Action{
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-		
 		return forward;
+
 	}
 
 }
