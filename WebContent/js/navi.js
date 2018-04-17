@@ -144,7 +144,7 @@ function checkUpdate(checked, content, checknum){
 		datatype:"text",
 		data:{Checked:checked, Checkboxcontents:content, Cardnum:cardnum, Checknum:checknum},
 		success:function(data){
-			cardViewDetail(cardnum);
+			//성공 아무것도 없어도 됨.
 		}
 	});
 }
@@ -185,7 +185,7 @@ function checkBoxModOk(obj, checknum){
 function focusoutdelay(cardnum){
 	setTimeout(function() {
 		cardViewDetail(cardnum);
-	}, 500);
+	}, 300);
 }
 
 //댓글을 추가하다
@@ -225,6 +225,49 @@ function removeComment(obj){
 				alert('삭제가 완료 되었습니다.');
 				cardViewDetail(cardnum);
 			}
+		}
+	});
+}
+
+//댓글을 수정하기전 작성한 인원이 맞는지 확인
+function replyMod(obj, replyNum){
+	var id = $('#getsession').val();
+	var cardnum = $('#hiddenCardnum').val();
+	
+	$.ajax({
+		url:"ReplySel.card",
+		datatype:"json",
+		data:{CardNum:cardnum, ReplyNum:replyNum},
+		success:function(data){
+			var json = JSON.parse(data);
+			console.log(json);
+			if(json.userId == id){
+				$(obj).removeAttr('readonly');
+				$(obj).attr('onfocusout', 'focusoutdelay('+ cardnum +')');
+				$(obj).parent().children('button').attr({
+					"class":"glyphicon close",
+					"onclick":"replyModOk(this, "+replyNum+")"
+				});
+				$(obj).parent().children('button').html('&#xe065;');
+				$(obj).focus();
+			}else{
+				alert('등록한 멤버가 아닙니다.');
+			}
+		}
+	});
+}
+
+//댓글 수정완료
+function replyModOk(obj, replyNum){
+	var cardnum = $('#hiddenCardnum').val();
+	var value = $(obj).parent().children('input').val();
+	
+	$.ajax({
+		url:"ReplyUp.card",
+		datatype:"text",
+		data:{ReplyContents:value, CardNum:cardnum, ReplyNum:replyNum},
+		success:function(data){
+			alert('댓글을 수정했습니다.');
 		}
 	});
 }

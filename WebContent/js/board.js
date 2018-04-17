@@ -356,10 +356,8 @@ function cardViewReplys(cardnum){
 			var htmldata = '';
 			$.each(json, function(index, elt) {
 				htmldata += '<div id="replyNum'+ elt.replyNum +'" class="commentlist">'
-						+ '<input type="text" class="form-control commentinputtextbox" value="' + elt.replyContents + '" readonly>'
-						+ '<button type="button" class="glyphicon close" onclick="replyMod(this, '+elt.checkNum+')">&#xe065;</button>'
+						+ '<input type="text" class="form-control commentinputtextbox" value="' + elt.replyContents + '" readonly onclick="replyMod(this, '+ elt.replyNum +')">'
 						+ '<button type="button" class="close" onclick="removeComment(this)">&times;</button></div>';
-				
 				arr.push({userId:elt.userId, replyNum:elt.replyNum});
 			});
 			
@@ -380,7 +378,6 @@ function userMember(arr){
 			success : function(data) {
 				//json : userId, userNicname, userProfile
 				var json = JSON.parse(data);
-				console.log(json);
 				var htmldata = '';
 				if(json.userProfile == "" || json.userProfile == null){
 					htmldata += '<img src="profile/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">';
