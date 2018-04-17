@@ -3,10 +3,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>YG-TIME: 404 Error</title>
+    <meta charset="UTF-8">
+    <title>YG-TIME: 404 Error</title>
 </head>
-<body>
-	<h1>윤근타임! 404 Error가 떴어요!</h1>
+<body style = 'width:100%; height:100%; position: absolute; margin:0px;'>
+    <div style='height:50%; width:100%; background-color:#194769; text-align: center;'>
+        <img src='../images/404.jpg' >
+    </div>
+    <div style='height:50%; width:100%; background-color: grey;'>
+    </div>
 </body>
 </html>
