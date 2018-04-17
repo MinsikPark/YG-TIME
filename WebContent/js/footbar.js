@@ -65,7 +65,11 @@ function memberList() {
 			var grade = $('#thisMemberGrade').val()
 			$.each(json, function(i, elt) {
 				div += '<div class="dropdown" style="float:left;">'
-				div += '<a class = "glyphicon glyphicon-user" data-toggle="dropdown" style="font-size: 25pt; top: 7px;"></a>'
+				if(elt.userProfile ==""){
+					div += '<a data-toggle="dropdown" style="font-size: 25pt; top: 7px;"><span class = "glyphicon glyphicon-user"></span></a>'	;				
+				}else{
+					div +='<a data-toggle="dropdown" style="font-size: 25pt; top: 7px;"><img style="width: 50px;height:50px" class="img-circle" src = "profile/'+elt.userProfile+'" /></a>';
+				}		
 				div += '<ul class="dropdown-menu">'
 				if(grade == '0' && elt.userId!=userId){
 					div += '<li><input type="hidden" value="'+ elt.userId +'"><a onclick="memberToKickOut(this)">맴버제명</a></li>'
@@ -75,6 +79,8 @@ function memberList() {
 				}
 				div += '<li><a>'+ elt.userNicname+'</a></li>'
 				div += '</ul></div>'
+				
+					
 			})
 			$('#thisProjctMeber').append(div)
 			
@@ -137,11 +143,29 @@ function memberToKickOut(obj) {
 				console.log(data);
 				memberList()
 				callprojectlist()
+				
 				}
 			})
 	
 }
+//오토컴플릿
+function autoComplet() {
+	console.log("바보바보")
+	 $.ajax({
+		 		url : "comple.member",
+		 		datatype : "JSON",
+		 		success : function (data) {
+					var param = JSON.parse(data);
 
+					$('#emailSearch').autocomplete({
+						 source: param,
+						 appendTo: "#friend"
+					})
+				}
+		 		
+	 		})
+}
+ 
 //팀탈퇴
 function memberDelete() {
 	console.log("메롱메롱메롱")
