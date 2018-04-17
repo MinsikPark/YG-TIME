@@ -36,7 +36,7 @@ function callprojectlist(){
 								
 								pg += '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
 								+'<ul class="dropdown-menu" style="float: right; position: unset;">'
-								+'<li><a onclick="projectDel('+projectNum+')">프로젝트 삭제</a></li>'
+								+'<li><a onclick="projectDel('+projectNum+',\''+ value.projectName+'\')">프로젝트 삭제</a></li>'
 								+'<li><a onclick="projectComplete('+projectNum+')">프로젝트 완료</a></li></ul>';
 							}
 							cp += '</div>';
