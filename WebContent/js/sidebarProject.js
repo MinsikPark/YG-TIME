@@ -22,18 +22,23 @@ function addProject() {
 }
 
 //프로젝트 삭제
-function projectDel(projectNum) {
-	var data3 = {
-		projectNum : projectNum
-	};
-	$.ajax({
-		url : "delete.project",
-		datatype : "text",
-		data : data3,
-		success : function(data) {
-			callprojectlist();
-		}
-	})
+function projectDel(projectNum,projectName) {
+	var delProjectName = prompt("삭제하실 프로젝트 명을 입력해 주세요.");
+	
+	if(projectName == delProjectName){
+		var data3 = {
+			projectNum : projectNum
+		};
+		$.ajax({
+			url : "delete.project",
+			datatype : "text",
+			data : data3,
+			success : function(data) {
+				callprojectlist();
+			}
+		})
+	}
+	
 }
 
 //프로젝트 완료
