@@ -19,6 +19,7 @@ function joinsubmit() {
 		return false;
 	}
 
+	
 	data = $("#joinForm").serialize();
 	console.log("data : " + data);
 	$.ajax({

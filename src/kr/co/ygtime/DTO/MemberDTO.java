@@ -13,7 +13,12 @@ public class MemberDTO {
 	private String userNicname;
 	private String userProfile;
 	
-	public MemberDTO() {}
+	public MemberDTO() {
+		this.userId = null;
+		this.userPwd = null;
+		this.userNicname = null;
+		this.userProfile = "profile.png";
+	}
 	
 	public MemberDTO(String userId, String userPwd, String userNicname, String userProfile) {
 		this.userId = userId;
@@ -44,7 +49,12 @@ public class MemberDTO {
 		return userProfile;
 	}
 	public void setUserProfile(String userProfile) {
-		this.userProfile = userProfile;
+		if(userProfile.equals("")||userProfile==null) {
+			this.userProfile = "profile.png";
+		}else {
+			this.userProfile = userProfile;
+		}
+		
 	}
 	
 }

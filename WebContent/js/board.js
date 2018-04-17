@@ -178,7 +178,7 @@ function listDel(obj){
 //(텍스트 클릭하면 텍스트박스 불러오기)리스트 수정
 function listmodify(obj, listNum, boardnum){
 	var html = $(obj).html();
-	var text = "<input class='inputtext' type='text' placeholder=" + html + " name='title'><a onclick='listmodifyOk(this,"+ listNum + "," + boardnum +")'>완료</a>" 
+	var text = "<input class='inputtext' type='text' placeholder=" + html + " name='title' onkeyup='fnChkByte(this,20)' ><a onclick='listmodifyOk(this,"+ listNum + "," + boardnum +")'>완료</a>" 
 			+"<a onclick='boardclick(" + boardnum +")'>취소</a>";
 	
 	$(obj).removeAttr("onclick");
@@ -211,7 +211,7 @@ function boardTitleEdit(obj, boardNum){
 	var htmlObj = $(obj).html();
 	$(obj).removeAttr("onclick");
 	$(obj).html('');
-	var edit = "<input class='inputtext' type='text' placeholder=" + htmlObj + " name='title'><a onclick='boardmodifyOk(this,"+ boardNum +")'>완료</a>" 
+	var edit = "<input class='inputtext' type='text' placeholder=" + htmlObj + " name='title' onkeyup='fnChkByte(this,20)'><a onclick='boardmodifyOk(this,"+ boardNum +")'>완료</a>" 
 			+"<a onclick='boardclick("+boardNum+")'>취소</a>";
 	
 	$(obj).append(edit);
@@ -222,7 +222,7 @@ function boardDetailEdit(obj, boardNum){
 	var htmlObj = $(obj).html();
 	$(obj).removeAttr("onclick");
 	$(obj).html('');
-	var edit = "<input class='inputtext' type='text' placeholder=" + htmlObj + " name='title'><a onclick='detailmodifyOk(this,"+ boardNum +")'>완료</a>" 
+	var edit = "<input class='inputtext' type='text' placeholder=" + htmlObj + " name='title' onkeyup='fnChkByte(this,30)'><a onclick='detailmodifyOk(this,"+ boardNum +")'>완료</a>" 
 	+"<a onclick='boardclick("+boardNum+")'>취소</a>";
 	
 	$(obj).append(edit);
