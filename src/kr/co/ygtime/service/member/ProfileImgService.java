@@ -29,7 +29,6 @@ public class ProfileImgService implements Action {
 			String userId =  request.getParameter("userId");
 			
 			memberdto = memberdao.memberSelect(userId);
-			
 			JSONObject json = JSONObject.fromObject(memberdto);
 			request.setAttribute("json", json);
 			

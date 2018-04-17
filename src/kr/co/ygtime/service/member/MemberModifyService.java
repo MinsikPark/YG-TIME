@@ -20,6 +20,7 @@ public class MemberModifyService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+		
 		MemberDAO memberdao = null;
 		ActionForward forward = null;
 		MemberDTO memberdto = null;
