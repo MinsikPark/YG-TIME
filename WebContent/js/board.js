@@ -284,7 +284,6 @@ function detailmodifyOk(obj, boardnum){
 			boardNum:boardnum,
 			detail: detailtitle
 	};
-	
 	$.ajax({
 		url:"boarddetailmodify.board",
 		datatype:"text",

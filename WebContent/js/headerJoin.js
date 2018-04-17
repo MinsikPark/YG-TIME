@@ -21,7 +21,7 @@ function joinsubmit() {
 
 	data = $("#joinForm").serialize();
 	console.log("data : " + data);
-	$("#joinForm").ajaxForm({
+	$.ajax({
 		url : "Join.member",
 		type : "post",
 		data : data,
@@ -38,7 +38,6 @@ function joinsubmit() {
 
 		}
 	});
-	$("#joinForm").submit();
 }
 
 //조인 모델 창 클리어
