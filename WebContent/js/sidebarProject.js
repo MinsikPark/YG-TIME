@@ -109,10 +109,10 @@ function projectView(projectNum,obj){
 		data:data,
 		success: function(data){
 			var json = JSON.parse(data);
-				var boardArr = boardData(json);
-				projectDisplay(boardArr);
-				memberList();
-				$('#mainFooterbar').show()
+			var boardArr = boardData(json);
+			projectDisplay(boardArr);
+			memberList();
+			$('#mainFooterbar').show()
 			//프로젝트 내에 보드가 존재할 때, 존재하지 않으면 아래 코드 실행되지 않음
 			console.log("json.length: " + json.length);
 			if(json.length > 0) {

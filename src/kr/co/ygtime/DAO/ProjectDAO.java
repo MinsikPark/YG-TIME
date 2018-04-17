@@ -132,16 +132,19 @@ public class ProjectDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, projectNum);
 			rs = pstmt.executeQuery();
-			
 			listmemberdto = new ArrayList<>();
 			while(rs.next()) {
-
 				memberdto = new MemberDTO();
 				memberdto.setUserId(rs.getString("userid"));
 				memberdto.setUserNicname(rs.getString("usernicname"));
-				memberdto.setUserProfile(rs.getString("userprofile"));
+				if(rs.getString("userprofile")==null) {
+					System.out.println("1111111111111111111111");
+					memberdto.setUserProfile("profile.png");
+				}else {
+					System.out.println("2222222222222222222222222");
+					memberdto.setUserProfile(rs.getString("userprofile"));
+				}
 				memberdto.setUserPwd(rs.getString("userpwd"));
-				
 				listmemberdto.add(memberdto);
 				
 			}

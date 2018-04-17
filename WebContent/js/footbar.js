@@ -58,8 +58,8 @@ function memberList() {
 		url : "memberlist.project",
 		datatype : "JSON",
 		success : function(data) {
-			memberOwnerView()
 			console.log(data);
+			memberOwnerView()
 			var json = JSON.parse(data)
 			var div = ""
 			$('#thisProjctMeber').empty()
@@ -67,7 +67,7 @@ function memberList() {
 			$.each(json, function(i, elt) {
 				div += '<div class="dropdown" style="float:left;">'
 				if(elt.userProfile ==""){
-					div += '<a data-toggle="dropdown" style="font-size: 25pt; top: 7px;"><span class = "glyphicon glyphicon-user"></span></a>'	;				
+					div += '<a data-toggle="dropdown" style="font-size: 25pt; top: 7px;"><img style="width: 50px;height:50px" class="img-circle" src = "profile/profile.png" /></a>'	;				
 				}else{
 					div +='<a data-toggle="dropdown" style="font-size: 25pt; top: 7px;"><img style="width: 50px;height:50px" class="img-circle" src = "profile/'+elt.userProfile+'" /></a>';
 				}		
