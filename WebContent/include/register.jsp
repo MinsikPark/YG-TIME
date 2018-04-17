@@ -38,10 +38,6 @@
 							style="color: red;"></span></label> <input type="text"
 							class="form-control" id="nickName" name="nickName">
 					</div>
-					<div class="form-group">
-						<label for="fileUpLoad">파일 업로드</label> <input type="file"
-							id="fileUpLoad" name="fileUpLoad">
-					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default"
 							onclick="joinsubmit()">Submit</button>
