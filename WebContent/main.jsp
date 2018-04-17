@@ -24,6 +24,7 @@
 
 </head>
 <body >
+	<div id="movingBox" style = 'position: absolute;'></div>
 	<jsp:include page="include/sidebar.jsp"></jsp:include>
 	
 	<div id="navigationBars">
@@ -40,7 +41,6 @@
 	<input type="hidden" id="hiddenBoardnum">
 	<div id="mainScreen">
 		<h2 id='boardTitle'>Title</h2><p id='boardDetail'>세부내용 블라블라</p>
-		<div id="movingBox" style='position: absolute;'>크하하하하하하핳하ㅏ</div>
 		<hr>
 		<div id="content-md">
 			<div class="listbox">

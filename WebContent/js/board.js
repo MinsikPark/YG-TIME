@@ -43,18 +43,13 @@ function sortable(){
 		items:'div:not(.listtitle)',
 		placeholder: "ui-state-highlight",
 		connectWith: '.listbox',
-		/*axis : 'y',*/
-		/*start : function(event, ui){
+		start : function(event, ui){
 			console.log(ui.item)
-			$('body').append(ui.item)
-			$('.listbox').css({
-				overflow : 'unset'
-			})
-		},*/
-		sort : function (event,ui){
-			
-			console.log(ui.item)
-			$('#content-md').append(ui.item)
+				$('#movingBox').css({
+					left: event.pageX - ui.item[0].offsetLeft - (ui.item[0].clientWidth/2),
+					top : event.pageY - ui.item[0].offsetTop - (ui.item[0].clientHeight/2)
+				})
+				$('#movingBox').append(ui.item) 
 		},
 		update: function(event, ui) {
 			var productOrder = $(this).sortable('toArray').toString();
