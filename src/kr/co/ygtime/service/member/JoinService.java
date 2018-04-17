@@ -28,11 +28,7 @@ public class JoinService implements Action{
 		
 		MultipartRequest multi = null; // 파일 업로드를 위한 cos.jar 추가 및 객체 생성
 		int filesize = 10*1024*1024; // 업로드 파일 max 사이즈 10메가
-		System.out.println("1");
-	
 		String savepath = request.getRealPath("/profile");
-		System.out.println("2");
-
 		int result =0;
 		try {
 			
@@ -51,7 +47,7 @@ public class JoinService implements Action{
 		  	Enumeration filenames = multi.getFileNames(); 
 			String file = (String)filenames.nextElement(); 
 			String userProfile = multi.getFilesystemName(file); // 변경된 이름 >>a(1).jsp중복된 파일
-			
+
 			System.out.println("filename :" + userProfile);
 
 			System.out.println(5);
@@ -60,6 +56,7 @@ public class JoinService implements Action{
 			member.setUserPwd(userPwd);
 			member.setUserNicname(userNicname);
 			member.setUserProfile(userProfile);
+			
 			MemberDAO dao = new MemberDAO();
 			result = dao.memberInsert(member);
 			
