@@ -981,6 +981,9 @@ public class CardDAO {
 				//게시글 삭제
 				String del_reply_sql = "delete from REPLY where replynum=? and cardnum=?";
 				
+				//게시글 삭제후 삭제한 댓글넘버 보다 큰 댓글들 넘버 -1
+				String up_reply_sql = "update REPLY set replynum=replynum-1 where cardnum=? and replynum > ?";
+				
 				pstmt = conn.prepareStatement(sel_id_sql);
 				pstmt.setInt(1, replyNum);
 				pstmt.setInt(2, cardNum);
@@ -990,11 +993,22 @@ public class CardDAO {
 				if(rs.next()) { 
 					//아이디가 일치하는지 확인
 					if(userid.equals(rs.getString("userid"))) {
+						pstmt.close();
+						//실제 삭제
 						pstmt = conn.prepareStatement(del_reply_sql);
 						pstmt.setInt(1, replyNum);
 						pstmt.setInt(2, cardNum);
 						
 						row = pstmt.executeUpdate();
+						if(row > 0) {
+							pstmt.close();
+							//삭제 성공 후 댓글넘버 업데이트
+							pstmt = conn.prepareStatement(up_reply_sql);
+							pstmt.setInt(1, cardNum);
+							pstmt.setInt(2, replyNum);
+							
+							row += pstmt.executeUpdate();
+						}
 					}
 				}
 						

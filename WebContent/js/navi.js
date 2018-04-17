@@ -204,17 +204,29 @@ function addComment(obj){
 				cardViewDetail(cardnum);
 			}
 		});
-		/*var div = '<div class="commentlist"><img src="images/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">'
-			div += '<input type="text" class="form-control commentinputtextbox" value="' + value + '" readonly>'
-			div += '<button type="bRutton" class="close" onclick="removeComment(this)">&times;</button></div>'
-			
-		$('#commentListForm').append(div)
-		$(obj).closest('div')[0].children[1].value = ""*/
 	}
 }
 
+//자신이 입력한 댓글 삭제
 function removeComment(obj){
-	$(obj).closest('div').remove()
+	var id = $('#getsession').val();
+	var cardnum = $('#hiddenCardnum').val();
+	var replynum = $(obj).parent().attr("id").substr(8);
+	
+	$.ajax({
+		url:"ReplyDel.card",
+		datatype:"text",
+		data:{UserId:id, CardNum:cardnum, ReplyNum:replynum},
+		success:function(data){
+			console.log(data.trim());
+			if(data.trim() == '0'){
+				alert('댓글을 등록한 멤버가 아닙니다');
+			}else{
+				alert('삭제가 완료 되었습니다.');
+				cardViewDetail(cardnum);
+			}
+		}
+	});
 }
 
 //카드 상세페이지, 상세내용 추가
@@ -237,7 +249,6 @@ function updateDetail(obj, cardNum){
 			}
 		}
 	});
-	
 }
 
 function bokyeong(obj) {

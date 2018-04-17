@@ -35,32 +35,38 @@ function initMap(){
 
 // 맵에 API 좌표 아이콘 출력
 function processApi(map) {
-	var apiUrl = "http://openapi.seoul.go.kr:8088/61684e6a7573756e38316e6f504b69/json/PublicWiFiPlaceInfo/1/1000";
-	$.ajax({
-           url : apiUrl,
-           dataType:"json",
-           success:function(data){
-           	var row = data.PublicWiFiPlaceInfo.row;
-			$.each(row, function(index, obj) {
-				var marker = new google.maps.Marker({
-					map: map,
-					icon: "images/wifi.png",
-					position: {
-						lat: Number(obj.INSTL_Y),
-						lng: Number(obj.INSTL_X)
-					}
+	var apiUrl = []; 
+	apiUrl.push("http://openapi.seoul.go.kr:8088/61684e6a7573756e38316e6f504b69/json/PublicWiFiPlaceInfo/1/1000");
+	apiUrl.push("http://openapi.seoul.go.kr:8088/61684e6a7573756e38316e6f504b69/json/PublicWiFiPlaceInfo/1001/2000");
+	apiUrl.push("http://openapi.seoul.go.kr:8088/61684e6a7573756e38316e6f504b69/json/PublicWiFiPlaceInfo/2001/3000");
+	
+	$.each(apiUrl, function(urlIndex, urlObj) {
+		$.ajax({
+	           url : urlObj,
+	           dataType:"json",
+	           success:function(data){
+	           	var row = data.PublicWiFiPlaceInfo.row;
+				$.each(row, function(index, obj) {
+					var marker = new google.maps.Marker({
+						map: map,
+						icon: "images/wifi.png",
+						position: {
+							lat: Number(obj.INSTL_Y),
+							lng: Number(obj.INSTL_X)
+						}
+					});
+					
+					var infowindow = new google.maps.InfoWindow({
+						content: obj.PLACE_NAME
+					});
+					
+					marker.addListener('click', function() {
+						infowindow.open(map, marker);
+					});
 				});
-				
-				var infowindow = new google.maps.InfoWindow({
-					content: obj.PLACE_NAME
-				});
-				
-				marker.addListener('click', function() {
-					infowindow.open(map, marker);
-				});
-			});
-           }
-    });
+	           }
+	    });
+	});
 	
 } // end - processApi()
 
