@@ -15,7 +15,7 @@
 						<div class="form-group">
 							<label for="content">상세 내용</label>
 						</div>
-						<textarea id="contentDetail"></textarea>
+						<textarea id="contentDetail" onkeyup="fnChkByte(this, 1000)"></textarea>
 						<div class="form-group">
 							<button id="detaiAddbtn" class="btn btn-success" type="button">작성</button>
 						</div>
