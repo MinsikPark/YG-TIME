@@ -11,7 +11,7 @@ public class UpLoadDTO {
 	private int fileNum;
 	private int cardNum;
 	private String filePath;
-	
+	private String originFileName;
 	public UpLoadDTO() {}
 	
 	public UpLoadDTO(int fileNum, int cardNum, String filePath) {
