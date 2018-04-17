@@ -118,6 +118,7 @@ public class CardController extends HttpServlet {
         } else if(cmdURI.equals("/Checkupdate.card")) {
         	try {
         		action = new CheckedUpdateService();
+        		forward = action.execute(request, response);
         	}
         	catch(Exception e) {
         		e.printStackTrace();
