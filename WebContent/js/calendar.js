@@ -146,7 +146,7 @@ $(function() { // $(document).ready
 								if(json.resultrow <=0 || json.resultrow == null){
 									alert("보드 생성에 실패하셨습니다");
 								}else{
-									projectView(this, json.projectNum);
+									projectView(json.projectNum, this);
 									alert("보드 생성했음");
 								}
 							}

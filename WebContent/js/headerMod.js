@@ -23,10 +23,11 @@ $(function() {
 
 //회원수정 비동기 유효성 함수
 function modsubmit() {
+	console.log("gdgdgdg")
 
 	var param = $("#modForm").serialize();
 	console.log(param)
-
+	console.log("ddddddd들어감");
 	if ($('#modpassword').val() == "") { //비밀번호 검사
 		alert('PWD를 입력해 주세요.');
 		$('#password').focus();
@@ -47,11 +48,44 @@ function modsubmit() {
 				alert("회원정보 수정에 실패하였습니다");
 			} else {
 				alert("회원정보 수정에 성공하였습니다.");
+				profileimgmodify();
 				$("#modclose").trigger("click");
 			}
 		}
 	})
 
+}
+function profileimgmodify() {
+	 var sessionid = $("#getsession").val(); 
+
+	 $.ajax({
+		
+		 url : "profileimg.member", 
+		 datatype: "json",
+		 data: {userId:sessionid},
+		 success : function(data) { 
+			 var json = JSON.parse(data); 
+			 console.log(json);
+			 if( sessionid == null || json.userProfile == ""){ //회원의 프로필 사진이 null이라면
+				 console.log("로그인안한상태");
+					$("#profiledrop > a > span").remove();
+					$("#profiledrop > a > img").remove();
+					var span ="<span class = 'glyphicon glyphicon-user'style='width: 50px;height:50px' > </span>"
+					$("#profiledrop > a ").append(span);
+			 }else{ //회원의 프로필 사진이 있다면
+				$("#profiledrop > a >img").remove();
+				//이미지 태그 생성
+				var img = '<img id="profileimg"style="width: 50px;height:50px" src = "profile/'+json.userProfile+'" />';
+				
+				 //이미지 태그를 $("#profiledrop > a 자식 업펜드
+				 $("#profiledrop > a ").append(img);
+				 
+			 }
+			 		 
+		}
+		 
+	 });
+	
 }
 
 ///비밀번호 일치 여부 확인

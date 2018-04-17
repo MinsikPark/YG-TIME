@@ -14,6 +14,10 @@ import kr.co.ygtime.service.card.CardDeleteService;
 import kr.co.ygtime.service.card.CarduploadListService;
 import kr.co.ygtime.service.card.CardFileUploadService;
 import kr.co.ygtime.service.card.CardListService;
+import kr.co.ygtime.service.card.CardMemberAddListService;
+import kr.co.ygtime.service.card.CardMemberAddService;
+import kr.co.ygtime.service.card.CardMemberDelService;
+import kr.co.ygtime.service.card.CardMemberListService;
 import kr.co.ygtime.service.card.CardNameUpdateService;
 import kr.co.ygtime.service.card.CardSelectService;
 import kr.co.ygtime.service.card.CardSequenceUpdateService;
@@ -118,6 +122,7 @@ public class CardController extends HttpServlet {
         } else if(cmdURI.equals("/Checkupdate.card")) {
         	try {
         		action = new CheckedUpdateService();
+        		forward = action.execute(request, response);
         	}
         	catch(Exception e) {
         		e.printStackTrace();
@@ -195,16 +200,49 @@ public class CardController extends HttpServlet {
         	catch(Exception e) {
         		e.printStackTrace();
         	}
-        }else if(cmdURI.equals("/carduploadlist.card")) {
+        } else if(cmdURI.equals("/carduploadlist.card")) {
         	try {
         		action = new CarduploadListService();
-
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/CardMemeberAddList.card")) {
+        	try {
+        		action = new CardMemberAddListService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/CardMemeberAdd.card")) {
+        	try {
+        		action = new CardMemberAddService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/CardMemberList.card")) {
+        	try {
+        		action = new CardMemberListService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/CardMemeberDel.card")) {
+        	try {
+        		action = new CardMemberDelService();
         		forward = action.execute(request, response);
         	}
         	catch(Exception e) {
         		e.printStackTrace();
         	}
         }
+        
+        
         //태우기 마지막
         if(forward != null){
         	if(forward.isRedirect()) {

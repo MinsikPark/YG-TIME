@@ -310,6 +310,41 @@ public class MemberDAO {
 		return list;
 	}
 	
+	/**
+	 * 
+	 날      짜 : 2018. 4. 9.
+	 기      능 : 모든 회원 검색
+	 작성자명 : 최 재 욱
+	 */
+	public List<String> allMemberSelect(){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<String> list = null;
+		String userId = null;
+		
+		String sql = "select userid from member";
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			list = new ArrayList<String>();
+			while(rs.next()) {
+				userId = rs.getString("userid");
+				list.add(userId);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(rs!=null) try{rs.close();}catch(SQLException ex){}
+			if(pstmt!=null) try{pstmt.close();}catch(SQLException ex){}
+			if(conn!=null) try{conn.close();}catch(SQLException ex){}
+		}
+		
+		return list;
+		
+	}
+	
 	
 	
 	/**

@@ -16,7 +16,7 @@ $(function(){
 
 	var projectNum = <%=session.getAttribute("projectNum")%>;
 	if(projectNum!=null && projectNum != ""){
-		projectView(this, projectNum);
+		projectView(projectNum, this);
 	}
 
 });

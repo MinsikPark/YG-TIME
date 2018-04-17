@@ -25,13 +25,13 @@ function callprojectlist(){
 						datatype:"text",
 						data: {projectnum:projectNum, userid:sessionId},
 						success:function(data){
-							var cp = '<div><button class="button btn-1" id="cp" onclick="projectView(this, '+projectNum+')">'+ proejectName +'</button>';
-							var pg = '<div><button class="button btn-1" id="pg" onclick="projectView(this, '+projectNum+')">' + proejectName + '</button>';
+							var cp = '<div><button class="button btn-1" id="cp" onclick="projectView('+projectNum+', this)">'+ proejectName +'</button>';
+							var pg = '<div><button class="button btn-1" onclick="projectView('+projectNum+', this)">' + proejectName + '</button>';
 							
 							if(data.trim()=="0"){
 								cp += '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
 								+ '<ul class="dropdown-menu" style="float: right; position: unset;">'
-								+ '<li><a onclick="projectView(this, '+projectNum+')">프로젝트 보기</a></li>'
+								+ '<li><a id="cpa" onclick="projectView('+projectNum+', this)">프로젝트 보기</a></li>'
 								+ '<li><a onclick="projectProgress('+projectNum+')">프로젝트 다시 진행</a></li></ul>';
 								
 								pg += '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
