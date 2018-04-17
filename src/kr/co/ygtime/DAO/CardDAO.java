@@ -168,7 +168,7 @@ public class CardDAO {
 			
 			conn = ds.getConnection();
 			String sql= 	"select cardnum, listnum, cardname, cardcontents, cardsequential, deleteok "
-							+ "from CARD where listnum=? ORDER BY cardsequential ASC";
+							+ "from CARD where listnum=? and deleteok=0 ORDER BY cardsequential ASC";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, listNum); 
@@ -182,10 +182,10 @@ public class CardDAO {
 				carddto.setListNum(rs.getInt("listnum"));
 				carddto.setCardName(rs.getString("cardname"));
 				carddto.setCardContents(rs.getString("cardcontents"));
-				carddto.setCardSequential(rs.getInt("deleteok"));
+				carddto.setDeleteCheck(rs.getInt("deleteok"));
 				
 				//순번 
-				carddto.setDeleteCheck(rs.getInt("cardsequential"));
+				carddto.setCardSequential(rs.getInt("cardsequential"));
 
 				cardlist.add(carddto);
 				
@@ -247,7 +247,7 @@ public class CardDAO {
 	 기      능 : 카드 삭제 (삭제여부 업데이트)
 	 작성자명 : 김 진 원
 	*/
-	public int cardDelete(int carNum) {
+	public int cardDelete(int cardNum) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int row = 0;
@@ -256,7 +256,7 @@ public class CardDAO {
 			String sql="update CARD set deleteok=1, cardsequential=-1 where cardnum=?";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, carNum);
+			pstmt.setInt(1, cardNum);
 			
 			row = pstmt.executeUpdate();
 			
@@ -504,7 +504,6 @@ public class CardDAO {
 				
 				if(delrow > 0) {
 					pstmt.close();
-					
 					String numminus = "update CHECKBOX set checknum=checknum-1 "
 									+ "where cardnum=? and checknum > ?";
 					
@@ -547,8 +546,8 @@ public class CardDAO {
 		int row = 0;
 		try {
 				conn = ds.getConnection();
-				String sql ="insert into UPLOAD(filenum, cardnum, filepath)" + 
-						    " values(?,?,?)";
+				String sql ="insert into UPLOAD(filenum, cardnum, filepath, originfilename)" + 
+						    " values(?,?,?,?)";
 				
 				pstmt = conn.prepareStatement(sql);
 				
@@ -556,7 +555,7 @@ public class CardDAO {
 				//1-> 카드넘버에 해당하는 파일넘버의 최대넘버 + 1
 				pstmt.setInt(2, upLoad.getCardNum());
 				pstmt.setString(3, upLoad.getFilePath());
-				
+				pstmt.setString(4, upLoad.getOriginFileName());
 				row = pstmt.executeUpdate();
 				
 		}catch (Exception e) {
@@ -594,7 +593,7 @@ public class CardDAO {
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
-					maxfile =  rs.getInt("checkmax");
+					maxfile =  rs.getInt("filemax");
 				}
 				
 		}catch (Exception e) {
@@ -616,7 +615,7 @@ public class CardDAO {
 	 기      능 : 업로드 검색(선택)
 	 작성자명 : 김 진 원
 	*/
-	public UpLoadDTO upLoadSelect(int upLodadNum, int cardNum) {
+	public UpLoadDTO upLoadSelect(int upLoadNum, int cardNum) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -624,11 +623,11 @@ public class CardDAO {
 		
 		try {
 				conn = ds.getConnection();
-				String sql ="select filenum, cardnum, filepath "
+				String sql ="select filenum, cardnum, filepath , originfilename "
 							+ "from UPLOAD where checknum = ? and cardnum = ?";
 				
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, upLodadNum);
+				pstmt.setInt(1, upLoadNum);
 				pstmt.setInt(2, cardNum);
 				
 				rs = pstmt.executeQuery();
@@ -639,6 +638,7 @@ public class CardDAO {
 					uploaddto.setFileNum(rs.getInt("filenum"));
 					uploaddto.setCardNum(rs.getInt("cardnum"));
 					uploaddto.setFilePath(rs.getString("filepath"));
+					uploaddto.setOriginFileName(rs.getString("originfilename"));
 				}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -668,7 +668,7 @@ public class CardDAO {
 		try {
 			
 			conn = ds.getConnection();
-			String sql= "select filenum, cardnum, filepath "
+			String sql= "select filenum, cardnum, filepath, originfilename "
 						+ "from UPLOAD where cardnum=? ORDER BY filenum ASC";
 			pstmt = conn.prepareStatement(sql);
 			
@@ -682,7 +682,7 @@ public class CardDAO {
 				uploaddto.setFileNum(rs.getInt("filenum"));
 				uploaddto.setCardNum(rs.getInt("cardnum"));
 				uploaddto.setFilePath(rs.getString("filepath"));
-				
+				uploaddto.setOriginFileName(rs.getString("originfilename"));
 				uploadlist.add(uploaddto);  
 				
 			}
@@ -725,11 +725,13 @@ public class CardDAO {
 				delrow = pstmt.executeUpdate();
 				
 				if(delrow > 0) {
+					pstmt.close();
 					String numminus = "update UPLOAD set filenum=filenum-1 "
-									+ "where filenum > ?";
+									+ "where cardnum=? and filenum > ?";
 					
 					pstmt = conn.prepareStatement(numminus);
-					pstmt.setInt(1, upLoadNum);
+					pstmt.setInt(1, cardNum);
+					pstmt.setInt(2, upLoadNum);
 					
 					uprow = pstmt.executeUpdate();
 					
@@ -937,13 +939,12 @@ public class CardDAO {
 		try {
 			conn = ds.getConnection();
 			String sql="update REPLY set replycontents=? "
-					+ "where replynum=? and userid=? and cardnum=?";
+					+ "where replynum=? and cardnum=?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, reply.getReplyContents());
 			pstmt.setInt(2, reply.getReplyNum());
-			pstmt.setString(3, reply.getUserId());
-			pstmt.setInt(4, reply.getCardNum());
+			pstmt.setInt(3, reply.getCardNum());
 			
 			row = pstmt.executeUpdate();
 			
@@ -981,6 +982,9 @@ public class CardDAO {
 				//게시글 삭제
 				String del_reply_sql = "delete from REPLY where replynum=? and cardnum=?";
 				
+				//게시글 삭제후 삭제한 댓글넘버 보다 큰 댓글들 넘버 -1
+				String up_reply_sql = "update REPLY set replynum=replynum-1 where cardnum=? and replynum > ?";
+				
 				pstmt = conn.prepareStatement(sel_id_sql);
 				pstmt.setInt(1, replyNum);
 				pstmt.setInt(2, cardNum);
@@ -990,11 +994,22 @@ public class CardDAO {
 				if(rs.next()) { 
 					//아이디가 일치하는지 확인
 					if(userid.equals(rs.getString("userid"))) {
+						pstmt.close();
+						//실제 삭제
 						pstmt = conn.prepareStatement(del_reply_sql);
 						pstmt.setInt(1, replyNum);
 						pstmt.setInt(2, cardNum);
 						
 						row = pstmt.executeUpdate();
+						if(row > 0) {
+							pstmt.close();
+							//삭제 성공 후 댓글넘버 업데이트
+							pstmt = conn.prepareStatement(up_reply_sql);
+							pstmt.setInt(1, cardNum);
+							pstmt.setInt(2, replyNum);
+							
+							row += pstmt.executeUpdate();
+						}
 					}
 				}
 						

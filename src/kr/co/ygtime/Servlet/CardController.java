@@ -1,17 +1,18 @@
 package kr.co.ygtime.Servlet;
 
 import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.service.card.CardContentsUpdateService;
+import kr.co.ygtime.service.card.CardDeleteService;
+import kr.co.ygtime.service.card.CarduploadListService;
+import kr.co.ygtime.service.card.CardFileUploadService;
 import kr.co.ygtime.service.card.CardListService;
 import kr.co.ygtime.service.card.CardNameUpdateService;
 import kr.co.ygtime.service.card.CardSelectService;
@@ -22,7 +23,11 @@ import kr.co.ygtime.service.card.CheckDeleteService;
 import kr.co.ygtime.service.card.CheckListService;
 import kr.co.ygtime.service.card.CheckedUpdateService;
 import kr.co.ygtime.service.card.ReplyAddService;
+import kr.co.ygtime.service.card.ReplyDelService;
 import kr.co.ygtime.service.card.ReplyListService;
+import kr.co.ygtime.service.card.ReplySelService;
+import kr.co.ygtime.service.card.ReplyUpService;
+
 
 /**
   클래스명 : CardController
@@ -109,9 +114,17 @@ public class CardController extends HttpServlet {
         	catch(Exception e) {
         		e.printStackTrace();
         	}
+
         } else if(cmdURI.equals("/Checkupdate.card")) {
         	try {
         		action = new CheckedUpdateService();
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        }else if(cmdURI.equals("/cardfileupload.card")) {
+        	try {
+        		action = new CardFileUploadService();
         		forward = action.execute(request, response);
         	}
         	catch(Exception e) {
@@ -149,9 +162,49 @@ public class CardController extends HttpServlet {
         	catch(Exception e) {
         		e.printStackTrace();
         	}
+        }else if(cmdURI.equals("/carddelete.card")) {
+        	try {
+        		action = new CardDeleteService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/ReplyDel.card")) {
+        	try {
+        		action = new ReplyDelService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/ReplySel.card")) {
+        	try {
+        		action = new ReplySelService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/ReplyUp.card")) {
+        	try {
+        		action = new ReplyUpService();
+        		forward = action.execute(request, response);
+
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        }else if(cmdURI.equals("/carduploadlist.card")) {
+        	try {
+        		action = new CarduploadListService();
+
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
         }
-		
-		
         //태우기 마지막
         if(forward != null){
         	if(forward.isRedirect()) {

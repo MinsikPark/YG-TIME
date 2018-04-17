@@ -11,16 +11,25 @@ public class UpLoadDTO {
 	private int fileNum;
 	private int cardNum;
 	private String filePath;
-	
+	private String originFileName;
 	public UpLoadDTO() {}
 	
-	public UpLoadDTO(int fileNum, int cardNum, String filePath) {
+	public UpLoadDTO(int fileNum, int cardNum, String filePath, String originFileName) {
 		this.fileNum = fileNum;
 		this.cardNum = cardNum;
 		this.filePath = filePath;
+		this.originFileName = originFileName;
 		
 	}
 	
+	public String getOriginFileName() {
+		return originFileName;
+	}
+
+	public void setOriginFileName(String originFileName) {
+		this.originFileName = originFileName;
+	}
+
 	public int getFileNum() {
 		return fileNum;
 	}

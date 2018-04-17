@@ -1,5 +1,6 @@
 var j = 1	
 $(function(){
+	$("#cardFileUpload").hide()
 	$('.setting, .button, .tab-content, #mainFooterbar').hide()
 	
 	//사이드 관련
@@ -13,6 +14,7 @@ $(function(){
 	//여기까지 사이드 관련
 	$('#btnFileUpLoad').click(function() {
 		$('#btnFileUpload').click()
+		$('#cardFileUpload').click()
 	})
 	
 	$('#modalHeader').click(function(){
@@ -41,14 +43,41 @@ function sideShow(){
 	$('.setting, .insert, .button, .tab-content').delay(250).fadeIn()
 } 
 
+
+//카드에 파일 업로드 하기 
 function changeValue(obj){
+	console.log("파일 업로드");
+	
+	var data = $("#cardfileupload").serialize();
+
 	if(obj.value != ""){
 		var div = '<div><input type="text" class="form-control inputtextbox" value="첨부 파일  : '+ obj.value.substr(12)+'" readonly>'
 			div += '<button type="button" class="close" onclick="fileInputDel(this)">&times;</button></div>'
 		$('#fileUploadForm').append(div)
+		
+		$("#cardfileupload").ajaxForm({
+			url: "cardfileupload.card",
+			data: data,
+			type : "post",
+			datatype: "text",
+			enctype:"multipart/form-data",
+			success: function(data){
+				if(data.trim()<=0){
+					console.log(">"+data+"<")
+					console.log(">"+data.trim()+"<")
+					alert("파일 업로드 실패");
+				}
+				callUploadList($("#hiddenCardnum").val());
+				
+			}
+		})
 	}
+	$("#cardfileupload").submit();
 	obj.value =""; 
+	
 }
+
+
 
 function fileInputDel(obj){
 	obj.closest('div').remove()
@@ -57,8 +86,9 @@ function fileInputDel(obj){
 //상세페이지 카드명 클릭시 텍스트 생성
 function cardNameMod(){
 	var cardnum = $('#hiddenCardnum').val();
+	var htmlObj = $('#modalHeader').html();
 	
-	var div = '<div onfocusout="focusoutdelay('+ cardnum +')"><input type="text" class="form-control inputtextbox">'
+	var div = '<div onfocusout="focusoutdelay('+ cardnum +')"><input type="text" class="form-control inputtextbox" placeholder=' + htmlObj + '>'
 		+ '<button type="button" class="close glyphicon" onclick="cardNameModOk()">&#xe013;</button></div>';
 
 	$('#modalHeader').html(div);
@@ -144,7 +174,7 @@ function checkUpdate(checked, content, checknum){
 		datatype:"text",
 		data:{Checked:checked, Checkboxcontents:content, Cardnum:cardnum, Checknum:checknum},
 		success:function(data){
-			cardViewDetail(cardnum);
+			//성공 아무것도 없어도 됨.
 		}
 	});
 }
@@ -185,7 +215,7 @@ function checkBoxModOk(obj, checknum){
 function focusoutdelay(cardnum){
 	setTimeout(function() {
 		cardViewDetail(cardnum);
-	}, 500);
+	}, 300);
 }
 
 //댓글을 추가하다
@@ -204,17 +234,72 @@ function addComment(obj){
 				cardViewDetail(cardnum);
 			}
 		});
-		/*var div = '<div class="commentlist"><img src="images/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">'
-			div += '<input type="text" class="form-control commentinputtextbox" value="' + value + '" readonly>'
-			div += '<button type="bRutton" class="close" onclick="removeComment(this)">&times;</button></div>'
-			
-		$('#commentListForm').append(div)
-		$(obj).closest('div')[0].children[1].value = ""*/
 	}
 }
 
+//자신이 입력한 댓글 삭제
 function removeComment(obj){
-	$(obj).closest('div').remove()
+	var id = $('#getsession').val();
+	var cardnum = $('#hiddenCardnum').val();
+	var replynum = $(obj).parent().attr("id").substr(8);
+	
+	$.ajax({
+		url:"ReplyDel.card",
+		datatype:"text",
+		data:{UserId:id, CardNum:cardnum, ReplyNum:replynum},
+		success:function(data){
+			console.log(data.trim());
+			if(data.trim() == '0'){
+				alert('댓글을 등록한 멤버가 아닙니다');
+			}else{
+				alert('삭제가 완료 되었습니다.');
+				cardViewDetail(cardnum);
+			}
+		}
+	});
+}
+
+//댓글을 수정하기전 작성한 인원이 맞는지 확인
+function replyMod(obj, replyNum){
+	var id = $('#getsession').val();
+	var cardnum = $('#hiddenCardnum').val();
+	
+	$.ajax({
+		url:"ReplySel.card",
+		datatype:"json",
+		data:{CardNum:cardnum, ReplyNum:replyNum},
+		success:function(data){
+			var json = JSON.parse(data);
+			console.log(json);
+			if(json.userId == id){
+				$(obj).removeAttr('readonly');
+				$(obj).attr('onfocusout', 'focusoutdelay('+ cardnum +')');
+				$(obj).parent().children('button').attr({
+					"class":"glyphicon close",
+					"onclick":"replyModOk(this, "+replyNum+")"
+				});
+				$(obj).parent().children('button').html('&#xe065;');
+				$(obj).focus();
+			}else{
+				alert('등록한 멤버가 아닙니다.');
+			}
+		}
+	});
+}
+
+//댓글 수정완료
+function replyModOk(obj, replyNum){
+	var cardnum = $('#hiddenCardnum').val();
+	var value = $(obj).parent().children('input').val();
+	
+	$.ajax({
+		url:"ReplyUp.card",
+		datatype:"text",
+		data:{ReplyContents:value, CardNum:cardnum, ReplyNum:replyNum},
+		success:function(data){
+			alert('댓글을 수정했습니다.');
+		}
+	});
 }
 
 //카드 상세페이지, 상세내용 추가
@@ -237,7 +322,7 @@ function updateDetail(obj, cardNum){
 			}
 		}
 	});
-	
+
 }
 
 function bokyeong(obj) {

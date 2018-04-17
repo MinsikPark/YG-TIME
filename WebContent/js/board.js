@@ -109,6 +109,23 @@ function addCard(obj, listnum){
 		});
 	}
 }
+//카드삭제
+function deleteCard(cardid, listNum) {
+	event.stopPropagation();//상위 이벤트 중지
+	var cardNum = cardid;
+	console.log("메롱메롱" + cardNum);
+	$.ajax({
+			url : "carddelete.card",
+			datatype:"text",
+			data:{cardNum:cardNum},
+			success:function(data){
+				console.log("너는 누구냐?" + data.trim());
+				console.log("listNum이래요 : " + listNum)
+				$('#div'+cardid).remove();
+				callCardList(listNum)
+			}
+			})
+}
 
 //리스트생성 텍스트박스를 불러오기
 function addListView(obj, boardnum){
@@ -166,7 +183,7 @@ function listDel(obj){
 //(텍스트 클릭하면 텍스트박스 불러오기)리스트 수정
 function listmodify(obj, listNum, boardnum){
 	var html = $(obj).html();
-	var text = "<input class='inputtext' type='text' placeholder='list title' name='title'><a onclick='listmodifyOk(this,"+ listNum + "," + boardnum +")'>완료</a>" 
+	var text = "<input class='inputtext' type='text' placeholder=" + html + " name='title'><a onclick='listmodifyOk(this,"+ listNum + "," + boardnum +")'>완료</a>" 
 			+"<a onclick='listmodifyNo(this,"+ listNum + "," + boardnum +")'>취소</a>";
 	
 	$(obj).removeAttr("onclick");
@@ -216,9 +233,10 @@ function listmodifyNo(obj, listNum, boardnum){
 
 //보드타이틀 클릭
 function boardTitleEdit(obj, boardNum){
+	var htmlObj = $(obj).html();
 	$(obj).removeAttr("onclick");
 	$(obj).html('');
-	var edit = "<input class='inputtext' type='text' placeholder='board title' name='title'><a onclick='boardmodifyOk(this,"+ boardNum +")'>완료</a>" 
+	var edit = "<input class='inputtext' type='text' placeholder=" + htmlObj + " name='title'><a onclick='boardmodifyOk(this,"+ boardNum +")'>완료</a>" 
 			+"<a onclick='boardclick("+boardNum+")'>취소</a>";
 	
 	$(obj).append(edit);
@@ -226,9 +244,10 @@ function boardTitleEdit(obj, boardNum){
 
 //보다디테일 클릭
 function boardDetailEdit(obj, boardNum){
+	var htmlObj = $(obj).html();
 	$(obj).removeAttr("onclick");
 	$(obj).html('');
-	var edit = "<input class='inputtext' type='text' placeholder='board detail' name='title'><a onclick='detailmodifyOk(this,"+ boardNum +")'>완료</a>" 
+	var edit = "<input class='inputtext' type='text' placeholder=" + htmlObj + " name='title'><a onclick='detailmodifyOk(this,"+ boardNum +")'>완료</a>" 
 	+"<a onclick='boardclick("+boardNum+")'>취소</a>";
 	
 	$(obj).append(edit);
@@ -295,9 +314,13 @@ function cardDetail(obj){
 
 //카드 상세 페이지
 function cardViewDetail(cardnum){
+
+	//파일리스트 있으면 불러오기 
+	callUploadList(cardnum);
+	
 	cardViewContents(cardnum);
 	cardViewCheckList(cardnum);
-	cardViewReplys(cardnum);
+	cardViewReplys(cardnum);	
 }
 
 //카드제목 보여주기 & 카드내용이 있었다면 보여주기
@@ -313,10 +336,14 @@ function cardViewContents(cardnum){
 			$('#contentDetail').html(json.cardContents);
 		}
 	});
+
 }
 
 //카드체크리스트 있다면 보여주기
 function cardViewCheckList(cardnum){
+
+
+	//카드체크리스트 있다면 보여주기
 	$.ajax({
 		url:"Checklist.card",
 		datatype:"json",
@@ -339,6 +366,7 @@ function cardViewCheckList(cardnum){
 	});
 }
 
+
 //카드댓글이 있다면 보여주기
 function cardViewReplys(cardnum){
 	$.ajax({
@@ -347,49 +375,68 @@ function cardViewReplys(cardnum){
 		data:{CardNum:cardnum},
 		success:function(data){
 			var json = JSON.parse(data);
-			console.log(json);
-			userMember();
 			//json : cardNum, replyContents, replyNum, userId
-			$('#commentListForm').empty();
-			
 			var arr = [];
 			
 			var htmldata = '';
 			$.each(json, function(index, elt) {
 				htmldata += '<div id="replyNum'+ elt.replyNum +'" class="commentlist">'
-						+ '<input type="text" class="form-control commentinputtextbox" value="' + elt.replyContents + '" readonly>'
-						+ '<button type="bRutton" class="close" onclick="removeComment(this)">&times;</button></div>';
-				
+						+ '<input type="text" class="form-control commentinputtextbox" value="' + elt.replyContents + '" readonly onclick="replyMod(this, '+ elt.replyNum +')">'
+						+ '<button type="button" class="close" onclick="removeComment(this)">&times;</button></div>';
 				arr.push({userId:elt.userId, replyNum:elt.replyNum});
 			});
 			
 			$('#commentListForm').html(htmldata);
-			
-			$.each(arr, function(i, elt) {
-				userMember(elt.userId, elt.replyNum);
-			});
+
+			userMember(arr);
 		}
 	});
 }
 
 //멤버 찾아서 멤버 프로필 보여주기
-function userMember(userid, replynum){
-	$.ajax({
-		url : "userSelect.member",
-		datatype : "JSON",
-		data : {userId:userid},
-		success : function(data) {
-			//json : userId, userNicname, userProfile
-			var json = JSON.parse(data);
-			console.log(json);
-			var htmldata = '';
-			if(json.userProfile == "" || json.userProfile == null){
-				htmldata += '<img src="profile/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">';
-			}else{
-				htmldata += '<img src="profile/'+json.userProfile+'" class="img-circle person" alt="Random Name" width="30" height="30">';
+function userMember(arr){
+	$.each(arr, function(i, elt) {
+		$.ajax({
+			url : "userSelect.member",
+			datatype : "JSON",
+			data : {userId:elt.userId},
+			success : function(data) {
+				//json : userId, userNicname, userProfile
+				var json = JSON.parse(data);
+				var htmldata = '';
+				if(json.userProfile == "" || json.userProfile == null){
+					htmldata += '<img src="profile/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">';
+				}else{
+					htmldata += '<img src="profile/'+json.userProfile+'" class="img-circle person" alt="Random Name" width="30" height="30">';
+				}
+				htmldata += '<label>'+json.userNicname+'</label>';
+				
+				$('#replyNum'+elt.replyNum).prepend(htmldata);
 			}
-			
-			$('#replyNum'+replynum).prepend(htmldata);
-		}
+		});
 	});
 }
+
+
+
+// 카드에 업로드되어 있는 파일 목록 불러오기
+function callUploadList(cardNum){
+	console.log("uploadlist")
+	$('#fileUploadForm').empty();
+	$.ajax({
+		url:"carduploadlist.card",
+		data:{cardNum:cardNum},
+		datatype:"json",
+		success:function(data){
+			console.log(">"+data+"<");
+			var json = JSON.parse(data);
+			$.each(json, function(index,json){
+				var div ='<div><a class="down" href="download?fileName='+json.filePath+'">'+ json.originFileName+'</a>' 
+				div += '<button type="button" class="close" onclick="fileInputDel(this)">&times;</button></div>'
+				$('#fileUploadForm').append(div)			
+			})	
+		}
+	})
+}
+
+
