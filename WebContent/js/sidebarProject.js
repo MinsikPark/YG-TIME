@@ -1,7 +1,7 @@
 //프로젝트 추가 From 생성
 function addProjectForm(obj) {
 	if ($('#projectName').length == 0) {
-		var button = '<div><button class="button btn-1"><input type="text" id="projectName" name="projectName" style="margin-left:-60px; color:black;"></button><a class="glyphicon setting" onclick="addProject()">&#xe013;</a></div>'
+		var button = '<div><button class="button btn-1"><input type="text" id="projectName" name="projectName" onkeyup="fnChkByte(this,20)" style="margin-left:-60px; color:black;"></button><a class="glyphicon setting" onclick="addProject()">&#xe013;</a></div>'
 		$('#progress').prepend(button)
 		$('#projectName').focus();
 		nameinput();

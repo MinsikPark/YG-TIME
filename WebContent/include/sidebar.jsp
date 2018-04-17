@@ -11,6 +11,7 @@
 <script src="js/sidebarProject.js"></script>
 <script src="js/sidebarProjectList.js"></script>
 <script src="js/footbar.js"></script>
+<script src="js/util.js"></script>
 
 <c:if test="${!empty sessionScope.sessionId}">
 
