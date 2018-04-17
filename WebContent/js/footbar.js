@@ -149,7 +149,7 @@ function memberToKickOut(obj) {
 	
 }
 //오토컴플릿
-function autoComplet() {
+function autoComplete() {
 	console.log("바보바보")
 	 $.ajax({
 		 		url : "comple.member",
@@ -159,7 +159,9 @@ function autoComplet() {
 
 					$('#emailSearch').autocomplete({
 						 source: param,
-						 appendTo: "#friend"
+						 appendTo: "#friend",
+						 minLength: 3
+						 
 					})
 				}
 		 		
