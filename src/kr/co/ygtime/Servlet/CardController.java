@@ -22,6 +22,7 @@ import kr.co.ygtime.service.card.CheckDeleteService;
 import kr.co.ygtime.service.card.CheckListService;
 import kr.co.ygtime.service.card.CheckedUpdateService;
 import kr.co.ygtime.service.card.ReplyAddService;
+import kr.co.ygtime.service.card.ReplyDelService;
 import kr.co.ygtime.service.card.ReplyListService;
 
 /**
@@ -144,6 +145,14 @@ public class CardController extends HttpServlet {
         } else if(cmdURI.equals("/Replylist.card")) {
         	try {
         		action = new ReplyListService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/ReplyDel.card")) {
+        	try {
+        		action = new ReplyDelService();
         		forward = action.execute(request, response);
         	}
         	catch(Exception e) {
