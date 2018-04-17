@@ -43,7 +43,19 @@ function sortable(){
 		items:'div:not(.listtitle)',
 		placeholder: "ui-state-highlight",
 		connectWith: '.listbox',
-		axis : 'y',
+		/*axis : 'y',*/
+		/*start : function(event, ui){
+			console.log(ui.item)
+			$('body').append(ui.item)
+			$('.listbox').css({
+				overflow : 'unset'
+			})
+		},*/
+		sort : function (event,ui){
+			
+			console.log(ui.item)
+			$('#content-md').append(ui.item)
+		},
 		update: function(event, ui) {
 			var productOrder = $(this).sortable('toArray').toString();
 			var children = $(this)[0].children
@@ -54,6 +66,7 @@ function sortable(){
 				$(this).empty()
 				$(this).append(children0, children2, children1)
 			}
+			
 			$.ajax({
 				url : 'CardSequenceUpdate.card',
 				data : { 
