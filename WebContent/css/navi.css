@@ -12,7 +12,7 @@
 	}
 	
 	.sidenav {
-	    height: 100%;
+	    height: 95%;
 	    width: 0;
 	    position: fixed;
 	    z-index: 1;
@@ -75,15 +75,23 @@
 	}
 	
 	.button::before,
-	.button::after {
+	.button::after{
 	  background: #fff;
 	  content: '';
 	  position: absolute;
 	  z-index: -1;
 	}
 	
+	
 	.button:hover {
 	  color: #2ecc71;
+	}
+	
+	.btnactive {
+	  background: #fff;
+	  content: '';
+	  z-index: -1;
+      color: #2ecc71;
 	}
 	
 	/* BUTTON 1 */
@@ -236,7 +244,7 @@
 			width: 85%;
 		}
 		.commentinputtextbox{
-			width : 50%
+			width : 50%;
 		}
 	}
 	@media screen and (max-width: 1000px) {

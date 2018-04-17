@@ -497,7 +497,7 @@ function memberList(projectNum2) {
 					<button class="button btn-1">Button 1</button>
 					<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>
     				<ul class="dropdown-menu" style= "float: right; position: unset;">
-      					<li><a onclick="projectDel(this)">프로젝트 삭제</a></li>
+      					<li><a onclick="autoComplet()">프로젝트 삭제</a></li>
       					<li><a onclick="projectComplete(this)">프로젝트 완료</a></li>
     				</ul>	
 				</div>
@@ -688,7 +688,7 @@ function memberList(projectNum2) {
 		        	<div class="form-group">
 					    <label for="comment">댓글</label>
 					    <input type="text" class="form-control commentlist" placeholder="댓글을 입력하세요">
-					    <button class="btn btn-success" type="button" onclick="addComment(this)">작성</button>
+					    <button class="btn btn-success" type="button" onclick="autoComplet()">작성</button>
 					    <div id="commentListForm"></div>
 					</div>
 	        	</form>

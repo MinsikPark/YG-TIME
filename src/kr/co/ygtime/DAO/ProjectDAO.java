@@ -754,4 +754,50 @@ public class ProjectDAO {
 		
 		return  resultrow;
 	}
+	
+	/**
+	 날      짜 : 2018. 4. 17.
+	 기      능 : 프로젝트넘버에 대한 팀DTO 조회
+	 작성자명 : 김 진 원
+	 */
+	public List<TeamDTO> allTeamSelect(int projectNum) {
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		TeamDTO teamdto = null;
+		List<TeamDTO> list = null;
+		
+		try {
+			conn = ds.getConnection();
+			String sql = "select projectnum, userid, grade, projectlastmoddate from team where projectnum=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, projectNum);
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<>();
+			while(rs.next()) {
+				teamdto = new TeamDTO();
+				teamdto.setProjectNum(rs.getInt("projectnum"));
+				teamdto.setUserId(rs.getString("userid"));
+				teamdto.setGrade(rs.getInt("grade"));
+				teamdto.setProjectLastModDate(rs.getString("projectlastmoddate"));
+				
+				list.add(teamdto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();
+			}catch (Exception e) {
+				e.getMessage();
+			}
+		}
+		
+		return list;
+	}
 }

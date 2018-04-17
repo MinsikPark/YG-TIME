@@ -94,7 +94,10 @@ function projectDisplay(dataArr) {
 }
 
 //프로젝트 선택보기
-function projectView(projectNum){
+function projectView(projectNum,obj){
+	
+	$('.button').removeClass('btnactive')
+	$(obj).addClass('btnactive')
 	console.log('프로젝트 아이디를 받아서 다시 뿌려줘요')
 	console.log("projectNum : " + projectNum);
 	//$('#thisProjectNum').val(projectNum)

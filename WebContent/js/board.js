@@ -43,18 +43,13 @@ function sortable(){
 		items:'div:not(.listtitle)',
 		placeholder: "ui-state-highlight",
 		connectWith: '.listbox',
-		/*axis : 'y',*/
-		/*start : function(event, ui){
+		start : function(event, ui){
 			console.log(ui.item)
-			$('body').append(ui.item)
-			$('.listbox').css({
-				overflow : 'unset'
-			})
-		},*/
-		sort : function (event,ui){
-			
-			console.log(ui.item)
-			$('#content-md').append(ui.item)
+				$('#movingBox').css({
+					left: event.pageX - ui.item[0].offsetLeft - (ui.item[0].clientWidth/2),
+					top : event.pageY - ui.item[0].offsetTop - (ui.item[0].clientHeight/2)
+				})
+				$('#movingBox').append(ui.item) 
 		},
 		update: function(event, ui) {
 			var productOrder = $(this).sortable('toArray').toString();
@@ -184,10 +179,11 @@ function listDel(obj){
 function listmodify(obj, listNum, boardnum){
 	var html = $(obj).html();
 	var text = "<input class='inputtext' type='text' placeholder=" + html + " name='title'><a onclick='listmodifyOk(this,"+ listNum + "," + boardnum +")'>완료</a>" 
-			+"<a onclick='listmodifyNo(this,"+ listNum + "," + boardnum +")'>취소</a>";
+			+"<a onclick='boardclick(" + boardnum +")'>취소</a>";
 	
 	$(obj).removeAttr("onclick");
 	$(obj).html("");
+	$(obj).parent().children('a').remove();
 	$(obj).append(text);
 	
 }
@@ -204,31 +200,10 @@ function listmodifyOk(obj, listNum, boardnum){
 	        datatype:"text",
 	        data:{listnum:listNum, listname:name},
 	        success:function(data){
-	        	var div = $(obj).parent();
-	        	
-	        	div.empty();
-	        	div.html(name);
-	        	div.attr("onclick", 'listmodify(this, '+ listNum +',' + boardnum +')');
+	        	boardclick(boardnum);
 	        }
 		});
 	}
-}
-
-//리스트 수정 취소
-function listmodifyNo(obj, listNum, boardnum){
-	$.ajax({
-		url:"listselect.list",
-        datatype:"JSON",
-        data:{listnum:listNum},
-        success:function(data){
-        	var div = $(obj).parent();
-        	console.log(div.attr("class"));
-        	var json = JSON.parse(data);
-        	div.empty();
-        	div.html(json.listName);
-        	div.attr("onclick", 'listmodify(this, '+ listNum +',' + boardnum +')');
-        }
-	});
 }
 
 //보드타이틀 클릭
@@ -319,7 +294,8 @@ function cardViewDetail(cardnum){
 	
 	cardViewContents(cardnum);
 	cardViewCheckList(cardnum);
-	cardViewReplys(cardnum);	
+	cardViewReplys(cardnum);
+	cardMemberListView(cardnum);
 }
 
 //카드제목 보여주기 & 카드내용이 있었다면 보여주기
@@ -340,9 +316,6 @@ function cardViewContents(cardnum){
 
 //카드체크리스트 있다면 보여주기
 function cardViewCheckList(cardnum){
-
-
-	//카드체크리스트 있다면 보여주기
 	$.ajax({
 		url:"Checklist.card",
 		datatype:"json",
@@ -350,13 +323,12 @@ function cardViewCheckList(cardnum){
 		success:function(data){
 			var json = JSON.parse(data);
 			//json : cardNum, checkBoxContents, checkNum, checked
-			$('#checkListForm').empty();
 			var htmldata = '';
 			$.each(json, function(index, elt) {
 				if(elt.checked == '0'){
 					htmldata += '<p><input type="checkbox" id="checkbox'+elt.checkNum+'" onclick="checkClick(this, '+elt.checkNum+')"><label for="checkbox'+elt.checkNum+'">'+elt.checkBoxContents+'</label><button type="button" class="close" onclick="removeCheckList(this, '+elt.checkNum+')">&times;</button><button type="button" class="glyphicon close" onclick="checkBoxMod(this, '+elt.checkNum+')">&#xe065;</button></p>';
 				} else{
-					htmldata += '<p><input type="checkbox" id="checkbox'+elt.checkNum+'" onclick="checkClick(this, '+elt.checkNum+')" checked><label for="checkbox'+elt.checkNum+'" style="text-decoration:line-through; font-style: oblique;">'+elt.checkBoxContents+'</label><button type="button" class="close" onclick="removeCheckList(this)">&times;</button><button type="button" class="glyphicon close" onclick="checkBoxMod(this, '+elt.checkNum+')">&#xe065;</button></p>';
+					htmldata += '<p><input type="checkbox" id="checkbox'+elt.checkNum+'" onclick="checkClick(this, '+elt.checkNum+')" checked><label for="checkbox'+elt.checkNum+'" style="text-decoration:line-through; font-style: oblique;">'+elt.checkBoxContents+'</label><button type="button" class="close" onclick="removeCheckList(this, '+elt.checkNum+')">&times;</button><button type="button" class="glyphicon close" onclick="checkBoxMod(this, '+elt.checkNum+')">&#xe065;</button></p>';
 				}
 			});
 			
@@ -416,18 +388,14 @@ function userMember(arr){
 	});
 }
 
-
-
 // 카드에 업로드되어 있는 파일 목록 불러오기
 function callUploadList(cardNum){
-	console.log("uploadlist")
 	$('#fileUploadForm').empty();
 	$.ajax({
 		url:"carduploadlist.card",
 		data:{cardNum:cardNum},
 		datatype:"json",
 		success:function(data){
-			console.log(">"+data+"<");
 			var json = JSON.parse(data);
 			$.each(json, function(index,json){
 				var div ='<div><a class="down" href="download?fileName='+json.filePath+'">'+ json.originFileName+'</a>' 
@@ -438,4 +406,27 @@ function callUploadList(cardNum){
 	})
 }
 
-
+// 해당카드의 카드멤버 목록 불러오기
+function cardMemberListView(cardnum){
+	$.ajax({
+		url:"CardMemberList.card",
+		datatype:"json",
+		data:{cardNum:cardnum},
+		success:function(data){
+			var json = JSON.parse(data);
+			//json : userId, userNicname, userProfile, userPwd
+			var htmldata = '';
+			$.each(json, function(i, elt) {
+				htmldata += '<div onclick="cardMemberDel(this)" class="close">';
+				if(json.userProfile == "" || json.userProfile == null){
+					htmldata += '<img src="profile/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">';
+				}else{
+					htmldata += '<img src="profile/'+json.userProfile+'" class="img-circle person" alt="Random Name" width="30" height="30">';
+				}
+				htmldata += '<input type="hidden" value="'+elt.userId+'"></div>'
+			});
+			
+			$('#cardMemberView').html(htmldata);
+		}
+	});
+}
