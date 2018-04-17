@@ -26,6 +26,7 @@ $(function(){
 		e.stopPropagation();
 		e.preventDefault();
 	});
+	
 })
 
 //사이드 숨길때
@@ -305,8 +306,6 @@ function replyModOk(obj, replyNum){
 
 //카드 상세페이지, 상세내용 추가
 function updateDetail(obj, cardNum){
-	console.log("카드넘버: " + cardNum);
-	console.log($('#contentDetail').val());
 	var contentDetail = $('#contentDetail').val();
 	
 	$.ajax({
@@ -324,6 +323,54 @@ function updateDetail(obj, cardNum){
 		}
 	});
 
+}
+
+//프로젝트 멤버의 모든 리스트를 넣어준다.
+function cardMemberAddList(obj){
+	$.ajax({
+		url:"CardMemeberAddList.card",
+		datatype:"json",
+		success:function(data){
+			var json = JSON.parse(data);
+			console.log(json);
+			var htmldata = "";
+			$.each(json, function(index, elt){
+				htmldata += '<li><a onclick="cardMemberAdd(this)">'+ elt.userId +'</a></li>'; 
+			})	
+			
+			$(obj).parent().children('ul').html(htmldata);
+		}
+	});
+}
+
+//해당 카드에 카드멤버를 추가 시킨다
+function cardMemberAdd(obj){
+	var id = $(obj).html();
+	var cardnum = $('#hiddenCardnum').val();
+	
+	$.ajax({
+		url:"CardMemeberAdd.card",
+		datatype:"text",
+		data:{cardNum:cardnum, userId:id},
+		success:function(data){
+			cardMemberListView(cardnum);
+		}
+	});
+}
+
+//해당 카드에 카드멤버를 삭제 시킨다
+function cardMemberDel(obj){
+	var id = $(obj).children('input').val();
+	var cardnum = $('#hiddenCardnum').val();
+	
+	$.ajax({
+		url:"CardMemeberDel.card",
+		datatype:"text",
+		data:{cardNum:cardnum, userId:id},
+		success:function(data){
+			cardMemberListView(cardnum);
+		}
+	});
 }
 
 function bokyeong(obj) {
