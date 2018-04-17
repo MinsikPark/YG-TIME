@@ -108,11 +108,11 @@ function cardNameModOk(){
 			success:function(data){
 				var boardnum = $('#hiddenBoardnum').val();
 				boardclick(boardnum);
-				cardViewDetail(cardnum);
+				cardViewContents(cardnum);
 			}
 		});
 	}else{
-		cardViewDetail(cardnum);
+		cardViewContents(cardnum);
 	}
 }
 
@@ -145,7 +145,7 @@ function addCheckList(obj) {
 			data:{cardNum:cardnum, checkboxcontents:value},
 			success:function(data){
 				console.log(data.trim());
-				cardViewDetail(cardnum);
+				cardViewCheckList(cardnum);
 				addCancel();
 			}
 		});
@@ -176,7 +176,7 @@ function checkUpdate(checked, content, checknum){
 		data:{Checked:checked, Checkboxcontents:content, Cardnum:cardnum, Checknum:checknum},
 		success:function(data){
 			//성공 아무것도 없어도 됨.
-			cardViewDetail(cardnum);
+			cardViewCheckList(cardnum);
 		}
 	});
 }
@@ -189,7 +189,7 @@ function removeCheckList(obj, checknum){
 		datatype:"text",
 		data:{Cardnum:cardnum, Checknum:checknum},
 		success:function(data){
-			cardViewDetail(cardnum);
+			cardViewCheckList(cardnum);
 		}
 	});
 }
@@ -233,7 +233,7 @@ function addComment(obj){
 			datatype:"text",
 			data:{UserId:id, CardNum:cardnum, ReplyContents:value},
 			success:function(data){
-				cardViewDetail(cardnum);
+				cardViewReplys(cardnum);
 			}
 		});
 	}
@@ -255,7 +255,7 @@ function removeComment(obj){
 				alert('댓글을 등록한 멤버가 아닙니다');
 			}else{
 				alert('삭제가 완료 되었습니다.');
-				cardViewDetail(cardnum);
+				cardViewReplys(cardnum);
 			}
 		}
 	});
@@ -272,7 +272,6 @@ function replyMod(obj, replyNum){
 		data:{CardNum:cardnum, ReplyNum:replyNum},
 		success:function(data){
 			var json = JSON.parse(data);
-			console.log(json);
 			if(json.userId == id){
 				$(obj).removeAttr('readonly');
 				$(obj).attr('onfocusout', 'focusoutdelay('+ cardnum +')');

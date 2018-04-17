@@ -179,10 +179,11 @@ function listDel(obj){
 function listmodify(obj, listNum, boardnum){
 	var html = $(obj).html();
 	var text = "<input class='inputtext' type='text' placeholder=" + html + " name='title'><a onclick='listmodifyOk(this,"+ listNum + "," + boardnum +")'>완료</a>" 
-			+"<a onclick='listmodifyNo(this,"+ listNum + "," + boardnum +")'>취소</a>";
+			+"<a onclick='boardclick(" + boardnum +")'>취소</a>";
 	
 	$(obj).removeAttr("onclick");
 	$(obj).html("");
+	$(obj).parent().children('a').remove();
 	$(obj).append(text);
 	
 }
@@ -199,31 +200,10 @@ function listmodifyOk(obj, listNum, boardnum){
 	        datatype:"text",
 	        data:{listnum:listNum, listname:name},
 	        success:function(data){
-	        	var div = $(obj).parent();
-	        	
-	        	div.empty();
-	        	div.html(name);
-	        	div.attr("onclick", 'listmodify(this, '+ listNum +',' + boardnum +')');
+	        	boardclick(boardnum);
 	        }
 		});
 	}
-}
-
-//리스트 수정 취소
-function listmodifyNo(obj, listNum, boardnum){
-	$.ajax({
-		url:"listselect.list",
-        datatype:"JSON",
-        data:{listnum:listNum},
-        success:function(data){
-        	var div = $(obj).parent();
-        	console.log(div.attr("class"));
-        	var json = JSON.parse(data);
-        	div.empty();
-        	div.html(json.listName);
-        	div.attr("onclick", 'listmodify(this, '+ listNum +',' + boardnum +')');
-        }
-	});
 }
 
 //보드타이틀 클릭
@@ -343,13 +323,12 @@ function cardViewCheckList(cardnum){
 		success:function(data){
 			var json = JSON.parse(data);
 			//json : cardNum, checkBoxContents, checkNum, checked
-			$('#checkListForm').empty();
 			var htmldata = '';
 			$.each(json, function(index, elt) {
 				if(elt.checked == '0'){
 					htmldata += '<p><input type="checkbox" id="checkbox'+elt.checkNum+'" onclick="checkClick(this, '+elt.checkNum+')"><label for="checkbox'+elt.checkNum+'">'+elt.checkBoxContents+'</label><button type="button" class="close" onclick="removeCheckList(this, '+elt.checkNum+')">&times;</button><button type="button" class="glyphicon close" onclick="checkBoxMod(this, '+elt.checkNum+')">&#xe065;</button></p>';
 				} else{
-					htmldata += '<p><input type="checkbox" id="checkbox'+elt.checkNum+'" onclick="checkClick(this, '+elt.checkNum+')" checked><label for="checkbox'+elt.checkNum+'" style="text-decoration:line-through; font-style: oblique;">'+elt.checkBoxContents+'</label><button type="button" class="close" onclick="removeCheckList(this)">&times;</button><button type="button" class="glyphicon close" onclick="checkBoxMod(this, '+elt.checkNum+')">&#xe065;</button></p>';
+					htmldata += '<p><input type="checkbox" id="checkbox'+elt.checkNum+'" onclick="checkClick(this, '+elt.checkNum+')" checked><label for="checkbox'+elt.checkNum+'" style="text-decoration:line-through; font-style: oblique;">'+elt.checkBoxContents+'</label><button type="button" class="close" onclick="removeCheckList(this, '+elt.checkNum+')">&times;</button><button type="button" class="glyphicon close" onclick="checkBoxMod(this, '+elt.checkNum+')">&#xe065;</button></p>';
 				}
 			});
 			
