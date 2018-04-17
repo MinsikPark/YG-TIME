@@ -1,6 +1,6 @@
 //회원정보 수정관련 함수
 $(function() {
-
+	$("#modfileUpLoad").hide();
 	$("#profilmodify").click(function() {
 		var datas = {
 			userId : '<%=session.getAttribute("sessionId")%>'
@@ -55,37 +55,38 @@ function modsubmit() {
 	})
 
 }
-function profileimgmodify() {
-	 var sessionid = $("#getsession").val(); 
 
-	 $.ajax({
-		
-		 url : "profileimg.member", 
-		 datatype: "json",
-		 data: {userId:sessionid},
-		 success : function(data) { 
-			 var json = JSON.parse(data); 
-			 console.log(json);
-			 if( sessionid == null || json.userProfile == ""){ //회원의 프로필 사진이 null이라면
-				 console.log("로그인안한상태");
-					$("#profiledrop > a > span").remove();
-					$("#profiledrop > a > img").remove();
-					var span ="<span class = 'glyphicon glyphicon-user'style='width: 50px;height:50px' > </span>"
-					$("#profiledrop > a ").append(span);
-			 }else{ //회원의 프로필 사진이 있다면
-				$("#profiledrop > a >img").remove();
-				//이미지 태그 생성
-				var img = '<img id="profileimg"style="width: 50px;height:50px" src = "profile/'+json.userProfile+'" />';
-				
-				 //이미지 태그를 $("#profiledrop > a 자식 업펜드
-				 $("#profiledrop > a ").append(img);
-				 
-			 }
-			 		 
-		}
-		 
-	 });
+// 프로필 이미지 수정을 위해 클릭할 경우 fileuplaod 실행되는 함수
+function modupload(){
+	$('#modfileUpLoad').trigger("click");
 	
+}
+
+function profileimgmodify() {
+	console.log("실행")
+	var data = $("#modprofile").serialize();
+	console.log(">"+data+"<");
+	 $("#modprofile").ajaxForm({
+		 url : "profileImgUpdate.member", 
+		 datatype: "json",
+		 type:"post",
+		 enctype: "multipart/form-data",
+		 beforeSubmit:function(data, frm, opt){
+			console.log("before data11 : " + data);				
+			console.log("before frm : " + frm);
+			console.log("befor opt: " + opt);
+		 },
+		 success : function(data) { 
+			if(data.trim()>0){
+				alert("프로필을 수정하였습니다.");
+			}
+		 },
+		 error: function(){
+			 alert("업로드에 실패하였습니다");
+		 }
+
+	 });
+	 $("#modprofile").submit();
 }
 
 ///비밀번호 일치 여부 확인

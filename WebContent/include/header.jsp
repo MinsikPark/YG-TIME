@@ -56,9 +56,8 @@
 							</a>
 						</li>
 				        	
-						<li id="profiledrop" class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown">
-								<span class="glyphicon glyphicon-user"></span>
+						<li id="profiledrop" class="dropdown" >
+							<a class="dropdown-toggle container" style="padding:0px" data-toggle="dropdown">
 							</a> 
 							<ul class="dropdown-menu">
 								<li data-toggle="modal"  data-target="#myModal2">

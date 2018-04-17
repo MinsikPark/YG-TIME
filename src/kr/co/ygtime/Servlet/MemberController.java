@@ -19,6 +19,7 @@ import kr.co.ygtime.service.member.InviteMsgService;
 import kr.co.ygtime.service.member.MsgAgreeService;
 import kr.co.ygtime.service.member.MsgDeleteSerivce;
 import kr.co.ygtime.service.member.ProfileImgService;
+import kr.co.ygtime.service.member.ProfileUpdateService;
 import net.sf.json.JSONArray;
 import kr.co.ygtime.service.member.JoinService;
 import kr.co.ygtime.service.member.LoginService;
@@ -47,6 +48,7 @@ public class MemberController extends HttpServlet {
         String contextPath = request.getContextPath();
         String cmdURI = requestURI.substring(contextPath.length());
         ActionForward forward =null;
+        System.out.println("cmdURI : " + cmdURI);
         System.out.println("con");
         Action action = null;
         
@@ -154,6 +156,16 @@ public class MemberController extends HttpServlet {
 
             action = new MemeberSelectService();
             try {
+            forward = action.execute(request, response);
+            }
+            catch(Exception e) {
+                e.getMessage();
+            }
+        }else if(cmdURI.equals("/profileImgUpdate.member")) {
+        	System.out.println("11111111111111111111111111111111111111111111111111profileImgUpdate.member");
+            try {
+            action = new ProfileUpdateService();
+            System.out.println("22222222222222222222222222222222222222222222profileImgUpdate.member");
             forward = action.execute(request, response);
             }
             catch(Exception e) {

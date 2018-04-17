@@ -63,48 +63,58 @@
 
 
 			<div class="modal-body">
-				<form id= "modprofile">
-				<h4>프로필 수정</h4>
+				<form id="modprofile">
+					<h4>프로필 수정</h4>
 					<br>
-					<div class="form-group">
-						<label for="modfileUpLoad">프로필 수정</label>
-						<img class = "img-circle" id= "currentProfile" style="width: 150px;height:150px" /> 
-						<input type="file"
-						id="modfileUpLoad" name="modfileUpLoad">
+					<div class="form-group container text-center">
+						<img class="img-circle center-block"  id="currentProfile" style=" width: 150px; height: 150px;" onclick="modupload()"/> 
+						<input type="file" id="modfileUpLoad" name="modfileUpLoad" onchange="profileimgmodify()">
 					</div>
 				</form>
-				<form id="modForm">
-					<hr>
-					<h4>기본정보 수정</h4>
-					<br>
-					<div class="form-group">
-						<label for="modemail">이메일 주소</label> <input type="text"
-							name="userId" value="${sessionScope.sessionId}"
-							readonly="readonly" class="form-control">
-					</div>
-					<div class="form-group">
-						<label for="modpassword">비밀 번호</label> <input type="password"
-							class="form-control" id="modpassword" name="modpassword">
-					</div>
-					<div class="form-group">
-						<label for="modpasswordCheck">비밀 번호 확인 <span
-							id="modpwdcheck" style="color: red;"></span></label> <input
-							type="password" class="form-control" id="modpasswordCheck"
-							name="modpasswordCheck" onchange="modpasswordfunction()">
-					</div>
-					<div class="form-group">
-						<label for="modnickName">닉네임 <span id="modnickcheck"
-							style="color: red;"></span></label> <input type="text"
-							class="form-control" id="modnickName" name="modnickName">
-					</div>
+				<div class="panel-group">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title text-center">
+								<a data-toggle="collapse" href="#collapse1">기본 정보 수정</a>
+							</h4>
+						</div>
+						<div id="collapse1" class="panel-collapse collapse">
+							<div class="panel-body">
+								<form id="modForm">
+									<div class="form-group">
+										<label for="modemail">이메일 주소</label> <input type="text"
+											name="userId" value="${sessionScope.sessionId}"
+											readonly="readonly" class="form-control">
+									</div>
+									<div class="form-group">
+										<label for="modpassword">비밀 번호</label> <input type="password"
+											class="form-control" id="modpassword" name="modpassword">
+									</div>
+									<div class="form-group">
+										<label for="modpasswordCheck">비밀 번호 확인 <span
+											id="modpwdcheck" style="color: red;"></span></label> <input
+											type="password" class="form-control" id="modpasswordCheck"
+											name="modpasswordCheck" onchange="modpasswordfunction()">
+									</div>
+									<div class="form-group">
+										<label for="modnickName">닉네임 <span id="modnickcheck"
+											style="color: red;"></span></label> <input type="text"
+											class="form-control" id="modnickName" name="modnickName">
+									</div>
 
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default"
-							onclick="modsubmit()">Submit</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal"
-							id="modclose" onclick="modclear()">Close</button>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											onclick="modsubmit()">Submit</button>
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal" id="modclose" onclick="modclear()">Close</button>
+									</div>
+								</form>
+							</div>
+							<div class="panel-footer"></div>
+						</div>
 					</div>
-				</form>
+				</div>
+
 			</div>
 		</div>
 	</div>
