@@ -20,7 +20,7 @@
 				<a href="#" class="glyphicon glyphicon-plus insert"
 					onclick="addProjectForm()"></a>
 				<ul class="nav nav-tabs nav-tabs-modify">
-					<li><img src="https://png.icons8.com/ios/50/ffffff/combo-chart-filled.png" data-toggle="modal" data-target="#chartModal" style='width:35px; border:none;'></li>
+					<li><img src="https://png.icons8.com/ios/50/ffffff/combo-chart-filled.png" data-toggle="modal" data-target="#chartModal" onclick ="chartClose()" style='width:35px; border:none;'></li>
 					<li class="active"><a data-toggle="tab" href="#progress">진행</a></li>
 					<li><a data-toggle="tab" href="#complete">완료</a></li> 
 				</ul>

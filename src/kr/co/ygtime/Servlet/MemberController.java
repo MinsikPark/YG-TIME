@@ -64,7 +64,7 @@ public class MemberController extends HttpServlet {
         	try {
         		request.getSession().invalidate();
             	forward = new ActionForward();
-            	forward.setPath("main.jsp");
+            	forward.setPath("login.jsp");
         	} 
         	catch (Exception e) {
         		e.printStackTrace();
