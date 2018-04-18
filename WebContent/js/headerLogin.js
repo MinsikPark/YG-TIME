@@ -9,7 +9,9 @@ $(function() {
 		}
 	}) 
 	
-	profileimglogin();
+	if($("#getsession").val() != null){
+		profileimglogin();
+	}
 });
 
 function btnloginclick(){
@@ -33,7 +35,7 @@ function profileimglogin(){
 		},
 		success : function(data) {
 			var json = JSON.parse(data);
-			$("#profiledrop > a > span").remove();			
+			$("#profiledrop > a > span").remove();
 			var img = '<img class="img-circle" id="profileimg"style="width: 40px;height:40px;" src = "profile/'
 						+ json.userProfile + '" />';
 			$("#profiledrop > a").append(img);
