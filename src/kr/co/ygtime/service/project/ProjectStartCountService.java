@@ -22,7 +22,6 @@ public class ProjectStartCountService implements Action{
 		ProjectDAO projectdao =null;
 		int resultrow = 0;
 		String userId = request.getParameter("userId");
-		System.out.println("들어왔니??재욱아");
 		
 		try {
 			projectdao = new ProjectDAO();
@@ -33,8 +32,6 @@ public class ProjectStartCountService implements Action{
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-		
-		
 		
 		return forward;
 	}

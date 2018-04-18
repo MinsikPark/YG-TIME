@@ -22,7 +22,6 @@ public class CardDeleteService implements Action{
 		ActionForward forward = null;
 		int resultrow = 0;
 		int cardNum = Integer.parseInt(request.getParameter("cardNum"));
-		System.out.println("재욱짱 ㅎㅎㅎㅎㅎ" + cardNum);
 		try {
 			carddao = new CardDAO();
 			resultrow = carddao.cardDelete(cardNum);
@@ -31,7 +30,6 @@ public class CardDeleteService implements Action{
 			forward.setPath("/ajaxpath/result_row.jsp");
 			
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

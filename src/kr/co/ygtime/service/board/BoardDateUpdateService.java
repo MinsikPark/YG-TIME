@@ -27,7 +27,6 @@ public class BoardDateUpdateService implements Action{
 		try {
 			dao = new BoardDAO();
 			dto = dao.boardSelect(boardNum);
-			System.out.println("board : " + dao);
 			if(dto!=null) {
 				dto.setBoardStartDate(boardStartDate);
 				dto.setBoardEndDate(boardEndDate);

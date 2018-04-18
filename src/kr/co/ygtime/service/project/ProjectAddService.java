@@ -50,7 +50,6 @@ public class ProjectAddService implements Action{
 				
 				int insertrow = projectdao.teamInsert(teamdto); //DB 팀에 넣어준다.
 					
-				System.out.println("session pronum " + request.getSession().getAttribute("projectNum"));	
 				
 				request.setAttribute("resultrow", insertrow);
 			}
