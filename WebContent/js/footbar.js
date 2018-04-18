@@ -157,7 +157,7 @@ function autoComplete() {
 					$('#emailSearch').autocomplete({
 						 source: param,
 						 appendTo: "#friend",
-						 minLength: 3
+						 minLength: 2
 					})
 					
 				}
