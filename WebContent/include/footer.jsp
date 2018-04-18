@@ -12,7 +12,7 @@
 		<div class="dropdown" style="float:left;">
 		</div>
 	</div>
-    <div class="dropup"  style="float:left; margin-top:10px;">
+    <div class="dropup"  style="float:left; margin-top:10px; cursor: pointer;">
 		<button type="button" id = "plus" class="btn btn-default"  data-toggle="dropdown" style="margin: 0px 0px 10px 30px;">
 			<span class="glyphicon glyphicon-plus" ></span> 멤버 추가
 		</button>

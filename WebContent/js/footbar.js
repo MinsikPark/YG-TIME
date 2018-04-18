@@ -64,11 +64,11 @@ function memberList() {
 			$.each(json, function(i, elt) {
 				div += '<div class="dropup" style="float:left;">'
 				if(elt.userProfile ==""){
-					div += '<a data-toggle="dropdown" style="font-size: 25pt; top: 7px;"><img style="width: 50px;height:50px" class="img-circle" src = "profile/profile.png" /></a>'	;				
+					div += '<a data-toggle="dropdown" style="font-size: 25pt; top: 7px; cursor: pointer;"><img style="width: 50px;height:50px" class="img-circle" src = "profile/profile.png" /></a>'	;				
 				}else{
-					div +='<a data-toggle="dropdown" style="font-size: 25pt; top: 7px;"><img style="width: 50px;height:50px" class="img-circle" src = "profile/'+elt.userProfile+'" /></a>';
+					div +='<a data-toggle="dropdown" style="font-size: 25pt; top: 7px; cursor: pointer;"><img style="width: 50px;height:50px" class="img-circle" src = "profile/'+elt.userProfile+'" /></a>';
 				}		
-				div += '<ul class="dropdown-menu">'
+				div += '<ul class="dropdown-menu" style="cursor: pointer;">'
 				if(grade == '0' && elt.userId!=userId){
 					div += '<li><input type="hidden" value="'+ elt.userId +'"><a onclick="memberToKickOut(this)">맴버제명</a></li>'
 					div += '<li><input type="hidden" value="'+ elt.userId +'"><a onclick="memberMendate(this)">팀장위임</a></li>'
