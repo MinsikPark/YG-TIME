@@ -82,18 +82,19 @@ function autoWidth(){
 
 //카드를 추가하는 텍스트박스를 생성한다
 function addCardView(e, listnum, boardNum) {
+	console.log("카드추가")
 	$(e).parent().find("#addcard").remove();
 	var div = "<div class='card' id='addcard'>" +
 			"<input class='inputtext' type='text' placeholder='card title' name='title' " +
-			"onkeypress='if(event.keyCode==13) {addCard($(this).parent().children(\"a\"), "+ listnum +");}' " +
-			"onfocusout='focusOutBoardDelay("+boardNum+")' onkeyup='fnChkByte(this, 26)'>" +
-			"<a onclick='addCard(this, "+ listnum +")'>완료</a></div>";
+			"onkeypress='if(event.keyCode==13) {addCard($(this).parent().children(\"a\"), "+ listnum +","+boardNum+");}' " +
+			"onfocusout='focusOutCardDelay("+listnum+")' onkeyup='fnChkByte(this, 26)'>" +
+			"<a onclick='addCard(this, "+ listnum +", "+ boardNum +")'>완료</a></div>";
 	$(e).before(div);
 	$('#addcard').children('input').focus();
 }
 
-
-function addCard(obj, listnum){
+//카드 등록 성공
+function addCard(obj, listnum, boardNum){
 	var parent = $(obj).closest('div')
 	var value = parent[0].firstChild.value //cardname
 	if(value.trim() != ""){
@@ -102,11 +103,8 @@ function addCard(obj, listnum){
 			datatype:"JSON",
 			data:{listNum:listnum, cardName:value},
 			success:function(data){
-				console.log("카드 추가 돼었나? "+ data.trim());
 				$(parent).remove();
-				callCardList(listnum);
 				$('#contentDetail').empty();
-				
 			}
 		});
 	}
@@ -125,7 +123,7 @@ function deleteCard(cardid, listNum) {
 				console.log("너는 누구냐?" + data.trim());
 				console.log("listNum이래요 : " + listNum)
 				$('#div'+cardid).remove();
-				callCardList(listNum)
+				callCardList(listNum);
 			}
 			})
 }

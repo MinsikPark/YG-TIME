@@ -242,6 +242,13 @@ function focusOutBoardDelay(boardNum){
 	}, 300);
 }
 
+//포커스 아웃 딜레이(보드 -> 카드 불러오기)
+function focusOutCardDelay(listNum){
+	setTimeout(function() {
+		callCardList(listNum);
+	}, 300);
+}
+
 //댓글을 추가하다
 function addComment(obj){
 	//userid, cardnum, replycontents
