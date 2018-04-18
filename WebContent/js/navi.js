@@ -92,8 +92,7 @@ function cardNameMod(){
 	
 	var div = '<div onfocusout="focusoutdelay('+ cardnum +')">'
 		+ '<input type="text" class="form-control inputtextbox" placeholder="' + htmlObj + '" onkeyup="fnChkByte(this, 26)"'
-		+ 'onkeypress="if(event.keyCode==13) {cardNameModOk();}" >'
-		+ '<button type="button" class="close glyphicon" onclick="cardNameModOk()">&#xe013;</button></div>';
+		+ 'onkeypress="if(event.keyCode==13) {cardNameModOk();}" >';
 
 	$('#modalHeader').html(div);
 	$('#modalHeader').children('div').children('input').focus();
