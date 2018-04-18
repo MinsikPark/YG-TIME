@@ -15,13 +15,10 @@
 		<button type="button" id = "plus" class="btn btn-default"  data-toggle="dropdown" style="margin: 0px 0px 10px 30px;">
 			<span class="glyphicon glyphicon-plus" ></span> 멤버 추가
 		</button>
-		<ul class="dropdown-menu" id = "friend" style="width: 300px; height:200px;">
+		<ul class="dropdown-menu" id = "friend" onclick="notHideAuto(event)" style="width: 300px; height:200px;">
 			<li><div class="input-group">
 					<div class="form-group">
-
-			   			<input type="email" class="form-control" id="emailSearch" onclick="autoComplete()" placeholder="이메일 입력..">
-
-
+			   			<input type="email" class="form-control" id="emailSearch" onclick="autoComplete()" onkeypress="if(event.keyCode==13) {memberinvite();}" placeholder="이메일 입력..">
 					</div>
 					<span class="input-group-btn">
 						<input type="hidden" id="thisProjectNum">
@@ -32,6 +29,7 @@
 				</div>
 			</li>
 		</ul>
+		
 	</div>
 </nav>
 <!-- FOOTER END -->
