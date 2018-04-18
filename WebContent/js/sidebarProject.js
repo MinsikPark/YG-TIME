@@ -126,7 +126,7 @@ function projectSelectView(pNum,obj){
 		datatype:"json",
 		data: {projectNum : pNum},
 		success: function(data){
-			projectNameSelect(projectNum);
+			projectNameSelect(pNum);
 			
 			var json = JSON.parse(data);
 			var boardArr = boardData(json);
