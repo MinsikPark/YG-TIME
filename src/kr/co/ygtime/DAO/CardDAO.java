@@ -719,11 +719,10 @@ public class CardDAO {
 				String sql="delete from UPLOAD where cardnum=? and filenum=?";
 				
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, upLoadNum);
-				pstmt.setInt(2, cardNum);
+				pstmt.setInt(1, cardNum);
+				pstmt.setInt(2, upLoadNum);
 				
 				delrow = pstmt.executeUpdate();
-				
 				if(delrow > 0) {
 					pstmt.close();
 					String numminus = "update UPLOAD set filenum=filenum-1 "
@@ -734,7 +733,6 @@ public class CardDAO {
 					pstmt.setInt(2, upLoadNum);
 					
 					uprow = pstmt.executeUpdate();
-					
 					if(uprow > 0) {
 						conn.commit();
 					}
