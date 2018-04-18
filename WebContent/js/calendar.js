@@ -7,6 +7,7 @@
 
 $(function() { // $(document).ready
 	var boardCnt = 0;
+	var boardCheck = "";
 	
 	// fullCalendar
 	$('#calendar').fullCalendar({
@@ -16,8 +17,6 @@ $(function() { // $(document).ready
 			right:  'title'
 		},
 		themeSystem: "bootstrap3",
-		aspectRatio: 2,
-		/*handleWindowResize: true,*/
 		eventDragStop: function (event, jsEvent) { // Drag 후 삭제 기능
 		    var trashEl = $('#trashCan');
 		    var ofs = trashEl.offset();
@@ -63,7 +62,29 @@ $(function() { // $(document).ready
 		editable: true, // 달력에 종료일 수정 여부 (드래그, 크기 조정)
 		eventLimit: true, // 하루에 표시되는 이벤트의 수를 제한. 나머지는 팝 오버에 나타남.
 		displayEventTime: false, // 
-		eventClick: function(event) {			
+		eventRender: function(event, element) {
+			   element.html(event.title + '<span class="glyphicon glyphicon-pencil pull-right" id="modifyBoardEvent"></span>');
+		},
+		eventClick: function(event, jsEvent) {
+			
+			
+			
+			
+			//달력 연필버튼 클릭시
+			if (jsEvent.target.id === 'modifyBoardEvent') {
+				boardCheck = "modify";
+				
+				$('#eventTitle').val(event.title);
+				var endDate = dateProcess(event.end.format(), -1); //추가 Dialog에서 종료값 -1일
+				$('#eventStart').val(event.start.format()); // start.format() : 시작일 값
+				$('#eventEnd').val(endDate); // 종료일 값
+				$('#eventStart, #eventEnd').datepicker({dateFormat: 'yy-mm-dd'}); // 시작일, 종료일 Datepicker
+				
+				$('#calEventDialog').data('eventId', event.id).dialog('open');
+			    return;
+			}
+			
+			//보드바 클릭시
 			boardclick(event.id);
 			$('#hiddenBoardnum').attr("value", event.id);
 		},
@@ -97,7 +118,6 @@ $(function() { // $(document).ready
 		});
 	}
 	
-	
 	// dialog 초기화
 	function clearDialog() {
 		$("#eventTitle").val("");
@@ -119,6 +139,7 @@ $(function() { // $(document).ready
 		buttons: {
 			// '추가'버튼 클릭 시
 			추가: function() {
+				var id = $("#calEventDialog").data('eventId');
 				var title = $('#eventTitle').val(); // 제목 
 				var start = $('#eventStart').val(); // 시작일
 				var end = $('#eventEnd').val();
@@ -136,29 +157,57 @@ $(function() { // $(document).ready
 							color: color,
 						};	
 						var inputParam = {
-								boardTitle: eventData.title,
-								boardStartDate: eventData.start,
-								boardEndDate: eventData.end,
-								label: eventData.color,
+							boardTitle: eventData.title,
+							boardStartDate: eventData.start,
+							boardEndDate: eventData.end,
+							label: eventData.color,
 
 						};
+						var modifyParam = {
+							boardNum: id,
+							boardTitle: title,
+							boardStartDate: start,
+							boardEndDate: end,
+							label: color,
+						};
 						
-						//비동기 처리
-						$.ajax({
-							url:"boardadd.board",
-							datatype:"json",
-							data: inputParam,
-							success: function(data){
-								var json = JSON.parse(data);
-								if(json.resultrow <=0 || json.resultrow == null){
-									alert("보드 생성에 실패하셨습니다");
-								}else{
-									projectView(json.projectNum, this);
-									alert("보드 생성했음");
+						//Modify 작업중
+						if(boardCheck === "modify") {
+							$.ajax({
+								url:"boardcontentmodify.board",
+								datatype:"text",
+								data: modifyParam,
+								success: function(data){
+									var json = JSON.parse(data);
+									if(json.resultrow <=0 || json.resultrow == null){
+										alert("보드 수정에 실패하셨습니다");
+									}else{
+										projectView(json.projectNum, this);
+										alert("보드 수정 완료");
+									}
+									boardCheck = "";
+								},
+								error: function(data) {
+									boardCheck = "";
 								}
-							}
-
-						})
+							});
+						}else {
+							//비동기 처리
+							$.ajax({
+								url:"boardadd.board",
+								datatype:"json",
+								data: inputParam,
+								success: function(data){
+									var json = JSON.parse(data);
+									if(json.resultrow <=0 || json.resultrow == null){
+										alert("보드 생성에 실패하셨습니다");
+									}else{
+										projectView(json.projectNum, this);
+										alert("보드 생성했음");
+									}
+								}
+							});
+						}
 						
 					}
 					$('#calendar').fullCalendar('unselect');
@@ -225,7 +274,7 @@ function boardclick(boardNum){
             	content += '<div class="listbox">'
             		+ '<div id="listnum'+elt.listNum+'"class="listtitle"><label onclick="listmodify(this, '+elt.listNum+',' + boardNum +')">'+ elt.listName +'</label>'
             		+ '<a class="glyphicon close" style="font-size: 17px;" onclick="listDel(this)">&#xe020;</a></div>'
-            		+ '<a class="cardcreate" onclick="addCardView(this, '+ elt.listNum +', ' + boardNum +')">Add a card...</a>'
+            		+ '<a class="cardcreate" onclick="addCardView(this, '+ elt.listNum +')">Add a card...</a>'
             	+ '</div>';
             });
             content +='<a class="listbox" onclick="addListView(this, '+ boardNum +')">Add a list...</a>'

@@ -14,6 +14,7 @@ import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.DAO.BoardDAO;
 import kr.co.ygtime.DTO.BoardDTO;
+import net.sf.json.JSONObject;
 
 public class BoardContentUpdateService implements Action {
 
@@ -37,17 +38,24 @@ public class BoardContentUpdateService implements Action {
 				dto.setBoardStartDate(boardStartDate);
 				dto.setBoardEndDate(boardEndDate);
 				dto.setLabel(label);
-				resultrow= dao.boardUpdate(dto);
 				
+				resultrow = dao.boardUpdate(dto);
+				int projectNum = dto.getProjectNum();
+				
+				JSONObject json = new JSONObject();
+		 		json.put("resultrow", resultrow);
+		 		json.put("projectNum", projectNum);
+				
+		 		request.setAttribute("json", json);
 			}
 			
 		}catch(Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 		request.setAttribute("resultrow", resultrow);
 		ActionForward forward = new ActionForward();
-		forward.setPath("/ajaxpath/result_row.jsp");
+		forward.setPath("/ajaxpath/jsonObject.jsp");
 		
 		return forward;
 	}
