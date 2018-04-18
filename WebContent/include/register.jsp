@@ -34,7 +34,7 @@
 					<div class="form-group">
 						<label for="nickName">닉네임 <span id="nickcheck"
 							style="color: red;"></span></label> <input type="text"
-							class="form-control" id="nickName" name="nickName">
+							class="form-control" id="nickName" name="nickName" onkeypress="if(event.keyCode==13) {joinsubmit();}">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default"
