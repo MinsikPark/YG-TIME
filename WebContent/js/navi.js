@@ -36,7 +36,10 @@ function notHideAuto(e) {
 	//e.preventDefault();
 }
 
-
+function project(){
+	$('#mainScreen').hide()
+	$('#calendarArea').show()
+}
 
 //사이드 숨길때
 function sideHide(){
