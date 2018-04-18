@@ -24,8 +24,8 @@ function addProject() {
 //프로젝트 삭제
 function projectDel(projectNum,projectName) {
 	var delProjectName = prompt("삭제하실 프로젝트 명을 입력해 주세요.");
-	
-	if(projectName == delProjectName){
+
+	if(projectName.toLowerCase() == delProjectName.toLowerCase()){
 		var data3 = {
 			projectNum : projectNum
 		};
@@ -42,7 +42,7 @@ function projectDel(projectNum,projectName) {
 }
 
 //프로젝트 완료
-function projectComplete(projectNum) {
+function projectComplete(projectNum,event) {
 
 	$.ajax({
 		url : "completeproject.project",
@@ -95,24 +95,44 @@ function projectDisplay(dataArr) {
 		$('#calendar').fullCalendar('renderEvent', dataArr[i], true);	
 	}
 	$('#mainScreen').hide()
-	$('#calendar').show()
+	$('#calendarArea').show()
 }
-
+function lastModDateUpdate(pNum){
+	$.ajax({
+		url : "lastmoddateupdate.project",
+		data : {projectNum : pNum}
+	})
+}
 //프로젝트 선택보기
 function projectView(projectNum,obj){
 	$('.button').removeClass('btnactive')
 	$(obj).addClass('btnactive')
-	var data = {projectNum:projectNum};
+	
+	//마지막 수정날짜 업데이트
+	lastModDateUpdate(projectNum)
+	//프로젝트 뷰
+	projectSelectView(projectNum,obj)
+	
+}
+function projectStartView(projectNum){
+	$('#btn'+projectNum).addClass('btnactive')
+	projectSelectView(projectNum,$('#btn'+projectNum))
+}
+
+//프로젝트 선택보기
+function projectSelectView(pNum,obj){
 	$.ajax({
 		url:"allboardlist.board",
 		datatype:"json",
-		data:data,
+		data: {projectNum : pNum},
 		success: function(data){
+			projectNameSelect(pNum);
+			
 			var json = JSON.parse(data);
-				var boardArr = boardData(json);
-				projectDisplay(boardArr);
-				memberList();
-				$('#mainFooterbar').show()
+			var boardArr = boardData(json);
+			projectDisplay(boardArr);
+			memberList();
+			$('#mainFooterbar').show()
 			//프로젝트 내에 보드가 존재할 때, 존재하지 않으면 아래 코드 실행되지 않음
 			console.log("json.length: " + json.length);
 			if(json.length > 0) {
@@ -120,9 +140,55 @@ function projectView(projectNum,obj){
 			}
 		}
 	});
-	
 }
 
+//프로젝트이름 가져오기
+function projectNameSelect(projectNum) {
+	$("#projName").html("");
+	$.ajax({
+		url:"projectselect.project",
+		datatype:"json",
+		data:{projectNum:projectNum},
+		success: function(responsedata){
+			var responsejson = JSON.parse(responsedata);
+			$("#projName").html(responsejson.projectName);
+			$('#projName').attr("onclick", "projectNameEdit(this, "+ projectNum +")");
+		}
+	});
+}
+
+//프로젝트이름 클릭
+function projectNameEdit(obj, projectNum){
+	var htmlObj = $(obj).html();
+	$(obj).removeAttr("onclick");
+	$(obj).html('');
+	var edit = "<input class='inputtext' type='text' placeholder=" + htmlObj + " name='projectTitle' onkeyup='fnChkByte(this,20)'><a onclick='projectNameModifyOk(this,"+ projectNum +")'>완료</a>";
+	
+	$(obj).append(edit);
+	$(obj).children('input').focus();
+}
+
+//프로젝트 수정 확인
+function projectNameModifyOk(obj, projectNum){
+	var name = $(obj).parent().children("input").val();
+	var data = {
+			projectNum: projectNum,
+			projectName: name
+	};
+	$.ajax({
+		url:"projectnameupdate.project",
+		datatype:"text",
+		data:data,
+		success:function(data){
+			if(data.trim() <= 0){
+				alert("프로젝트이름 변경 실패");
+			}else{
+				alert("프로젝트이름 변경 완료");
+				projectNameSelect(projectNum);
+			}
+		}
+	});
+}
 //완료된 프로젝트의 가장 오래된 보드 날짜로 달력 이동
 function completedProjectView(element, json) {
 	if(element.id == "cp" || element.id == "cpa") {

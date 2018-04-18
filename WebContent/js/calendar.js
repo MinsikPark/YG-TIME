@@ -10,6 +10,11 @@ $(function() { // $(document).ready
 	
 	// fullCalendar
 	$('#calendar').fullCalendar({
+		header: {
+			left:   'prev,next today',
+			center: '',
+			right:  'title'
+		},
 		themeSystem: "bootstrap3",
 		aspectRatio: 2,
 		/*handleWindowResize: true,*/
@@ -172,7 +177,7 @@ $(function() { // $(document).ready
 	}); // end - calEventDialog
 	
 	//원하는 날짜로 이동
-	$('.fc-left').click(function() {
+	$('.fc-right').click(function() {
 		var selectDate = prompt("원하는 날짜를 입력해주세요 (예: 2018-04-12)");
 		if(selectDate === null || selectDate === '') {
 			return;
@@ -192,7 +197,7 @@ function boardclick(boardNum){
         	
             var json = JSON.parse(data);
             
-            $('#calendar').hide();
+            $('#calendarArea').hide();
             
             $('#content-md .listbox').remove();
             

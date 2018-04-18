@@ -15,7 +15,7 @@
 						<div class="form-group">
 							<label for="content">상세 내용</label>
 						</div>
-						<textarea id="contentDetail"></textarea>
+						<textarea id="contentDetail" onkeyup="fnChkByte(this, 1000)"></textarea>
 						<div class="form-group">
 							<button id="detaiAddbtn" class="btn btn-success" type="button">작성</button>
 						</div>
@@ -25,7 +25,7 @@
 							<div id="checkListForm"></div>
 						</div>
 						<div class="form-group">
-							<label for="comment">댓글</label> <input type="text" class="form-control commentlist" placeholder="댓글을 입력하세요" onkeyup="fnChkByte(this, 80)">
+							<label for="comment">댓글</label> <input type="text" class="form-control commentlist" placeholder="댓글을 입력하세요" onkeyup="fnChkByte(this, 80)" onkeypress="if(event.keyCode==13) {addComment($(this).parent().children('button'));}">
 							<button class="btn btn-success" type="button" onclick="addComment(this)">작성</button>
 							<div id="commentListForm"></div>
 						</div>
@@ -42,13 +42,9 @@
 					<input class="detailbutton btn btn-primary" type="button" value="Check List" id="addCheckList" onclick="addCheckListForm()">
 					<div class="dropdown">
 						<input class="detailbutton btn btn-primary" type="button" value="Member" data-toggle="dropdown" onclick="cardMemberAddList(this)">
-						<ul class="dropdown-menu">
-							<li><a href="#">HTML</a></li>
-							<li><a href="#">CSS</a></li>
-							<li><a href="#">JavaScript</a></li>
-						</ul>
+						<ul class="dropdown-menu" style="cursor: pointer;"></ul>
 					</div>
-					<div id="cardMemberView"></div>
+					<div id="cardMemberView" style="margin-left: 10px;"></div>
 				</div>
 			</div>
 		</div>

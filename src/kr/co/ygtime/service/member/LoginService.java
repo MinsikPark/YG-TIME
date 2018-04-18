@@ -28,7 +28,6 @@ public class LoginService implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		String loginEmail = request.getParameter("loginEmail");
 		String loginPwd = request.getParameter("loginPwd");
-		System.out.println("여기까지가 끝인가보오  " + loginEmail + " : " + loginPwd);
 		String msg = "fail";
 		String path = "login.jsp";
 		try {

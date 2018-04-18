@@ -209,10 +209,37 @@ public class MemberDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = "DELETE FROM MEMBER WHERE USERID=?";
+			String sql1 = "DELETE from team where userid = ?";
+			String sql2 = "DELETE from INVITEMSG where userid = ? or INVITEUSERID = ?";
+			String sql3 = "DELETE from cardmember where userid = ?";
+			String sql4 = "delete from reply where userid = ?";
+			String sql5 = "DELETE FROM MEMBER WHERE USERID=?";
 			
-			pstmt = conn.prepareStatement(sql);
+			
+			pstmt = conn.prepareStatement(sql1);
 			pstmt.setString(1, userId);
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userId);
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			pstmt = conn.prepareStatement(sql3);
+			pstmt.setString(1, userId);
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			pstmt = conn.prepareStatement(sql4);
+			pstmt.setString(1, userId);
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			pstmt = conn.prepareStatement(sql5);
+			pstmt.setString(1, userId);
+			
 			
 			row = pstmt.executeUpdate();
 			

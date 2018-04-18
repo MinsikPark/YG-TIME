@@ -48,18 +48,18 @@ body {
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="loginEmail"
 								type="text" class="form-control" name="loginEmail" value=""
-								placeholder="username or email">
+								placeholder="username or email" onkeypress="if(event.keyCode==13) {btnloginclick();}">
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-lock"></i></span> <input id="loginPwd"
 								type="password" class="form-control" name="loginPwd"
-								placeholder="password">
+								placeholder="password" onkeypress="if(event.keyCode==13) {btnloginclick();}">
 						</div>
 						<div style="margin-top: 10px;" class="form-group">
 							<div class="col-sm-12 controls">
-								<a id="btnLogin1" class="btn btn-success">Login </a>
+								<a id="btnLogin1" class="btn btn-success" onclick="btnloginclick()">Login </a>
 							</div>
 						</div>
 					</form>

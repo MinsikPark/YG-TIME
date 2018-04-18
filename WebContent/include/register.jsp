@@ -16,8 +16,6 @@
 				<form id="joinForm" method="post">
 					<div class="form-group">
 						<label for="email">이메일 주소</label>
-						<button id="idcheckhover" type="button" class="btn btn-default"
-							onclick="idcheck()">이메일 중복확인</button>
 						<span id="result"></span> <br> <br> <input type="email"
 							class="form-control" id="email" name="email"
 							placeholder="이메일을 입력하세요" onfocus="idcheck()" onchange="idcheck()">
@@ -103,14 +101,15 @@
 									</div>
 
 									<div class="modal-footer">
+										<button type="button" class="btn btn-default" onclick="withDrawal()">회원탈퇴</button>
 										<button type="button" class="btn btn-default"
 											onclick="modsubmit()">Submit</button>
 										<button type="button" class="btn btn-default"
 											data-dismiss="modal" id="modclose" onclick="modclear()">Close</button>
 									</div>
+									<div class="panel-footer"></div>
 								</form>
 							</div>
-							<div class="panel-footer"></div>
 						</div>
 					</div>
 				</div>

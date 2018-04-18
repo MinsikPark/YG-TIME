@@ -30,14 +30,19 @@ $(function(){
 <script src="js/locale-all.js"></script>
 <!-- script - calendar.js -->
 <script src="js/calendar.js"></script>
+
+<!-- 프로젝트 이름 -->
+
 <!-- calendar -->
 
-<nav class="navvar ">
-	<div id="calendar" class ="z-index nav-center container-fluid">
-		<br>
-		<img id="trashCan" src="images/trashcan.png" height="35px" width="35px"> 
+
+<nav class="navvar " id="calendarArea">
+	<div style="margin: 0px 400px;">
+		<h2 id="projName">프로젝트</h2>
+	</div>
+	<div id="calendar" class="z-index nav-center container-fluid">
+		<br> <img id="trashCan" src="images/trashcan.png" height="35px"
+			width="35px">
 	</div>
 </nav>
 
-
-	

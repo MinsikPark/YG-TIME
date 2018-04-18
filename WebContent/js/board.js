@@ -1,4 +1,5 @@
 $(function(){
+	
 	$.mCustomScrollbar.defaults.scrollButtons.enable=true; //enable scrolling buttons by default
 	$.mCustomScrollbar.defaults.axis="y"; //enable 2 axis scrollbars by default
 	$("#content-md").mCustomScrollbar({theme:"minimal-dark"});
@@ -8,30 +9,6 @@ $(function(){
 	autoWidth()
 	sortable()
 	 
-	$('#content-md').draggable(
-		  {
-			 axis: "x"
-		},{
-			stop: function() {
-				var left = $('#content-md')[0].offsetLeft
-				var maxwidth = $(window).width() - $('#content-md').width()
-				
-				if(left > 0){
-					$('#content-md').css('left','0px')
-				}else if($(window).width() > $('#content-md').width()){
-					if(left < 0){ //화면크기가 div길이보다 크고 left가 0보다 작으면!!
-						$('#content-md').css('left','0px')
-					}
-				}else if($(window).width() < $('#content-md').width()){
-					if(left < maxwidth){ //화면크기가 div길이보다 작고 left가 maxwidth보다 작으면!!
-						$('#content-md').css('left',maxwidth-80)
-					}
-				}
-				$('#content-md').off('mousemove')
-			}
-		}
-	)
-	
 	$('body').attr({
 		oncontextmenu:"return false",
 	 	onselectstart:"return false",
@@ -100,6 +77,8 @@ function addCard(obj, listnum){
 				console.log("카드 추가 돼었나? "+ data.trim());
 				$(parent).remove();
 				callCardList(listnum);
+				$('#contentDetail').empty();
+				
 			}
 		});
 	}
@@ -286,7 +265,6 @@ function cardViewDetail(cardnum){
 
 	//파일리스트 있으면 불러오기 
 	callUploadList(cardnum);
-	
 	cardViewContents(cardnum);
 	cardViewCheckList(cardnum);
 	cardViewReplys(cardnum);
@@ -295,6 +273,7 @@ function cardViewDetail(cardnum){
 
 //카드제목 보여주기 & 카드내용이 있었다면 보여주기
 function cardViewContents(cardnum){
+	
 	$.ajax({
 		url:"Cardselect.card",
 		datatype:"json",
@@ -303,7 +282,7 @@ function cardViewContents(cardnum){
 			var json = JSON.parse(data);
 			//json : cardContents, cardName, cardNum, cardSequential, deleteCheck, listNum
 			$('#modalHeader').html(json.cardName);
-			$('#contentDetail').html(json.cardContents);
+			$('#contentDetail').val(json.cardContents);
 		}
 	});
 
@@ -412,11 +391,11 @@ function cardMemberListView(cardnum){
 			//json : userId, userNicname, userProfile, userPwd
 			var htmldata = '';
 			$.each(json, function(i, elt) {
-				htmldata += '<div onclick="cardMemberDel(this)" class="close">';
-				if(json.userProfile == "" || json.userProfile == null){
-					htmldata += '<img src="profile/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">';
+				htmldata += '<div onclick="cardMemberDel(this)" style="cursor: pointer;">';
+				if(elt.userProfile == "" || elt.userProfile == null){
+					htmldata += '<img src="profile/profile.png" class="img-circle person" width="30" height="30">';
 				}else{
-					htmldata += '<img src="profile/'+json.userProfile+'" class="img-circle person" alt="Random Name" width="30" height="30">';
+					htmldata += '<img src="profile/'+elt.userProfile+'" class="img-circle person" width="30" height="30">';
 				}
 				htmldata += '<input type="hidden" value="'+elt.userId+'"></div>'
 			});
