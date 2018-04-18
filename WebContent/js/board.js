@@ -412,11 +412,11 @@ function cardMemberListView(cardnum){
 			//json : userId, userNicname, userProfile, userPwd
 			var htmldata = '';
 			$.each(json, function(i, elt) {
-				htmldata += '<div onclick="cardMemberDel(this)" class="close">';
-				if(json.userProfile == "" || json.userProfile == null){
-					htmldata += '<img src="profile/profile.png" class="img-circle person" alt="Random Name" width="30" height="30">';
+				htmldata += '<div onclick="cardMemberDel(this)" style="cursor: pointer;">';
+				if(elt.userProfile == "" || elt.userProfile == null){
+					htmldata += '<img src="profile/profile.png" class="img-circle person" width="30" height="30">';
 				}else{
-					htmldata += '<img src="profile/'+json.userProfile+'" class="img-circle person" alt="Random Name" width="30" height="30">';
+					htmldata += '<img src="profile/'+elt.userProfile+'" class="img-circle person" width="30" height="30">';
 				}
 				htmldata += '<input type="hidden" value="'+elt.userId+'"></div>'
 			});
