@@ -129,7 +129,7 @@ function cardNameModOk(){
 function addCheckListForm(){
 	var cardnum = $('#hiddenCardnum').val();
 	
-	var div = '<div id="addCheckListdiv"><input type="text" class="form-control inputtextbox" onkeyup="fnChkByte(this, 50)">'
+	var div = '<div id="addCheckListdiv"><input type="text" class="form-control inputtextbox" onkeyup="fnChkByte(this, 50)" onkeypress="if(event.keyCode==13) {addCheckList($(this).parent().children(\'button\'));}">'
 		div += '<button type="button" class="close glyphicon" onclick="addCheckList(this)">&#xe013;</button></div>'
 	
 	$('#addCheckList').attr('onclick', 'addCancel()');
@@ -250,6 +250,7 @@ function addComment(obj){
 			data:{UserId:id, CardNum:cardnum, ReplyContents:value},
 			success:function(data){
 				cardViewReplys(cardnum);
+				$(obj).parent().children('input').val("");
 			}
 		});
 	}
