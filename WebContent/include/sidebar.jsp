@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script src="js/headerLogin.js"></script>
@@ -12,8 +10,6 @@
 <script src="js/sidebarProjectList.js"></script>
 <script src="js/footbar.js"></script>
 <script src="js/util.js"></script>
-
-<c:if test="${!empty sessionScope.sessionId}">
 
 	<div id="mySidenav" class="sidenav">
 		<div id="sideNav" class="sidenav">
@@ -37,4 +33,4 @@
 			</div>
 		</div>
 	</div>
-</c:if>
+

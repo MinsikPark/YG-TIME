@@ -21,6 +21,7 @@ import kr.co.ygtime.service.member.MsgAgreeService;
 import kr.co.ygtime.service.member.MsgDeleteSerivce;
 import kr.co.ygtime.service.member.ProfileImgService;
 import kr.co.ygtime.service.member.ProfileUpdateService;
+import kr.co.ygtime.service.member.WithdrawalService;
 import net.sf.json.JSONArray;
 import kr.co.ygtime.service.member.JoinService;
 import kr.co.ygtime.service.member.LoginService;
@@ -160,19 +161,28 @@ public class MemberController extends HttpServlet {
                 e.getMessage();
             }
         }else if(cmdURI.equals("/profileImgUpdate.member")) {
-        	System.out.println("11111111111111111111111111111111111111111111111111profileImgUpdate.member");
             try {
             action = new ProfileUpdateService();
-            System.out.println("22222222222222222222222222222222222222222222profileImgUpdate.member");
+            forward = action.execute(request, response);
+            }
+            catch(Exception e) {
+                e.getMessage();
+            }
+        }else if(cmdURI.equals("/comple.member")) {
+
+            action = new CompleteService();
+            try {
             forward = action.execute(request, response);
             }
             catch(Exception e) {
                 e.getMessage();
             }
         }
-        else if(cmdURI.equals("/comple.member")) {
-
-            action = new CompleteService();
+        else if(cmdURI.equals("/withdrawal.member")) {
+        	System.out.println("111111111111111111111111111111");
+            action = new WithdrawalService();
+            System.out.println("0000000000000000000000000000");
+            request.getSession().invalidate();
             try {
             forward = action.execute(request, response);
             }

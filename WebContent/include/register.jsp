@@ -101,18 +101,18 @@
 									</div>
 
 									<div class="modal-footer">
+										<button type="button" class="btn btn-default" onclick="withDrawal()">회원탈퇴</button>
 										<button type="button" class="btn btn-default"
 											onclick="modsubmit()">Submit</button>
 										<button type="button" class="btn btn-default"
 											data-dismiss="modal" id="modclose" onclick="modclear()">Close</button>
 									</div>
+									<div class="panel-footer"></div>
 								</form>
 							</div>
-							<div class="panel-footer"></div>
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>

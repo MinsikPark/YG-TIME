@@ -745,7 +745,7 @@ NOTE: use percentage font sizes or else old IE chokes
   text-decoration: underline; }
 
 .fc-bootstrap3 hr.fc-divider {
-  border-color: inherit; }
+  border-color: white; }
 
 .fc-bootstrap3 .fc-today.alert {
   border-radius: 0; }
@@ -793,16 +793,23 @@ NOTE: use percentage font sizes or else old IE chokes
 /* Toolbar
 --------------------------------------------------------------------------------------------------*/
 .fc-toolbar {
-  text-align: center; }
+  text-align: center; 
+  }
 
 .fc-toolbar.fc-header-toolbar {
-  margin-bottom: 1em; }
+  margin-bottom: 1em;
+  background-color: #194769;
+  margin-bottom: 0px;
+  padding:10px;
+  border-radius: 15px 15px 0px 0px;
+  box-shadow: 1px 1px 1px 1px #b4adad;}
 
 .fc-toolbar.fc-footer-toolbar {
   margin-top: 1em; }
 
 .fc-toolbar .fc-left {
-  float: left; }
+  float: left;
+   }
 
 .fc-toolbar .fc-right {
   float: right; }
@@ -823,7 +830,9 @@ NOTE: use percentage font sizes or else old IE chokes
 
 /* title text */
 .fc-toolbar h2 {
-  margin: 0; }
+  margin: 0;
+  color: white;
+   }
 
 /* button layering (for border precedence) */
 .fc-toolbar button {
@@ -852,13 +861,19 @@ NOTE: use percentage font sizes or else old IE chokes
 .fc-view-container *:after {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
-  box-sizing: content-box; }
+  box-sizing: content-box; 
+  }
 
 .fc-view,
 .fc-view > table {
+	background-color:white;
   /* so dragged elements can be above the view's main element */
   position: relative;
-  z-index: 1; }
+  z-index: 1; 
+  border-radius: 0px 0px 15px 15px;
+  box-shadow: 1px 1px 1px 1px #b4adad;
+
+  }
 
 /* BasicView
 --------------------------------------------------------------------------------------------------*/

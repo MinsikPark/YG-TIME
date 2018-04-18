@@ -56,6 +56,23 @@ function modsubmit() {
 
 }
 
+//
+function withDrawal() {
+	var userId = $('#getsession').val();
+	console.log("아이디다" + userId);
+	alert("정말로 탈퇴하시겠습니까?");
+	$.ajax({
+			url : "withdrawal.member",
+			data : {userId : userId},
+			datatype : "text",
+			success: function (data) {
+				console.log("들어왔니??");
+				$("#modclose").trigger("click");
+				location.href='login.jsp';
+			}
+			})
+}
+
 // 프로필 이미지 수정을 위해 클릭할 경우 fileuplaod 실행되는 함수
 function modupload(){
 	$('#modfileUpLoad').trigger("click");

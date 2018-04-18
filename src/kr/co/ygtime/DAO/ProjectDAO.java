@@ -177,7 +177,7 @@ public class ProjectDAO {
 			String sql = "update project set projectname=? where projectnum = ?";
 			
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setString(1, project.getProjectName());
 			pstmt.setInt(2, project.getProjectNum());
 			
