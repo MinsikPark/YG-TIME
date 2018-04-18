@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.DAO.CardDAO;
-import kr.co.ygtime.DTO.CheckBoxDTO;
 
 public class CheckDeleteService implements Action{
 

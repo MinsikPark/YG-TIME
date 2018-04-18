@@ -26,7 +26,6 @@ public class ProfileUpdateService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("여기옴");
 		String userId = (String) request.getSession().getAttribute("sessionId");
 		MultipartRequest multi = null;
 		int filesize = 10*1024*1024;
@@ -34,7 +33,6 @@ public class ProfileUpdateService implements Action {
 		int resultrow =0;
 		
 		try {
-			System.out.println("content type : " + request.getContentType());
 			 multi=new MultipartRequest(
 	                    request
 	                    , savepath

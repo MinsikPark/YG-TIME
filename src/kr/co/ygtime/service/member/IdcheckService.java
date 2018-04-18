@@ -19,11 +19,9 @@ public class IdcheckService implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
-		System.out.println("IdcheckService");
 		String id = request.getParameter("email");
 		
 		MemberDAO dao = null;
-		System.out.println(id);
 		try {
 			dao = new MemberDAO();
 	

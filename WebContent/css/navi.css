@@ -256,6 +256,7 @@
 	    filter: alpha(opacity=20);
 	    opacity: .4;
     }
+    
 	@media screen and (max-width: 600px) {
 		.inputtextbox{
 			width: 85%;

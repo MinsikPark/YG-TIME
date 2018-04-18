@@ -21,7 +21,6 @@ import kr.co.ygtime.DAO.MemberDAO;
 import kr.co.ygtime.DAO.ProjectDAO;
 import kr.co.ygtime.DTO.InviteMsgDTO;
 import kr.co.ygtime.DTO.ProjectDTO;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**

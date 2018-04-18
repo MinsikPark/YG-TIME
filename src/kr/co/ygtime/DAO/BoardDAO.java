@@ -36,7 +36,6 @@ public class BoardDAO {
 	 작성자명 : 박 민 식
 	 */
 	public int boardInsert(BoardDTO board) {
-		System.out.println("boardInsert 함수");
 		PreparedStatement pstmt =null;
 		Connection conn = null;
 		String sql =  "insert into board(boardnum, projectnum, boardtitle, detail,"
@@ -74,7 +73,6 @@ public class BoardDAO {
 	 작성자명 : 박 민 식
 	 */
 	public BoardDTO boardSelect(int boardNum){
-		System.out.println("boardSelect 함수");
 		PreparedStatement pstmt =null;
 		Connection conn = null;
 		ResultSet rs = null;
@@ -124,7 +122,6 @@ public class BoardDAO {
 	 작성자명 : 박 민 식
 	 */
 	public List<BoardDTO> allBoardSelect(int projectNum) {
-		System.out.println("boardSelect 함수");
 		PreparedStatement pstmt =null;
 		Connection conn = null;
 		ResultSet rs = null;
@@ -216,7 +213,6 @@ public class BoardDAO {
 	 작성자명 : 박 민 식
 	 */
 	public int boardDelete(int boardNum) {
-		System.out.println("boardDelete 함수");
 		PreparedStatement pstmt =null;
 		Connection conn = null;
 		String sql = "update board set deleteok=1 where boardNum=?";

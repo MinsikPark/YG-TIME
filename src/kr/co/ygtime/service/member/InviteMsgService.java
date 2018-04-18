@@ -38,7 +38,6 @@ public class InviteMsgService implements Action{
 			
 			forward = new ActionForward();
 			request.setAttribute("resultrow", resultrow);
-			System.out.println(resultrow);
 			forward.setRedirect(false);
 			forward.setPath("/ajaxpath/result_row.jsp");
 		} catch (NamingException e) {
