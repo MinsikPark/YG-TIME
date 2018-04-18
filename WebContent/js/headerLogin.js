@@ -8,17 +8,18 @@ $(function() {
 			$("#formLogin").submit();
 		}
 	}) 
-	$("#btnLogin1").click(function() {
-		console.log('실행되까여?')
-		if ($("#loginEmail1").val() == "" || $("#loginPwd1").val() == "") {
-			alert("아이디와 비밀번호를 입력해 주세요");
-
-		} else {
-			$("#loginform").submit();
-		}
-	});
+	
 	profileimglogin();
 });
+
+function btnloginclick(){
+	if ($("#loginEmail1").val() == "" || $("#loginPwd1").val() == "") {
+		alert("아이디와 비밀번호를 입력해 주세요");
+
+	} else {
+		$("#loginform").submit();
+	}
+}
 
 function profileimglogin(){
 
