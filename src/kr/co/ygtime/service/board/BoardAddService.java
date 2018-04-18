@@ -9,7 +9,6 @@ package kr.co.ygtime.service.board;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.Session;
 
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;

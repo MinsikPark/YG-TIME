@@ -23,16 +23,10 @@ public class JoinService implements Action{
 		int result =0;
 		try {
 			
-			System.out.println(request.getContentType());
-			
-			System.out.println(4);
 			String userId = request.getParameter("email");
 			String userPwd = request.getParameter("password");
 			String userNicname = request.getParameter("nickName");
 		  
-	
-
-			System.out.println(5);
 			MemberDTO member = new MemberDTO();
 			member.setUserId(userId);
 			member.setUserPwd(userPwd);

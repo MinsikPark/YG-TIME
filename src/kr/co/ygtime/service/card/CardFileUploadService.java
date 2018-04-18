@@ -11,7 +11,6 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.plaf.BorderUIResource.EtchedBorderUIResource;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -25,8 +24,6 @@ public class CardFileUploadService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("업로드");
-		
 		
 		MultipartRequest multi = null; // 파일 업로드를 위한 cos.jar 추가 및 객체 생성
 		int filesize = 10*1024*1024; // 업로드 파일 max 사이즈 10메가
@@ -34,7 +31,6 @@ public class CardFileUploadService implements Action{
 		int resultrow =0;
 		
 		try {
-			System.out.println("content type : " + request.getContentType());
 			 multi=new MultipartRequest(
 	                    request
 	                    , savepath
@@ -48,7 +44,6 @@ public class CardFileUploadService implements Action{
 			 String cardUploadFile = multi.getFilesystemName(file);
 			 String originFileName = multi.getOriginalFileName(file);
 			 int fileNum= dao.maxFileNum(cardNum)+1;
-			 System.out.println("cardUploadFile : " + cardUploadFile);
 			 UpLoadDTO dto= new UpLoadDTO();
 			 dto.setCardNum(cardNum);
 			 dto.setFileNum(fileNum);

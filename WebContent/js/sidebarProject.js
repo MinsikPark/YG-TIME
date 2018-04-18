@@ -134,7 +134,6 @@ function projectSelectView(pNum,obj){
 			memberList();
 			$('#mainFooterbar').show()
 			//프로젝트 내에 보드가 존재할 때, 존재하지 않으면 아래 코드 실행되지 않음
-			console.log("json.length: " + json.length);
 			if(json.length > 0) {
 				completedProjectView(obj, json);
 			}
@@ -183,7 +182,6 @@ function projectNameModifyOk(obj, projectNum){
 			if(data.trim() <= 0){
 				alert("프로젝트이름 변경 실패");
 			}else{
-				alert("프로젝트이름 변경 완료");
 				callprojectlist();
 				projectNameSelect(projectNum);
 			}
@@ -229,9 +227,7 @@ function boardData(json) {
 function nameinput() {
 	$("#projectName").keypress(function(event) {
 		var keycode = event.keyCode;
-		console.log(keycode);
 		if (keycode == '13') {
-			console.log("엔터입력");
 			var value = $("#projectName").val();
 			
 			if (value.trim() == "") {

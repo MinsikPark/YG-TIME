@@ -37,7 +37,6 @@ public class ListDAO {
 	 작성자명 : 박 민 식
 	*/
 	public int listInsert(ListDTO list) {
-		System.out.println("listInsert 함수");
 		PreparedStatement pstmt =null;
 		Connection conn = null;
 		String sql = "insert into list(boardnum, listnum, listname, deleteok,listsequential )"
@@ -72,7 +71,6 @@ public class ListDAO {
 	 작성자명 : 박 민 식
 	*/	
 	public int maxListSequential(int boardNum) {
-		System.out.println("listInsert 함수");
 		PreparedStatement pstmt =null;
 		Connection conn = null;
 		ResultSet rs = null;
@@ -146,7 +144,6 @@ public class ListDAO {
 	 작성자명 : 박 민 식
 	*/
 	public int listDelete(int listNum) {
-		System.out.println("listDelete 함수");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
@@ -179,7 +176,6 @@ public class ListDAO {
 	 작성자명 : 박 민 식
 	*/
 	public ListDTO listSelect(int listNum) {
-		System.out.println("listSelect 함수");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -199,12 +195,8 @@ public class ListDAO {
 					dto.setListName(rs.getString("listname"));
 					dto.setListNum(rs.getInt("listnum"));
 					dto.setListSequential(rs.getInt("listSequential"));	
-				}else {
-					System.out.println("삭제된 리스트");
 				}
-				
 			}
-			
 			
 		} catch(Exception e){
 			
@@ -265,7 +257,6 @@ public class ListDAO {
 	 작성자명 : 박민식
 	*/
 	public List<ListDTO> allListSelect(int boardNum){
-		System.out.println("allListSelect 함수");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

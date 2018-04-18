@@ -5,7 +5,6 @@ function memberinvite() {
 		url : "idcheck.member",
 		data : {email : userId1},
 		success : function (datas) {
-			console.log(datas.trim())
 			if(datas.trim() === 'true'){
 				alert('없는 회원입니다')
 				return false;
@@ -35,7 +34,6 @@ function inviteIdCheck(){
 					datatype : "JSON",
 					data : data,
 					success : function(datas) {
-						console.log("data : " + datas);
 					}
 				})
 			}else{
@@ -55,7 +53,6 @@ function memberList() {
 		url : "memberlist.project",
 		datatype : "JSON",
 		success : function(data) {
-			console.log(data);
 			memberOwnerView()
 			var json = JSON.parse(data)
 			var div = ""
@@ -64,11 +61,11 @@ function memberList() {
 			$.each(json, function(i, elt) {
 				div += '<div class="dropup" style="float:left;">'
 				if(elt.userProfile ==""){
-					div += '<a data-toggle="dropdown" style="font-size: 25pt; top: 7px;"><img style="width: 50px;height:50px" class="img-circle" src = "profile/profile.png" /></a>'	;				
+					div += '<a data-toggle="dropdown" style="font-size: 25pt; top: 7px; cursor: pointer;"><img style="width: 50px;height:50px" class="img-circle" src = "profile/profile.png" /></a>'	;				
 				}else{
-					div +='<a data-toggle="dropdown" style="font-size: 25pt; top: 7px;"><img style="width: 50px;height:50px" class="img-circle" src = "profile/'+elt.userProfile+'" /></a>';
+					div +='<a data-toggle="dropdown" style="font-size: 25pt; top: 7px; cursor: pointer;"><img style="width: 50px;height:50px" class="img-circle" src = "profile/'+elt.userProfile+'" /></a>';
 				}		
-				div += '<ul class="dropdown-menu">'
+				div += '<ul class="dropdown-menu" style="cursor: pointer;">'
 				if(grade == '0' && elt.userId!=userId){
 					div += '<li><input type="hidden" value="'+ elt.userId +'"><a onclick="memberToKickOut(this)">맴버제명</a></li>'
 					div += '<li><input type="hidden" value="'+ elt.userId +'"><a onclick="memberMendate(this)">팀장위임</a></li>'
@@ -108,10 +105,7 @@ function memberMendate(obj) {
 			datatype : "JSON",
 			data : {userId : $("#getsession").val()},
 			success: function (data){
-				console.log(data);
 				var id = $(obj).parent().children("input").val();
-				console.log($(obj).parent());
-				
 				$.ajax({
 					url : "mendate.project",
 					datatype : "JSON",
@@ -138,7 +132,6 @@ function memberToKickOut(obj) {
 				outUserId : id
 				},
 		success: function (data){
-				console.log(data);
 				memberList()
 				callprojectlist()
 				
@@ -148,7 +141,6 @@ function memberToKickOut(obj) {
 }
 //오토컴플릿
 function autoComplete() {
-	console.log("바보바보")
 	 $.ajax({
 		 		url : "comple.member",
 		 		datatype : "JSON",
@@ -157,7 +149,7 @@ function autoComplete() {
 					$('#emailSearch').autocomplete({
 						 source: param,
 						 appendTo: "#friend",
-						 minLength: 3
+						 minLength: 2
 					})
 					
 				}
@@ -167,14 +159,12 @@ function autoComplete() {
  
 //팀탈퇴
 function memberDelete() {
-	console.log("메롱메롱메롱")
 	var userId = $("#getsession").val();
 	$.ajax({
 			url : "memberdeleteproject.project",
 			data : {userId : userId},
 			datatype : "JSON",
 			success : function (data) {
-				console.log(data);
 				memberList()
 				callprojectlist()
 			}

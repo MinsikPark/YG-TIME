@@ -31,7 +31,6 @@ public class ProjectMemberListService implements Action{
 			projectdao = new ProjectDAO();
 			list = projectdao.allProjectMemberSelect(projectNum);
 			JSONArray json = JSONArray.fromObject(list);
-			System.out.println(json);
 			request.setAttribute("json", json);
 			forward = new ActionForward();
 			forward.setPath("/ajaxpath/jsonArray.jsp");

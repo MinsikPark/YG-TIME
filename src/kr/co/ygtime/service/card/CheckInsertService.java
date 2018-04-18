@@ -31,7 +31,6 @@ public class CheckInsertService implements Action{
 			String checkboxcontents = request.getParameter("checkboxcontents");
 			
 			int checkNum = carddao.maxCheckNum(cardnum);
-			System.out.println("checkNum : " + checkNum);
 			checkdto.setCheckNum(checkNum+1);
 			checkdto.setCardNum(cardnum);
 			checkdto.setCheckBoxContents(checkboxcontents);

@@ -44,7 +44,6 @@ function sortable(){
 		placeholder: "ui-state-highlight",
 		connectWith: '.listbox',
 		start : function(event, ui){
-			console.log(ui.item)
 				$('#movingBox').css({
 					left: event.pageX - ui.item[0].offsetLeft - (ui.item[0].clientWidth/2),
 					top : event.pageY - ui.item[0].offsetTop - (ui.item[0].clientHeight/2)
@@ -82,18 +81,19 @@ function autoWidth(){
 
 //카드를 추가하는 텍스트박스를 생성한다
 function addCardView(e, listnum, boardNum) {
+	console.log("카드추가")
 	$(e).parent().find("#addcard").remove();
 	var div = "<div class='card' id='addcard'>" +
 			"<input class='inputtext' type='text' placeholder='card title' name='title' " +
-			"onkeypress='if(event.keyCode==13) {addCard($(this).parent().children(\"a\"), "+ listnum +");}' " +
-			"onfocusout='focusOutBoardDelay("+boardNum+")' onkeyup='fnChkByte(this, 26)'>" +
-			"<a onclick='addCard(this, "+ listnum +")'>완료</a></div>";
+			"onkeypress='if(event.keyCode==13) {addCard($(this).parent().children(\"a\"), "+ listnum +","+boardNum+");}' " +
+			"onfocusout='focusOutCardDelay("+listnum+")' onkeyup='fnChkByte(this, 26)'>" +
+			"<a onclick='addCard(this, "+ listnum +", "+ boardNum +")'>완료</a></div>";
 	$(e).before(div);
 	$('#addcard').children('input').focus();
 }
 
-
-function addCard(obj, listnum){
+//카드 등록 성공
+function addCard(obj, listnum, boardNum){
 	var parent = $(obj).closest('div')
 	var value = parent[0].firstChild.value //cardname
 	if(value.trim() != ""){
@@ -102,11 +102,8 @@ function addCard(obj, listnum){
 			datatype:"JSON",
 			data:{listNum:listnum, cardName:value},
 			success:function(data){
-				console.log("카드 추가 돼었나? "+ data.trim());
 				$(parent).remove();
-				callCardList(listnum);
 				$('#contentDetail').empty();
-				
 			}
 		});
 	}
@@ -116,16 +113,13 @@ function addCard(obj, listnum){
 function deleteCard(cardid, listNum) {
 	event.stopPropagation();//상위 이벤트 중지
 	var cardNum = cardid;
-	console.log("메롱메롱" + cardNum);
 	$.ajax({
 			url : "carddelete.card",
 			datatype:"text",
 			data:{cardNum:cardNum},
 			success:function(data){
-				console.log("너는 누구냐?" + data.trim());
-				console.log("listNum이래요 : " + listNum)
 				$('#div'+cardid).remove();
-				callCardList(listNum)
+				callCardList(listNum);
 			}
 			})
 }
@@ -146,8 +140,6 @@ function addListView(obj, boardnum){
 function addList(obj, boardnum){
 	var parent = $(obj).closest('.listbox')
 	var value = parent[0].firstChild.value
-	console.log(boardnum)
-	console.log(value)
 	if(value.trim() != ""){
 		$.ajax({
 			url:"listinsert.list",
@@ -163,26 +155,19 @@ function addList(obj, boardnum){
 	}
 }
 
-function listDelete(obj) {
-	   console.log("나는리스트넘버야 : " + listNum)
-}
-
 //리스트 삭제
 function listDel(obj){
 	var input = confirm('삭제하시겠습니까?')
 	if(input){
-		console.log('true')
 		 $.ajax({
 	         url : "listdelete.list",
 	         datatype : "JSON",
 	         data : {listNum : $(obj).closest('.listtitle')[0].id.substr(7)},
 	         success : function (data) {
 	            $(obj).closest('.listbox').remove()
-	            console.log('완료')
 	         }
          })
 	}else{
-		console.log('false')
 	}
 }
 
@@ -204,7 +189,6 @@ function listmodify(obj, listNum, boardnum){
 //리스트 수정 확인
 function listmodifyOk(obj, listNum, boardnum){
 	var name = $(obj).parent().children("input").val();
-	console.log($(obj).parent().children("input").val());
 	if(name.trim() == ""){
 		alert("빈 문자열로 수정이 되지 않습니다");
 	} else {
@@ -292,7 +276,6 @@ function cardDetail(obj){
 	//$(obj).attr('id') == 카드넘버
 	var cardnum = $(obj).attr('id');
 	$('#hiddenCardnum').attr("value", cardnum);
-	console.log("cardDetail:cardnum:"+cardnum);
 	//view DB뿌려주기
 	cardViewDetail(cardnum);
 	
@@ -413,7 +396,7 @@ function callUploadList(cardNum){
 			var json = JSON.parse(data);
 			$.each(json, function(index,json){
 				var div ='<div><a class="down" href="download?fileName='+json.filePath+'">'+ json.originFileName+'</a>' 
-				div += '<button type="button" class="close" onclick="fileInputDel(this)">&times;</button></div>'
+				div += '<button type="button" class="close" onclick="fileInputDel(this, '+ json.fileNum +')">&times;</button></div>'
 				$('#fileUploadForm').append(div)			
 			})	
 		}

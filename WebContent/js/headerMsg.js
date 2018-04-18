@@ -13,7 +13,6 @@ $(function(){
                 $("#dropdownchilddiv").empty();
                 
                 $.each(json, function(index, obj) {
-                	console.log(obj)
                 	var str = '<div class="joinmessage" id="fromUser'+index+'">';
                 	str += '<label>'+obj[0].inviteUserId+'님이 "'+ obj[1].projectName +'" 프로젝트로 초대 하였습니다</label>';
                 	str += '<button  class="btn btn-warning joinbutton" value="N" onclick="msgreject(this,'+obj[0].projectNum+')">거절</button>';

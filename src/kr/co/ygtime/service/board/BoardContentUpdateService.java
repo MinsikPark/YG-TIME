@@ -32,7 +32,6 @@ public class BoardContentUpdateService implements Action {
 		try {
 			dao = new BoardDAO();
 			dto = dao.boardSelect(boardNum);
-			System.out.println("board : " + dao);
 			if(dto!=null) {
 				dto.setBoardTitle(boardTitle);
 				dto.setBoardStartDate(boardStartDate);

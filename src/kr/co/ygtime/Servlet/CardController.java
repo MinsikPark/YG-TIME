@@ -26,6 +26,7 @@ import kr.co.ygtime.service.card.CheckInsertService;
 import kr.co.ygtime.service.card.CheckDeleteService;
 import kr.co.ygtime.service.card.CheckListService;
 import kr.co.ygtime.service.card.CheckedUpdateService;
+import kr.co.ygtime.service.card.DownLoadDelService;
 import kr.co.ygtime.service.card.ReplyAddService;
 import kr.co.ygtime.service.card.ReplyDelService;
 import kr.co.ygtime.service.card.ReplyListService;
@@ -58,7 +59,6 @@ public class CardController extends HttpServlet {
 		String requestURI = request.getRequestURI();
         String contextPath = request.getContextPath();
         String cmdURI = requestURI.substring(contextPath.length());
-        System.out.println(cmdURI);
         ActionForward forward =null;
         Action action = null;
         
@@ -235,6 +235,14 @@ public class CardController extends HttpServlet {
         } else if(cmdURI.equals("/CardMemeberDel.card")) {
         	try {
         		action = new CardMemberDelService();
+        		forward = action.execute(request, response);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        } else if(cmdURI.equals("/DownLoadDel.card")) {
+        	try {
+        		action = new DownLoadDelService();
         		forward = action.execute(request, response);
         	}
         	catch(Exception e) {

@@ -25,7 +25,6 @@ public class ProjectMemberDeleteService implements Action{
 		int resultrow = 0;
 		String userId = request.getParameter("userId");
 		int projectNum = (int)request.getSession().getAttribute("projectNum");
-		System.out.println(userId+"/"+projectNum);
 		TeamDTO teamdto = new TeamDTO();
 		teamdto.setProjectNum(projectNum);
 		teamdto.setUserId(userId);
