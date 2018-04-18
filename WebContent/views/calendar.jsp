@@ -36,13 +36,15 @@ $(function(){
 <!-- calendar -->
 
 
-<nav class="navvar " id="calendarArea">
-	<div style="margin: 0px 400px;">
-		<h2 id="projName">프로젝트</h2>
+<div id="calendarArea">
+	<div style="margin-left: 13%; margin-bottom:0px;">
+		<h2 id="projName" style= "margin-bottom:0.5%;">프로젝트</h2>
 	</div>
-	<div id="calendar" class="z-index nav-center container-fluid">
-		<br> <img id="trashCan" src="images/trashcan.png" height="35px"
-			width="35px">
+	<div id="calendar" class=" nav-center container-fluid containment-wrapper">
+		<img id="trashCan" src="images/trashcan.png" height="35px"
+			width="35px"> 
+			<!-- <div id="trashCan" class ="container"style="width:100%;height:5%; background-color: black; z-index: 11">
+			</div> -->
 	</div>
-</nav>
+</div>
 

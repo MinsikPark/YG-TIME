@@ -162,7 +162,7 @@ function projectNameEdit(obj, projectNum){
 	var htmlObj = $(obj).html();
 	$(obj).removeAttr("onclick");
 	$(obj).html('');
-	var edit = "<input class='inputtext' type='text' placeholder=" + htmlObj + " name='projectTitle' onkeyup='fnChkByte(this,20)'><a onclick='projectNameModifyOk(this,"+ projectNum +")'>완료</a>";
+	var edit = "<input class='inputtext' type='text' placeholder=" + htmlObj + " name='projectTitle' onkeyup='fnChkByte(this,20)' onkeypress='if(event.keyCode==13){projectNameModifyOk(this,"+ projectNum +")}'><a onclick='projectNameModifyOk(this,"+ projectNum +")'>완료</a>";
 	
 	$(obj).append(edit);
 	$(obj).children('input').focus();
