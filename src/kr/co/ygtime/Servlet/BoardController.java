@@ -19,8 +19,6 @@ import kr.co.ygtime.service.board.BoardDetailUpdateService;
 import kr.co.ygtime.service.board.BoardListService;
 import kr.co.ygtime.service.board.BoardSelectService;
 import kr.co.ygtime.service.board.BoardTitleUpdateService;
-import kr.co.ygtime.service.card.CardListService;
-
 
 /**
  * 

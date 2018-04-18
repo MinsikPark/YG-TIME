@@ -7,7 +7,6 @@
 
 package kr.co.ygtime.service.card;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.NamingException;
