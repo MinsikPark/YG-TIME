@@ -209,7 +209,8 @@ function checkBoxMod(obj, checknum){
 	var p = $(obj).closest('p');
 	var text = p.children('label').html();
 	
-	var div = '<div onfocusout="focusoutdelay('+ cardnum +')"><input type="text" class="form-control inputtextbox" onkeyup="fnChkByte(this, 50)">'
+	var div = '<div onfocusout="focusoutdelay('+ cardnum +')">'
+		+ '<input type="text" class="form-control inputtextbox" onkeyup="fnChkByte(this, 50)">'
 		+ '<button type="button" class="close glyphicon" onclick="checkBoxModOk(this, '+checknum+')">&#xe013;</button></div>';
 	p.empty();
 	p.html(div);
