@@ -13,6 +13,7 @@
 <script src="js/footbar.js"></script>
 <script src="js/util.js"></script>
 
+
 <c:if test="${!empty sessionScope.sessionId}">
 
 	<div id="mySidenav" class="sidenav">
