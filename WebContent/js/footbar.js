@@ -10,7 +10,6 @@ function memberinvite() {
 				alert('없는 회원입니다')
 				return false;
 			}else{
-				alert('초대메시지가 전송 합니까?')
 				inviteIdCheck()
 			}
 		}
@@ -29,8 +28,6 @@ function inviteIdCheck(){
 		url :"owner.project",
 		data : {userId : userId1},
 		success : function(datas) {
-			console.log('유자아이디가 있나여??')
-			console.log()
 			if(datas.trim() == 2){
 				alert('초대메시지가 발송 되었습니다')
 				$.ajax({

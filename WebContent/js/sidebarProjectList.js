@@ -1,9 +1,9 @@
 $(function(){
 	callprojectlist();
 });
-
 //프로젝트 리스트 불러오기
 function callprojectlist(){
+	var i = 1;
 	$("#progress").empty();
 	$("#complete").empty();
 	var sessionId = $("#getsession").val();
@@ -14,7 +14,6 @@ function callprojectlist(){
 			data: {userId:sessionId},
 			success:function(data){
 				var json = JSON.parse(data);
-				
 				 $.each(json,function(key,value){
 					var proejectName = value.projectName;
 					var projectEndDate = value.projectEndDate;
@@ -26,7 +25,7 @@ function callprojectlist(){
 						data: {projectnum:projectNum, userid:sessionId},
 						success:function(data){
 							var cp = '<div><button class="button btn-1" id="cp" onclick="projectView('+projectNum+', this)">'+ proejectName +'</button>';
-							var pg = '<div><button class="button btn-1" onclick="projectView('+projectNum+', this)">' + proejectName + '</button>';
+							var pg = '<div><button class="button btn-1" onclick="projectView('+projectNum+', this)" id="btn'+projectNum + '"> '+proejectName + '</button>';
 							
 							if(data.trim()=="0"){
 								cp += '<a class="glyphicon glyphicon-cog setting" data-toggle="dropdown"></a>'
@@ -46,17 +45,19 @@ function callprojectlist(){
 								$("#complete").append(cp);
 							}else{ // 프로젝트가 현재도 진행중이라면
 								$("#progress").append(pg);
-								
+							}
+							if (i++ == 1){
+								projectStartView(projectNum)
 							}
 						}
 					});
-				})  
+				})
 			}
 		})
 	}
+	
 }
 //프로젝트 관리 함수 끝
-
 
 
 function chartClose() {

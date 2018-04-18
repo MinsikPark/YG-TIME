@@ -1,4 +1,5 @@
 $(function(){
+	
 	$.mCustomScrollbar.defaults.scrollButtons.enable=true; //enable scrolling buttons by default
 	$.mCustomScrollbar.defaults.axis="y"; //enable 2 axis scrollbars by default
 	$("#content-md").mCustomScrollbar({theme:"minimal-dark"});
@@ -8,30 +9,6 @@ $(function(){
 	autoWidth()
 	sortable()
 	 
-	$('#content-md').draggable(
-		  {
-			 axis: "x"
-		},{
-			stop: function() {
-				var left = $('#content-md')[0].offsetLeft
-				var maxwidth = $(window).width() - $('#content-md').width()
-				
-				if(left > 0){
-					$('#content-md').css('left','0px')
-				}else if($(window).width() > $('#content-md').width()){
-					if(left < 0){ //화면크기가 div길이보다 크고 left가 0보다 작으면!!
-						$('#content-md').css('left','0px')
-					}
-				}else if($(window).width() < $('#content-md').width()){
-					if(left < maxwidth){ //화면크기가 div길이보다 작고 left가 maxwidth보다 작으면!!
-						$('#content-md').css('left',maxwidth-80)
-					}
-				}
-				$('#content-md').off('mousemove')
-			}
-		}
-	)
-	
 	$('body').attr({
 		oncontextmenu:"return false",
 	 	onselectstart:"return false",
