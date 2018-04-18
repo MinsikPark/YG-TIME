@@ -4,7 +4,7 @@ $(function(){
 	$('.setting, .button, .tab-content, #mainFooterbar').hide()
 	
 	//사이드 관련
-	$('#navigationBars, #mainScreen, #calendar').click(function() {
+	$('#navigationBars, #mainScreen, #calendar, #movingBox').click(function() {
 		sideHide()
 	}) 
 	

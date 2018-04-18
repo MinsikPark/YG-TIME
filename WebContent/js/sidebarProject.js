@@ -24,8 +24,8 @@ function addProject() {
 //프로젝트 삭제
 function projectDel(projectNum,projectName) {
 	var delProjectName = prompt("삭제하실 프로젝트 명을 입력해 주세요.");
-	
-	if(projectName == delProjectName){
+
+	if(projectName.toLowerCase() == delProjectName.toLowerCase()){
 		var data3 = {
 			projectNum : projectNum
 		};
@@ -97,18 +97,36 @@ function projectDisplay(dataArr) {
 	$('#mainScreen').hide()
 	$('#calendarArea').show()
 }
-
+function lastModDateUpdate(pNum){
+	$.ajax({
+		url : "lastmoddateupdate.project",
+		data : {projectNum : pNum}
+	})
+}
 //프로젝트 선택보기
 function projectView(projectNum,obj){
 	$('.button').removeClass('btnactive')
 	$(obj).addClass('btnactive')
-	var data = {projectNum:projectNum};
+	
+	//마지막 수정날짜 업데이트
+	lastModDateUpdate(projectNum)
+	//프로젝트 뷰
+	projectSelectView(projectNum,obj)
+	
+}
+function projectStartView(projectNum){
+	$('#btn'+projectNum).addClass('btnactive')
+	projectSelectView(projectNum,$('#btn'+projectNum))
+}
+
+//프로젝트 선택보기
+function projectSelectView(pNum,obj){
 	$.ajax({
 		url:"allboardlist.board",
 		datatype:"json",
-		data:data,
+		data: {projectNum : pNum},
 		success: function(data){
-			projectNameSelect(projectNum);
+			projectNameSelect(pNum);
 			
 			var json = JSON.parse(data);
 			var boardArr = boardData(json);
@@ -122,7 +140,6 @@ function projectView(projectNum,obj){
 			}
 		}
 	});
-	
 }
 
 //프로젝트이름 가져오기
@@ -172,8 +189,6 @@ function projectNameModifyOk(obj, projectNum){
 		}
 	});
 }
-
-
 //완료된 프로젝트의 가장 오래된 보드 날짜로 달력 이동
 function completedProjectView(element, json) {
 	if(element.id == "cp" || element.id == "cpa") {

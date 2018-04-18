@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
+import kr.co.ygtime.service.project.LastModDateUpdateService;
 import kr.co.ygtime.service.project.ProjectAddService;
 import kr.co.ygtime.service.project.ProjectAdmin;
 import kr.co.ygtime.service.project.ProjectCardCountService;
@@ -206,8 +207,15 @@ public class ProjectController extends HttpServlet {
         	catch (Exception e) {
 				e.printStackTrace();
         	}
+        }else if(cmdURI.equals("/lastmoddateupdate.project")){
+        	action = new LastModDateUpdateService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+        	}
         }
-        
         	
         //마지막 태우기
         if(forward != null){
