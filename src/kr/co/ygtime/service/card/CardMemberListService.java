@@ -42,8 +42,9 @@ public class CardMemberListService implements Action{
 			
 			while(it.hasNext()) {
 				CardMemberDTO cardmemberdto = it.next();
-				MemberDTO meberdto = memberdao.memberSelect(cardmemberdto.getUserId());
-				memberList.add(meberdto);
+				MemberDTO memberdto = memberdao.memberSelect(cardmemberdto.getUserId());
+				System.out.println("11111111111111111111111111"+memberdto.getUserProfile());
+				memberList.add(memberdto);
 			}
 			
 			JSONArray json = JSONArray.fromObject(memberList);

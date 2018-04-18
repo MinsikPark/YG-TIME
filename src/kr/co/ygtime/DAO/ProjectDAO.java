@@ -18,8 +18,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.sun.javafx.application.PlatformImpl.FinishListener;
-
 import kr.co.ygtime.DTO.MemberDTO;
 import kr.co.ygtime.DTO.ProjectDTO;
 import kr.co.ygtime.DTO.TeamDTO;
@@ -50,8 +48,8 @@ public class ProjectDAO {
 		try {
 			conn = ds.getConnection();
 			String sql = "insert into project(projectnum, projectname, projectstartdate, projectenddate,deleteok) values(project_idx.nextval,?,sysdate,null,0)";
-			pstmt = conn.prepareStatement(sql);
 			
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, project.getProjectName());
 			
 			resultrow = pstmt.executeUpdate();
@@ -450,6 +448,7 @@ public class ProjectDAO {
 		try {
 			conn = ds.getConnection();
 			String sql = "insert into team(projectnum, userid, grade, projectlastmoddate) values(?,?,?,sysdate)";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, team.getProjectNum());
 			pstmt.setString(2,team.getUserId());

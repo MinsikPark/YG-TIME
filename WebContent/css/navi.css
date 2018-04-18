@@ -228,7 +228,7 @@
 	.commentinputtextbox{
 		width:90%;
 		float:left;
-		margin : 5px 2px;
+		/* margin : 5px 2px; */
 	}
 	
 	.joinbutton {

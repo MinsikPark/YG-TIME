@@ -21,13 +21,22 @@ $(function(){
 		cardNameMod();
 	})
 	
-	$('.dropdown a.message').on("click", function(e){
+	$('.dropdown a.message, .dropdown-menu .membersearch').on("click", function(e){
 		$(this).next('ul').toggle();
 		e.stopPropagation();
 		e.preventDefault();
 	});
 	
 })
+function notHideAuto(e) {
+	console.log("321321321")
+	e.stopPropagation()
+	
+	
+	//e.preventDefault();
+}
+
+
 
 //사이드 숨길때
 function sideHide(){
@@ -120,7 +129,7 @@ function cardNameModOk(){
 function addCheckListForm(){
 	var cardnum = $('#hiddenCardnum').val();
 	
-	var div = '<div id="addCheckListdiv"><input type="text" class="form-control inputtextbox" onkeyup="fnChkByte(this, 50)">'
+	var div = '<div id="addCheckListdiv"><input type="text" class="form-control inputtextbox" onkeyup="fnChkByte(this, 50)" onkeypress="if(event.keyCode==13) {addCheckList($(this).parent().children(\'button\'));}">'
 		div += '<button type="button" class="close glyphicon" onclick="addCheckList(this)">&#xe013;</button></div>'
 	
 	$('#addCheckList').attr('onclick', 'addCancel()');
@@ -241,6 +250,7 @@ function addComment(obj){
 			data:{UserId:id, CardNum:cardnum, ReplyContents:value},
 			success:function(data){
 				cardViewReplys(cardnum);
+				$(obj).parent().children('input').val("");
 			}
 		});
 	}
@@ -323,6 +333,7 @@ function updateDetail(obj, cardNum){
 			alert("카드완료");
 			if(data == 1) {
 				alert("카드 내용이 추가되었습니다.");
+				//$('#contentDetail').val("");
 			}else {
 				alert("오류가 발생하였습니다.");
 			}

@@ -42,7 +42,7 @@ function projectDel(projectNum,projectName) {
 }
 
 //프로젝트 완료
-function projectComplete(projectNum) {
+function projectComplete(projectNum,event) {
 
 	$.ajax({
 		url : "completeproject.project",
