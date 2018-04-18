@@ -48,8 +48,8 @@ public class ProjectDAO {
 		try {
 			conn = ds.getConnection();
 			String sql = "insert into project(projectnum, projectname, projectstartdate, projectenddate,deleteok) values(project_idx.nextval,?,sysdate,null,0)";
-			pstmt = conn.prepareStatement(sql);
 			
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, project.getProjectName());
 			
 			resultrow = pstmt.executeUpdate();
@@ -130,16 +130,17 @@ public class ProjectDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, projectNum);
 			rs = pstmt.executeQuery();
-			
 			listmemberdto = new ArrayList<>();
 			while(rs.next()) {
-
 				memberdto = new MemberDTO();
 				memberdto.setUserId(rs.getString("userid"));
 				memberdto.setUserNicname(rs.getString("usernicname"));
-				memberdto.setUserProfile(rs.getString("userprofile"));
+				if(rs.getString("userprofile")==null) {
+					memberdto.setUserProfile("profile.png");
+				}else {
+					memberdto.setUserProfile(rs.getString("userprofile"));
+				}
 				memberdto.setUserPwd(rs.getString("userpwd"));
-				
 				listmemberdto.add(memberdto);
 				
 			}
@@ -176,10 +177,9 @@ public class ProjectDAO {
 			String sql = "update project set projectname=? where projectnum = ?";
 			
 			pstmt = conn.prepareStatement(sql);
-			ProjectDTO projectdto = new ProjectDTO();
 			
-			pstmt.setString(1,projectdto.getProjectName());
-			pstmt.setInt(2, projectdto.getProjectNum());
+			pstmt.setString(1, project.getProjectName());
+			pstmt.setInt(2, project.getProjectNum());
 			
 			resultrow = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -448,6 +448,7 @@ public class ProjectDAO {
 		try {
 			conn = ds.getConnection();
 			String sql = "insert into team(projectnum, userid, grade, projectlastmoddate) values(?,?,?,sysdate)";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, team.getProjectNum());
 			pstmt.setString(2,team.getUserId());

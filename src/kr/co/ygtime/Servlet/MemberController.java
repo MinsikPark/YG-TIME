@@ -49,8 +49,6 @@ public class MemberController extends HttpServlet {
         String contextPath = request.getContextPath();
         String cmdURI = requestURI.substring(contextPath.length());
         ActionForward forward =null;
-        System.out.println("cmdURI : " + cmdURI);
-        System.out.println("con");
         Action action = null;
         
 
@@ -85,7 +83,6 @@ public class MemberController extends HttpServlet {
         		e.printStackTrace();
         	}
         }else if(cmdURI.equals("/idcheck.member")){
-        	System.out.println("id");
         	action = new IdcheckService();
         	try {
         		forward = action.execute(request, response);

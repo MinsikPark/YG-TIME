@@ -8,17 +8,20 @@ $(function() {
 			$("#formLogin").submit();
 		}
 	}) 
-	$("#btnLogin1").click(function() {
-		console.log('실행되까여?')
-		if ($("#loginEmail1").val() == "" || $("#loginPwd1").val() == "") {
-			alert("아이디와 비밀번호를 입력해 주세요");
-
-		} else {
-			$("#loginform").submit();
-		}
-	});
-	profileimglogin();
+	
+	if($("#getsession").val() != null){
+		profileimglogin();
+	}
 });
+
+function btnloginclick(){
+	if ($("#loginEmail1").val() == "" || $("#loginPwd1").val() == "") {
+		alert("아이디와 비밀번호를 입력해 주세요");
+
+	} else {
+		$("#loginform").submit();
+	}
+}
 
 function profileimglogin(){
 
@@ -32,7 +35,7 @@ function profileimglogin(){
 		},
 		success : function(data) {
 			var json = JSON.parse(data);
-			$("#profiledrop > a > span").remove();			
+			$("#profiledrop > a > span").remove();
 			var img = '<img class="img-circle" id="profileimg"style="width: 40px;height:40px;" src = "profile/'
 						+ json.userProfile + '" />';
 			$("#profiledrop > a").append(img);

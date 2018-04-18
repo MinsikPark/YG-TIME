@@ -58,8 +58,6 @@ function callprojectlist(){
 	
 }
 //프로젝트 관리 함수 끝
-
-
 function chartClose() {
 	$("#divChart").empty()
 	var div = "<canvas id='myChart'></canvas>"
@@ -101,6 +99,7 @@ function chart(start, end) {
 		    
 		});
 }
+
 //리스트 차트
 //And for a doughnut chart
 function listChart(start, end) {

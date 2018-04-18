@@ -30,10 +30,17 @@ $(function(){
 <script src="js/locale-all.js"></script>
 <!-- script - calendar.js -->
 <script src="js/calendar.js"></script>
-<!-- calendar -->
-<div id="calendar">
-	<br>
-	<img id="trashCan" src="images/trashcan.png" height="35px" width="35px"> 
-</div>
 
+<!-- 프로젝트 이름 -->
+
+<!-- calendar -->
+<div id="calendarArea">
+	<div style="margin: 0px 400px;">
+		<h2 id="projName">프로젝트</h2>
+	</div>
+	<div id="calendar">
+		<br>
+		<img id="trashCan" src="images/trashcan.png" height="35px" width="35px"> 
+	</div>
+</div>
 	

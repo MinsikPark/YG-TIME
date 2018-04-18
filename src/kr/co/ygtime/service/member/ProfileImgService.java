@@ -36,11 +36,8 @@ public class ProfileImgService implements Action {
 			forward.setPath("/ajaxpath/jsonObject.jsp");
 			
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 				
 		return forward;
 	}
