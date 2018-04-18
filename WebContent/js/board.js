@@ -8,7 +8,30 @@ $(function(){
 	
 	autoWidth()
 	sortable()
-	 
+	 $('#content-md').draggable(
+          {
+             axis: "x"
+        },{
+            stop: function() {
+                
+                var left = $('#content-md')[0].offsetLeft
+                var maxwidth = $(window).width() - $('#content-md').width()
+                
+                if(left > 0){
+                    $('#content-md').css('left','0px')
+                }else if($(window).width() > $('#content-md').width()){
+                    if(left < 0){ //화면크기가 div길이보다 크고 left가 0보다 작으면!!
+                        $('#content-md').css('left','0px')
+                    }
+                }else if($(window).width() < $('#content-md').width()){
+                    if(left < maxwidth){ //화면크기가 div길이보다 작고 left가 maxwidth보다 작으면!!
+                        $('#content-md').css('left',maxwidth-80)
+                    }
+                }
+                $('#content-md').off('mousemove')
+            }
+        }
+    )
 	$('body').attr({
 		oncontextmenu:"return false",
 	 	onselectstart:"return false",
@@ -57,11 +80,16 @@ function autoWidth(){
 	$('#mainScreen').css("width", width)
 }
 
-
-function addCardView(e, listnum) {
+//카드를 추가하는 텍스트박스를 생성한다
+function addCardView(e, listnum, boardNum) {
 	$(e).parent().find("#addcard").remove();
-		var div = "<div class='card' id='addcard'><input class='inputtext' type='text' placeholder='card title' name='title'><a onclick='addCard(this, "+ listnum +")'>완료</a></div>"
-		$(e).before(div);
+	var div = "<div class='card' id='addcard'>" +
+			"<input class='inputtext' type='text' placeholder='card title' name='title' " +
+			"onkeypress='if(event.keyCode==13) {addCard($(this).parent().children(\"a\"), "+ listnum +");}' " +
+			"onfocusout='focusOutBoardDelay("+boardNum+")'>" +
+			"<a onclick='addCard(this, "+ listnum +")'>완료</a></div>";
+	$(e).before(div);
+	$('#addcard').children('input').focus();
 }
 
 
@@ -83,6 +111,7 @@ function addCard(obj, listnum){
 		});
 	}
 }
+
 //카드삭제
 function deleteCard(cardid, listNum) {
 	event.stopPropagation();//상위 이벤트 중지
@@ -103,9 +132,13 @@ function deleteCard(cardid, listNum) {
 
 //리스트생성 텍스트박스를 불러오기
 function addListView(obj, boardnum){
-	console.log(boardnum);
-	var div = "<div class='listbox'><input class='inputtext' type='text' placeholder='list title' name='title'><a onclick='addList(this,"+ boardnum +")'>완료</a></div>"
+	var div = "<div class='listbox'><input onkeypress='if(event.keyCode==13) {addList($(this).parent().children(\"a\"), "+ boardnum +");}' " +
+			"onfocusout='focusOutBoardDelay("+boardnum+")' " +
+			"class='inputtext' type='text' placeholder='list title' name='title'>" +
+			"<a onclick='addList(this,"+ boardnum +")'>완료</a></div>"
+	var parent = $(obj).parent().attr('id');
 	$(obj).before(div)
+	$('#content-md').children().children('input').focus();
 	autoWidth()
 }
 
@@ -156,7 +189,10 @@ function listDel(obj){
 //(텍스트 클릭하면 텍스트박스 불러오기)리스트 수정
 function listmodify(obj, listNum, boardnum){
 	var html = $(obj).html();
-	var text = "<input onfocusout='focusOutBoardDelay("+boardnum+")' class='inputtext' type='text' placeholder=" + html + " name='title' onkeyup='fnChkByte(this,20)' ><a onclick='listmodifyOk(this,"+ listNum + "," + boardnum +")'>완료</a>";;
+	var text = "<input onkeypress='if(event.keyCode==13) {listmodifyOk($(this).parent().children(\"a\"), "+ listNum +", "+ boardnum +");}' " +
+			"onfocusout='focusOutBoardDelay("+boardnum+")' class='inputtext' " +
+			"type='text' placeholder=" + html + " name='title' onkeyup='fnChkByte(this,20)' >" +
+			"<a onclick='listmodifyOk(this,"+ listNum + "," + boardnum +")'>완료</a>";;
 	
 	$(obj).removeAttr("onclick");
 	$(obj).html("");
@@ -188,7 +224,9 @@ function boardTitleEdit(obj, boardNum){
 	var htmlObj = $(obj).html();
 	$(obj).removeAttr("onclick");
 	$(obj).html('');
-	var edit = "<input onfocusout='focusOutBoardDelay("+boardNum+")' class='inputtext' type='text' placeholder=" + htmlObj + " name='title' onkeyup='fnChkByte(this,20)'><a onclick='boardmodifyOk(this,"+ boardNum +")'>완료</a>";
+	var edit = "<input onfocusout='focusOutBoardDelay("+boardNum+")' class='inputtext' type='text' placeholder='" + htmlObj + "' " +
+			"name='title' onkeyup='fnChkByte(this,20)' onkeypress='if(event.keyCode==13) {boardmodifyOk($(this).parent().children(\"a\"), "+ boardNum +");}'>" +
+			"<a onclick='boardmodifyOk(this,"+ boardNum +")'>완료</a>";
 	
 	$(obj).append(edit);
 	$(obj).children('input').focus();
@@ -199,7 +237,9 @@ function boardDetailEdit(obj, boardNum){
 	var htmlObj = $(obj).html();
 	$(obj).removeAttr("onclick");
 	$(obj).html('');
-	var edit = "<input onfocusout='focusOutBoardDelay("+boardNum+")' class='inputtext' type='text' placeholder=" + htmlObj + " name='title' onkeyup='fnChkByte(this,30)'><a onclick='detailmodifyOk(this,"+ boardNum +")'>완료</a>";
+	var edit = "<input onfocusout='focusOutBoardDelay("+boardNum+")' class='inputtext' type='text' placeholder='" + htmlObj + "' " +
+			"name='title' onkeyup='fnChkByte(this,30)' onkeypress='if(event.keyCode==13) {detailmodifyOk($(this).parent().children(\"a\"), "+ boardNum +");}'>" +
+			"<a onclick='detailmodifyOk(this,"+ boardNum +")'>완료</a>";
 	
 	$(obj).append(edit);
 	$(obj).children('input').focus();

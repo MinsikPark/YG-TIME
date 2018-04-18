@@ -62,7 +62,7 @@ function memberList() {
 			$('#thisProjctMeber').empty()
 			var grade = $('#thisMemberGrade').val()
 			$.each(json, function(i, elt) {
-				div += '<div class="dropdown" style="float:left;">'
+				div += '<div class="dropup" style="float:left;">'
 				if(elt.userProfile ==""){
 					div += '<a data-toggle="dropdown" style="font-size: 25pt; top: 7px;"><img style="width: 50px;height:50px" class="img-circle" src = "profile/profile.png" /></a>'	;				
 				}else{

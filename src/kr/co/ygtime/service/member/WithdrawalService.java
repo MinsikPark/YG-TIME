@@ -20,14 +20,16 @@ public class WithdrawalService implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
 		MemberDAO memberdao = null;
-		int msg = 0;
+		int resultrow = 0;
 		String userId = request.getParameter("userId");
 		
 		try {
 			memberdao = new MemberDAO();
-			msg = memberdao.memberDelete(userId);
+			resultrow = memberdao.memberDelete(userId);
+			
+			request.setAttribute("resultrow", resultrow);
 			forward = new ActionForward();
-			forward.setPath("/ajaxpath/with.jsp");
+			forward.setPath("/ajaxpath/result_row.jsp");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
