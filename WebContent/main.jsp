@@ -23,6 +23,7 @@
 <script src="js/navi.js"></script>
 </head>
 <body>
+
 	<div id="movingBox"></div>
 	<jsp:include page="include/sidebar.jsp"></jsp:include>
 	

@@ -60,13 +60,13 @@ function modsubmit() {
 function withDrawal() {
 	var userId = $('#getsession').val();
 	console.log("아이디다" + userId);
+	alert("탈퇴할꺼야?");
 	$.ajax({
 			url : "withdrawal.member",
 			data : {userId : userId},
 			datatype : "text",
 			success: function (data) {
 				console.log("들어왔니??");
-				alert("탈퇴할꺼야?");
 				$("#modclose").trigger("click");
 			}
 			})

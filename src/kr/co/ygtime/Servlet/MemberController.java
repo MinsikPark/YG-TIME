@@ -179,8 +179,10 @@ public class MemberController extends HttpServlet {
             }
         }
         else if(cmdURI.equals("/withdrawal.member")) {
-
+        	System.out.println("111111111111111111111111111111");
             action = new WithdrawalService();
+            System.out.println("0000000000000000000000000000");
+            request.getSession().invalidate();
             try {
             forward = action.execute(request, response);
             }

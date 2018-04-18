@@ -21,18 +21,13 @@ public class WithdrawalService implements Action{
 		ActionForward forward = null;
 		MemberDAO memberdao = null;
 		int msg = 0;
-		String path = "login.jsp";
 		String userId = request.getParameter("userId");
 		
 		try {
 			memberdao = new MemberDAO();
 			msg = memberdao.memberDelete(userId);
-			request.setAttribute("path", path);
-			request.setAttribute("msg", msg);
-			
 			forward = new ActionForward();
-			forward.setPath("/ajaxpath/with.jsp");	
-			
+			forward.setPath("/ajaxpath/with.jsp");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

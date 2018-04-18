@@ -101,7 +101,7 @@
 									</div>
 
 									<div class="modal-footer">
-										<button class="btn btn-default" onclick="withDrawal()">회원탈퇴</button>
+										<button type="button" class="btn btn-default" onclick="withDrawal()">회원탈퇴</button>
 										<button type="button" class="btn btn-default"
 											onclick="modsubmit()">Submit</button>
 										<button type="button" class="btn btn-default"
