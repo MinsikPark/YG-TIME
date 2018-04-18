@@ -1,7 +1,10 @@
 	
 	#calendar {
-		    max-width: 900px;
-		    margin : 0px 400px;
+		    width: 75%;
+		    margin-top : 3%;
+		    margin-left : 11%;
+		    margin-right : 5%;
+		 /*    background-coor: white; */
 	}
 	body{
 	    font-family: "Lato", sans-serif;
@@ -20,6 +23,8 @@
 		height: 90%;
 		overflow-x: auto;
 		overflow-y: hidden;
+		background-color: inherit;
+		
 	}
 	
 	#content-md{

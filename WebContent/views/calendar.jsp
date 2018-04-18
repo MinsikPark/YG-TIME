@@ -31,9 +31,13 @@ $(function(){
 <!-- script - calendar.js -->
 <script src="js/calendar.js"></script>
 <!-- calendar -->
-<div id="calendar">
-	<br>
-	<img id="trashCan" src="images/trashcan.png" height="35px" width="35px"> 
-</div>
+
+<nav class="navvar ">
+	<div id="calendar" class ="z-index nav-center container-fluid">
+		<br>
+		<img id="trashCan" src="images/trashcan.png" height="35px" width="35px"> 
+	</div>
+</nav>
+
 
 	
