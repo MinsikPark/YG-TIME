@@ -152,7 +152,6 @@ $(function() { // $(document).ready
 									alert("보드 생성에 실패하셨습니다");
 								}else{
 									projectView(json.projectNum, this);
-									alert("보드 생성했음");
 								}
 							}
 

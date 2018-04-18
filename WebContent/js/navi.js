@@ -307,9 +307,7 @@ function replyModOk(obj, replyNum){
 		url:"ReplyUp.card",
 		datatype:"text",
 		data:{ReplyContents:value, CardNum:cardnum, ReplyNum:replyNum},
-		success:function(data){
-			alert('댓글을 수정했습니다.');
-		}
+		success:function(data){	}
 	});
 }
 
@@ -322,13 +320,7 @@ function updateDetail(obj, cardNum){
 		datatype:"text",
 		data:{cardNum:cardNum, cardContents:contentDetail},
 		success:function(data){
-			alert("카드완료");
-			if(data == 1) {
-				alert("카드 내용이 추가되었습니다.");
-				//$('#contentDetail').val("");
-			}else {
-				alert("오류가 발생하였습니다.");
-			}
+			if(data == 1) {	}else {alert("오류가 발생하였습니다.");}
 		}
 	});
 
