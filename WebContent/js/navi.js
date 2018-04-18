@@ -90,12 +90,6 @@ function changeValue(obj){
 	
 }
 
-
-
-function fileInputDel(obj){
-	obj.closest('div').remove()
-}
-
 //상세페이지 카드명 클릭시 텍스트 생성
 function cardNameMod(){
 	var cardnum = $('#hiddenCardnum').val();
@@ -392,6 +386,20 @@ function cardMemberDel(obj){
 		data:{cardNum:cardnum, userId:id},
 		success:function(data){
 			cardMemberListView(cardnum);
+		}
+	});
+}
+
+//해당 카드에 대한 다운로드 파일을 지운다
+function fileInputDel(obj, fileNum){
+	var cardnum = $('#hiddenCardnum').val();
+	
+	$.ajax({
+		url:"DownLoadDel.card",
+		datatype:"text",
+		data:{cardNum:cardnum, upLoadNum:fileNum},
+		success:function(data){
+			callUploadList(cardnum);
 		}
 	});
 }

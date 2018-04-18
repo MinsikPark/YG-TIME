@@ -413,7 +413,7 @@ function callUploadList(cardNum){
 			var json = JSON.parse(data);
 			$.each(json, function(index,json){
 				var div ='<div><a class="down" href="download?fileName='+json.filePath+'">'+ json.originFileName+'</a>' 
-				div += '<button type="button" class="close" onclick="fileInputDel(this)">&times;</button></div>'
+				div += '<button type="button" class="close" onclick="fileInputDel(this, '+ json.fileNum +')">&times;</button></div>'
 				$('#fileUploadForm').append(div)			
 			})	
 		}
