@@ -22,14 +22,12 @@ function joinsubmit() {
 	}
 	
 	data = $("#joinForm").serialize();
-	console.log("data : " + data);
 	$.ajax({
 		url : "Join.member",
 		type : "post",
 		data : data,
 		enctype: "multipart/form-data",
 		success : function(data) {
-			console.log(data);
 			if (data.trim() == "success") {
 				alert("회원가입에 성공하셨습니다");
 				joinclear();
@@ -56,7 +54,6 @@ function joinclear() {
 //비밀번호 일치여부
 function passwordfunction(){
 	if ($("#password").val().length > 30 || $("#password").val().length < 3){
-		console.log("ㅎㅎ");
 		$("#pwdcheck").css("color", "red");
 		$("#pwdcheck").html("* 비밀번호는 4글자 이상 30글자 이하");
 		$("#password").val('');
@@ -94,7 +91,6 @@ function Nicfunction() {
 //아이디중복체크 비동기
 function idcheck() {
 	var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-	console.log("idc")
 	$.ajax({
 		url : "idcheck.member",
 		data : {

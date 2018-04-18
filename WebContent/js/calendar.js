@@ -39,7 +39,6 @@ $(function() { // $(document).ready
 		    			datatype:"text",
 		    			data:data,
 		    			success:function(data){
-		    				console.log(">"+data.trim()+"<");
 		    			}
 		    		
 		    		})
@@ -89,7 +88,6 @@ $(function() { // $(document).ready
 			datatype:"text",
 			data:data,
 			success:function(data){
-				console.log(">"+data.trim()+"<")
 				if(data.trim() <= 0){
 					alert("날짜 변경 실패");
 				}
@@ -221,7 +219,6 @@ function boardclick(boardNum){
             
             var content =""
             $.each(json, function(index, elt) {
-            	console.log(elt);
             	content += '<div class="listbox">'
             		+ '<div id="listnum'+elt.listNum+'"class="listtitle"><label onclick="listmodify(this, '+elt.listNum+',' + boardNum +')">'+ elt.listName +'</label>'
             		+ '<a class="glyphicon close" style="font-size: 17px;" onclick="listDel(this)">&#xe020;</a></div>'
@@ -250,9 +247,7 @@ function callCardList(listNum){
         success:function(carddata){
             var cardjson = JSON.parse(carddata);
             var cardcontent = "";
-            console.log(cardjson);
             $.each(cardjson, function(indexcard, eltcard) {
-            	console.log("카드넘카드넘카드넘" + eltcard.cardNum);
                 cardcontent += '<div id ="div'+eltcard.cardNum+'">';
             	cardcontent += '<div class="card ui-sortable-handle" id ="'+eltcard.cardNum+'" data-toggle="modal" data-target="#myModal1" onclick="cardDetail(this)" style="">'+eltcard.cardName+'<button type="button" class="close" onclick="deleteCard('+eltcard.cardNum+','+listNum+')">&times;</button>'+'</div>';
                 cardcontent += '</div>';

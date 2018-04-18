@@ -44,7 +44,6 @@ function sortable(){
 		placeholder: "ui-state-highlight",
 		connectWith: '.listbox',
 		start : function(event, ui){
-			console.log(ui.item)
 				$('#movingBox').css({
 					left: event.pageX - ui.item[0].offsetLeft - (ui.item[0].clientWidth/2),
 					top : event.pageY - ui.item[0].offsetTop - (ui.item[0].clientHeight/2)
@@ -102,7 +101,6 @@ function addCard(obj, listnum){
 			datatype:"JSON",
 			data:{listNum:listnum, cardName:value},
 			success:function(data){
-				console.log("카드 추가 돼었나? "+ data.trim());
 				$(parent).remove();
 				callCardList(listnum);
 				$('#contentDetail').empty();
@@ -116,14 +114,11 @@ function addCard(obj, listnum){
 function deleteCard(cardid, listNum) {
 	event.stopPropagation();//상위 이벤트 중지
 	var cardNum = cardid;
-	console.log("메롱메롱" + cardNum);
 	$.ajax({
 			url : "carddelete.card",
 			datatype:"text",
 			data:{cardNum:cardNum},
 			success:function(data){
-				console.log("너는 누구냐?" + data.trim());
-				console.log("listNum이래요 : " + listNum)
 				$('#div'+cardid).remove();
 				callCardList(listNum)
 			}
@@ -146,8 +141,6 @@ function addListView(obj, boardnum){
 function addList(obj, boardnum){
 	var parent = $(obj).closest('.listbox')
 	var value = parent[0].firstChild.value
-	console.log(boardnum)
-	console.log(value)
 	if(value.trim() != ""){
 		$.ajax({
 			url:"listinsert.list",
@@ -163,26 +156,19 @@ function addList(obj, boardnum){
 	}
 }
 
-function listDelete(obj) {
-	   console.log("나는리스트넘버야 : " + listNum)
-}
-
 //리스트 삭제
 function listDel(obj){
 	var input = confirm('삭제하시겠습니까?')
 	if(input){
-		console.log('true')
 		 $.ajax({
 	         url : "listdelete.list",
 	         datatype : "JSON",
 	         data : {listNum : $(obj).closest('.listtitle')[0].id.substr(7)},
 	         success : function (data) {
 	            $(obj).closest('.listbox').remove()
-	            console.log('완료')
 	         }
          })
 	}else{
-		console.log('false')
 	}
 }
 
@@ -204,7 +190,6 @@ function listmodify(obj, listNum, boardnum){
 //리스트 수정 확인
 function listmodifyOk(obj, listNum, boardnum){
 	var name = $(obj).parent().children("input").val();
-	console.log($(obj).parent().children("input").val());
 	if(name.trim() == ""){
 		alert("빈 문자열로 수정이 되지 않습니다");
 	} else {
@@ -292,7 +277,6 @@ function cardDetail(obj){
 	//$(obj).attr('id') == 카드넘버
 	var cardnum = $(obj).attr('id');
 	$('#hiddenCardnum').attr("value", cardnum);
-	console.log("cardDetail:cardnum:"+cardnum);
 	//view DB뿌려주기
 	cardViewDetail(cardnum);
 	
