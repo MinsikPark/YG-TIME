@@ -77,7 +77,7 @@ function sortable(){
 function autoWidth(){
 	var width = ($('.listbox').length) * 320 +"px";
 	$('#content-md').css("width", width)
-	$('#mainScreen').css("width", "100%")
+	$('#mainScreen').css("width", width)
 }
 
 
