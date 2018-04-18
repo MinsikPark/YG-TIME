@@ -4,7 +4,7 @@ $(function(){
 	$('.setting, .button, .tab-content, #mainFooterbar').hide()
 	
 	//사이드 관련
-	$('#navigationBars, #mainScreen, #calendar').click(function() {
+	$('#navigationBars, #mainScreen, #calendar, #movingBox').click(function() {
 		sideHide()
 	}) 
 	
@@ -36,7 +36,10 @@ function notHideAuto(e) {
 	//e.preventDefault();
 }
 
-
+function project(){
+	$('#mainScreen').hide()
+	$('#calendarArea').show()
+}
 
 //사이드 숨길때
 function sideHide(){
@@ -98,7 +101,9 @@ function cardNameMod(){
 	var cardnum = $('#hiddenCardnum').val();
 	var htmlObj = $('#modalHeader').html();
 	
-	var div = '<div onfocusout="focusoutdelay('+ cardnum +')"><input type="text" class="form-control inputtextbox" placeholder="' + htmlObj + '" onkeyup="fnChkByte(this, 20)">'
+	var div = '<div onfocusout="focusoutdelay('+ cardnum +')">'
+		+ '<input type="text" class="form-control inputtextbox" placeholder="' + htmlObj + '" onkeyup="fnChkByte(this, 26)"'
+		+ 'onkeypress="if(event.keyCode==13) {cardNameModOk();}" >'
 		+ '<button type="button" class="close glyphicon" onclick="cardNameModOk()">&#xe013;</button></div>';
 
 	$('#modalHeader').html(div);
@@ -209,7 +214,8 @@ function checkBoxMod(obj, checknum){
 	var p = $(obj).closest('p');
 	var text = p.children('label').html();
 	
-	var div = '<div onfocusout="focusoutdelay('+ cardnum +')"><input type="text" class="form-control inputtextbox" onkeyup="fnChkByte(this, 50)">'
+	var div = '<div onfocusout="focusoutdelay('+ cardnum +')">'
+		+ '<input type="text" class="form-control inputtextbox" onkeyup="fnChkByte(this, 50)">'
 		+ '<button type="button" class="close glyphicon" onclick="checkBoxModOk(this, '+checknum+')">&#xe013;</button></div>';
 	p.empty();
 	p.html(div);

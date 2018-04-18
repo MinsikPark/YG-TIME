@@ -8,6 +8,7 @@ function joinsubmit() {
 	} else if ($('#result').html() != "사용가능한 아이디입니다.") {
 		alert("아이디 형식 또는 중복을 확인하세요");
 		return false;
+		
 	} else if ($('#password').val() == "") { //비밀번호 검사
 		/* alert('PWD를 입력해 주세요.');
 		$('#password').focus(); */
@@ -17,8 +18,8 @@ function joinsubmit() {
 	} else if ($("#nickName").val().trim() == "") { //nickName 검사
 		Nicfunction();
 		return false;
+		
 	}
-
 	
 	data = $("#joinForm").serialize();
 	console.log("data : " + data);
@@ -53,13 +54,15 @@ function joinclear() {
 }
 
 //비밀번호 일치여부
-
 function passwordfunction(){
-	
-	console.log("$('#password').val()" + $("#password").val());
-	console.log("$('#passwordCheck').val()" +  $("#passwordCheck").val());
-		
-	if ($("#password").val() != $("#passwordCheck").val()
+	if ($("#password").val().length > 30 || $("#password").val().length < 8){
+		console.log("ㅎㅎ");
+		$("#pwdcheck").css("color", "red");
+		$("#pwdcheck").html("* 비밀번호는 8글자 이상 30글자 이하");
+		$("#password").val('');
+		$("#passwordCheck").val('');
+		$("#password").focus();
+	}  else if ($("#password").val() != $("#passwordCheck").val()
 			|| $("#password").val() == "") {
 		$("#pwdcheck").css("color", "red");
 		$("#pwdcheck").html("* 비밀번호가 일치 하지 않습니다.");
@@ -67,7 +70,7 @@ function passwordfunction(){
 		$("#passwordCheck").val('');
 		$("#password").focus();
 
-	} else {
+	}  else {
 		$("#pwdcheck").css("color", "blue");
 		$("#pwdcheck").html("* 비밀번호 일치");
 		$("#nickName").focus();

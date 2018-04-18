@@ -21,42 +21,35 @@
 <script src="js/jquery.form.js"></script>
 <script src="js/board.js"></script>
 <script src="js/navi.js"></script>
-<!-- <style type="text/css">
-.glyphicon-user:before {
-    content: "\e008";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-</style> -->
 </head>
-<body >
+
+<body style="background-color: #e6e6e6" >
 	<div id="movingBox" style = 'position: absolute;'></div>
+
 	<jsp:include page="include/sidebar.jsp"></jsp:include>
 	
 	<div id="navigationBars">
 		<jsp:include page="include/header.jsp"></jsp:include>
+		<jsp:include page="include/footer.jsp"></jsp:include>
 		<jsp:include page="include/addboard.jsp"></jsp:include>
 		<jsp:include page="include/carddetail.jsp"></jsp:include>
 		<jsp:include page="include/wifi.jsp"></jsp:include>
-		<jsp:include page="include/footer.jsp"></jsp:include>
 		<jsp:include page="include/register.jsp"></jsp:include>
 		<jsp:include page="include/chart.jsp"></jsp:include>
+		<jsp:include page="views/calendar.jsp"></jsp:include>
 	</div>
 	
-	<jsp:include page="views/calendar.jsp"></jsp:include>
-	<input type="hidden" id="hiddenBoardnum">
-	<div id="mainScreen">
-		<h2 id='boardTitle'>Title</h2><p id='boardDetail'>세부내용 블라블라</p>
-		<hr>
-		<div id="content-md">
-			<div class="listbox">
-				
-			    <a class="cardcreate" onclick="addCardView(this)">Add a card...</a>
+	<div class="content-wrapper container">
+		<input type="hidden" id="hiddenBoardnum">
+		<div id="mainScreen" class="container-fluid">
+			<h2 id='boardTitle'>Title</h2><p id='boardDetail'>세부내용 블라블라</p>
+			<hr>
+			<div id="content-md">
+				<div class="listbox">
+				    <a class="cardcreate" onclick="addCardView(this)">Add a card...</a>
+				</div>
+				<a class="listbox" onclick="addListView(this)">Add a list...</a>
 			</div>
-			<a class="listbox" onclick="addListView(this)">Add a list...</a>
 		</div>
 	</div>
 </body>

@@ -34,13 +34,15 @@ $(function(){
 <!-- 프로젝트 이름 -->
 
 <!-- calendar -->
-<div id="calendarArea">
+
+
+<nav class="navvar " id="calendarArea">
 	<div style="margin: 0px 400px;">
 		<h2 id="projName">프로젝트</h2>
 	</div>
-	<div id="calendar">
-		<br>
-		<img id="trashCan" src="images/trashcan.png" height="35px" width="35px"> 
+	<div id="calendar" class="z-index nav-center container-fluid">
+		<br> <img id="trashCan" src="images/trashcan.png" height="35px"
+			width="35px">
 	</div>
-</div>
-	
+</nav>
+

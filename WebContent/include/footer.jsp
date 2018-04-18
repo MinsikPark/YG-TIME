@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<nav id="mainFooterbar" class="navbar navbar-default navbar-fixed-bottom">
+<div style="bottom:0;position:fixed;padding:0px" class="container">
+<nav id="mainFooterbar" class="navbar navbar-default" style="margin:0px ;width:100%;box-shadow:1px 1px 4px 1px rgba(0,0,0,.14)"> 
     <div class="navbar-header">
       <a class="navbar-brand" href="#">진행중인 MEMBER &nbsp;&nbsp;&nbsp;</a>
     </div>
@@ -32,4 +33,5 @@
 		
 	</div>
 </nav>
+</div>
 <!-- FOOTER END -->

@@ -177,7 +177,7 @@ public class ProjectDAO {
 			String sql = "update project set projectname=? where projectnum = ?";
 			
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setString(1, project.getProjectName());
 			pstmt.setInt(2, project.getProjectNum());
 			
@@ -798,5 +798,40 @@ public class ProjectDAO {
 		}
 		
 		return list;
+	}
+	
+	/**
+	 날      짜 : 2018. 4. 18.
+	 기      능 : 프로젝트 마지막 수정날짜 업데이트
+	 작성자명 : 아 윤 근
+	 */
+	public int lastModDateUpdate(int projectNum, String userId) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row = 0;
+		try {
+			conn = ds.getConnection();
+			
+			//projectLastModDate Update
+			String sql = "update team set projectlastmoddate=sysdate where projectnum=? and userid=?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, projectNum);
+			pstmt.setString(2, userId);
+			
+			row = pstmt.executeUpdate();
+			
+		}catch (SQLException e) {
+			try {conn.rollback();} catch (SQLException e1) {e1.printStackTrace();}
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			}catch (Exception e) {
+				
+			}
+		}
+		return  row;
+
 	}
 }
