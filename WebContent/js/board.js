@@ -86,7 +86,7 @@ function addCardView(e, listnum, boardNum) {
 	var div = "<div class='card' id='addcard'>" +
 			"<input class='inputtext' type='text' placeholder='card title' name='title' " +
 			"onkeypress='if(event.keyCode==13) {addCard($(this).parent().children(\"a\"), "+ listnum +");}' " +
-			"onfocusout='focusOutBoardDelay("+boardNum+")'>" +
+			"onfocusout='focusOutBoardDelay("+boardNum+")' onkeyup='fnChkByte(this, 26)'>" +
 			"<a onclick='addCard(this, "+ listnum +")'>완료</a></div>";
 	$(e).before(div);
 	$('#addcard').children('input').focus();
@@ -133,7 +133,7 @@ function deleteCard(cardid, listNum) {
 //리스트생성 텍스트박스를 불러오기
 function addListView(obj, boardnum){
 	var div = "<div class='listbox'><input onkeypress='if(event.keyCode==13) {addList($(this).parent().children(\"a\"), "+ boardnum +");}' " +
-			"onfocusout='focusOutBoardDelay("+boardnum+")' " +
+			"onfocusout='focusOutBoardDelay("+boardnum+")' onkeyup='fnChkByte(this, 20)'" +
 			"class='inputtext' type='text' placeholder='list title' name='title'>" +
 			"<a onclick='addList(this,"+ boardnum +")'>완료</a></div>"
 	var parent = $(obj).parent().attr('id');

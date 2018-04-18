@@ -2,12 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<script>
-	function project(){
-		$('#mainScreen').hide()
-		$('#calendarArea').show()
-	}
-</script>
 <header>
 	<nav class="navbar z-index">
 		<div class="navbar-header">

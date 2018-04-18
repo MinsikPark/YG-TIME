@@ -10,7 +10,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/headerLogin.js"></script>
 <script src="js/headerJoin.js"></script>
-<title>Insert title here</title>
+<title>YG-TIME</title>
 <style type="text/css"> 
 body {
 	background-image: url(images/login-background.jpg);

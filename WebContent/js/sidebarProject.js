@@ -184,6 +184,7 @@ function projectNameModifyOk(obj, projectNum){
 				alert("프로젝트이름 변경 실패");
 			}else{
 				alert("프로젝트이름 변경 완료");
+				callprojectlist();
 				projectNameSelect(projectNum);
 			}
 		}

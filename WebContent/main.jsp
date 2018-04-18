@@ -34,7 +34,6 @@
 		<jsp:include page="include/addboard.jsp"></jsp:include>
 		<jsp:include page="include/carddetail.jsp"></jsp:include>
 		<jsp:include page="include/wifi.jsp"></jsp:include>
-		<jsp:include page="include/footer.jsp"></jsp:include>
 		<jsp:include page="include/register.jsp"></jsp:include>
 		<jsp:include page="include/chart.jsp"></jsp:include>
 		<jsp:include page="views/calendar.jsp"></jsp:include>
