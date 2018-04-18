@@ -10,13 +10,12 @@ function memberinvite() {
 				alert('없는 회원입니다')
 				return false;
 			}else{
-				alert('초대메시지가 전송 합니까?')
 				inviteIdCheck()
 			}
 		}
 	})
 }
-
+//초대아이디 체크하기
 function inviteIdCheck(){
 	var userId1 = $("#emailSearch").val();
 	var inviteUserId1 = $("#getsession").val(); // session ID로 바꿔라
@@ -29,8 +28,6 @@ function inviteIdCheck(){
 		url :"owner.project",
 		data : {userId : userId1},
 		success : function(datas) {
-			console.log('유자아이디가 있나여??')
-			console.log()
 			if(datas.trim() == 2){
 				alert('초대메시지가 발송 되었습니다')
 				$.ajax({
@@ -157,15 +154,14 @@ function autoComplete() {
 		 		datatype : "JSON",
 		 		success : function (data) {
 					var param = JSON.parse(data);
-
 					$('#emailSearch').autocomplete({
 						 source: param,
 						 appendTo: "#friend",
 						 minLength: 3
-						 
 					})
+					
 				}
-		 		
+	 	
 	 		})
 }
  
