@@ -5,7 +5,7 @@
 <script>
 	function project(){
 		$('#mainScreen').hide()
-		$('#calendar').show()
+		$('#calendarArea').show()
 	}
 </script>
 <header>

@@ -22,10 +22,12 @@ import kr.co.ygtime.service.project.ProjectListCountService;
 import kr.co.ygtime.service.project.ProjectListService;
 import kr.co.ygtime.service.project.ProjectMemberDeleteService;
 import kr.co.ygtime.service.project.ProjectMemberListService;
+import kr.co.ygtime.service.project.ProjectNameUpdateService;
 import kr.co.ygtime.service.project.ProjectOwnerKickOutService;
 import kr.co.ygtime.service.project.ProjectOwnerMendateService;
 import kr.co.ygtime.service.project.ProjectOwnerService;
 import kr.co.ygtime.service.project.ProjectProgressService;
+import kr.co.ygtime.service.project.ProjectSelectService;
 import kr.co.ygtime.service.project.ProjectStartCountService;
 
 @WebServlet("*.project")
@@ -61,6 +63,16 @@ public class ProjectController extends HttpServlet {
 				e.printStackTrace();
 			}
 
+        }else if(cmdURI.equals("/projectnameupdate.project")) {
+
+        	action = new ProjectNameUpdateService();
+        	try {
+        		forward = action.execute(request, response);
+        	}
+        	catch (Exception e) {
+        		e.getMessage();
+        	}
+
         }else if(cmdURI.equals("/delete.project")) {
 
         	action = new ProjectDeleteService();
@@ -80,6 +92,15 @@ public class ProjectController extends HttpServlet {
 				e.printStackTrace();
 			}
 
+        } else if(cmdURI.equals("/projectselect.project")) {
+        	action = new ProjectSelectService();
+        	try {
+				forward = action.execute(request, response);
+			} 
+        	catch (Exception e) {
+				e.printStackTrace();
+			}
+        
         } else if(cmdURI.equals("/completeproject.project")){
         	action = new ProjectCompleteService();
         	try {
