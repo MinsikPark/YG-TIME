@@ -113,7 +113,6 @@
 						</div>
 					</div>
 				</div>
-				<button class="btn btn-default">회원 탈퇴</button>
 			</div>
 		</div>
 	</div>

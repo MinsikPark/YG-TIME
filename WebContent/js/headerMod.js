@@ -60,7 +60,7 @@ function modsubmit() {
 function withDrawal() {
 	var userId = $('#getsession').val();
 	console.log("아이디다" + userId);
-	alert("탈퇴할꺼야?");
+	alert("정말로 탈퇴하시겠습니까?");
 	$.ajax({
 			url : "withdrawal.member",
 			data : {userId : userId},
@@ -68,6 +68,7 @@ function withDrawal() {
 			success: function (data) {
 				console.log("들어왔니??");
 				$("#modclose").trigger("click");
+				location.href='login.jsp';
 			}
 			})
 }
