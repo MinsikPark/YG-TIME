@@ -225,7 +225,7 @@ function boardclick(boardNum){
             	content += '<div class="listbox">'
             		+ '<div id="listnum'+elt.listNum+'"class="listtitle"><label onclick="listmodify(this, '+elt.listNum+',' + boardNum +')">'+ elt.listName +'</label>'
             		+ '<a class="glyphicon close" style="font-size: 17px;" onclick="listDel(this)">&#xe020;</a></div>'
-            		+ '<a class="cardcreate" onclick="addCardView(this, '+ elt.listNum +')">Add a card...</a>'
+            		+ '<a class="cardcreate" onclick="addCardView(this, '+ elt.listNum +', ' + boardNum +')">Add a card...</a>'
             	+ '</div>';
             });
             content +='<a class="listbox" onclick="addListView(this, '+ boardNum +')">Add a list...</a>'
