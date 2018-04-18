@@ -1,6 +1,5 @@
 package kr.co.ygtime.service.project;
 
-import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

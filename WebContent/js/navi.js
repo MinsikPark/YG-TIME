@@ -29,7 +29,6 @@ $(function(){
 	
 })
 function notHideAuto(e) {
-	console.log("321321321")
 	e.stopPropagation()
 	
 	
@@ -59,8 +58,6 @@ function sideShow(){
 
 //카드에 파일 업로드 하기 
 function changeValue(obj){
-	console.log("파일 업로드");
-	
 	var data = $("#cardfileupload").serialize();
 
 	if(obj.value != ""){
@@ -76,8 +73,6 @@ function changeValue(obj){
 			enctype:"multipart/form-data",
 			success: function(data){
 				if(data.trim()<=0){
-					console.log(">"+data+"<")
-					console.log(">"+data.trim()+"<")
 					alert("파일 업로드 실패");
 				}
 				callUploadList($("#hiddenCardnum").val());
@@ -88,12 +83,6 @@ function changeValue(obj){
 	$("#cardfileupload").submit();
 	obj.value =""; 
 	
-}
-
-
-
-function fileInputDel(obj){
-	obj.closest('div').remove()
 }
 
 //상세페이지 카드명 클릭시 텍스트 생성
@@ -158,7 +147,6 @@ function addCheckList(obj) {
 			datatype:"text",
 			data:{cardNum:cardnum, checkboxcontents:value},
 			success:function(data){
-				console.log(data.trim());
 				cardViewCheckList(cardnum);
 				addCancel();
 			}
@@ -280,7 +268,6 @@ function removeComment(obj){
 		datatype:"text",
 		data:{UserId:id, CardNum:cardnum, ReplyNum:replynum},
 		success:function(data){
-			console.log(data.trim());
 			if(data.trim() == '0'){
 				alert('댓글을 등록한 멤버가 아닙니다');
 			}else{
@@ -327,9 +314,7 @@ function replyModOk(obj, replyNum){
 		url:"ReplyUp.card",
 		datatype:"text",
 		data:{ReplyContents:value, CardNum:cardnum, ReplyNum:replyNum},
-		success:function(data){
-			alert('댓글을 수정했습니다.');
-		}
+		success:function(data){	}
 	});
 }
 
@@ -342,14 +327,7 @@ function updateDetail(obj, cardNum){
 		datatype:"text",
 		data:{cardNum:cardNum, cardContents:contentDetail},
 		success:function(data){
-			console.log("카드 업데이트 : " + data);
-			alert("카드완료");
-			if(data == 1) {
-				alert("카드 내용이 추가되었습니다.");
-				//$('#contentDetail').val("");
-			}else {
-				alert("오류가 발생하였습니다.");
-			}
+			if(data == 1) {	}else {alert("오류가 발생하였습니다.");}
 		}
 	});
 
@@ -362,7 +340,6 @@ function cardMemberAddList(obj){
 		datatype:"json",
 		success:function(data){
 			var json = JSON.parse(data);
-			console.log(json);
 			var htmldata = "";
 			$.each(json, function(index, elt){
 				htmldata += '<li><a onclick="cardMemberAdd(this)">'+ elt.userId +'</a></li>'; 
@@ -403,6 +380,16 @@ function cardMemberDel(obj){
 	});
 }
 
-function bokyeong(obj) {
-	console.log($(obj).css('left'))
+//해당 카드에 대한 다운로드 파일을 지운다
+function fileInputDel(obj, fileNum){
+	var cardnum = $('#hiddenCardnum').val();
+	
+	$.ajax({
+		url:"DownLoadDel.card",
+		datatype:"text",
+		data:{cardNum:cardnum, upLoadNum:fileNum},
+		success:function(data){
+			callUploadList(cardnum);
+		}
+	});
 }

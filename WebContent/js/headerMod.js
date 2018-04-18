@@ -10,7 +10,6 @@ $(function() {
 			datatype : "JSON",
 			data : datas,
 			success : function(data) {
-				console.log(data);
 				var json = JSON.parse(data);
 				$("#modemail").val(json.userId);
 				$("#modnickName").val(json.userNicname);
@@ -23,11 +22,8 @@ $(function() {
 
 //회원수정 비동기 유효성 함수
 function modsubmit() {
-	console.log("gdgdgdg")
 
 	var param = $("#modForm").serialize();
-	console.log(param)
-	console.log("ddddddd들어감");
 	if ($('#modpassword').val() == "") { //비밀번호 검사
 		alert('PWD를 입력해 주세요.');
 		$('#password').focus();
@@ -59,14 +55,12 @@ function modsubmit() {
 //
 function withDrawal() {
 	var userId = $('#getsession').val();
-	console.log("아이디다" + userId);
 	alert("정말로 탈퇴하시겠습니까?");
 	$.ajax({
 			url : "withdrawal.member",
 			data : {userId : userId},
 			datatype : "text",
 			success: function (data) {
-				console.log("들어왔니??");
 				$("#modclose").trigger("click");
 				location.href='login.jsp';
 			}
@@ -80,18 +74,13 @@ function modupload(){
 }
 
 function profileimgmodify() {
-	console.log("실행")
 	var data = $("#modprofile").serialize();
-	console.log(">"+data+"<");
 	 $("#modprofile").ajaxForm({
 		 url : "profileImgUpdate.member", 
 		 datatype: "json",
 		 type:"post",
 		 enctype: "multipart/form-data",
 		 beforeSubmit:function(data, frm, opt){
-			console.log("before data11 : " + data);				
-			console.log("before frm : " + frm);
-			console.log("befor opt: " + opt);
 		 },
 		 success : function(data) { 
 			if(data.trim()>0){

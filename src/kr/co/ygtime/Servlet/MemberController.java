@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.org.apache.xml.internal.security.utils.resolver.implementations.ResolverXPointer;
-
 import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.service.member.CompleteService;
@@ -22,7 +20,6 @@ import kr.co.ygtime.service.member.MsgDeleteSerivce;
 import kr.co.ygtime.service.member.ProfileImgService;
 import kr.co.ygtime.service.member.ProfileUpdateService;
 import kr.co.ygtime.service.member.WithdrawalService;
-import net.sf.json.JSONArray;
 import kr.co.ygtime.service.member.JoinService;
 import kr.co.ygtime.service.member.LoginService;
 import kr.co.ygtime.service.member.MemberInfoService;
@@ -179,9 +176,7 @@ public class MemberController extends HttpServlet {
             }
         }
         else if(cmdURI.equals("/withdrawal.member")) {
-        	System.out.println("111111111111111111111111111111");
             action = new WithdrawalService();
-            System.out.println("0000000000000000000000000000");
             request.getSession().invalidate();
             try {
             forward = action.execute(request, response);

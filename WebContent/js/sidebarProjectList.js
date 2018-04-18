@@ -136,7 +136,6 @@ function listChart(start, end) {
 
 //프로젝트 차트보여주기
 function projectChartView(){
-	console.log("들어왔니?123")
 	var userId = $("#getsession").val();
 	var start =null;
 	var end = null;

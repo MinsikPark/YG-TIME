@@ -1,7 +1,7 @@
 /* 
-    파일명: CheckDeleteService.java
+    파일명: DownLoadDelService.java
     설명: 
-    작성일: 2018. 4. 16.
+    작성일: 2018. 4. 18.
     작성자: 김 진 원
 */
 
@@ -14,18 +14,18 @@ import kr.co.ygtime.Action.Action;
 import kr.co.ygtime.Action.ActionForward;
 import kr.co.ygtime.DAO.CardDAO;
 
-public class CheckDeleteService implements Action{
+public class DownLoadDelService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
 		try {
-			int Cardnum = Integer.parseInt(request.getParameter("Cardnum"));
-			int Checknum = Integer.parseInt(request.getParameter("Checknum"));
+			int cardNum = Integer.parseInt(request.getParameter("cardNum"));
+			int upLoadNum = Integer.parseInt(request.getParameter("upLoadNum"));
 			
 			CardDAO dao = new CardDAO();
 			
-			int resultrow = dao.checkDelete(Checknum, Cardnum);
+			int resultrow = dao.upLoadDelete(upLoadNum, cardNum);
 			
 			forward = new ActionForward();
 			request.setAttribute("resultrow", resultrow);

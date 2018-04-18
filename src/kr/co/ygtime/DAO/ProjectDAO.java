@@ -152,7 +152,6 @@ public class ProjectDAO {
 				rs.close();
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
