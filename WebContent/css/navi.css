@@ -72,6 +72,7 @@
 	  float:left;
 	  height: 102px;
 	  width: 245px;
+	  word-wrap: break-word;
 	}
 	
 	.button::before,
