@@ -16,6 +16,7 @@ $(function() { // $(document).ready
 			center: '',
 			right:  'title'
 		},
+		aspectRatio:2,
 		themeSystem: "bootstrap3",
 		eventDragStop: function (event, jsEvent) { // Drag 후 삭제 기능
 		    var trashEl = $('#trashCan');
