@@ -30,18 +30,18 @@ public class ListinsertService implements Action {
 			 dao = new ListDAO();
 			 
 			 int  boardNum = Integer.parseInt(request.getParameter("boardNum"));
-			 String listname = request.getParameter("listname");
+			 String listName = request.getParameter("listName");
 			 int listSequential =  dao.maxListSequential(boardNum);
 			 
 			 listdto = new ListDTO();
 			 listdto.setBoardNum(boardNum);
-			 listdto.setListName(listname);
+			 listdto.setListName(listName);
 			 listdto.setListSequential(listSequential+1);
 			 
 			 dao.listInsert(listdto);
-			 int listnum = dao.listSelect(boardNum, listdto.getListSequential());
+			 int listNum = dao.listSelect(boardNum, listdto.getListSequential());
 			 
-			 request.setAttribute("resultrow", listnum);
+			 request.setAttribute("resultrow", listNum);
 
 			 forward = new ActionForward();
 			 forward.setPath("/ajaxpath/result_row.jsp");

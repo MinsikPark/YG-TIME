@@ -20,11 +20,11 @@ public class CardSelectService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		int CardNum = Integer.parseInt(request.getParameter("CardNum"));
+		int cardNum = Integer.parseInt(request.getParameter("cardNum"));
 		CardDAO dao = null;
 		try {
 			dao = new CardDAO();
-			CardDTO carddto = dao.cardSelect(CardNum);
+			CardDTO carddto = dao.cardSelect(cardNum);
 			
 			JSONObject json = JSONObject.fromObject(carddto);
 			request.setAttribute("json", json);

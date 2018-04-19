@@ -15,18 +15,18 @@ public class CardContentsUpdateService implements Action{
 		String cardContents = request.getParameter("cardContents");
 		int cardNum = Integer.parseInt(request.getParameter("cardNum"));
 		
-		CardDAO dao = null;
-		CardDTO dto = null;
+		CardDAO carddao = null;
+		CardDTO carddto = null;
 		
 		int resultrow = 0;
 		
 		try {
-			dao = new CardDAO();
-			dto = dao.cardSelect(cardNum);
+			carddao = new CardDAO();
+			carddto = carddao.cardSelect(cardNum);
 			
-			if(dto!=null) {
-				dto.setCardContents(cardContents);
-				resultrow= dao.cardUpdate(dto);
+			if(carddto!=null) {
+				carddto.setCardContents(cardContents);
+				resultrow= carddao.cardUpdate(carddto);
 			}
 			
 		}catch(Exception e) {

@@ -27,8 +27,8 @@ public class CardMemberAddListService implements Action{
 		List<TeamDTO> list = null;
 		try {
 		
-			ProjectDAO dao = new ProjectDAO();
-			list = dao.allTeamSelect(projectNum);
+			ProjectDAO projectdao = new ProjectDAO();
+			list = projectdao.allTeamSelect(projectNum);
 			JSONArray json = JSONArray.fromObject(list);
 			request.setAttribute("json", json);
 					

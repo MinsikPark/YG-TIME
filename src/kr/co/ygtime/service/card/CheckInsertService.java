@@ -27,13 +27,13 @@ public class CheckInsertService implements Action{
 			
 			CheckBoxDTO checkdto = new CheckBoxDTO();
 			
-			int cardnum = Integer.parseInt(request.getParameter("cardNum"));
-			String checkboxcontents = request.getParameter("checkboxcontents");
+			int cardNum = Integer.parseInt(request.getParameter("cardNum"));
+			String checkBoxContents = request.getParameter("checkBoxContents");
 			
-			int checkNum = carddao.maxCheckNum(cardnum);
+			int checkNum = carddao.maxCheckNum(cardNum);
 			checkdto.setCheckNum(checkNum+1);
-			checkdto.setCardNum(cardnum);
-			checkdto.setCheckBoxContents(checkboxcontents);
+			checkdto.setCardNum(cardNum);
+			checkdto.setCheckBoxContents(checkBoxContents);
 			
 			int row = carddao.checkInsert(checkdto);
 			

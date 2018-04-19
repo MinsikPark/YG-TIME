@@ -30,7 +30,7 @@ $(function(){
 
 // 초대승락
 function msgaccept(me, projectNum){
-	var param = {userid : $('#getsession').val(), projectnum : projectNum}
+	var param = {userId : $('#getsession').val(), projectNum : projectNum}
 	
 	$.ajax({
           url:"msgagree.member",
@@ -45,7 +45,7 @@ function msgaccept(me, projectNum){
 
 // 초대거절
 function msgreject(me, projectNum){
-	var param = {userid : $('#getsession').val(), projectnum : projectNum}
+	var param = {userId : $('#getsession').val(), projectNum : projectNum}
 	
 	$.ajax({
           url:"msgdel.member",

@@ -171,6 +171,7 @@ public class ProjectController extends HttpServlet {
         	action = new ProjectMemberDeleteService();
         	try {
 				forward = action.execute(request, response);
+				request.getSession().setAttribute("projectNum", null);
 			} 
         	catch (Exception e) {
 				e.printStackTrace();

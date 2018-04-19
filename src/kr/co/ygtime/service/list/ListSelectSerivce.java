@@ -23,15 +23,15 @@ public class ListSelectSerivce implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		ActionForward forward = null;
-		ListDAO dao =null;
+		ListDAO listdao =null;
 		ListDTO listdto = null;
 		
 		try {
-			 dao = new ListDAO();
+			listdao = new ListDAO();
 			 
-			 int  listnum = Integer.parseInt(request.getParameter("listnum"));
+			 int  listNum = Integer.parseInt(request.getParameter("listNum"));
 			 
-			 listdto = dao.listSelect(listnum);
+			 listdto = listdao.listSelect(listNum);
 			 
 			 JSONObject json = JSONObject.fromObject(listdto);
 			 request.setAttribute("json", json);

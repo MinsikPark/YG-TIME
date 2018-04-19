@@ -53,7 +53,7 @@ function joinclear() {
 
 //비밀번호 일치여부
 function passwordfunction(){
-	if ($("#password").val().length > 30 || $("#password").val().length < 3){
+	if ($("#password").val().length > 30 || $("#password").val().length < 4){
 		$("#pwdcheck").css("color", "red");
 		$("#pwdcheck").html("* 비밀번호는 4글자 이상 30글자 이하");
 		$("#password").val('');

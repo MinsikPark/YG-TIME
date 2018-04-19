@@ -80,27 +80,27 @@ function autoWidth(){
 }
 
 //카드를 추가하는 텍스트박스를 생성한다
-function addCardView(e, listnum, boardNum) {
+function addCardView(e, listNum, boardNum) {
 	console.log("카드추가")
 	$(e).parent().find("#addcard").remove();
 	var div = "<div class='card' id='addcard'>" +
 			"<input class='inputtext' type='text' placeholder='card title' name='title' " +
-			"onkeypress='if(event.keyCode==13) {addCard($(this).parent().children(\"a\"), "+ listnum +","+boardNum+");}' " +
-			"onfocusout='focusOutCardDelay("+listnum+")' onkeyup='fnChkByte(this, 26)'>" +
-			"<a onclick='addCard(this, "+ listnum +", "+ boardNum +")'>완료</a></div>";
+			"onkeypress='if(event.keyCode==13) {addCard($(this).parent().children(\"a\"), "+ listNum +","+boardNum+");}' " +
+			"onfocusout='focusOutCardDelay("+listNum+")' onkeyup='fnChkByte(this, 26)'>" +
+			"<a onclick='addCard(this, "+ listNum +", "+ boardNum +")'>완료</a></div>";
 	$(e).before(div);
 	$('#addcard').children('input').focus();
 }
 
 //카드 등록 성공
-function addCard(obj, listnum, boardNum){
+function addCard(obj, listNum, boardNum){
 	var parent = $(obj).closest('div')
 	var value = parent[0].firstChild.value //cardname
 	if(value.trim() != ""){
 		$.ajax({
 			url:"Cardinsert.card",
 			datatype:"JSON",
-			data:{listNum:listnum, cardName:value},
+			data:{listNum:listNum, cardName:value},
 			success:function(data){
 				$(parent).remove();
 				$('#contentDetail').empty();
@@ -110,26 +110,26 @@ function addCard(obj, listnum, boardNum){
 }
 
 //카드삭제
-function deleteCard(cardid, listNum) {
+function deleteCard(cardId, listNum) {
 	event.stopPropagation();//상위 이벤트 중지
-	var cardNum = cardid;
+	var cardNum = cardId;
 	$.ajax({
 			url : "carddelete.card",
 			datatype:"text",
 			data:{cardNum:cardNum},
 			success:function(data){
-				$('#div'+cardid).remove();
+				$('#div'+cardId).remove();
 				callCardList(listNum);
 			}
 			})
 }
 
 //리스트생성 텍스트박스를 불러오기
-function addListView(obj, boardnum){
-	var div = "<div class='listbox'><input onkeypress='if(event.keyCode==13) {addList($(this).parent().children(\"a\"), "+ boardnum +");}' " +
-			"onfocusout='focusOutBoardDelay("+boardnum+")' onkeyup='fnChkByte(this, 20)'" +
+function addListView(obj, boardNum){
+	var div = "<div class='listbox'><input onkeypress='if(event.keyCode==13) {addList($(this).parent().children(\"a\"), "+ boardNum +");}' " +
+			"onfocusout='focusOutBoardDelay("+boardNum+")' onkeyup='fnChkByte(this, 20)'" +
 			"class='inputtext' type='text' placeholder='list title' name='title'>" +
-			"<a onclick='addList(this,"+ boardnum +")'>완료</a></div>"
+			"<a onclick='addList(this,"+ boardNum +")'>완료</a></div>"
 	var parent = $(obj).parent().attr('id');
 	$(obj).before(div)
 	$('#content-md').children().children('input').focus();
@@ -137,17 +137,17 @@ function addListView(obj, boardnum){
 }
 
 //리스트 생성
-function addList(obj, boardnum){
+function addList(obj, boardNum){
 	var parent = $(obj).closest('.listbox')
 	var value = parent[0].firstChild.value
 	if(value.trim() != ""){
 		$.ajax({
 			url:"listinsert.list",
             datatype:"JSON",
-            data:{boardNum:boardnum, listname:value},
+            data:{boardNum:boardNum, listName:value},
             success:function(data){
             	parent.empty()
-            	boardclick(boardnum);
+            	boardclick(boardNum);
             	sortable();
             }
 		});
@@ -172,12 +172,12 @@ function listDel(obj){
 }
 
 //(텍스트 클릭하면 텍스트박스 불러오기)리스트 수정
-function listmodify(obj, listNum, boardnum){
+function listmodify(obj, listNum, boardNum){
 	var html = $(obj).html();
-	var text = "<input onkeypress='if(event.keyCode==13) {listmodifyOk($(this).parent().children(\"a\"), "+ listNum +", "+ boardnum +");}' " +
-			"onfocusout='focusOutBoardDelay("+boardnum+")' class='inputtext' " +
+	var text = "<input onkeypress='if(event.keyCode==13) {listmodifyOk($(this).parent().children(\"a\"), "+ listNum +", "+ boardNum +");}' " +
+			"onfocusout='focusOutBoardDelay("+boardNum+")' class='inputtext' " +
 			"type='text' placeholder=" + html + " name='title' onkeyup='fnChkByte(this,20)' >" +
-			"<a onclick='listmodifyOk(this,"+ listNum + "," + boardnum +")'>완료</a>";;
+			"<a onclick='listmodifyOk(this,"+ listNum + "," + boardNum +")'>완료</a>";;
 	
 	$(obj).removeAttr("onclick");
 	$(obj).html("");
@@ -187,7 +187,7 @@ function listmodify(obj, listNum, boardnum){
 }
 
 //리스트 수정 확인
-function listmodifyOk(obj, listNum, boardnum){
+function listmodifyOk(obj, listNum, boardNum){
 	var name = $(obj).parent().children("input").val();
 	if(name.trim() == ""){
 		alert("빈 문자열로 수정이 되지 않습니다");
@@ -195,9 +195,9 @@ function listmodifyOk(obj, listNum, boardnum){
 		$.ajax({
 			url:"listupdate.list",
 	        datatype:"text",
-	        data:{listnum:listNum, listname:name},
+	        data:{listNum:listNum, listName:name},
 	        success:function(data){
-	        	boardclick(boardnum);
+	        	boardclick(boardNum);
 	        }
 		});
 	}
@@ -230,10 +230,10 @@ function boardDetailEdit(obj, boardNum){
 }
 
 //보드제목 수정 확인
-function boardmodifyOk(obj, boardnum){
+function boardmodifyOk(obj, boardNum){
 	var title = $(obj).parent().children("input").val();
 	var data = {
-			boardNum:boardnum,
+			boardNum:boardNum,
 			boardTitle: title
 	};
 	$.ajax({
@@ -244,18 +244,18 @@ function boardmodifyOk(obj, boardnum){
 			if(data.trim() <= 0){
 				alert("제목 변경 실패");
 			}else{
-				boardclick(boardnum);
+				boardclick(boardNum);
 			}
 		}
 	});
 }
 
 //보드 디테일 수정 확인
-function detailmodifyOk(obj, boardnum){
-	var detailtitle = $(obj).parent().children("input").val();
+function detailmodifyOk(obj, boardNum){
+	var detailTitle = $(obj).parent().children("input").val();
 	var data = {
-			boardNum:boardnum,
-			detail: detailtitle
+			boardNum:boardNum,
+			detail: detailTitle
 	};
 	$.ajax({
 		url:"boarddetailmodify.board",
@@ -265,7 +265,7 @@ function detailmodifyOk(obj, boardnum){
 			if(data.trim() <= 0){
 				alert("제목 변경 실패");
 			}else{
-				boardclick(boardnum);
+				boardclick(boardNum);
 			}
 		}
 	});
@@ -274,33 +274,33 @@ function detailmodifyOk(obj, boardnum){
 //보드 디테일 모달창 띄우기
 function cardDetail(obj){
 	//$(obj).attr('id') == 카드넘버
-	var cardnum = $(obj).attr('id');
-	$('#hiddenCardnum').attr("value", cardnum);
+	var cardNum = $(obj).attr('id');
+	$('#hiddenCardnum').attr("value", cardNum);
 	//view DB뿌려주기
-	cardViewDetail(cardnum);
+	cardViewDetail(cardNum);
 	
 	//onclick 변경 (카드넘버 가지고)
-	$('#detaiAddbtn').attr("onclick", "updateDetail(this,"+ cardnum +")");
+	$('#detaiAddbtn').attr("onclick", "updateDetail(this,"+ cardNum +")");
 }
 
 //카드 상세 페이지
-function cardViewDetail(cardnum){
+function cardViewDetail(cardNum){
 
 	//파일리스트 있으면 불러오기 
-	callUploadList(cardnum);
-	cardViewContents(cardnum);
-	cardViewCheckList(cardnum);
-	cardViewReplys(cardnum);
-	cardMemberListView(cardnum);
+	callUploadList(cardNum);
+	cardViewContents(cardNum);
+	cardViewCheckList(cardNum);
+	cardViewReplys(cardNum);
+	cardMemberListView(cardNum);
 }
 
 //카드제목 보여주기 & 카드내용이 있었다면 보여주기
-function cardViewContents(cardnum){
+function cardViewContents(cardNum){
 	
 	$.ajax({
 		url:"Cardselect.card",
 		datatype:"json",
-		data:{CardNum:cardnum},
+		data:{cardNum:cardNum},
 		success:function(data){
 			var json = JSON.parse(data);
 			//json : cardContents, cardName, cardNum, cardSequential, deleteCheck, listNum
@@ -312,11 +312,11 @@ function cardViewContents(cardnum){
 }
 
 //카드체크리스트 있다면 보여주기
-function cardViewCheckList(cardnum){
+function cardViewCheckList(cardNum){
 	$.ajax({
 		url:"Checklist.card",
 		datatype:"json",
-		data:{CardNum:cardnum},
+		data:{cardNum:cardNum},
 		success:function(data){
 			var json = JSON.parse(data);
 			//json : cardNum, checkBoxContents, checkNum, checked
@@ -336,11 +336,11 @@ function cardViewCheckList(cardnum){
 
 
 //카드댓글이 있다면 보여주기
-function cardViewReplys(cardnum){
+function cardViewReplys(cardNum){
 	$.ajax({
 		url:"Replylist.card",
 		datatype:"json",
-		data:{CardNum:cardnum},
+		data:{cardNum:cardNum},
 		success:function(data){
 			var json = JSON.parse(data);
 			//json : cardNum, replyContents, replyNum, userId
@@ -404,11 +404,11 @@ function callUploadList(cardNum){
 }
 
 // 해당카드의 카드멤버 목록 불러오기
-function cardMemberListView(cardnum){
+function cardMemberListView(cardNum){
 	$.ajax({
 		url:"CardMemberList.card",
 		datatype:"json",
-		data:{cardNum:cardnum},
+		data:{cardNum:cardNum},
 		success:function(data){
 			var json = JSON.parse(data);
 			//json : userId, userNicname, userProfile, userPwd

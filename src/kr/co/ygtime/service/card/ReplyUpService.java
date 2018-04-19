@@ -21,16 +21,16 @@ public class ReplyUpService implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
 		try {
-			String ReplyContents= request.getParameter("ReplyContents");
-			int CardNum = Integer.parseInt(request.getParameter("CardNum"));
-			int ReplyNum = Integer.parseInt(request.getParameter("ReplyNum"));
+			String replyContents= request.getParameter("replyContents");
+			int cardNum = Integer.parseInt(request.getParameter("cardNum"));
+			int replyNum = Integer.parseInt(request.getParameter("replyNum"));
 			
 			CardDAO dao = new CardDAO();
 			ReplyDTO replydto = new ReplyDTO();
 			
-			replydto.setReplyContents(ReplyContents);
-			replydto.setCardNum(CardNum);
-			replydto.setReplyNum(ReplyNum);
+			replydto.setReplyContents(replyContents);
+			replydto.setCardNum(cardNum);
+			replydto.setReplyNum(replyNum);
 			
 			int resultrow = dao.replyUpdate(replydto);
 			

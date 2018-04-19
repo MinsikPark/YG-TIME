@@ -27,8 +27,8 @@ public class ProjectListService implements Action {
 		
 		try {
 			
-			ProjectDAO dao = new ProjectDAO();
-			list = dao.allProjectSelect(userId);
+			ProjectDAO projectdao = new ProjectDAO();
+			list = projectdao.allProjectSelect(userId);
 			
 			JSONArray json = JSONArray.fromObject(list);
 			

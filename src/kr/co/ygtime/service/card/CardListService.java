@@ -27,9 +27,9 @@ public class CardListService implements Action{
 		
 		try {
 			CardDAO carddao = new CardDAO();
-			int listnum = Integer.parseInt(request.getParameter("listnum"));
+			int listNum = Integer.parseInt(request.getParameter("listNum"));
 			
-			cardlist = carddao.allCardSelect(listnum);
+			cardlist = carddao.allCardSelect(listNum);
 			JSONArray json = JSONArray.fromObject(cardlist);
 			
 			request.setAttribute("json", json);

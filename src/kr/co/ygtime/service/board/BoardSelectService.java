@@ -20,11 +20,11 @@ public class BoardSelectService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		int BoardNum = Integer.parseInt(request.getParameter("BoardNum"));
+		int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 		BoardDAO dao = null;
 		try {
 			dao = new BoardDAO();
-			BoardDTO boarddto = dao.boardSelect(BoardNum);
+			BoardDTO boarddto = dao.boardSelect(boardNum);
 			
 			JSONObject json = JSONObject.fromObject(boarddto);
 			request.setAttribute("json", json);

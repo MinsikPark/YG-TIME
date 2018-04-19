@@ -18,15 +18,15 @@ public class ReplyDelService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		String UserId = request.getParameter("UserId");
-		int CardNum = Integer.parseInt(request.getParameter("CardNum"));
-		int ReplyNum = Integer.parseInt(request.getParameter("ReplyNum"));
+		String userId = request.getParameter("userId");
+		int cardNum = Integer.parseInt(request.getParameter("cardNum"));
+		int replyNum = Integer.parseInt(request.getParameter("replyNum"));
 		
 		CardDAO carddao = null;
 		int resultrow = 0;
 		try {
 			carddao = new CardDAO();
-			resultrow = carddao.replyDelete(UserId, ReplyNum, CardNum);
+			resultrow = carddao.replyDelete(userId, replyNum, cardNum);
 			
 			request.setAttribute("resultrow", resultrow);
 			

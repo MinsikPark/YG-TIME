@@ -22,20 +22,20 @@ public class ListUpdateService implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		ActionForward forward = null;
-		ListDAO dao =null;
+		ListDAO listdao =null;
 		ListDTO listdto = null;
 		
 		try {
-			 dao = new ListDAO();
+			listdao = new ListDAO();
 			 
-			 int  listNum = Integer.parseInt(request.getParameter("listnum"));
-			 String listname = request.getParameter("listname");
+			 int  listNum = Integer.parseInt(request.getParameter("listNum"));
+			 String listname = request.getParameter("listName");
 			 
 			 listdto = new ListDTO();
 			 listdto.setListNum(listNum);
 			 listdto.setListName(listname);
 			 
-			 int row = dao.listUpdate(listdto);
+			 int row = listdao.listUpdate(listdto);
 			 
 			 if(row > 0) {
 				 request.setAttribute("resultrow", row);

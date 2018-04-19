@@ -30,12 +30,12 @@ public class MsgDeleteSerivce implements Action {
 		
 		try {
 			//파라미터로 아이디와 초대받은 프로젝튼 넘버를 가져온다
-			String userid = request.getParameter("userid");
-			int projectnum = Integer.parseInt(request.getParameter("projectnum"));
+			String userId = request.getParameter("userId");
+			int projectNum = Integer.parseInt(request.getParameter("projectNum"));
 			MemberDAO memberdao = new MemberDAO();
 			
 			//2. 초대메세지 삭제
-			int row = memberdao.inviteMsgDelete(userid, projectnum);
+			int row = memberdao.inviteMsgDelete(userId, projectNum);
 			forward = new ActionForward();
 			if(row > 0) { 
 				//삭제성공 -> 메세지 List보기(json)

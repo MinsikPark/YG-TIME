@@ -318,7 +318,7 @@ public class CardDAO {
 	 기      능 : 해당 되는 카드넘버에 최대 체크넘버를 가져온다 (카드넘버당 체크박스개수)
 	 작성자명 : 김 진 원
 	*/
-	public int maxCheckNum(int cardnum) {
+	public int maxCheckNum(int cardNum) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -329,7 +329,7 @@ public class CardDAO {
 				String sql ="select nvl(max(checknum), 0) as checkmax from CHECKBOX where cardnum=?";
 				
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, cardnum);
+				pstmt.setInt(1, cardNum);
 				
 				rs = pstmt.executeQuery();
 				
@@ -577,7 +577,7 @@ public class CardDAO {
 	 기      능 : 해당 되는 카드넘버에 최대 파일넘버를 가져온다 (카드넘버당 파일개수)
 	 작성자명 : 김 진 원
 	*/
-	public int maxFileNum(int cardnum) {
+	public int maxFileNum(int cardNum) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -588,7 +588,7 @@ public class CardDAO {
 				String sql ="select max(filenum) as filemax from UPLOAD where cardnum=?";
 				
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, cardnum);
+				pstmt.setInt(1, cardNum);
 				
 				rs = pstmt.executeQuery();
 				
@@ -798,7 +798,7 @@ public class CardDAO {
 	 기      능 : 해당 되는 카드넘버에 최대 댓글넘버를 가져온다 (카드넘버당 댓글개수)
 	 작성자명 : 김 진 원
 	*/
-	public int maxReplyNum(int cardnum) {
+	public int maxReplyNum(int cardNum) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -809,7 +809,7 @@ public class CardDAO {
 				String sql ="select nvl(max(replynum), 0) as replymax from REPLY where cardnum=?";
 				
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, cardnum);
+				pstmt.setInt(1, cardNum);
 				
 				rs = pstmt.executeQuery();
 				
@@ -965,7 +965,7 @@ public class CardDAO {
 	 기      능 : 댓글 삭제(정말로 삭제)
 	 작성자명 : 김 진 원
 	*/
-	public int replyDelete(String userid, int replyNum, int cardNum) {
+	public int replyDelete(String userId, int replyNum, int cardNum) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -991,7 +991,7 @@ public class CardDAO {
 				
 				if(rs.next()) { 
 					//아이디가 일치하는지 확인
-					if(userid.equals(rs.getString("userid"))) {
+					if(userId.equals(rs.getString("userid"))) {
 						pstmt.close();
 						//실제 삭제
 						pstmt = conn.prepareStatement(del_reply_sql);

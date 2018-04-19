@@ -27,9 +27,9 @@ public class CheckListService implements Action{
 		
 		try {
 			CardDAO carddao = new CardDAO();
-			int CardNum = Integer.parseInt(request.getParameter("CardNum"));
+			int cardNum = Integer.parseInt(request.getParameter("cardNum"));
 			
-			checklist = carddao.allCheckSelect(CardNum);
+			checklist = carddao.allCheckSelect(cardNum);
 			JSONArray json = JSONArray.fromObject(checklist);
 			
 			request.setAttribute("json", json);

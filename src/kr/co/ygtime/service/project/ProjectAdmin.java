@@ -20,8 +20,8 @@ public class ProjectAdmin implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
-			int projectNum = Integer.parseInt(request.getParameter("projectnum"));
-			String userId = request.getParameter("userid");
+			int projectNum = Integer.parseInt(request.getParameter("projectNum"));
+			String userId = request.getParameter("userId");
 			
 			ProjectDAO dao = new ProjectDAO();
 			int owner = dao.ownerSelect(projectNum, userId);

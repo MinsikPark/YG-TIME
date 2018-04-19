@@ -15,19 +15,19 @@ public class ProjectNameUpdateService implements Action{
 		String projectName = request.getParameter("projectName");
 		int projectNum = Integer.parseInt(request.getParameter("projectNum"));
 		
-		ProjectDAO dao = null;
-		ProjectDTO dto = null;
+		ProjectDAO projectdao = null;
+		ProjectDTO projectdto = null;
 		
 		int resultrow = 0;
 		
 		try {
-			dao = new ProjectDAO();
-			dto = dao.projectSelect(projectNum);
+			projectdao = new ProjectDAO();
+			projectdto = projectdao.projectSelect(projectNum);
 			
-			if(dto!=null) {
-				dto.setProjectName(projectName);
+			if(projectdto!=null) {
+				projectdto.setProjectName(projectName);
 				
-				resultrow= dao.projectUpdate(dto);
+				resultrow= projectdao.projectUpdate(projectdto);
 			}
 			
 		}catch(Exception e) {

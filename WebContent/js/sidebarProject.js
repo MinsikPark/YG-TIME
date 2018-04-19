@@ -242,7 +242,7 @@ function nameinput() {
 //프로젝트 생성 관련 비동기 함수
 function addproajax(value) {
 	var data = {
-		newprojectname : value
+		newProjectName : value
 	};
 	$.ajax({
 		url : "addproject.project",

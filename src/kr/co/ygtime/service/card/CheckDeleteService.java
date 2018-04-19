@@ -20,12 +20,12 @@ public class CheckDeleteService implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
 		try {
-			int Cardnum = Integer.parseInt(request.getParameter("Cardnum"));
-			int Checknum = Integer.parseInt(request.getParameter("Checknum"));
+			int cardNum = Integer.parseInt(request.getParameter("cardNum"));
+			int checkNum = Integer.parseInt(request.getParameter("checkNum"));
 			
 			CardDAO dao = new CardDAO();
 			
-			int resultrow = dao.checkDelete(Checknum, Cardnum);
+			int resultrow = dao.checkDelete(checkNum, cardNum);
 			
 			forward = new ActionForward();
 			request.setAttribute("resultrow", resultrow);

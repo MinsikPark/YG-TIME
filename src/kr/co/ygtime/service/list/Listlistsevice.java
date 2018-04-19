@@ -22,12 +22,12 @@ public class Listlistsevice implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		int boardnum = Integer.parseInt(request.getParameter("boardnum"));
+		int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 		List<ListDTO> list = null;
 		
 		try {
 			ListDAO listdao = new ListDAO();
-			list = listdao.allListSelect(boardnum);
+			list = listdao.allListSelect(boardNum);
 			
 			JSONArray json = JSONArray.fromObject(list);
 			

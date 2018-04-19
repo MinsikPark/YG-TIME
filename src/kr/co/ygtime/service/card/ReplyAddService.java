@@ -27,17 +27,17 @@ public class ReplyAddService implements Action{
 			
 			ReplyDTO replydto = new ReplyDTO(); 
 			
-			String UserId = request.getParameter("UserId");
-			int CardNum = Integer.parseInt(request.getParameter("CardNum"));
-			String ReplyContents = request.getParameter("ReplyContents");
+			String userId = request.getParameter("userId");
+			int cardNum = Integer.parseInt(request.getParameter("cardNum"));
+			String replyContents = request.getParameter("replyContents");
 			
-			int ReplyNum = carddao.maxReplyNum(CardNum);
+			int replyNum = carddao.maxReplyNum(cardNum);
 			
 			
-			replydto.setUserId(UserId);
-			replydto.setCardNum(CardNum);
-			replydto.setReplyContents(ReplyContents);
-			replydto.setReplyNum(ReplyNum+1);
+			replydto.setUserId(userId);
+			replydto.setCardNum(cardNum);
+			replydto.setReplyContents(replyContents);
+			replydto.setReplyNum(replyNum+1);
 			
 			int row = carddao.replyInsert(replydto);
 			

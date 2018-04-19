@@ -87,10 +87,10 @@ function changeValue(obj){
 
 //상세페이지 카드명 클릭시 텍스트 생성
 function cardNameMod(){
-	var cardnum = $('#hiddenCardnum').val();
+	var cardNum = $('#hiddenCardnum').val();
 	var htmlObj = $('#modalHeader').html();
 	
-	var div = '<div onfocusout="focusoutdelay('+ cardnum +')">'
+	var div = '<div onfocusout="focusoutdelay('+ cardNum +')">'
 		+ '<input type="text" class="form-control inputtextbox" placeholder="' + htmlObj + '" onkeyup="fnChkByte(this, 26)"'
 		+ 'onkeypress="if(event.keyCode==13) {cardNameModOk();}" >';
 
@@ -100,28 +100,26 @@ function cardNameMod(){
 
 //상세페이지 카드명 수정 완료
 function cardNameModOk(){
-	var cardnum = $('#hiddenCardnum').val();
+	var cardNum = $('#hiddenCardnum').val();
 	var value = $('#modalHeader').children('div').children('input').val();
 	if(value.trim() != ""){
 		$.ajax({
 			url:"CardNameUpdate.card",
 			datatype:"text",
-			data:{cardNum:cardnum, cardName:value.trim()},
+			data:{cardNum:cardNum, cardName:value.trim()},
 			success:function(data){
-				var boardnum = $('#hiddenBoardnum').val();
-				boardclick(boardnum);
-				cardViewContents(cardnum);
+				var boardNum = $('#hiddenBoardnum').val();
+				boardclick(boardNum);
+				cardViewContents(cardNum);
 			}
 		});
 	}else{
-		cardViewContents(cardnum);
+		cardViewContents(cardNum);
 	}
 }
 
 //Check List 버튼을 클릭시
 function addCheckListForm(){
-	var cardnum = $('#hiddenCardnum').val();
-	
 	var div = '<div id="addCheckListdiv"><input type="text" class="form-control inputtextbox" onkeyup="fnChkByte(this, 50)" onkeypress="if(event.keyCode==13) {addCheckList($(this).parent().children(\'button\'));}">'
 		div += '<button type="button" class="close glyphicon" onclick="addCheckList(this)">&#xe013;</button></div>'
 	
@@ -137,16 +135,16 @@ function addCancel(){
 
 //체크리스트를 추가 했을 때
 function addCheckList(obj) {
-	var cardnum = $('#hiddenCardnum').val();
+	var cardNum = $('#hiddenCardnum').val();
 	var value = $(obj).closest('div')[0].children[0].value
 	
 	if(value.trim() != ""){
 		$.ajax({
 			url:"Checkinsert.card",
 			datatype:"text",
-			data:{cardNum:cardnum, checkboxcontents:value},
+			data:{cardNum:cardNum, checkBoxContents:value},
 			success:function(data){
-				cardViewCheckList(cardnum);
+				cardViewCheckList(cardNum);
 				addCancel();
 			}
 		});
@@ -154,7 +152,7 @@ function addCheckList(obj) {
 }
 
 //체크를 클릭했을 때 바로 업데이트 하기
-function checkClick(obj, checknum){
+function checkClick(obj, checkNum){
 	var checked = 0;
 	var content = $(obj).parent().children('label').html();
 	
@@ -164,61 +162,60 @@ function checkClick(obj, checknum){
         }else{
         	checked = 0;
         }
-        checkUpdate(checked, content, checknum);
+        checkUpdate(checked, content, checkNum);
     });
 }
 
 //체크박스 업데이트
-function checkUpdate(checked, content, checknum){
-	var cardnum = $('#hiddenCardnum').val();
+function checkUpdate(checked, content, checkNum){
+	var cardNum = $('#hiddenCardnum').val();
 	$.ajax({
 		url:"Checkupdate.card",
 		datatype:"text",
-		data:{Checked:checked, Checkboxcontents:content, Cardnum:cardnum, Checknum:checknum},
+		data:{checked:checked, checkBoxContents:content, cardNum:cardNum, checkNum:checkNum},
 		success:function(data){
-			//성공 아무것도 없어도 됨.
-			cardViewCheckList(cardnum);
+			cardViewCheckList(cardNum);
 		}
 	});
 }
 
 //체크박스를 삭제한다
-function removeCheckList(obj, checknum){
-	var cardnum = $('#hiddenCardnum').val();
+function removeCheckList(obj, checkNum){
+	var cardNum = $('#hiddenCardnum').val();
 	$.ajax({
 		url:"Checkdelete.card",
 		datatype:"text",
-		data:{Cardnum:cardnum, Checknum:checknum},
+		data:{cardNum:cardNum, checkNum:checkNum},
 		success:function(data){
-			cardViewCheckList(cardnum);
+			cardViewCheckList(cardNum);
 		}
 	});
 }
 
 //체크박스를 텍스트를 생성하다
-function checkBoxMod(obj, checknum){
-	var cardnum = $('#hiddenCardnum').val();
+function checkBoxMod(obj, checkNum){
+	var cardNum = $('#hiddenCardnum').val();
 	var p = $(obj).closest('p');
 	var text = p.children('label').html();
 	
-	var div = '<div onfocusout="focusoutdelay('+ cardnum +')">'
+	var div = '<div onfocusout="focusoutdelay('+ cardNum +')">'
 		+ '<input type="text" class="form-control inputtextbox" onkeyup="fnChkByte(this, 50)">'
-		+ '<button type="button" class="close glyphicon" onclick="checkBoxModOk(this, '+checknum+')">&#xe013;</button></div>';
+		+ '<button type="button" class="close glyphicon" onclick="checkBoxModOk(this, '+checkNum+')">&#xe013;</button></div>';
 	p.empty();
 	p.html(div);
 	p.children('div').children('input').focus();
 }
 
 //체크박스 내용 수정
-function checkBoxModOk(obj, checknum){
+function checkBoxModOk(obj, checkNum){
 	var content = $(obj).parent().children('input').val();
-	checkUpdate(0, content, checknum);
+	checkUpdate(0, content, checkNum);
 }
 
 //포커스 아웃 딜레이(카드)
-function focusoutdelay(cardnum){
+function focusoutdelay(cardNum){
 	setTimeout(function() {
-		cardViewDetail(cardnum);
+		cardViewDetail(cardNum);
 	}, 300);
 }
 
@@ -240,16 +237,16 @@ function focusOutCardDelay(listNum){
 function addComment(obj){
 	//userid, cardnum, replycontents
 	var id = $('#getsession').val();
-	var cardnum = $('#hiddenCardnum').val();
+	var cardNum = $('#hiddenCardnum').val();
 	var value = $(obj).closest('div')[0].children[1].value
 	
 	if(value.trim() != ""){
 		$.ajax({
 			url:"ReplyAdd.card",
 			datatype:"text",
-			data:{UserId:id, CardNum:cardnum, ReplyContents:value},
+			data:{userId:id, cardNum:cardNum, replyContents:value},
 			success:function(data){
-				cardViewReplys(cardnum);
+				cardViewReplys(cardNum);
 				$(obj).parent().children('input').val("");
 			}
 		});
@@ -259,19 +256,19 @@ function addComment(obj){
 //자신이 입력한 댓글 삭제
 function removeComment(obj){
 	var id = $('#getsession').val();
-	var cardnum = $('#hiddenCardnum').val();
-	var replynum = $(obj).parent().attr("id").substr(8);
+	var cardNum = $('#hiddenCardnum').val();
+	var replyNum = $(obj).parent().attr("id").substr(8);
 	
 	$.ajax({
 		url:"ReplyDel.card",
 		datatype:"text",
-		data:{UserId:id, CardNum:cardnum, ReplyNum:replynum},
+		data:{userId:id, cardNum:cardNum, replyNum:replyNum},
 		success:function(data){
 			if(data.trim() == '0'){
 				alert('댓글을 등록한 멤버가 아닙니다');
 			}else{
 				alert('삭제가 완료 되었습니다.');
-				cardViewReplys(cardnum);
+				cardViewReplys(cardNum);
 			}
 		}
 	});
@@ -280,17 +277,17 @@ function removeComment(obj){
 //댓글을 수정하기전 작성한 인원이 맞는지 확인
 function replyMod(obj, replyNum){
 	var id = $('#getsession').val();
-	var cardnum = $('#hiddenCardnum').val();
+	var cardNum = $('#hiddenCardnum').val();
 	
 	$.ajax({
 		url:"ReplySel.card",
 		datatype:"json",
-		data:{CardNum:cardnum, ReplyNum:replyNum},
+		data:{cardNum:cardNum, replyNum:replyNum},
 		success:function(data){
 			var json = JSON.parse(data);
 			if(json.userId == id){
 				$(obj).removeAttr('readonly');
-				$(obj).attr('onfocusout', 'focusoutdelay('+ cardnum +')');
+				$(obj).attr('onfocusout', 'focusoutdelay('+ cardNum +')');
 				$(obj).parent().children('button').attr({
 					"class":"glyphicon close",
 					"onclick":"replyModOk(this, "+replyNum+")"
@@ -306,13 +303,13 @@ function replyMod(obj, replyNum){
 
 //댓글 수정완료
 function replyModOk(obj, replyNum){
-	var cardnum = $('#hiddenCardnum').val();
+	var cardNum = $('#hiddenCardnum').val();
 	var value = $(obj).parent().children('input').val();
 	
 	$.ajax({
 		url:"ReplyUp.card",
 		datatype:"text",
-		data:{ReplyContents:value, CardNum:cardnum, ReplyNum:replyNum},
+		data:{replyContents:value, cardNum:cardNum, replyNum:replyNum},
 		success:function(data){	}
 	});
 }
@@ -352,14 +349,14 @@ function cardMemberAddList(obj){
 //해당 카드에 카드멤버를 추가 시킨다
 function cardMemberAdd(obj){
 	var id = $(obj).html();
-	var cardnum = $('#hiddenCardnum').val();
+	var cardNum = $('#hiddenCardnum').val();
 	
 	$.ajax({
 		url:"CardMemeberAdd.card",
 		datatype:"text",
-		data:{cardNum:cardnum, userId:id},
+		data:{cardNum:cardNum, userId:id},
 		success:function(data){
-			cardMemberListView(cardnum);
+			cardMemberListView(cardNum);
 		}
 	});
 }
@@ -367,28 +364,28 @@ function cardMemberAdd(obj){
 //해당 카드에 카드멤버를 삭제 시킨다
 function cardMemberDel(obj){
 	var id = $(obj).children('input').val();
-	var cardnum = $('#hiddenCardnum').val();
+	var cardNum = $('#hiddenCardnum').val();
 	
 	$.ajax({
 		url:"CardMemeberDel.card",
 		datatype:"text",
-		data:{cardNum:cardnum, userId:id},
+		data:{cardNum:cardNum, userId:id},
 		success:function(data){
-			cardMemberListView(cardnum);
+			cardMemberListView(cardNum);
 		}
 	});
 }
 
 //해당 카드에 대한 다운로드 파일을 지운다
 function fileInputDel(obj, fileNum){
-	var cardnum = $('#hiddenCardnum').val();
+	var cardNum = $('#hiddenCardnum').val();
 	
 	$.ajax({
 		url:"DownLoadDel.card",
 		datatype:"text",
-		data:{cardNum:cardnum, upLoadNum:fileNum},
+		data:{cardNum:cardNum, upLoadNum:fileNum},
 		success:function(data){
-			callUploadList(cardnum);
+			callUploadList(cardNum);
 		}
 	});
 }

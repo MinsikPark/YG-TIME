@@ -23,14 +23,14 @@ public class ReplyListService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		List<ReplyDTO> replylist = null;
+		List<ReplyDTO> replyList = null;
 		
 		try {
 			CardDAO carddao = new CardDAO();
-			int CardNum = Integer.parseInt(request.getParameter("CardNum"));
+			int cardNum = Integer.parseInt(request.getParameter("cardNum"));
 			
-			replylist = carddao.allReplySelect(CardNum);
-			JSONArray json = JSONArray.fromObject(replylist);
+			replyList = carddao.allReplySelect(cardNum);
+			JSONArray json = JSONArray.fromObject(replyList);
 			
 			request.setAttribute("json", json);
 			

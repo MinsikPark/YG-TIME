@@ -237,7 +237,7 @@ function boardclick(boardNum){
 	$.ajax({
 		url:"Listlist.list",
         datatype:"JSON",
-        data:{boardnum:boardNum},
+        data:{boardNum:boardNum},
         success:function(data){
         	
             var json = JSON.parse(data);
@@ -249,7 +249,7 @@ function boardclick(boardNum){
             $.ajax({
         		url:"boardselect.board",
         		datatype:"json",
-        		data:{BoardNum:boardNum},
+        		data:{boardNum:boardNum},
         		success: function(data){
         			var boardjson = JSON.parse(data);
         			
@@ -290,7 +290,7 @@ function callCardList(listNum){
       $.ajax({
         url:"Cardlist.card",
         datatype:"JSON",
-        data:{listnum:listNum},
+        data:{listNum:listNum},
         success:function(carddata){
             var cardjson = JSON.parse(carddata);
             var cardcontent = "";

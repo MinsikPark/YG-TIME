@@ -22,7 +22,7 @@ function callprojectlist(){
 					$.ajax({
 						url:"projectadmin.project",
 						datatype:"text",
-						data: {projectnum:projectNum, userid:sessionId},
+						data: {projectNum:projectNum, userId:sessionId},
 						success:function(data){
 							var cp = '<div><button class="button btn-1" id="cp" onclick="projectView('+projectNum+', this)">'+ proejectName +'</button>';
 							var pg = '<div><button class="button btn-1" onclick="projectView('+projectNum+', this)" id="btn'+projectNum + '"> '+proejectName + '</button>';

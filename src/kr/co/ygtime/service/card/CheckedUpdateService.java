@@ -21,18 +21,18 @@ public class CheckedUpdateService implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
 		try {
-			int Checked = Integer.parseInt(request.getParameter("Checked"));
-			String Checkboxcontents= request.getParameter("Checkboxcontents");
-			int Cardnum = Integer.parseInt(request.getParameter("Cardnum"));
-			int Checknum = Integer.parseInt(request.getParameter("Checknum"));
+			int checked = Integer.parseInt(request.getParameter("checked"));
+			String checkBoxContents= request.getParameter("checkBoxContents");
+			int cardNum = Integer.parseInt(request.getParameter("cardNum"));
+			int checkNum = Integer.parseInt(request.getParameter("checkNum"));
 			
 			CardDAO dao = new CardDAO();
 			CheckBoxDTO checkdto = new CheckBoxDTO();
 			
-			checkdto.setChecked(Checked);
-			checkdto.setCheckBoxContents(Checkboxcontents);
-			checkdto.setCardNum(Cardnum);
-			checkdto.setCheckNum(Checknum);
+			checkdto.setChecked(checked);
+			checkdto.setCheckBoxContents(checkBoxContents);
+			checkdto.setCardNum(cardNum);
+			checkdto.setCheckNum(checkNum);
 			
 			int resultrow = dao.checkUpdate(checkdto);
 			

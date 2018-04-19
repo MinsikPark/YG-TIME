@@ -40,7 +40,7 @@ public class MemberDAO {
 	 기      능 : 아이디 중복 체크
 	 작성자명 : 전 나 영
 	 */
-	public String isIdcheck(String id) {
+	public String isIdcheck(String userId) {
 		String ischeckid= null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -49,7 +49,7 @@ public class MemberDAO {
 				conn = ds.getConnection();
 				String sql = "select userId from MEMBER where userId=?";
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, id);
+				pstmt.setString(1, userId);
 		
 				rs = pstmt.executeQuery();
 				
@@ -61,7 +61,7 @@ public class MemberDAO {
 					ischeckid = "true"; //아이디가 없을때 
 				}
 				
-				if(id.equals("")){
+				if(userId.equals("")){
 					ischeckid ="empty"; //id가 빈값일때 
 					
 				}
@@ -261,7 +261,7 @@ public class MemberDAO {
 	 기      능 : 초대메세지보내기
 	 작성자명 : 전 나 영
 	 */
-	public int inviteMsgInsert(InviteMsgDTO invitemsg) {
+	public int inviteMsgInsert(InviteMsgDTO inviteMsg) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -274,9 +274,9 @@ public class MemberDAO {
 			String sql = "INSERT INTO INVITEMSG(userId,projectNum,inviteUserId,msgDate) VALUES (?,?,?,sysdate)";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,invitemsg.getUserId());
-			pstmt.setInt(2,invitemsg.getProjectNum());
-			pstmt.setString(3,invitemsg.getInviteUserId());
+			pstmt.setString(1,inviteMsg.getUserId());
+			pstmt.setInt(2,inviteMsg.getProjectNum());
+			pstmt.setString(3,inviteMsg.getInviteUserId());
 			
 			row = pstmt.executeUpdate();
 			

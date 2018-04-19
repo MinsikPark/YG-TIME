@@ -20,12 +20,12 @@ public class ReplySelService implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		int CardNum = Integer.parseInt(request.getParameter("CardNum"));
-		int ReplyNum = Integer.parseInt(request.getParameter("ReplyNum"));
-		CardDAO dao = null;
+		int cardNum = Integer.parseInt(request.getParameter("cardNum"));
+		int replyNum = Integer.parseInt(request.getParameter("replyNum"));
+		CardDAO carddao = null;
 		try {
-			dao = new CardDAO();
-			ReplyDTO replydto = dao.upLoadInsert(ReplyNum, CardNum);
+			carddao = new CardDAO();
+			ReplyDTO replydto = carddao.upLoadInsert(replyNum, cardNum);
 			
 			JSONObject json = JSONObject.fromObject(replydto);
 			request.setAttribute("json", json);
