@@ -21,16 +21,16 @@ public class BoardDateUpdateService implements Action{
 		String boardStartDate= request.getParameter("boardStartDate");
 		String boardEndDate = request.getParameter("boardEndDate");
 		int boardNum = Integer.parseInt(request.getParameter("boardNum"));
-		BoardDAO dao = null;
-		BoardDTO dto = null;
+		BoardDAO boarddao = null;
+		BoardDTO boarddto = null;
 		int resultrow = 0;
 		try {
-			dao = new BoardDAO();
-			dto = dao.boardSelect(boardNum);
-			if(dto!=null) {
-				dto.setBoardStartDate(boardStartDate);
-				dto.setBoardEndDate(boardEndDate);
-				resultrow= dao.boardUpdate(dto);
+			boarddao = new BoardDAO();
+			boarddto = boarddao.boardSelect(boardNum);
+			if(boarddto!=null) {
+				boarddto.setBoardStartDate(boardStartDate);
+				boarddto.setBoardEndDate(boardEndDate);
+				resultrow= boarddao.boardUpdate(boarddto);
 				
 			}
 			

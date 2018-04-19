@@ -39,16 +39,16 @@ public class ProfileUpdateService implements Action {
 	                    , filesize
 	                    , "UTF-8"
 	                    , new DefaultFileRenamePolicy()); 
-			 MemberDAO dao = new MemberDAO();
-			 MemberDTO dto = dao.memberSelect(userId);
+			 MemberDAO memberdao = new MemberDAO();
+			 MemberDTO memberdto = memberdao.memberSelect(userId);
 			
 			 Enumeration filenames = multi.getFileNames();
 			 
 			 String file = (String)filenames.nextElement(); 
 			 String cardUploadFile = multi.getFilesystemName(file);
-			 dto.setUserProfile(cardUploadFile);
+			 memberdto.setUserProfile(cardUploadFile);
 			 
- 			 resultrow = dao.memberUpdate(dto);
+ 			 resultrow = memberdao.memberUpdate(memberdto);
  			 
  			 request.setAttribute("resultrow", resultrow);
 			 

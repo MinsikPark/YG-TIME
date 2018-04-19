@@ -27,14 +27,14 @@ public class JoinService implements Action{
 			String userPwd = request.getParameter("password");
 			String userNicname = request.getParameter("nickName");
 		  
-			MemberDTO member = new MemberDTO();
-			member.setUserId(userId);
-			member.setUserPwd(userPwd);
-			member.setUserNicname(userNicname);
+			MemberDTO memberdto = new MemberDTO();
+			memberdto.setUserId(userId);
+			memberdto.setUserPwd(userPwd);
+			memberdto.setUserNicname(userNicname);
 
 			
 			MemberDAO dao = new MemberDAO();
-			result = dao.memberInsert(member);
+			result = dao.memberInsert(memberdto);
 			
 			if(result>0) {
 

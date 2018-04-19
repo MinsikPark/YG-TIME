@@ -27,18 +27,18 @@ public class BoardAddService implements Action{
 		 	String label = request.getParameter("label");
 		 	int projectNum = (int) request.getSession().getAttribute("projectNum");
 		 	int resultrow = 0;
-		 	BoardDAO dao = null;
-		 	BoardDTO dto = null;
+		 	BoardDAO boarddao = null;
+		 	BoardDTO boarddto = null;
 		 	try {
-		 		dao = new BoardDAO();
-		 		dto = new BoardDTO();
-		 		dto.setBoardEndDate(boardEndDate);
-		 		dto.setBoardTitle(boardTitle);
-		 		dto.setBoardStartDate(boardStartDate);
-		 		dto.setLabel(label);
-		 		dto.setProjectNum(projectNum);
+		 		boarddao = new BoardDAO();
+		 		boarddto = new BoardDTO();
+		 		boarddto.setBoardEndDate(boardEndDate);
+		 		boarddto.setBoardTitle(boardTitle);
+		 		boarddto.setBoardStartDate(boardStartDate);
+		 		boarddto.setLabel(label);
+		 		boarddto.setProjectNum(projectNum);
 		 		
-		 		resultrow = dao.boardInsert(dto);
+		 		resultrow = boarddao.boardInsert(boarddto);
 		 		
 		 		JSONObject json = new JSONObject();
 		 		json.put("resultrow", resultrow);

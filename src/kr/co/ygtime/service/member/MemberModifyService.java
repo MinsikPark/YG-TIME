@@ -27,7 +27,7 @@ public class MemberModifyService implements Action{
 		int resultrow = 0;
 		String userId =  (String)request.getSession().getAttribute("sessionId");
 		String userPwd = request.getParameter("modpassword");
-		String userNicname = request.getParameter("modnickName");
+		String userNickname = request.getParameter("modnickName");
 		try {
 			memberdao = new MemberDAO();
 
@@ -35,7 +35,7 @@ public class MemberModifyService implements Action{
 			
 			if(memberdto!=null) {
 				memberdto.setUserPwd(userPwd);
-				memberdto.setUserNicname(userNicname);
+				memberdto.setUserNicname(userNickname);
 				resultrow = memberdao.memberUpdate(memberdto);
 			}
 			

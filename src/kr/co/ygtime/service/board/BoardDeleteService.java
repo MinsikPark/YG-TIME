@@ -19,11 +19,11 @@ public class BoardDeleteService implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		int boardNum = Integer.parseInt(request.getParameter("boardNum"));
-		BoardDAO dao = null;
+		BoardDAO boarddao = null;
 		int resultrow = 0;
 		try {
-			dao = new BoardDAO();
-			resultrow = dao.boardDelete(boardNum);
+			boarddao = new BoardDAO();
+			resultrow = boarddao.boardDelete(boardNum);
 			
 			request.setAttribute("resultrow", resultrow);
 			

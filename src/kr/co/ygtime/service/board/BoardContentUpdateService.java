@@ -27,19 +27,19 @@ public class BoardContentUpdateService implements Action {
 	 	String label = request.getParameter("label");
 	 	int resultrow = 0;
 	 	
-		BoardDAO dao = null;
-		BoardDTO dto = null;
+		BoardDAO boarddao = null;
+		BoardDTO boarddto = null;
 		try {
-			dao = new BoardDAO();
-			dto = dao.boardSelect(boardNum);
-			if(dto!=null) {
-				dto.setBoardTitle(boardTitle);
-				dto.setBoardStartDate(boardStartDate);
-				dto.setBoardEndDate(boardEndDate);
-				dto.setLabel(label);
+			boarddao = new BoardDAO();
+			boarddto = boarddao.boardSelect(boardNum);
+			if(boarddto!=null) {
+				boarddto.setBoardTitle(boardTitle);
+				boarddto.setBoardStartDate(boardStartDate);
+				boarddto.setBoardEndDate(boardEndDate);
+				boarddto.setLabel(label);
 				
-				resultrow = dao.boardUpdate(dto);
-				int projectNum = dto.getProjectNum();
+				resultrow = boarddao.boardUpdate(boarddto);
+				int projectNum = boarddto.getProjectNum();
 				
 				JSONObject json = new JSONObject();
 		 		json.put("resultrow", resultrow);
