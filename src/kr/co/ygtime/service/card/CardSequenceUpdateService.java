@@ -23,9 +23,10 @@ public class CardSequenceUpdateService implements Action{
 		int listNum = Integer.parseInt(request.getParameter("listNum").substring(7));
 		String[] seq = (request.getParameter("sequential")).split(",");
 		try {
-			dao = new CardDAO();
-			
+			dao = new CardDAO(); 
 			for(int i = 0; i < seq.length; i++) {
+				if(seq[i].substring(0, 3).equals("div")) continue;
+
 				CardDTO card = new CardDTO();
 				card.setListNum(listNum);
 				card.setCardNum(Integer.parseInt(seq[i]));

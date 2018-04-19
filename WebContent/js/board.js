@@ -60,7 +60,6 @@ function sortable(){
 				$(this).empty()
 				$(this).append(children0, children2, children1)
 			}
-			
 			$.ajax({
 				url : 'CardSequenceUpdate.card',
 				data : { 
