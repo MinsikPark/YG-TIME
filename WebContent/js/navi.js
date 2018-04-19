@@ -61,9 +61,6 @@ function changeValue(obj){
 	var data = $("#cardfileupload").serialize();
 
 	if(obj.value != ""){
-		var div = '<div><input type="text" class="form-control inputtextbox" value="첨부 파일  : '+ obj.value.substr(12)+'" readonly>'
-			div += '<button type="button" class="close" onclick="fileInputDel(this)">&times;</button></div>'
-		$('#fileUploadForm').append(div)
 		
 		$("#cardfileupload").ajaxForm({
 			url: "cardfileupload.card",
