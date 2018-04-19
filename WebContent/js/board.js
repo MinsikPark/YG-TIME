@@ -80,7 +80,6 @@ function autoWidth(){
 
 //카드를 추가하는 텍스트박스를 생성한다
 function addCardView(e, listNum, boardNum) {
-	console.log("카드추가")
 	$(e).parent().find("#addcard").remove();
 	var div = "<div class='card' id='addcard'>" +
 			"<input class='inputtext' type='text' placeholder='card title' name='title' " +

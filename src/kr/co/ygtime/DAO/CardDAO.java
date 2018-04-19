@@ -1160,7 +1160,6 @@ public class CardDAO {
 		try {
 			conn = ds.getConnection();
 			String sql="update CARD set listnum=?, cardsequential=? where cardnum=?";
-			System.out.println("드러왔니??????????????????????");
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, card.getListNum());
 			pstmt.setInt(2, card.getCardSequential());
