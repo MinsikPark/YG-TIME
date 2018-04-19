@@ -90,7 +90,7 @@ function cardNameMod(){
 	var cardNum = $('#hiddenCardnum').val();
 	var htmlObj = $('#modalHeader').html();
 	
-	var div = '<div onfocusout="focusoutdelay('+ cardNum +')">'
+	var div = '<div onfocusout="cardViewContents('+ cardNum +')">'
 		+ '<input type="text" class="form-control inputtextbox" placeholder="' + htmlObj + '" onkeyup="fnChkByte(this, 26)"'
 		+ 'onkeypress="if(event.keyCode==13) {cardNameModOk();}" >';
 

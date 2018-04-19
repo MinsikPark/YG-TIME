@@ -15,7 +15,7 @@
 	          maxIdle="50" 
 	          maxActive="100" 
 	          password="1004"
-		      username="YGTIME" 
+		      username="YG_TIME" 
 		      url="jdbc:oracle:thin:@192.168.0.28:1521:XE"
 			  driverClassName="oracle.jdbc.OracleDriver" 
 			  type="javax.sql.DataSource"

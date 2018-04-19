@@ -25,8 +25,8 @@ public class CardSequenceUpdateService implements Action{
 		try {
 			dao = new CardDAO(); 
 			for(int i = 0; i < seq.length; i++) {
-				if(seq[i].substring(0, 3).equals("div")) continue;
-
+				System.out.println(seq[i].substring(0, 1));
+				if(seq[i].substring(0, 1).equals("d")) continue;
 				CardDTO card = new CardDTO();
 				card.setListNum(listNum);
 				card.setCardNum(Integer.parseInt(seq[i]));
