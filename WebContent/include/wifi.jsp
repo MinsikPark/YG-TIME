@@ -22,5 +22,5 @@
 	</div>
 </div>
 
-<script src="js/wifi.js"></script>
+<script src="<%=request.getContextPath()%>/js/wifi.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANFCM82CSQsLcitkNXAadHB8bmsh6hrH8&callback=initMap" async defer></script>    

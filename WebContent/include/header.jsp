@@ -5,10 +5,10 @@
 <header>
 	<nav class="navbar z-index">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#"><img src="images/logo.JPG"
+			<a class="navbar-brand" href="#"><img src="<%=request.getContextPath()%>/images/logo.JPG"
 				style="width: 110px; height: 30px;" onclick="project()"></a>
 			<div class="navbar-brand">
-				<img src ="images/wifiLogo.png" style="height: 30px;" data-toggle="modal" data-target="#modalWifiMap">
+				<img src ="<%=request.getContextPath()%>/images/wifiLogo.png" style="height: 30px;" data-toggle="modal" data-target="#modalWifiMap">
 			</div>
 		</div>
 		<div>
@@ -22,7 +22,7 @@
 					<c:otherwise>
 						<input id="getsession" type="hidden" value="${sessionScope.sessionId}">
 						<li>
-							<a href="logout.member">Logout 
+							<a href="<%=request.getContextPath()%>/logout.member">Logout 
 								<span class="glyphicon glyphicon-log-out"></span>
 							</a>
 						</li>

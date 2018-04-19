@@ -34,7 +34,7 @@ body {
 	<div class="container">
 		<div style="top: 100px;"
 			class="col-md-6 col-md-offset-3">
-				<img src="images/ygtime.png" style="width:100%">
+				<img src="<%=request.getContextPath()%>/images/ygtime.png" style="width:100%">
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<div class="panel-title">Sign In</div>
@@ -42,7 +42,7 @@ body {
 
 				<div class="panel-body">
 
-					<form id="loginform" class="form-horizontal" role="form" action="login.member">
+					<form id="loginform" class="form-horizontal" role="form" action="<%=request.getContextPath()%>/login.member">
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
