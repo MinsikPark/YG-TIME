@@ -14,7 +14,7 @@
 	}else if("<%=msg%>"=="error"){
 		alert("유효하지 않는 요청입니다");
 	}
-	  location.href='<%=path%>';
+	  location.href='<%=request.getContextPath()%>/<%=path%>';
 
 
 </script>

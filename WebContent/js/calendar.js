@@ -6,8 +6,6 @@
 */
 
 $(function() { // $(document).ready
-	var boardCnt = 0;
-	var boardCheck = "";
 	
 	// fullCalendar
 	$('#calendar').fullCalendar({
@@ -40,7 +38,7 @@ $(function() { // $(document).ready
 		    			data:data,
 		    			success:function(data){}
 		    		
-		    		})
+		    		});
 		    		
 		    		$('#calendar').fullCalendar('removeEvents', event._id);
 		    	}
@@ -60,30 +58,9 @@ $(function() { // $(document).ready
 		},
 		editable: true, // 달력에 종료일 수정 여부 (드래그, 크기 조정)
 		eventLimit: true, // 하루에 표시되는 이벤트의 수를 제한. 나머지는 팝 오버에 나타남.
-		displayEventTime: false, // 
-		eventRender: function(event, element) {
-			   element.html(event.title + '<span class="glyphicon glyphicon-pencil pull-right" id="modifyBoardEvent"></span>');
-		},
-		eventClick: function(event, jsEvent) {
-			
-			
-			
-			
-			//달력 연필버튼 클릭시
-			if (jsEvent.target.id === 'modifyBoardEvent') {
-				boardCheck = "modify";
-				
-				$('#eventTitle').val(event.title);
-				var endDate = dateProcess(event.end.format(), -1); //추가 Dialog에서 종료값 -1일
-				$('#eventStart').val(event.start.format()); // start.format() : 시작일 값
-				$('#eventEnd').val(endDate); // 종료일 값
-				$('#eventStart, #eventEnd').datepicker({dateFormat: 'yy-mm-dd'}); // 시작일, 종료일 Datepicker
-				
-				$('#calEventDialog').data('eventId', event.id).dialog('open');
-			    return;
-			}
-			
-			//보드바 클릭시
+		displayEventTime: false,
+		eventClick: function(event) {
+			// 보드바 클릭시
 			boardclick(event.id);
 			$('#hiddenBoardnum').attr("value", event.id);
 		},
@@ -96,7 +73,6 @@ $(function() { // $(document).ready
 	}); // end - fullCalendar
 	
 	//board 날짜 변경 비동기 함수
-
 	function boarddateupdate(event){
 		var data = {
 				boardNum:event.id,
@@ -137,7 +113,6 @@ $(function() { // $(document).ready
 		buttons: {
 			// '추가'버튼 클릭 시
 			추가: function() {
-				var id = $("#calEventDialog").data('eventId');
 				var title = $('#eventTitle').val(); // 제목 
 				var start = $('#eventStart').val(); // 시작일
 				var end = $('#eventEnd').val();
@@ -159,52 +134,22 @@ $(function() { // $(document).ready
 							boardStartDate: eventData.start,
 							boardEndDate: eventData.end,
 							label: eventData.color,
-
-						};
-						var modifyParam = {
-							boardNum: id,
-							boardTitle: title,
-							boardStartDate: start,
-							boardEndDate: end,
-							label: color,
 						};
 						
-						//Modify 작업중
-						if(boardCheck === "modify") {
-							$.ajax({
-								url:"boardcontentmodify.board",
-								datatype:"text",
-								data: modifyParam,
-								success: function(data){
-									var json = JSON.parse(data);
-									if(json.resultrow <=0 || json.resultrow == null){
-										alert("보드 수정에 실패하셨습니다");
-									}else{
-										projectView(json.projectNum, this);
-									}
-									boardCheck = "";
-								},
-								error: function(data) {
-									boardCheck = "";
+						//비동기 처리
+						$.ajax({
+							url:"boardadd.board",
+							datatype:"json",
+							data: inputParam,
+							success: function(data){
+								var json = JSON.parse(data);
+								if(json.resultrow <=0 || json.resultrow == null){
+									alert("보드 생성에 실패하셨습니다");
+								}else{
+									projectView(json.projectNum, this);
 								}
-							});
-						}else {
-							//비동기 처리
-							$.ajax({
-								url:"boardadd.board",
-								datatype:"json",
-								data: inputParam,
-								success: function(data){
-									var json = JSON.parse(data);
-									if(json.resultrow <=0 || json.resultrow == null){
-										alert("보드 생성에 실패하셨습니다");
-									}else{
-										projectView(json.projectNum, this);
-									}
-								}
-							});
-						}
-						
+							}
+						});
 					}
 					$('#calendar').fullCalendar('unselect');
 					$(this).dialog('close');

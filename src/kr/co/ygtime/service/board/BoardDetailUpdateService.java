@@ -22,21 +22,21 @@ public class BoardDetailUpdateService implements Action {
 		String detail= request.getParameter("detail");
 		int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 		
-		BoardDAO dao = null;
-		BoardDTO dto = null;
+		BoardDAO boarddao = null;
+		BoardDTO boarddto = null;
 		
 		int resultrow = 0;
 		
 		try {
-			dao = new BoardDAO();
-			dto = dao.boardSelect(boardNum);
+			boarddao = new BoardDAO();
+			boarddto = boarddao.boardSelect(boardNum);
 			
-			if(dto!=null) {
-				dto.setDetail(detail);
-				dto.setBoardStartDate(dto.getBoardStartDate().substring(0, 10));
-				dto.setBoardEndDate(dto.getBoardEndDate().substring(0, 10));
+			if(boarddto!=null) {
+				boarddto.setDetail(detail);
+				boarddto.setBoardStartDate(boarddto.getBoardStartDate().substring(0, 10));
+				boarddto.setBoardEndDate(boarddto.getBoardEndDate().substring(0, 10));
 				
-				resultrow= dao.boardUpdate(dto);
+				resultrow= boarddao.boardUpdate(boarddto);
 				
 			}
 			

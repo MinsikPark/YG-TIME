@@ -19,13 +19,13 @@ public class IdcheckService implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
-		String id = request.getParameter("email");
+		String userId = request.getParameter("email");
 		
-		MemberDAO dao = null;
+		MemberDAO memberdao = null;
 		try {
-			dao = new MemberDAO();
+			memberdao = new MemberDAO();
 	
-			String result = dao.isIdcheck(id);
+			String result = memberdao.isIdcheck(userId);
 	
 			if(result.equals("false")) { //아이디가 있을때
 				result = "false";

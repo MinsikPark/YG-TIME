@@ -23,7 +23,7 @@
 					</div>
 					<span class="input-group-btn">
 						<input type="hidden" id="thisProjectNum">
-						<button class="btn btn-default" type="button"  onclick="memberinvite()">
+						<button class="btn btn-default" type="button" onclick="memberinvite()">
 							<span class="glyphicon">&#xe171;</span>
 						</button>
 					</span>

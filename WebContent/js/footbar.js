@@ -29,6 +29,7 @@ function inviteIdCheck(){
 		success : function(datas) {
 			if(datas.trim() == 2){
 				alert('초대메시지가 발송 되었습니다')
+				$('#emailSearch').val("");
 				$.ajax({
 					url : "invite.member",
 					datatype : "JSON",
@@ -38,6 +39,7 @@ function inviteIdCheck(){
 				})
 			}else{
 				alert('이미 가입된 회원입니다')
+				$('#emailSearch').val("");
 			}
 		}
 	})

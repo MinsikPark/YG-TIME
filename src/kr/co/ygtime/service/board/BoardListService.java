@@ -22,11 +22,11 @@ public class BoardListService implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 			int projectNum = Integer.parseInt(request.getParameter("projectNum"));
-			BoardDAO dao = null;
+			BoardDAO boarddao = null;
 			List<BoardDTO> list = null;
 			try {
-				dao = new BoardDAO();
-				list = dao.allBoardSelect(projectNum);
+				boarddao = new BoardDAO();
+				list = boarddao.allBoardSelect(projectNum);
 				request.getSession().setAttribute("projectNum", projectNum);
 				
 				JSONArray json = JSONArray.fromObject(list);

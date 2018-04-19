@@ -31,11 +31,11 @@ public class LoginService implements Action{
 		String msg = "fail";
 		String path = "login.jsp";
 		try {
-			MemberDAO dao = new MemberDAO();
-			MemberDTO dto = dao.memberSelect(loginEmail);
+			MemberDAO memberdao = new MemberDAO();
+			MemberDTO memberdto = memberdao.memberSelect(loginEmail);
 
-			if(dto !=null) { // 해당하는 멤버가 있다면
-				if(loginPwd.equals(dto.getUserPwd())) { // 입력한 비밀번호가 user의 비밀번호와 같은지 체크
+			if(memberdto !=null) { // 해당하는 멤버가 있다면
+				if(loginPwd.equals(memberdto.getUserPwd())) { // 입력한 비밀번호가 user의 비밀번호와 같은지 체크
 					msg = "success";
 					path = "main.jsp";
 					request.getSession().setAttribute("sessionId", loginEmail);//비밀번호가 일치 한다면 session에 담아주세요

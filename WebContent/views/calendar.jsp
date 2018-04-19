@@ -23,13 +23,13 @@ $(function(){
 
 </script>
 
-<script src="js/moment.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/moment.min.js"></script>
 <!-- (주의: 순서)fullcalendar.js import는 위의 js files import 이후에 작성되어야 함 -->
-<script src="js/fullcalendar.js"></script>
+<script src="<%=request.getContextPath()%>/js/fullcalendar.js"></script>
 <!-- (주의: 순서)locale-all.js(언어설정) import는 fullcalendar.js 밑에 작성되어야 함 -->
-<script src="js/locale-all.js"></script>
+<script src="<%=request.getContextPath()%>/js/locale-all.js"></script>
 <!-- script - calendar.js -->
-<script src="js/calendar.js"></script>
+<script src="<%=request.getContextPath()%>/js/calendar.js"></script>
 
 <!-- 프로젝트 이름 -->
 
@@ -41,7 +41,7 @@ $(function(){
 		<h2 id="projName" style= "margin-bottom:0.5%;">프로젝트</h2>
 	</div>
 	<div id="calendar" class=" nav-center container-fluid containment-wrapper">
-		<img id="trashCan" src="images/trashcan.png" height="35px"
+		<img id="trashCan" src="<%=request.getContextPath()%>/images/trashcan.png" height="35px"
 			width="35px"> 
 			<!-- <div id="trashCan" class ="container"style="width:100%;height:5%; background-color: black; z-index: 11">
 			</div> -->
